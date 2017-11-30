@@ -1,18 +1,17 @@
 <template>
     <div class="hello">
-        <h3>这是系统外部</h3>  
-        <ohead></ohead>
-        <router-view/>
+        <h3>这是登录页面</h3>  
+        <a href="#/LoginRegister/register">注册</a>
     </div>
 </template>
 
 <script>
-import ohead from "./ohead";
+import LRhead from "../components/sinda_LoginRegister_header";
 export default {
   data() {
     return {};
   },
-  components: { ohead }
+  components: { LRhead }
 };
 </script>
 

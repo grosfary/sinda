@@ -1,24 +1,22 @@
 <template>
     <div class="hello">
-        <h3>这是注册页面</h3>  
-        <a href="#/outter/login">登录</a>
+        <LRhead></LRhead>
+        <h3>这是登录注册部分</h3>  
+        <router-view/>
     </div>
 </template>
 
 <script>
-import ohead from "../components/ohead";
+import LRhead from "./sinda_LoginRegister_header";
 export default {
+  name: "sinda_LoginRegister",
   data() {
     return {};
   },
-  components: { ohead }
+  components: { LRhead }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-// @color: red;
-// div {
-//   color: @color;
-// }
 </style>
