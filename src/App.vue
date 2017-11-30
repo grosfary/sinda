@@ -13,7 +13,8 @@
 <script>
 import sinda_top from "./components/sinda_top"; // 用变量sinda_top来接收sinda_top.vue里的html内容
 import sinda_bottom from "./components/sinda_bottom"; // 作用同上
-export default { // ES6：export default暴露 模块、函数、变量、文件 
+export default {
+  // ES6：export default暴露 模块、函数、变量、文件
   // 想知道原理自己看
   // http://es6.ruanyifeng.com/?search=export&x=0&y=0#docs/module#export-default-命令
   name: "app",
@@ -21,12 +22,18 @@ export default { // ES6：export default暴露 模块、函数、变量、文件
 };
 </script>
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 </style>
