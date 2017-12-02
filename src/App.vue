@@ -22,18 +22,20 @@ export default {
 };
 </script>
 <style>
-* {
+
+*{
   margin: 0;
   padding: 0;
-  font-size: 14px;
 }
-li {
+#app {
+  /* font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px; */
   list-style: none;
-}
-a {
   text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
+
 }
 </style>
