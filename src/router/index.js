@@ -6,6 +6,7 @@ import index from '../views/sinda_index' // 首页
 import list from '../views/sinda_list' // 列表页
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
+import memober from '../views/sinda_memober' //会员中心
 Vue.use(Router)
 
 // pc端
@@ -23,9 +24,14 @@ export default new Router({
       children: [{
         path: '', // path为路径  在这里为首页   如 http://localhost:8081/#/
         component: index
-      },{
+      },
+      {
         path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
         component: list
+      },
+      {
+        path:'memober',//会员中心
+        component: memober
       } ]
     },
     {
