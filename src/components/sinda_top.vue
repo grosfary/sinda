@@ -4,8 +4,8 @@
       <div class="top_content">
         <ul class="top_welcome">
           <li><span>欢迎来到信达！</span></li>
-          <li><a href="">登录</a></li>
-          <li><a href="">注册</a></li>
+          <li><a href="#/LoginRegister/login">登录</a></li>
+          <li><a href="#/LoginRegister/register">快速注册</a></li>
         </ul>
         <ul>
           <li><span class="icon_gouwuche"></span></li>
