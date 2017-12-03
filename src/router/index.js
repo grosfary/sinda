@@ -7,6 +7,10 @@ import list from '../views/sinda_list' // 列表页
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
 import memober from '../views/sinda_memober' //会员中心
+import myYing from '../memober-third/myYing' //会员中心
+import center from '../memober-third/center' //会员中心
+import toeveluete from '../memober-third/toeveluete' //会员中心
+import setting from '../memober-third/setting' //会员中心
 Vue.use(Router)
 
 // pc端
@@ -30,9 +34,28 @@ export default new Router({
         component: list
       },
       {
-        path:'memober',//会员中心
-        component: memober
-      } ]
+        path:'memober',//会员中心  如 http://localhost:8081/#/memober
+        component: memober,   
+        children: [{
+            path:'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
+            component: myYing          
+        },
+        {
+          path:'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
+          component:center
+        },
+        {
+          path:'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+          component:toeveluete
+        },
+        {
+          path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+          component:setting
+        }
+      ]
+      }
+
+    ]
     },
     {
       path: '/LoginRegister',
