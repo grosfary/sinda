@@ -22,7 +22,6 @@ export default {
 };
 </script>
 <style>
-
 *{
   margin: 0;
   padding: 0;
@@ -34,8 +33,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px; */
-  list-style: none;
-  text-decoration: none;
-
 }
 </style>
