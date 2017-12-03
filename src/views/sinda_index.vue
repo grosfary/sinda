@@ -1,24 +1,133 @@
 <template>
-    <div class="hello">
-        <h3>这是首页</h3> 
+<div>
+  <div class="carousel">
+    <div class="carousel_inner" @mousemove="stopPlay()" @mouseout="play()">
+      <transition-group tag="ul" name="image">
+        <li v-for="(image,index) in img" :key="index" v-if="index===mark">
+          <a href="#/"><img :src="image"></a>
+        </li>
+      </transition-group>
     </div>
+    <div class="bullet">
+      <span v-for="(item,index) in img.length" :class="{'active':index===mark}" @click="change(index)" :key="index" @mousemove="stopPlay()" @mouseout="play()"></span>
+    </div>
+  </div>
+</div>
+  
 </template>
 
 <script>
-import sinda_header from "../components/sinda_global_header";
-import sinda_footer from "../components/sinda_global_footer";
+// import sinda_header from "../components/sinda_global_header";
+// import sinda_footer from "../components/sinda_global_footer";
 export default {
+  name: "sinda_index",
   data() {
-    return {};
+    return {
+      mark: 0,
+      img: [
+        // require("../assets/pc/lou.jpg"),
+        "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1927986978,2546133654&fm=27&gp=0.jpg",
+        "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2523007129,1951728501&fm=27&gp=0.jpg",
+        "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1032378099,515442160&fm=27&gp=0.jpg",
+        "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4220262347,3856549398&fm=27&gp=0.jpg"
+      ],
+    };
   },
-  components: { sinda_header, sinda_footer }
+  methods: {
+    change(i) {
+      this.stopPlay();
+      this.mark = i;
+      
+    },
+    autoPlay() {
+      this.mark !=3 ? this.mark++ : (this.mark = 0);
+    },
+    play() {
+      // 鼠标移出，开始轮播
+      window.autoPlay = setInterval(this.autoPlay, 2500);
+    },
+    stopPlay() {
+      // 鼠标进入，停止轮播
+      clearInterval(window.autoPlay);
+    }
+  },
+  created() {
+    // 生命周期开始，开始轮播
+    this.play();
+  },
+  destroyed: function() {
+    // 生命周期结束，停止轮播
+    clearInterval(window.autoPlay);
+  }
+  // components: { sinda_header, sinda_footer }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-// @color: red;
-// div {
-//   color: @color;
-// }
+// 顶部轮播部分
+.carousel{
+  position: relative;
+}
+.carousel_inner {
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 1200px;
+  height: 400px;
+  position: relative;
+  ul{
+    overflow: hidden;
+  }
+  img {
+    width: 1200px;
+    height: 400px;
+  }
+  li {
+    position: absolute;
+  }
+}
+
+// 轮播按钮样式
+.bullet {
+  bottom: 0;
+  position: absolute;
+  left: 500px;
+  margin: 0 auto;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  span {
+    float: left;
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    &:hover {
+      background: #126;
+    }
+    &.active {
+      background: rgba(255,255,255,0.8);
+    }
+  }
+}
+
+// 顶部轮播动画效果
+.image-enter-active {
+  transform: translateX(0);
+  transition: all .8s ease;
+}
+.image-leave-active {
+  transform: translateX(-100%);
+  transition: all .8s ease;
+}
+.image-enter {
+  transform: translateX(100%);
+}
+.image-leave {
+  transform: translateX(0);
+}
 </style>

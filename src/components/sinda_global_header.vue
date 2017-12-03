@@ -39,9 +39,22 @@
       <!-- 头部导航栏部分 -->
     <ul>
       <li>
-        <a :href="ind.id" :key="ind.id" v-for="(ind,key,index) in btn" v-bind:class="{active:(indexs==index)}" v-on:click="a(index)">{{ind.name}}</a>
+        <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" v-bind:class="{active:(indexs==index)}" v-on:click="a(index)">{{ind.name}}</a>
       </li>
     </ul>
+    <div class="header_sidebar">
+      <ul>
+        <li v-for="(i,key,index) in listarr" :key="i.code" style="font-size:40px;">{{i.name}}{{key}}<br>{{index}}
+          <ul>
+            <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:20px;">{{i.name}}
+              <ul>
+                <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:12px;">{{i.name}}</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </template>
@@ -52,17 +65,28 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "全部产品", id: "#/" },
-        b: { name: "财税服务", id: "#/list" },
-        c: { name: "公司工商", id: "#/" },
-        d: { name: "加盟我们", id: "#/" },
-        e: { name: "店铺", id: "#/" }
+        a: { name: "全部产品", src: "#/" },
+        b: { name: "财税服务", src: "#/list" },
+        c: { name: "公司工商", src: "#/" },
+        d: { name: "加盟我们", src: "#/" },
+        e: { name: "店铺", src: "#/" }
       },
       indexs: 0,
       a: function(n) {
         this.indexs = n;
-      }
+      },
+      listarr: []
     };
+  },
+  created() {
+    var that = this;
+    this.ajax
+      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+      .then(function(data) {
+        var data = data.data.data;
+        console.log(data);
+        that.listarr = data;
+      });
   }
 };
 </script>
@@ -270,4 +294,16 @@ export default {
 }
 
 // 头部导航栏部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+// 头部侧导航部分--------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+.header_sidebar {
+  position: absolute;
+  z-index: 100;
+  width: 199px;
+  height: 400px;
+  background: #16263c;
+  color: #e2e4e6;
+}
+
+// 头部侧导航部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 </style>
