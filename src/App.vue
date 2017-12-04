@@ -6,7 +6,8 @@
     <router-view/>
     <!-- router-view 整个项目用来来回切换试图的部分 -->
     <sinda_bottom></sinda_bottom>
-    <!-- sinda_top是指整个项目的公共底部 -->
+  <!-- sinda_top是指整个项目的公共底部 -->
+  <!-- <a href="./components/sinda_LoginRegister.vue">go login</a> -->
   </div>
 </template>
 
