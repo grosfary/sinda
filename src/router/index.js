@@ -11,6 +11,7 @@ import myYing from '../memober-third/myYing' //会员中心
 import center from '../memober-third/center' //会员中心
 import toeveluete from '../memober-third/toeveluete' //会员中心
 import setting from '../memober-third/setting' //会员中心
+import modify from '../memober-third/modify' //会员中心
 Vue.use(Router)
 
 // pc端
@@ -51,6 +52,10 @@ export default new Router({
         {
           path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
           component:setting
+        },
+        {
+          path:'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
+          component:modify
         }
       ]
       }

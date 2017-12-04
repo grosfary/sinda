@@ -1,5 +1,6 @@
 <template>
     <div class="hello">
+      <div class="top">
         <div class='assess'>
           <div>我的评价</div>
         </div>
@@ -11,6 +12,8 @@
             <a class='notappb'></a>
           </div>
         </div>
+      </div>
+        
     </div>
 </template>
 <script>
@@ -90,5 +93,7 @@ export default {
     .notappa;
     display:none;
     }
-
+ .top{
+   margin-top:233px;
+ }
 </style>

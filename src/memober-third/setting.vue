@@ -1,57 +1,85 @@
 <template>
     <div class="hello">
+      <div class="top">
         <div class='assess'>
-          <div>评价</div>
+          <div>账户设置</div>
         </div>
-    <div class='evaluate'>
-      <div>
-        <span>服务单号：</span>
-        <span></span>
+        <div class='password'>
+          <div>修改密码</div>
+        </div>
+        <div>
+          <div class='head'>
+            <span>当前头像：</span>
+            <div class='imt'><img src="../assets/pc/u5086.jpg" alt=""></div>
+          </div>
+          <div class='name'>
+              <span>姓名：</span>
+              <input type="text" placeholder="请输入姓名">
+          </div>
+          <div class='sex'>
+              <span>性别：</span>
+              <input type="radio" name='sex'>
+              <span>男</span>
+              <input type="radio" name='sex'>
+              <span>女</span>
+          </div>
+          <div>
+              <div class='postbox'>
+              <span>邮箱：</span>
+              <input type="text" placeholder="请输入邮箱地址" class='post'  v-on:keyup='key'>
+              <p class='box'>邮箱格式不正确</p>
+          </div>
+          </div>
+          <div class='area'>
+              <span>所在地区：</span>
+              <v-distpicker class='picker'></v-distpicker>
+              <!-- <select name="" id=""></select>
+              <select name="" id=""></select>
+              <select name="" id=""></select> -->
+          </div>
+          <div class='keep'>
+              <input type="submit">
+          </div>
+        </div>
       </div>
-      <div>
-        <span>购买内容：</span>
-        <span></span>
-      </div>
-      <div>
-        <span>购买时间：</span>
-        <span></span>
-      </div>
-    </div>
-    <div class='evalu'>
-      <span>评价：</span>
-      <input type="radio" name='radio'>
-      <span>好评</span>
-      <input type="radio" name='radio'>
-      <span>中评</span>
-      <input type="radio" name='radio'>
-      <span>差评</span>
-    </div>
-    <div class='score'>
-      <span>评分：</span>
-    </div>
-    <div class='feel'>
-      <span>感受：</span> 
-      <textarea class='textarea'></textarea>   
-    </div>
-    <div class='sub'>
-      <input type='submit' class='judge'></input>
-    </div>
+        
     </div>
 </template>
 <script>
+import VDistpicker from 'v-distpicker'
 import memober from "../views/sinda_memober";
 export default {
   data() {
     return {};
   },
-  components: { memober }
+  components: { memober,VDistpicker },
+  methods:{
+  key:function(){
+    var post = document.querySelector('.post');
+    var box = document.querySelector('.box');
+    var reg =/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
+    console.log(reg.test(post.value))
+      if(reg.test(post.value)){
+        box.style.display='none';
+        console.log('aaa')
+      }else {
+        console.log('aaa')
+        box.style.display='block';
+      }
+  }
+    }
+
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .backe{
         background:#e9e9e9;
+}
+.hello{
+  font-size:13px;
 }
   .assess{
     width:875px;
@@ -68,64 +96,97 @@ export default {
     line-height:34px;
     text-align:center;
     }
-   
   }
- .evaluate{
-   width:644px;
-   height: 36px;
-   margin-top:-438px;
-   margin-left:569px;
-   float:left;
-   span{
-     width:200px;
-     font-size:10px;
-     line-height:36px;
-     float:left;
-           margin-left:10px;
-   }
- }
- .evalu{
-   .evaluate;
-    margin-top:-401px;
-    width:300px;
+  .password{
+      color:#e9e9e9;
+    .assess;
+      width:789px;
+      margin-left:627px;
+      div{
+        border-bottom:2px solid #e9e9e9;
+        color:#000;
+      }
+  }
+  .head{
+    width:192px;
+    height:98px;
+    margin-top:-415px;
+    margin-left:539px;
+    float:left;
     span{
-      float:left;
-      width:40px;
+      line-height:98px;
+    }
+  }
+  .name{
+    width:276px;
+    height:27px;
+    margin-top:-291px;
+    margin-left:541px;
+    float:left;
+    input{
+      width:183px;
+      height:23px;
+      margin-left: 30px;
+    }
+  }
+  .sex{
+    width:276px;
+    height:27px;
+    margin-top:-238px;
+    margin-left:541px;
+    float:left;
+    span{
+      line-height:27px;
     }
     input{
-      margin-top:11px;
-      margin-left:-63px;
+      margin-left: 30px;
     }
- }
- .score{
-   .evaluate;
-    margin-top:-363px;
-    width:180px;
- }
- .feel{
-   .evaluate;
-    margin-top:-326px;
-    width:590px;
-    height:103px;
- }
- .sub{
-   .evaluate;
-    margin-top:-222px;
- }
- .textarea{
-   width:536px;
-   height:101px;
-   margin-top:-30px;
-   margin-left:55px;
- }
- .judge{
-   width:105px;
-   height:30px;
-   float:right;
-   background:#169bd5;
-   border:0;
-   margin-top:17px;
-   border-radius:4px;
-   color:#fff;
- }
+  }
+  .postbox{
+    .name;
+    margin-top:-196px;
+  }
+  .area{
+    .name;
+      margin-top:-146px;
+      width:328px;
+    .picker{
+      margin-top: -25px;
+      margin-left: 74px;
+      width:700px;
+    }
+  }
+  .keep{
+    .name;
+    margin-top:-75px;
+    input{
+      width:70px;
+      height:26px;
+      margin-left:75px;
+      background:#fff;
+      border:2px solid #2793d3;
+      border-radius:4px;
+    }
+  }
+  .box{
+      width:100px;
+      margin-top:-24px;
+      margin-left:275px;
+      color:red;
+      display:none;
+  }
+      .imt{
+        width:97px;
+        height:97px;
+        margin-top:-100px;
+        margin-left:73px;
+        img{
+          width:100%;
+          height:100%;
+        }
+      }
+       .top{
+           margin-top:233px;
+          }
 </style>
+
