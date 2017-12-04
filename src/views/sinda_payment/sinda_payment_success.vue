@@ -56,15 +56,18 @@ export default {
 .Success{
   font-size: 35px;
   color:#39a591;
+  padding-top: 50px;
 }
 .thanks{
-  font-size: 34px;
+  font-size: 29px;
 }
 .word{
     margin-left: 400px;
 }
 .sure{
+  margin: 10px;
+  padding-bottom: 10px;
   font-size: 20px;
-  border-bottom: 1px solid #f7f7f7;
+  border-bottom: 1px solid #e3e3e1;
 }
 </style>
