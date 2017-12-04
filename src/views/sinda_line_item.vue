@@ -29,7 +29,13 @@
              </div>
              <div class="Self-help">
                   <span ><input type="radio" name="pay" class="radioIV" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
+                   <p>注：转账时请将订单编号备注在付款信息里：转账完成后,请通知客服。</p>
              </div>
+            
+        </div>
+        <div class="Settlement">
+            <p>金额总计：</p><br>
+            <button>去结算</button>
         </div>
     </div>
  
@@ -55,6 +61,7 @@ export default {
 // 整体盒子样式
 .body{
     width:70%;
+    height: 850px;;
     margin: 0 auto;
 }
 // 支付头部样式
@@ -180,12 +187,31 @@ export default {
         width: 531px;
         height: 91px;//给背景设置宽高
         display: block;//设置为块级元素
-        background: url("../assets/pc/zhaoshang.jpg") no-repeat 0 0;
+        background: url("../assets/pc/zhaoshang.jpg") no-repeat 0 0;//背景图
     }
     .radioIV{
         // 单选框设置
         margin-left: 23px;
         margin-top: 42px;
+    }
+    p{
+        font-size: 10px;
+        color:red;
+    }
+}
+.Settlement{
+    float: right;
+    margin-top: 80px;
+    font-size: 13px;
+    // button按钮样式
+    button{
+        width: 103px;//宽
+        height: 26px;//高
+        color: #74b2df;//字体颜色
+        background: #ffffff;//背景颜色
+        border: #74b2df 1px solid;//边框
+        border-radius: 4px;//设置圆角边框
+        margin-left: 60px;//位置
     }
 }
 </style>

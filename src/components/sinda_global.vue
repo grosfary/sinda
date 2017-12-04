@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
         <sinda_header></sinda_header>
-        <h3>这是公共页面部分</h3>      
+        <!-- <h3>这是公共页面部分</h3>       -->
         <router-view/>
         <sinda_footer></sinda_footer>    
     </div>

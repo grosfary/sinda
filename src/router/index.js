@@ -6,7 +6,10 @@ import index from '../views/sinda_index' // 首页
 import list from '../views/sinda_list' // 列表页
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
-import line_item from '../views/sinda_line_item'
+import line_item from '../views/sinda_line_item' //订单详情
+import memober from '../views/sinda_memober' //会员中心
+import Join_Us from '../views/sinda_Join_Us' //加盟我们
+import store_list from '../views/sinda_store_list' //店铺列表
 Vue.use(Router)
 
 // pc端
@@ -18,33 +21,50 @@ Vue.use(Router)
 // 我的想法是 如果说要建立三级路由 就建一个跟二级路由相同的文件夹，把三级路由的文件放到这个文件夹中
 export default new Router({
     routes: [{
-            path: '/',
-            name: 'sinda_global',
-            component: global,
-            children: [{
-                path: '', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                component: index
-            }, {
-                path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                component: list
-            }, {
-                path: 'line_item',
-                component: line_item
-            }]
-        },
-        {
-            path: '/LoginRegister',
-            name: 'sinda_LoginRegister',
-            component: LoginRegister,
-            children: [{
-                    path: 'login',
-                    component: login
-                },
-                {
-                    path: 'register',
-                    component: register
-                },
-            ]
-        }
-    ]
+        path: '/',
+        name: 'sinda_global',
+        component: global,
+        children: [{
+            path: '', // path为路径  在这里为首页   如 http://localhost:8081/#/
+            component: index
+        }, {
+            path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+            component: list
+        }, {
+            path: 'line_item',
+            component: line_item
+        }, {
+            path: 'memober', //会员中心
+            component: memober
+        }, {
+            path: 'Join_Us',
+            component: Join_Us
+        }, {
+            path: 'store_list',
+            component: store_list
+        }]
+    }, {
+        path: '/LoginRegister',
+        name: 'sinda_LoginRegister',
+        component: LoginRegister,
+        children: [{
+                path: 'login',
+                component: login
+            },
+            {
+                path: '/LoginRegister',
+                name: 'sinda_LoginRegister',
+                component: LoginRegister,
+                children: [{
+                        path: 'login',
+                        component: login
+                    },
+                    {
+                        path: 'register',
+                        component: register
+                    },
+                ]
+            }
+        ]
+    }]
 })
