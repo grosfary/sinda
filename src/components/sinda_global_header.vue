@@ -42,19 +42,48 @@
         <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" v-bind:class="{active:(indexs==index)}" v-on:click="a(index)">{{ind.name}}</a>
       </li>
     </ul>
-    <div class="header_sidebar">
-      <ul>
-        <li v-for="(i,key,index) in listarr" :key="i.code" style="font-size:40px;">{{i.name}}{{key}}<br>{{index}}
+      <!-- <ul>
+
+        <li v-for="(i,key,index) in listarr" :key="i.code" style="font-size:16px;">
+          {{i.name}}
           <ul>
-            <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:20px;">{{i.name}}
+
+            <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
+              {{i.name}}
               <ul>
-                <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:12px;">{{i.name}}</li>
+                <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
+                  {{i.name}}
+                </li>
               </ul>
             </li>
+
           </ul>
         </li>
-      </ul>
-    </div>
+
+      </ul> -->
+    <!-- <div class="header_sidebar">
+      <div v-for="(i,key,index) in listarr" :key="i.code" style="font-size:16px;">
+        <div class="sidebar_left">
+          <div class="icon_global sidebar_icon"></div>
+          <div class="sidebar_title">
+            {{i.name}}
+            <ul>
+              <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
+                {{i.name}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="sidebar_right" style="display:inline-block;width:1001px;float:right">
+          <ul>
+            <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
+                  <span style="display:inline-block;width:1001px;"><span style="display:inline-block">{{i.name}}>　　</span><span v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">|{{i.name}}</span></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> -->
+
   </div>
 </div>
 </template>
@@ -299,10 +328,53 @@ export default {
 .header_sidebar {
   position: absolute;
   z-index: 100;
-  width: 199px;
+  width: 1200px;
   height: 400px;
-  background: #16263c;
   color: #e2e4e6;
+}
+.sidebar_left{
+  display: inline-block;
+  width: 199px;
+  background: #16263c;
+  vertical-align: top;
+  &:hover{
+    background: #2693d4;
+  }
+}
+.sidebar_icon{
+  width: 49px;
+  margin-top: 17px;
+  margin-left: 14px;
+  height: 26px;
+  width: 26px;
+  display: inline-block;
+  vertical-align: top;
+}
+.sidebar_title {
+  width: 150px;
+  font-size: 16px;
+  margin-top: 13px;
+  margin-bottom: 14px;
+  line-height: 34px;
+  display: inline-block;
+  vertical-align: top;
+  ul {
+    li {
+      float: left;
+      line-height: 26px;
+      margin-right: 14px;
+    }
+    &::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  }
+}
+
+.sidebar_right{
+  display: inline-block;
+  vertical-align: top;
 }
 
 // 头部侧导航部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
