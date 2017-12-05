@@ -138,7 +138,7 @@ export default {
       width: 323px;
       height: 109px; //给背景设置宽高
       display: block; //设置为块级元素
-      background: url("../assets/pc/ditu.jpg") no-repeat 0 0;
+      background: url("../assets/pc/ditu.png") no-repeat 0 0;
       margin: 0 auto;
       .lageII {
         text-align: center;
