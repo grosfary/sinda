@@ -42,7 +42,7 @@ export default new Router({
         },
         {
           path:'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
-          component:center
+          component:center  
         },
         {
           path:'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
