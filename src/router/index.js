@@ -15,6 +15,7 @@ import myYing from '../memober-third/myYing' //会员中心
 import center from '../memober-third/center' //会员中心
 import toeveluete from '../memober-third/toeveluete' //会员中心
 import setting from '../memober-third/setting' //会员中心
+import forgetThePassword from '../views/sinda_forgetThePassword.vue'//忘记密码
 import modify from '../memober-third/modify' //会员中心
 Vue.use(Router)
 
@@ -93,9 +94,19 @@ export default new Router({
           {
             path: 'register',
             component: register
+<<<<<<< HEAD
           },
         ]
       }
+=======
+        },
+        {
+          path: 'forgetThePassword',
+          component: forgetThePassword
+        },
+      ]
+    }
+>>>>>>> 06b351a18e325a94d37587b66e7868d6d58305db
     ]
   }
 

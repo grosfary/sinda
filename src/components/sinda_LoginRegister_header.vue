@@ -1,7 +1,17 @@
 <template>
-    <div class="hello">
-        <h3>这是登录和注册的头部</h3>  
+  <div class="hello">
+    <div class="top">
+      <div class="topI">
+        <div class="topII">
+          <div>
+            <span class="logo"></span>
+            <img src="../assets/pc/xinda.jpg" alt="">
+          </div>
+          <p>欢迎登录</p>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -14,8 +24,42 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-@color: red;
-div {
-  color: @color;
+.top {
+  width: 100%;
+  height: 97px;
+}
+.topI {
+  width: 1200px;
+  height: 97px;
+  margin: 0 auto;
+}
+.topII {
+  width: 295px;
+  height: 97px;
+  display: flex;
+  div {
+    margin-top: 15px;
+    width: 174px;
+    height: 56px;
+    display: flex;
+    border-right: 1px solid #b4b4b4;
+    img {
+      margin-top: 10px;
+      padding-left: 5px;
+      width: 76px;
+      height: 41px;
+    }
+  }
+  p{
+    padding-left: 26px;
+    font-size: 18px;
+    line-height: 85px;
+  }
+}
+.logo {
+  display: block;
+  width: 52px;
+  height: 56px;
+  background: url(../assets/pc/Sprites.png) no-repeat 0 0;
 }
 </style>
