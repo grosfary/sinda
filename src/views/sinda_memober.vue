@@ -1,21 +1,23 @@
 <template>
     <div class="hello">
+     
+
         <div>
           <div class='home'>
             <div class='homepage'>
               <a href="">首页</a>
               <span>/</span>
-              <a href="">个人主页</a>
+              <a href="">公司工商</a>
             </div>
             <div class='informations'></div>
             <div class='set'>
-              <div><span class='backa'><span>我的订单</span></span></div>
-              <div><span class='backb'><span>用户评价</span></span></div>
-              <div><span class='backc'><span>账户设置</span></span></div>
+              <div><div class='backa'><div>我的订单</div></div></div>
+              <div class='backd'><div class='backb'><div>用户评价</div></div></div>
+              <div class='backe'><div class='backc'><div>账户设置</div></div></div>
             </div>
           </div>
-          <div></div>
         </div>
+      <router-view></router-view>
     </div>
 </template>
 
@@ -24,6 +26,7 @@ import sinda_header from "../components/sinda_global_header";
 import sinda_footer from "../components/sinda_global_footer";
 export default {
   data() {
+    name:'sinda_memober'
     return {};
   },
   components: { sinda_header, sinda_footer }
@@ -49,33 +52,35 @@ export default {
       height:188px;
       margin-top:16px;
       background:#f7f7f7;
-      div{
-        span{
+        div{
+        width:376px;
         height:62px;
-        font-size:22px;
+        font-size:17px;
         line-height:62px;
-        margin-left:90px;
-        }
+        text-indent:90px;
       .backa{
+      width:101px;
       height:62px;
-      margin-left:0;
-              font-size:28px;
-      background:url(../assets/pc/Sprites.png) no-repeat -476px -303px;
+      font-size:17px;
+      background:url(../assets/pc/Sprites.png) no-repeat -476px -294px;
     }
       .backb{
-      margin-left:0;
+      width:101px;
       height:62px;
-              font-size:28px;
-      background:url(../assets/pc/Sprites.png) no-repeat -324px -311px;
+      font-size:17px;
+      background:url(../assets/pc/Sprites.png) no-repeat -324px -294px;
     }
       .backc{
-      margin-left:0;
+      width:101px;
       height:62px;
-              font-size:28px;
-      background:url(../assets/pc/Sprites.png) no-repeat -403px -309px;
+      font-size:17px;
+      background:url(../assets/pc/Sprites.png) no-repeat -403px -294px;
     }
       }
     }
   }
- 
+.backd{
+        background:#e9e9e9;
+}
+
 </style>
