@@ -1,6 +1,7 @@
 <template>
     <div class="hello">
         <h3>这是列表页</h3> 
+        
     </div>
 </template>
 
@@ -11,14 +12,12 @@ export default {
   data() {
     return {};
   },
-  components: { sinda_header, sinda_footer }
+  components: { sinda_header, sinda_footer },
+
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-// @color: red;
-// div {
-//   color: @color;
-// }
+
 </style>

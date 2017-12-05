@@ -1,6 +1,7 @@
 <template>
     <div class="hello">
-        <div class='assess'>
+      <div class='top'>
+    <div class='assess'>
           <div>评价</div>
         </div>
     <div class='evaluate'>
@@ -36,6 +37,8 @@
     <div class='sub'>
       <input type='submit' class='judge'></input>
     </div>
+      </div>
+        
     </div>
 </template>
 <script>
@@ -78,7 +81,7 @@ export default {
      font-size:10px;
      line-height:36px;
      float:left;
-           margin-left:10px;
+     margin-left:10px;
    }
  }
  .evalu{
@@ -124,5 +127,8 @@ export default {
    margin-top:17px;
    border-radius:4px;
    color:#fff;
+ }
+ .top{
+   margin-top:233px;
  }
 </style>
