@@ -49,48 +49,43 @@ export default new Router({
                         path: 'failure',
                         component: payment_failure,
                     }]
-                }]
-                // children: [{
-                //     path: '', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                //     component: index
-                //   },
-                //   {
-                //     path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                //     component: list
-                //   },
-                //   {
-                //     path:'memober',//会员中心  如 http://localhost:8081/#/memober
-                //     component: memober,   
-                //     children: [{
-                //         path:'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
-                //         component: myYing          
-                //     },
-                //     {
-                //       path:'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
-                //       component:center
-                //     },
-                //     {
-                //       path:'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
-                //       component:toeveluete
-                //     },
-                //     {
-                //       path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-                //       component:setting
-                //     }
-                //   ]
-                //   }
+                },
+                {
+                    path:'memober',
+                    component:memober,
+                    children: [{
+                            path:'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
+                            component: myYing          
+                        },
+                        {
+                          path:'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
+                          component:center
+                        },
+                        {
+                          path:'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+                          component:toeveluete
+                        },
+                        {
+                          path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+                          component:setting
+                        },   
+                        {
+                           path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+                           component:setting
+                        },
+                        {
+                            path:'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
+                            component:modify
+                        }
+                      ]
+                      }
+    
+                ]
+                },
 
-            // ]
+            ]      
         },
         {
-<<<<<<< HEAD
-          path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-          component:setting
-        },
-        {
-          path:'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
-          component:modify
-=======
             path: '/LoginRegister',
             name: 'sinda_LoginRegister',
             component: LoginRegister,
@@ -103,7 +98,5 @@ export default new Router({
                     component: register
                 },
             ]
->>>>>>> bb7e40f5178c7c202302587fa36ef6827eff63b4
         }
-    ]
-})
+)
