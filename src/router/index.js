@@ -94,11 +94,7 @@ export default new Router({
           {
             path: 'register',
             component: register
-<<<<<<< HEAD
-          },
-        ]
-      }
-=======
+
         },
         {
           path: 'forgetThePassword',
@@ -106,7 +102,6 @@ export default new Router({
         },
       ]
     }
->>>>>>> 06b351a18e325a94d37587b66e7868d6d58305db
     ]
   }
 
