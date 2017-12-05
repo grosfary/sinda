@@ -1,10 +1,9 @@
-<<<<<<< HEAD
-import Vue from 'vue';
-import Vuex from 'vuex';
-Vue.use(Vues);
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex);
 export default new Vuex.Store({
     state: { //状态集合
-        num: '123'
+        num: 123
     },
     mutations: { //突变集合
         SET_NUM(state, num) {
@@ -13,33 +12,10 @@ export default new Vuex.Store({
     },
     actions: { //操作集合
         setNum({ commit }, num) {
-            commit(SET_NUM, num);
+            commit('SET_NUM', num);
         }
     },
     getters: { //显示集合
         getNum: state => state.num
     }
-})
-=======
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex);
-export default new Vuex.Store({
-    state:{//状态集合
-        num:123
-    },
-    mutations:{//突变集合
-        SET_NUM(state,num){
-            state.num =num;
-        }
-    },
-    actions:{//操作集合
-        setNum({commit},num){
-            commit('SET_NUM',num);
-        }
-    },
-    getters:{//显示集合
-        getNum:state=>state.num
-    }
 });
->>>>>>> ffb1d98a6f81fc616931e7684c0a254c1ce7640a
