@@ -18,7 +18,7 @@ import myYing from '../memober-third/myYing' //会员中心
 import center from '../memober-third/center' //会员中心
 import toeveluete from '../memober-third/toeveluete' //会员中心
 import setting from '../memober-third/setting' //会员中心
-import forgetThePassword from '../views/sinda_forgetThePassword.vue'//忘记密码
+import forgetThePassword from '../views/sinda_forgetThePassword.vue' //忘记密码
 import modify from '../memober-third/modify' //会员中心
 Vue.use(Router)
 
@@ -30,159 +30,91 @@ Vue.use(Router)
 // 再往下肯定还会有三级路由 在views里
 // 我的想法是 如果说要建立三级路由 就建一个跟二级路由相同的文件夹，把三级路由的文件放到这个文件夹中
 export default new Router({
-    routes: [{
-        path: '/',
-        name: 'sinda_global',
-        component: global,
-        children: [{
-<<<<<<< HEAD
-                path: '', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                component: index
-            },
-            {
-                path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                component: list
-            }, {
-                path: 'line_item', //店铺详情   如 http://localhost:8081/#/line_item
-                component: line_item
-            }, {
-                path: 'Join_Us', //加盟我们   如 http://localhost:8081/#/Join_Us
-                component: Join_Us
-            }, {
-                path: 'store_list', //店铺列表  如 http://localhost:8081/#/store_list
-                component: store_list
-            },
-            {
-                path: 'memober', //会员中心  如 http://localhost:8081/#/memober
-                component: memober,
+        routes: [{
+                path: '/',
+                name: 'sinda_global',
+                component: global,
                 children: [{
-                        path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/memober/myYing
-                        component: myYing
+                        path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+                        component: index
+                    }, {
+                        path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+                        component: list
+                    }, {
+                        path: 'Join_Us',
+                        component: Join_Us
+                    }, {
+                        path: 'line_item',
+                        component: line_item
+                    }, {
+                        path: 'store_list',
+                        component: store_list
+                    }, {
+                        path: 'shop',
+                        component: shop
+                    }, {
+                        path: 'payment',
+                        component: payment,
+                        children: [{
+                            path: 'success',
+                            component: payment_success,
+                        }, {
+                            path: 'failure',
+                            component: payment_failure,
+                        }]
                     },
                     {
-                        path: 'center', //会员中心三级页   如 http://localhost:8081/#/memober/center
-                        component: center
-                    },
-                    {
-                        path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/memober/toeveluete
-                        component: toeveluete
-                    },
-                    {
-                        path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
-                        component: setting
+                        path: 'memober',
+                        component: memober,
+                        children: [{
+                                path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/memober/myYing
+                                component: myYing
+                            },
+                            {
+                                path: 'center', //会员中心三级页   如 http://localhost:8081/#/memober/center
+                                component: center
+                            },
+                            {
+                                path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+                                component: toeveluete
+                            },
+                            {
+                                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
+                                component: setting
+                            },
+                            {
+                                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
+                                component: setting
+                            },
+                            {
+                                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/memober/modify
+                                component: modify
+                            }
+                        ]
                     }
+
                 ]
-            }, {
-                path: 'shop',
-                component: shop
             },
             {
-                path: 'payment',
-                component: payment,
+                path: '/LoginRegister',
+                name: 'sinda_LoginRegister',
+                component: LoginRegister,
                 children: [{
-                    path: 'success',
-                    component: payment_success,
-                }, {
-                    path: 'failure',
-                    component: payment_failure,
-                }]
+                        path: 'login',
+                        component: login
+                    },
+                    {
+                        path: 'register',
+                        component: register
+
+                    },
+                    {
+                        path: 'forgetThePassword',
+                        component: forgetThePassword
+                    },
+                ]
             }
         ]
-    }, {
-=======
-            path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
-            component: index
-          }, {
-            path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-            component: list
-          }, {
-            path: 'shop',
-            component: shop
-          }, {
-            path: 'payment',
-            component: payment,
-            children: [{
-              path: 'success',
-              component: payment_success,
-            }, {
-              path: 'failure',
-              component: payment_failure,
-            }]
-          },
-          {
-            path: 'memober',
-            component: memober,
-            children: [{
-                path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/memober/myYing
-                component: myYing
-              },
-              {
-                path: 'center', //会员中心三级页   如 http://localhost:8081/#/memober/center
-                component: center
-              },
-              {
-                path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/memober/toeveluete
-                component: toeveluete
-              },
-              {
-                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
-                component: setting
-              },
-              {
-                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
-                component: setting
-              },
-              {
-                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/memober/modify
-                component: modify
-              }
-            ]
-          }
-
-        ]
-      },
-      {
->>>>>>> ffb1d98a6f81fc616931e7684c0a254c1ce7640a
-        path: '/LoginRegister',
-        name: 'sinda_LoginRegister',
-        component: LoginRegister,
-        children: [{
-<<<<<<< HEAD
-                path: 'login',
-                component: login
-            },
-            {
-                path: 'register',
-                component: register
-            },
-            {
-                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
-                component: setting
-            },
-            {
-                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/memober/modify
-                component: modify
-            }
-        ]
-    }]
-})
-=======
-            path: 'login',
-            component: login
-          },
-          {
-            path: 'register',
-            component: register
-
-        },
-        {
-          path: 'forgetThePassword',
-          component: forgetThePassword
-        },
-      ]
     }
-    ]
-  }
 
 )
->>>>>>> ffb1d98a6f81fc616931e7684c0a254c1ce7640a
