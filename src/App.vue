@@ -21,7 +21,7 @@ export default {
   components: { sinda_top, sinda_bottom }
 };
 </script>
-<style>
+<style lang="less">
 * {
   margin: 0;
   padding: 0;
@@ -34,5 +34,13 @@ a {
 }
 a:hover {
   text-decoration: underline;
+}
+.register-android-wheel{
+  select {
+  height: 35px;
+  width: 90px;
+  font-size: 0.9rem;
+  margin-bottom: 26px;
+}
 }
 </style>

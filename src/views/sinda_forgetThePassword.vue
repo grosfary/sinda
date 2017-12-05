@@ -1,23 +1,27 @@
 <template>
   <div class="hello">
     <div class="vacancy"></div><br>
-    <div class="login">
-      <div class="loginI">
-        <div class="loginfirst">
-          <input class="box" name="phone" type="number" placeholder="请输入手机号码" v-model="phone" />
-          <input class="box" type="text" placeholder="请输入密码">
-          <div>
+    <div class="register">
+      <div class="registerI">
+        <div class="registerfirst">
+          <input class="box" type="text" placeholder="请输入手机号">
+          <div class="verify">
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <div class="verify"></div>
+            <div class="verifyI"></div>
           </div>
-          <a href="#/LoginRegister/forgetThePassword">忘记密码?</a><br>
-          <button class="boxII">立即登录</button>
+          <div class="acquire">
+            <input class="boxI" type="text" placeholder="请输入验证码">
+            <button>点击获取</button>
+          </div>
+          <input class="boxII" type="text" placeholder="请输入新密码">
+          <input class="boxII" type="text" placeholder="请再次确认密码">
+          <button class="boxIII">确认修改</button>
         </div>
-        <p></p>
+        <p class="division"></p>
         <!-- 中间分割线 -->
-        <div class="lofinsecond">
-          <span>还没有账号？</span><br>
-          <a href="#/LoginRegister/register">立即注册>></a>
+        <div class="registersecond">
+          <span>想起密码来了？</span><br>
+          <a class="dl" href="#/LoginRegister/login">返回登录>></a>
           <img src="../assets/pc/ren.jpg" alt="">
         </div>
       </div>
@@ -41,47 +45,54 @@ export default {
 .hello {
   background-color: #f5f5f5;
 }
-.login {
+.register {
   margin-top: 20px;
   width: 100%;
   height: 435px;
 }
-.loginI {
+.registerI {
   width: 1200px;
   height: 435px;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
   background-color: #fff;
-  p {
-    width: 1px;
-    height: 260px;
-    background-color: #cbcbcb;
-    margin-top: 82px;
-  }
 }
-.loginfirst {
+.division {
+  width: 1px;
+  height: 260px;
+  background-color: #cbcbcb;
+  margin-top: 82px;
+}
+.registerfirst {
   width: 283px;
   height: 258px;
   margin-top: 50px;
-  div {
-    display: flex;
-    justify-content: space-around;
-    div {
-      width: 85px;
-      height: 35px;
-      padding-left: 10px;
-      background-color: pink;
-    }
-  }
-  a {
-    margin-left: 210px;
-    font-size: 14px;
-    color: #2693d4;
-    text-decoration: none;
+}
+.verify {
+  display: flex;
+  justify-content: space-around;
+
+  .verifyI {
+    width: 85px;
+    height: 35px;
+    padding-left: 10px;
+    background-color: pink;
   }
 }
-.lofinsecond {
+.acquire {
+  display: flex;
+  justify-content: space-around;
+  button {
+    width: 98px;
+    height: 35px;
+    border: 1px solid #2693d4;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #2693d4;
+  }
+}
+.registersecond {
   width: 283px;
   height: 258px;
   margin-top: 40px;
@@ -101,20 +112,26 @@ export default {
   width: 280px;
   height: 35px;
   border: 1px solid #cbcbcb;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   border-radius: 3px;
 }
 .boxI {
   width: 174px;
   height: 35px;
   border: 1px solid #cbcbcb;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   border-radius: 3px;
 }
 .boxII {
   width: 280px;
   height: 35px;
-  margin-top: 23px;
+  margin-bottom: 27px;
+  border: 1px solid #cbcbcb;
+  border-radius: 3px;
+}
+.boxIII {
+  width: 280px;
+  height: 35px;
   border: 1px solid #2693d4;
   color: #2693d4;
   border-radius: 3px;
