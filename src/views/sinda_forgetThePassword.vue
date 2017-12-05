@@ -1,35 +1,28 @@
 <template>
   <div class="hello">
-    <!-- <h3>这是注册页面</h3>
-    <a href="#/LoginRegister/login">登录</a> -->
     <div class="vacancy"></div><br>
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class="box" v-model="phone" type="text">
+          <input class="box" type="text" placeholder="请输入手机号">
           <div class="verify">
-            <input class="boxI" type="text" v-model="imgCode" placeholder="请输入验证码">
-            <div class="verifyI" @click = "imgReflash">
-              <img :src="imgUrl" alt="">
-            </div>
+            <input class="boxI" type="text" placeholder="请输入验证码">
+            <div class="verifyI"></div>
           </div>
           <div class="acquire">
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <button @click = "getCode">点击获取</button>
+            <button>点击获取</button>
           </div>
-          <v-distpicker class="register-android-wheel" province="省" city="市" area="区"></v-distpicker>
-          <input class="boxII" type="text">
-          <button class="boxIII">立即注册</button>
-          <p>注册及同意遵守
-            <a class="agreement" href="">《服务协议》</a>
-          </p>
+          <input class="boxII" type="text" placeholder="请输入新密码">
+          <input class="boxII" type="text" placeholder="请再次确认密码">
+          <button class="boxIII">确认修改</button>
         </div>
         <p class="division"></p>
         <!-- 中间分割线 -->
         <div class="registersecond">
-          <span>已有账号？</span><br>
-          <a class="dl" href="#/LoginRegister/login">立即登录>></a>
-          <img src="../assets/pc/u7967.jpg" alt="">
+          <span>想起密码来了？</span><br>
+          <a class="dl" href="#/LoginRegister/login">返回登录>></a>
+          <img src="../assets/pc/ren.jpg" alt="">
         </div>
       </div>
     </div><br>
@@ -39,32 +32,11 @@
 
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
-import VDistpicker from "v-distpicker";
-import {mapActions} from 'vuex'
-
 export default {
   data() {
-    return {
-      imgUrl:'/xinda-api/ajaxAuthcode',
-      imgCode:'',
-      phone:''
-    };
+    return {};
   },
-  methods:{
-    ...mapActions(['setNum']),
-    imgReflash:function(){
-      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
-    },
-    getCode:function(){
-      this.setNum(0);
-      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
-        console.log(data);
-        
-      })
-    }
-  },
-  components: { LRhead },
-  components: { VDistpicker }
+  components: { LRhead }
 };
 </script>
 
@@ -96,15 +68,6 @@ export default {
   width: 283px;
   height: 258px;
   margin-top: 50px;
-  p {
-    margin-left: 20px;
-    font-size: 14px;
-    a {
-      font-size: 14px;
-      color: #2693d4;
-      text-decoration: none;
-    }
-  }
 }
 .verify {
   display: flex;
@@ -162,13 +125,13 @@ export default {
 .boxII {
   width: 280px;
   height: 35px;
+  margin-bottom: 27px;
   border: 1px solid #cbcbcb;
   border-radius: 3px;
 }
 .boxIII {
   width: 280px;
   height: 35px;
-  margin-top: 27px;
   border: 1px solid #2693d4;
   color: #2693d4;
   border-radius: 3px;

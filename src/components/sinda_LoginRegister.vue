@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
         <LRhead></LRhead>
-        <h3>这是登录注册部分</h3>  
+        <!-- <h3>这是登录注册部分</h3>   -->
         <router-view/>
     </div>
 </template>
