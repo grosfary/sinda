@@ -30,42 +30,32 @@
     </div>
     <div class="header_phone">
     <!-- 头部电话部分 -->
-      <span class="phone_pic icon_global"></span>
+      <span class="phone_pic icon_global"></span> 
       <span>010-83421842</span>
     </div>
 
   </div>
-  <div class="header_nav">
+
+
+<!-- <transition name="fade"> -->
+  <div class="header_nav" ref="header_nav">
       <!-- 头部导航栏部分 -->
     <ul>
       <li>
-        <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" v-bind:class="{active:(indexs==index)}" v-on:click="a(index)">{{ind.name}}</a>
+        <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }"  @click="a(index)" ><span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span><span v-else>{{ind.name}}</span></a>
       </li>
     </ul>
-      <!-- <ul>
 
-        <li v-for="(i,key,index) in listarr" :key="i.code" style="font-size:16px;">
-          {{i.name}}
-          <ul>
-
-            <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
-              {{i.name}}
-              <ul>
-                <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
-                  {{i.name}}
-                </li>
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-      </ul> -->
-    <!-- <div class="header_sidebar">
-      <div v-for="(i,key,index) in listarr" :key="i.code" style="font-size:16px;">
-        <div class="sidebar_left">
+<transition name="fade">
+    <div class="header_sidebar" v-if="mark">
+      <!-- 头部侧导航部分 -->
+      <div v-for="(i,index) in sortListarr" :key="i.code" style="font-size:16px;" @mousemove="mark=true" @mouseout="mark=false">
+        <div class="sidebar_left"  @mousemove="relationClick(index)" @mouseout="nowIndex=-1" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
+          <!-- 侧导航左半边 -->
           <div class="icon_global sidebar_icon"></div>
+          <!-- 侧导航图标 -->
           <div class="sidebar_title">
+            <!-- 侧导航标题 -->
             {{i.name}}
             <ul>
               <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
@@ -74,16 +64,26 @@
             </ul>
           </div>
         </div>
-        <div class="sidebar_right" style="display:inline-block;width:1001px;float:right">
+        <div class="sidebar_right"  v-show="index===nowIndex" @mousemove="relationClick(index)" @mouseout="nowIndex=-1">
+          <!-- 侧导航右边 -->
           <ul>
-            <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
-                  <span style="display:inline-block;width:1001px;"><span style="display:inline-block">{{i.name}}>　　</span><span v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">|{{i.name}}</span></span>
+            <li v-for="(i,key,index) in i.itemList" :key="i.name">
+                  <span class="sidebar_subnav">
+                    <!-- 侧部导航的子导航 -->
+                    <span>{{i.name}}></span>
+                    <div>
+                      <span v-for="(i,key,index) in i.itemList" :key="i.name">
+                        <span style="margin:0 5px;">|</span>
+                        {{i.name}}
+                      </span>
+                    </div>
+                  </span>
             </li>
           </ul>
         </div>
       </div>
-    </div> -->
-
+    </div>
+</transition>
   </div>
 </div>
 </template>
@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "全部产品", src: "#/" },
+        a: { name: "全部产品", src: "#/", class: "allgoods" },
         b: { name: "财税服务", src: "#/list" },
         c: { name: "公司工商", src: "#/" },
         d: { name: "加盟我们", src: "#/" },
@@ -104,7 +104,9 @@ export default {
       a: function(n) {
         this.indexs = n;
       },
-      listarr: []
+      listarr: [],
+      mark: false,
+      nowIndex: -1
     };
   },
   created() {
@@ -113,9 +115,24 @@ export default {
       .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
       .then(function(data) {
         var data = data.data.data;
-        console.log(data);
         that.listarr = data;
       });
+  },
+  mounted() {},
+  methods: {
+    relationClick: function(index) {
+      this.nowIndex = index;
+    }
+  },
+  computed: {
+    sortListarr: function() {
+      var listarr = this.listarr;
+      var obj = {};
+      for (var i in listarr) {
+        obj[listarr[i].code] = listarr[i];
+      }
+      return obj;
+    }
   }
 };
 </script>
@@ -321,7 +338,6 @@ export default {
   text-decoration: none;
   border-bottom: 3px solid #2693d4;
 }
-
 // 头部导航栏部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 // 头部侧导航部分--------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -331,17 +347,22 @@ export default {
   width: 1200px;
   height: 400px;
   color: #e2e4e6;
+  > div {
+    display: flex;
+  }
 }
-.sidebar_left{
-  display: inline-block;
+.sidebar_left {
+  // 侧部导航左边
   width: 199px;
   background: #16263c;
   vertical-align: top;
-  &:hover{
+  &.sidebar_left_active {
+    // 侧部导航hover效果
     background: #2693d4;
   }
 }
-.sidebar_icon{
+.sidebar_icon {
+  // 侧部导航图标
   width: 49px;
   margin-top: 17px;
   margin-left: 14px;
@@ -351,6 +372,7 @@ export default {
   vertical-align: top;
 }
 .sidebar_title {
+  // 侧部导航标题
   width: 150px;
   font-size: 16px;
   margin-top: 13px;
@@ -372,10 +394,50 @@ export default {
   }
 }
 
-.sidebar_right{
+.sidebar_right {
+  // 侧部导航右边
+  height: inherit;
   display: inline-block;
   vertical-align: top;
+  width: 1001px;
+  background: rgba(255, 255, 255, 0.6);
+  ul {
+    margin-top: 9.5px;
+    li {
+      font-size: 14px;
+      > span {
+        display: inline-block;
+        width: 1001px;
+      }
+    }
+  }
 }
-
+.sidebar_subnav {
+  // 侧部导航的子导航
+  > span {
+    display: inline-block;
+    width: 99px;
+    vertical-align: top;
+    text-align: center;
+  }
+  > div {
+    line-height: 20px;
+    font-size: 14px;
+    width: 902px;
+    vertical-align: top;
+    float: right;
+    span {
+      display: inline-block;
+    }
+  }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 // 头部侧导航部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 </style>

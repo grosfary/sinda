@@ -27,76 +27,76 @@ Vue.use(Router)
 // 我的想法是 如果说要建立三级路由 就建一个跟二级路由相同的文件夹，把三级路由的文件放到这个文件夹中
 export default new Router({
     routes: [{
-            path: '/',
-            name: 'sinda_global',
-            component: global,
+        path: '/',
+        name: 'sinda_global',
+        component: global,
+        children: [{
+            path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+            component: index
+        }, {
+            path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+            component: list
+        }, {
+            path: 'shop',
+            component: shop
+        }, {
+            path: 'payment',
+            component: payment,
             children: [{
-                    path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                    component: index
-                }, {
-                    path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                    component: list
-                }, {
-                    path: 'shop',
-                    component: shop
-                }, {
-                    path: 'payment',
-                    component: payment,
-                    children: [{
-                        path: 'success',
-                        component: payment_success,
-                    }, {
-                        path: 'failure',
-                        component: payment_failure,
-                    }]
-                },
-                {
-                    path:'memober',
-                    component:memober,
-                    children: [{
-                            path:'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
-                            component: myYing          
-                        },
-                        {
-                          path:'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
-                          component:center
-                        },
-                        {
-                          path:'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
-                          component:toeveluete
-                        },
-                        {
-                          path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-                          component:setting
-                        },   
-                        {
-                           path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-                           component:setting
-                        },
-                        {
-                            path:'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
-                            component:modify
-                        }
-                      ]
-                      }
-    
-                ]
-                },
-
-            ]      
+                path: 'success',
+                component: payment_success,
+            }, {
+                path: 'failure',
+                component: payment_failure,
+            }]
         },
         {
-            path: '/LoginRegister',
-            name: 'sinda_LoginRegister',
-            component: LoginRegister,
+            path: 'memober',
+            component: memober,
             children: [{
-                    path: 'login',
-                    component: login
-                },
-                {
-                    path: 'register',
-                    component: register
-                },
+                path: 'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
+                component: myYing
+            },
+            {
+                path: 'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
+                component: center
+            },
+            {
+                path: 'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+                component: toeveluete
+            },
+            {
+                path: 'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+                component: setting
+            },
+            {
+                path: 'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+                component: setting
+            },
+            {
+                path: 'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
+                component: modify
+            }
             ]
         }
+
+        ]
+    },
+    {
+        path: '/LoginRegister',
+        name: 'sinda_LoginRegister',
+        component: LoginRegister,
+        children: [{
+            path: 'login',
+            component: login
+        },
+        {
+            path: 'register',
+            component: register
+        },
+        ]
+    }
+    ]
+}
+
 )
