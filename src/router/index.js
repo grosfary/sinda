@@ -4,7 +4,12 @@ import global from '@/components/sinda_global' // 公共页
 import LoginRegister from '../components/sinda_LoginRegister' // 登录和注册的公共页
 import index from '../views/sinda_index' // 首页
 import list from '../views/sinda_list' // 列表页
-import shop from '../views/sinda_shop' // 列表页
+import shop from '../views/sinda_shop' // 店铺页
+
+import service from '../views/sinda_shop/sinda_service' // 三级服务页
+import product from '../views/sinda_shop/sinda_product' // 三级产品页
+import certificate from '../views/sinda_shop/sinda_certificate.vue' // 三级证书页
+
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
 import payment from '../views/sinda_payment' //支付页面
@@ -36,16 +41,26 @@ export default new Router({
                     path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
                     component: list
                 }, {
-                    path: 'shop',
-                    component: shop
+                    path: 'shop', //这是店铺首页
+                    component: shop,
+                    children: [{
+                        path: '/', //这是三级服务
+                        component: service,
+                    }, {
+                        path: 'product', //这是三级产品
+                        component: product,
+                    }, {
+                        path: 'certificate', //这是资质证书
+                        component: certificate,
+                    }]
                 }, {
                     path: 'payment',
                     component: payment,
                     children: [{
-                        path: 'success',
+                        path: 'success', //这是成功页面
                         component: payment_success,
                     }, {
-                        path: 'failure',
+                        path: 'failure', //这是失败页面
                         component: payment_failure,
                     }]
                 }]
