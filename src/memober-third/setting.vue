@@ -33,9 +33,6 @@
           <div class='area'>
               <span>所在地区：</span>
               <v-distpicker class='picker'></v-distpicker>
-              <!-- <select name="" id=""></select>
-              <select name="" id=""></select>
-              <select name="" id=""></select> -->
           </div>
           <div class='keep'>
               <input type="submit">
@@ -189,4 +186,10 @@ export default {
            margin-top:233px;
           }
 </style>
-
+<style lang="less">
+  .hello>.top>div>.area>.picker>select{
+    height: 28px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+</style>

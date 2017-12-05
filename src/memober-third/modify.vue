@@ -20,7 +20,7 @@
           <div class='pass'>
             <span class='event'>再次输入新密码：</span>
             <input type="password" class='eventpass'>
-            <p class='distinct'>密码输入不一致</p>
+            <p class='distinct' v-show="error1">密码输入不一致</p>
           </div>
           <div>
             <input type="submit" class='submit'  v-on:click='arr'>
@@ -35,6 +35,7 @@ import memober from "../views/sinda_memober";
 export default {
   data() {
     return {};
+    error1:false;
   },
   components: { memober },
    methods:{
@@ -48,6 +49,7 @@ export default {
         }
     },
     arr:function(){
+      this.error1=true
         var eventpass = document.querySelector('.eventpass');
         var distinct = document.querySelector('.distinct');
         var newpass = document.querySelector('.newpass');

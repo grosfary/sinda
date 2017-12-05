@@ -28,7 +28,12 @@
       <span>差评</span>
     </div>
     <div class='score'>
-      <span>评分：</span>
+      <a>评分：</a>
+      <span class='imageo' v-on:click='image'></span>
+      <span class='imgt' v-on:click='image'></span>
+      <span class='imgs' v-on:click='image'></span>
+      <span class='imgf' v-on:click='image'></span>
+      <span class='imgse' v-on:click='image'></span>
     </div>
     <div class='feel'>
       <span>感受：</span> 
@@ -47,8 +52,15 @@ export default {
   data() {
     return {};
   },
-  components: { memober }
+  components: { memober },
+  methods:{
+    image:function(){
+    console.log(this)
+    }
+  }
+
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -100,6 +112,7 @@ export default {
  .score{
    .evaluate;
     margin-top:-363px;
+    margin-left:579px;
     width:180px;
  }
  .feel{
@@ -130,5 +143,16 @@ export default {
  }
  .top{
    margin-top:233px;
+ }
+ .score>span{
+   width:13px;
+   height:13px;
+   background:url('../assets/kehu/Sprites.png') no-repeat -198px -261px;
+   margin-top:12px;
+ }
+ .score>a{
+   line-height: 36px;
+   float:left;
+   font-size:10px;
  }
 </style>
