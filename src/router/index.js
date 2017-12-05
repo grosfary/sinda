@@ -15,6 +15,7 @@ import myYing from '../memober-third/myYing' //会员中心
 import center from '../memober-third/center' //会员中心
 import toeveluete from '../memober-third/toeveluete' //会员中心
 import setting from '../memober-third/setting' //会员中心
+import forgetThePassword from '../views/sinda_forgetThePassword.vue'//忘记密码
 import modify from '../memober-third/modify' //会员中心
 Vue.use(Router)
 
@@ -33,70 +34,75 @@ export default new Router({
         children: [{
             path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
             component: index
-        }, {
+          }, {
             path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
             component: list
-        }, {
+          }, {
             path: 'shop',
             component: shop
-        }, {
+          }, {
             path: 'payment',
             component: payment,
             children: [{
-                path: 'success',
-                component: payment_success,
+              path: 'success',
+              component: payment_success,
             }, {
-                path: 'failure',
-                component: payment_failure,
+              path: 'failure',
+              component: payment_failure,
             }]
-        },
-        {
+          },
+          {
             path: 'memober',
             component: memober,
             children: [{
-                path: 'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
+                path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/memober/myYing
                 component: myYing
-            },
-            {
-                path: 'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
+              },
+              {
+                path: 'center', //会员中心三级页   如 http://localhost:8081/#/memober/center
                 component: center
-            },
-            {
-                path: 'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+              },
+              {
+                path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/memober/toeveluete
                 component: toeveluete
-            },
-            {
-                path: 'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+              },
+              {
+                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
                 component: setting
-            },
-            {
-                path: 'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
+              },
+              {
+                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
                 component: setting
-            },
-            {
-                path: 'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
+              },
+              {
+                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/memober/modify
                 component: modify
-            }
+              }
             ]
-        }
+          }
 
         ]
-    },
-    {
+      },
+      {
         path: '/LoginRegister',
         name: 'sinda_LoginRegister',
         component: LoginRegister,
         children: [{
             path: 'login',
             component: login
-        },
-        {
+          },
+          {
             path: 'register',
             component: register
+
         },
-        ]
+        {
+          path: 'forgetThePassword',
+          component: forgetThePassword
+        },
+      ]
     }
     ]
-}
+  }
 
 )
