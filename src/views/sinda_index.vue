@@ -14,7 +14,31 @@
   </div>
   <div class="starGoods">
     <div class="index_title">
-      明星产品推荐
+      <p>明星产品推荐</p>
+      <span></span>
+    </div>
+  </div>
+  <div class="noviceMust">
+    <div class="index_title">
+      <p>初创企业必备</p>
+      <span></span>
+    </div>
+  </div>
+  <div class="knowledge">
+    <div class="index_title">
+      <p>知识产权</p>
+      <span></span>
+    </div>
+  </div>
+  <div class="server">
+    <div class="index_title">
+      <p>推荐服务商</p>
+      <span></span>
+    </div>
+  </div>
+  <div class="sindaFriend">
+    <div class="index_title">
+      <p>合作伙伴</p>
       <span></span>
     </div>
   </div>
@@ -77,7 +101,30 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
 }
-
+.index_title {
+  line-height: 31px;
+  color: #000;
+  font-size: 16px;
+  p{
+    padding-left: 10px;
+  }
+  > span {
+    display: block;
+    height: 2px;
+    background: #2693d4;
+    width: 1200px;
+    position: relative;
+    &::after {
+      content: "";
+      display: block;
+      border: 2px solid #2693d4;
+      border-bottom: 2px solid rgba(0, 0, 0, 0);
+      border-right: 2px solid rgba(0, 0, 0, 0);
+      position: absolute; left: 44px;bottom:0px;
+      transform: rotate(45deg)
+    }
+  }
+}
 
 // 首页全局样式----------start------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
