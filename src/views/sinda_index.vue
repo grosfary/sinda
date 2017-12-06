@@ -17,6 +17,23 @@
       <p>明星产品推荐</p>
       <span></span>
     </div>
+          <div class="star_main" >
+        <div class="star_pro" v-for="(i,index) in noviceMust" :key="i.id">
+          <!-- 初创企业必备产品 -->
+          <div>
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+            <!-- 公司logo -->
+            <p>{{i.providerName}}</p>
+            <!-- 公司名称 -->
+          </div>
+          <h4>{{i.serviceName}}</h4>
+          <!-- 产品名称 -->
+          <p class="star_Info">{{i.serviceInfo}}</p>
+          <!-- 产品内容 -->
+          <p>￥{{i.marketPrice}}<span>{{i.unit}}</span></p>
+          <!-- 产品价格 -->
+        </div>
+      </div>
   </div>
   <div class="noviceMust">
     <!-- 初创企业必备部分 -->
@@ -97,15 +114,68 @@
     </div>
   </div>
   <div class="server">
-    <div class="index_title">
-      <p>推荐服务商</p>
+    <div class="server_title">
+       <div>
+        <a :key="ind.name" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }"  @click="a(index)" >
+          {{ind.name}}
+        </a>
+      </div>
       <span></span>
     </div>
+    
+
+      <div class="server_pro" v-for="(i,index) in serverArr" :key="i.id" v-show="indexs==0">
+        <!-- 推荐服务商 -->
+        <div>
+          <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+          <!-- 公司logo -->
+          <p>{{i.providerName}}</p>
+          <!-- 公司名称 -->
+        </div>
+        <h4>{{i.serviceName}}</h4>
+        <!-- 产品名称 -->
+        <p>服务指数：8.9分</p>
+        <p>提供的服务</p>
+        <!-- 提供的服务 -->
+        <span>{{i.serviceName}}</span>
+        <span>{{i.serviceName}}</span>
+        <span>{{i.serviceName}}</span>
+        <span>{{i.serviceName}}</span>
+      </div>
+
+
+
+      <div class="novice_main" v-show="indexs==1">
+        <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
+          <!-- 初创企业必备产品 -->
+          <div>
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+            <!-- 公司logo -->
+            <p>{{i.providerName}}</p>
+            <!-- 公司名称 -->
+          </div>
+          <h4>{{i.serviceName}}</h4>
+          <!-- 产品名称 -->
+          <p class="novice_Info">{{i.serviceInfo}}</p>
+          <!-- 产品内容 -->
+          <p>￥{{i.marketPrice}}<span>{{i.unit}}</span></p>
+          <!-- 产品价格 -->
+          <button>查看详情</button>
+          <!-- 查看详情按钮 -->
+        </div>
+      </div>
+
+
+
   </div>
+
   <div class="sindaFriend">
+    <!-- 信达合作伙伴部分 -->
     <div class="index_title">
       <p>合作伙伴</p>
       <span></span>
+    </div>
+    <div class="friend_main">
     </div>
   </div>
 </div>
@@ -127,12 +197,15 @@ export default {
       ],
       // 初创企业必备接口数组
       noviceMust: [],
+      serverArr: [],
       zscqObj: {
         a: { class: "zzrz", title: "资质认证", info: "服务商100%实名认证" },
         b: { class: "zfaq", title: "支付安全", info: "明码标价支付" },
         c: { class: "bxpf", title: "保险赔付", info: "出现问题平台赔付" },
         d: { class: "shwy", title: "售后无忧", info: "客服经理全程跟进" }
-      }
+      },
+      btn: { a: { name: "推荐服务商" }, b: { name: "推荐服务" } },
+      indexs: 0
     };
   },
   methods: {
@@ -150,6 +223,9 @@ export default {
     stopPlay() {
       // 鼠标进入，停止轮播
       clearInterval(window.autoPlay);
+    },
+    a(index) {
+      this.indexs = index;
     }
   },
   created() {
@@ -162,7 +238,20 @@ export default {
       )
       .then(data => {
         this.noviceMust = data.data.data.product;
-        console.log(this.noviceMust);
+      });
+    this.ajax
+      .post(
+        "/xinda-api/product/package/search-grid",
+        this.qs.stringify({
+          start: 0,
+          limit: 4,
+          searchName: "代理",
+          sort: 3
+        })
+      )
+      .then(data => {
+        this.serverArr = data.data.data;
+        console.log(this.serverArr);
       });
   },
   destroyed: function() {
@@ -283,6 +372,78 @@ export default {
 .image-leave {
   transform: translateX(0);
 }
+// ----------end------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+// 明显产品推荐----------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+.star_main {
+  margin-top: 48px;
+  margin-bottom: 53px;
+  display: flex;
+  justify-content: space-between;
+  .star_pro {
+    // 初创企业必备产品
+    width: 270px;
+    height: 462px;
+    border: 1px solid #e8e8e8;
+    text-align: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+    div {
+      img {
+        // 公司logo
+        margin-top: 31px;
+        margin-bottom: 26px;
+        width: 114px;
+        height: 60px;
+      }
+      p {
+        // 公司标题
+        font-size: 17px;
+        line-height: 53px;
+        height: 53px;
+      }
+    }
+    h4 {
+      // 产品标题
+      height: 63px;
+    }
+    p {
+      // 产品价格
+      height: 70px;
+      font-size: 38px;
+      color: #2693d4;
+      font-weight: 100;
+      span {
+        // 元
+        font-size: 16px;
+        color: #000;
+        display: inline-block;
+        margin-left: 6px;
+      }
+    }
+    .star_Info {
+      // 产品内容
+      text-align: left;
+      font-size: 14px;
+      line-height: 18px;
+      color: #000;
+      height: 72px;
+    }
+    button {
+      // 查看产品详情按钮
+      width: 157px;
+      height: 44px;
+      border: 2px solid #2693d4;
+      background: #fafafa;
+      font-size: 18px;
+      color: #2693d4;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+}
+
 // ----------end------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 // 初创企业必备----------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -448,7 +609,7 @@ export default {
   background: #f7f7f7;
   display: flex;
   justify-content: space-around;
- align-items: center;
+  align-items: center;
   margin-bottom: 58px;
   color: #696969;
   .know_f_bg {
@@ -460,22 +621,153 @@ export default {
   .zzrz {
     background-position: -169px -190px;
   }
-  .zfaq{
+  .zfaq {
     background-position: -270px -379px;
   }
-  .bxpf{
+  .bxpf {
     background-position: -170px -108px;
   }
-  .shwy{
+  .shwy {
     background-position: -362px -425px;
   }
   ul {
     float: right;
     font-size: 16px;
-    .know_f_t{
+    .know_f_t {
       font-size: 24px;
     }
   }
+}
+
+// ----------end------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+// 服务商推荐----------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+.server_title {
+  div {
+    margin-left: 5px;
+  }
+  a {
+    line-height: 31px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 15px;
+    &:hover {
+      text-decoration: none;
+      color: #369;
+    }
+  }
+  .active {
+    color: #2693d4;
+    position: relative;
+    &::after {
+      content: "";
+      display: block;
+      border: 2px solid #2693d4;
+      border-bottom: 2px solid rgba(0, 0, 0, 0);
+      border-right: 2px solid rgba(0, 0, 0, 0);
+      position: absolute;
+      left: 39px;
+      bottom: -7px;
+      transform: rotate(45deg);
+    }
+    &:hover {
+      text-decoration: none;
+      color: #2693d4;
+    }
+  }
+  span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: #2693d4;
+  }
+}
+
+.server {
+  margin-top: 48px;
+  margin-bottom: 53px;
+  .novice_main {
+    margin-bottom: 63px;
+  }
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  > div {
+    margin-right: 40px;
+  }
+  div:first-child {
+    margin-right: 0;
+  }
+  div:nth-child(5) {
+    margin-right: 0;
+  }
+  div:last-child {
+    margin-right: 0;
+  }
+  .server_pro {
+    // 初创企业必备产品
+    float: left;
+    width: 270px;
+    height: 462px;
+    border: 1px solid #e8e8e8;
+    text-align: center;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin-top: 48px;
+    margin-bottom: 63px;
+    div {
+      img {
+        // 公司logo
+        margin-top: 31px;
+        margin-bottom: 26px;
+        width: 114px;
+        height: 60px;
+      }
+      p {
+        // 公司标题
+        font-size: 17px;
+        line-height: 53px;
+        height: 53px;
+      }
+    }
+    h4 {
+      // 产品标题
+      height: 63px;
+    }
+    p {
+      // 产品价格
+      height: 21px;
+      font-size: 14px;
+      color: #000;
+    }
+    span {
+      display: inline-block;
+      overflow: hidden;
+      width: 74px;
+      height: 29px;
+      line-height: 29px;
+      background: #ffecb7;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin: 10px 20px;
+    }
+  }
+}
+// ----------end------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+// 合作伙伴----------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+.friend_main {
+  height: 147px;
+  width: 100%;
+  margin-top: 42px;
+  margin-bottom: 100px;
+  background: url("../assets/pc/jiamengshang.jpg") 0 0 no-repeat;
+  background-size: 100% 100%;
 }
 // ----------end------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 </style>
