@@ -26,16 +26,13 @@
           <div>
               <div class='postbox'>
               <span>邮箱：</span>
-              <input type="text" placeholder="请输入邮箱地址" class='post'  v-on:keyup='key'>
-              <p class='box'>邮箱格式不正确</p>
+              <input type="text" placeholder="请输入邮箱地址" class='post'  v-on:keyup='key' v-model='post'>
+              <p class='box' v-show="box">邮箱格式不正确</p>
           </div>
           </div>
           <div class='area'>
               <span>所在地区：</span>
               <v-distpicker class='picker'></v-distpicker>
-              <!-- <select name="" id=""></select>
-              <select name="" id=""></select>
-              <select name="" id=""></select> -->
           </div>
           <div class='keep'>
               <input type="submit">
@@ -47,24 +44,22 @@
 </template>
 <script>
 import VDistpicker from 'v-distpicker'
-import memober from "../views/sinda_memober";
+import member from "../views/sinda_member";
 export default {
   data() {
-    return {};
+    return {
+      post:'',
+      box:false
+    };
   },
-  components: { memober,VDistpicker },
+  components: { member,VDistpicker },
   methods:{
   key:function(){
-    var post = document.querySelector('.post');
-    var box = document.querySelector('.box');
     var reg =/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
-    console.log(reg.test(post.value))
-      if(reg.test(post.value)){
-        box.style.display='none';
-        console.log('aaa')
+      if(reg.test(this.post)){
+        this.box=false;
       }else {
-        console.log('aaa')
-        box.style.display='block';
+        this.box=true;
       }
   }
     }
@@ -72,8 +67,6 @@ export default {
 };
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .backe{
         background:#e9e9e9;
@@ -173,7 +166,6 @@ export default {
       margin-top:-24px;
       margin-left:275px;
       color:red;
-      display:none;
   }
       .imt{
         width:97px;
@@ -189,4 +181,10 @@ export default {
            margin-top:233px;
           }
 </style>
-
+<style lang="less">
+  .hello>.top>div>.area>.picker>select{
+    height: 28px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+</style>
