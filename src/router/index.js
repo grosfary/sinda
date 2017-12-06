@@ -11,29 +11,15 @@ import line_item from '../stores/line_item' //订单详情
 import payment from '../views/sinda_payment' //支付页面
 import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
 import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
-<<<<<<< HEAD
 import member from '../views/sinda_member' //会员中心
 import myYing from '../member-third/myYing' //会员中心
 import center from '../member-third/center' //会员中心
 import toeveluete from '../member-third/toeveluete' //会员中心
 import setting from '../member-third/setting' //会员中心
-import forgetThePassword from '../views/sinda_forgetThePassword.vue'//忘记密码
 import modify from '../member-third/modify' //会员中心
-=======
-import memober from '../views/sinda_memober' //会员中心
 import Join_Us from '../stores/Join_Us' //加盟我们
 import store_list from '../stores/store_list' //店铺列表
-import myYing from '../memober-third/myYing' //会员中心
-import center from '../memober-third/center' //会员中心
-import toeveluete from '../memober-third/toeveluete' //会员中心
-import setting from '../memober-third/setting' //会员中心
-<<<<<<< HEAD
 import forgetPs from '../views/sinda_forgetPs.vue'//忘记密码
-=======
-import forgetThePassword from '../views/sinda_forgetThePassword.vue' //忘记密码
->>>>>>> 60596020d21da03db8afe58bf5e98d0049df9251
-import modify from '../memober-third/modify' //会员中心
->>>>>>> f396856d781c88a48a1874b572eabc7b635a5914
 Vue.use(Router)
 
 // pc端
@@ -120,7 +106,6 @@ export default new Router({
           {
             path: 'register',
             component: register
-<<<<<<< HEAD
         },
         {
           path: 'forgetPs',
@@ -130,16 +115,4 @@ export default new Router({
     }
     ]
 }
-=======
->>>>>>> 60596020d21da03db8afe58bf5e98d0049df9251
-
-          },
-          {
-            path: 'forgetThePassword',
-            component: forgetThePassword
-          },
-        ]
-      }
-    ]
-  }
 )
