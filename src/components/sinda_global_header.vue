@@ -97,8 +97,8 @@ export default {
         a: { name: "全部产品", src: "#/", class: "allgoods" },
         b: { name: "财税服务", src: "#/list" },
         c: { name: "公司工商", src: "#/" },
-        d: { name: "加盟我们", src: "#/" },
-        e: { name: "店铺", src: "#/" }
+        d: { name: "加盟我们", src: "#/Join_Us" },
+        e: { name: "店铺", src: "#/store_list" }
       },
       indexs: 0,
       a: function(n) {
