@@ -10,13 +10,13 @@ import register from '../views/sinda_register' //注册
 import payment from '../views/sinda_payment' //支付页面
 import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
 import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
-import memober from '../views/sinda_memober' //会员中心
-import myYing from '../memober-third/myYing' //会员中心
-import center from '../memober-third/center' //会员中心
-import toeveluete from '../memober-third/toeveluete' //会员中心
-import setting from '../memober-third/setting' //会员中心
+import member from '../views/sinda_member' //会员中心
+import myYing from '../member-third/myYing' //会员中心
+import center from '../member-third/center' //会员中心
+import toeveluete from '../member-third/toeveluete' //会员中心
+import setting from '../member-third/setting' //会员中心
 import forgetThePassword from '../views/sinda_forgetThePassword.vue'//忘记密码
-import modify from '../memober-third/modify' //会员中心
+import modify from '../member-third/modify' //会员中心
 Vue.use(Router)
 
 // pc端
@@ -52,30 +52,30 @@ export default new Router({
             }]
           },
           {
-            path: 'memober',
-            component: memober,
+            path: 'member',
+            component: member,
             children: [{
-                path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/memober/myYing
+                path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/member/myYing
                 component: myYing
               },
               {
-                path: 'center', //会员中心三级页   如 http://localhost:8081/#/memober/center
+                path: 'center', //会员中心三级页   如 http://localhost:8081/#/member/center
                 component: center
               },
               {
-                path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+                path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/member/toeveluete
                 component: toeveluete
               },
               {
-                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
+                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
                 component: setting
               },
               {
-                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
+                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
                 component: setting
               },
               {
-                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/memober/modify
+                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/member/modify
                 component: modify
               }
             ]

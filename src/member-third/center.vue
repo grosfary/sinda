@@ -29,11 +29,11 @@
     </div>
     <div class='score'>
       <a>评分：</a>
-      <span class='imageo' v-on:click='image'></span>
-      <span class='imgt' v-on:click='image'></span>
-      <span class='imgs' v-on:click='image'></span>
-      <span class='imgf' v-on:click='image'></span>
-      <span class='imgse' v-on:click='image'></span>
+      <span :class='index>=0?"active":""' v-on:click='image(0)'></span>
+      <span :class='index>=1?"active":""' @click='image(1)'></span>
+      <span :class='index>=2?"active":""' v-on:click='image(2)'></span>
+      <span :class='index>=3?"active":""' v-on:click='image(3)'></span>
+      <span :class='index>=4?"active":""' v-on:click='image(4)'></span>
     </div>
     <div class='feel'>
       <span>感受：</span> 
@@ -47,15 +47,17 @@
     </div>
 </template>
 <script>
-import memober from "../views/sinda_memober";
+import member from "../views/sinda_member";
 export default {
   data() {
-    return {};
+    return {
+      index:-1
+    };
   },
-  components: { memober },
+  components: { member },
   methods:{
-    image:function(){
-    console.log(this)
+    image:function(index){
+    this.index = index;
     }
   }
 
@@ -149,7 +151,11 @@ export default {
    height:13px;
    background:url('../assets/kehu/Sprites.png') no-repeat -198px -261px;
    margin-top:12px;
+   &.active{
+     background-position: -221px -261px;
+   }
  }
+
  .score>a{
    line-height: 36px;
    float:left;
