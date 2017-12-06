@@ -10,7 +10,7 @@
         <ul>
           <li><span class="icon_gouwuche"></span></li>
           <li><span>购物车</span></li>
-          <li><a href="" class="gouwuche_number">0</a></li>
+          <li><a href="" class="gouwuche_number">{{getNum}}</a></li>
           <li><span>件</span></li>
           <li><a href="">服务商入口</a></li>
         </ul>
@@ -20,9 +20,13 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data() {
     return {};
+  },
+  computed:{
+    ...mapGetters(['getNum'])//{getNum:function(){}}
   }
 };
 </script>

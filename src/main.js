@@ -5,14 +5,19 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-
+import Distpicker from 'v-distpicker'
+import qs from 'qs'
+// import store from 'store'
+Vue.component('v-distpicker', Distpicker);
+Vue.prototype.qs = qs;
 Vue.prototype.ajax = axios;
 Vue.config.productionTip = false
-Vue.config.devtools = false//关闭vue提示
+Vue.config.devtools = false //关闭vue提示
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App
@@ -37,4 +42,3 @@ new Vue({
 //   console.log(1);
 // }, 100);
 // console.log(2);
-

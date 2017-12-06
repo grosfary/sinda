@@ -31,12 +31,12 @@
     </div>
 </template>
 <script>
-import memober from "../views/sinda_memober";
+import member from "../views/sinda_member";
 export default {
   data() {
     return {};
   },
-  components: { memober }
+  components: { member }
 };
 </script>
 

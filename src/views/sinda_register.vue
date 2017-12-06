@@ -6,14 +6,16 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class="box" type="text">
+          <input class="box" v-model="phone" type="text">
           <div class="verify">
-            <input class="boxI" type="text" placeholder="请输入验证码">
-            <div class="verifyI"></div>
+            <input class="boxI" type="text" v-model="imgCode" placeholder="请输入验证码">
+            <div class="verifyI" @click = "imgReflash">
+              <img :src="imgUrl" alt="">
+            </div>
           </div>
           <div class="acquire">
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <button>点击获取</button>
+            <button @click = "getCode">点击获取</button>
           </div>
           <v-distpicker class="register-android-wheel" province="省" city="市" area="区"></v-distpicker>
           <input class="boxII" type="text">
@@ -38,10 +40,28 @@
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
 import VDistpicker from "v-distpicker";
+import {mapActions} from 'vuex'
 
 export default {
   data() {
-    return {};
+    return {
+      imgUrl:'/xinda-api/ajaxAuthcode',
+      imgCode:'',
+      phone:''
+    };
+  },
+  methods:{
+    ...mapActions(['setNum']),
+    imgReflash:function(){
+      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
+    },
+    getCode:function(){
+      this.setNum(0);
+      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
+        console.log(data);
+        
+      })
+    }
   },
   components: { LRhead },
   components: { VDistpicker }

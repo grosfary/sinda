@@ -14,16 +14,16 @@
           </div>
           <div class='newpassworld'>
             <span class='new'>新密码：</span>
-            <input class='newpass' type="password" @blur='abl'>
-            <p class='none'>请输入密码</p>
+            <input class='newpass' type="password" @blur='abl' v-model='place'>
+            <p class='none' v-show='style'>请输入密码</p>
           </div>
           <div class='pass'>
             <span class='event'>再次输入新密码：</span>
-            <input type="password" class='eventpass'>
-            <p class='distinct'>密码输入不一致</p>
+            <input type="password" class='eventpass' v-model='fal'>
+            <p class='distinct' v-show='nostyle'>密码输入不一致</p>
           </div>
           <div>
-            <input type="submit" class='submit'  v-on:click='arr'>
+            <input type="submit" class='submit'  @click='arr'>
           </div>
         </div>
       </div>
@@ -31,30 +31,32 @@
     </div>
 </template>
 <script>
-import memober from "../views/sinda_memober";
+import member from "../views/sinda_member";
 export default {
   data() {
-    return {};
+    return {
+      place:'',
+      fal:'',
+      style:false,
+      nostyle:false
+    };
   },
-  components: { memober },
+  components: { member },
    methods:{
     abl:function(){
-        var none = document.querySelector('.none');
-        var newpass = document.querySelector('.newpass');
-        if(newpass.value==''){
-            none.style.display='block'
+      var that=this
+        if(this.place==''){
+            this.style=true;
         }else{
-           none.style.display='none'
+           this.style=false;
         }
     },
     arr:function(){
-        var eventpass = document.querySelector('.eventpass');
-        var distinct = document.querySelector('.distinct');
-        var newpass = document.querySelector('.newpass');
-          if(newpass.value!==eventpass.value){
-              distinct.style.display = 'block';
+          if(this.place!==this.fal){
+            console.log('aaa')
+              this.nostyle=true;
           }else{
-              distinct.style.display = 'none';
+             this.nostyle=false;
           }
     }
 
@@ -126,7 +128,6 @@ export default {
       margin-top:-30px;
       margin-left:349px;
       color:red;
-      display:none;
     }
   }
   .submit{

@@ -28,7 +28,7 @@ import sinda_header from "../components/sinda_global_header";
 import sinda_footer from "../components/sinda_global_footer";
 export default {
   data() {
-    name:'sinda_memober'
+    name:'sinda_member'
     return {};
   },
   components: { sinda_header, sinda_footer },
