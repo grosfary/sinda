@@ -4,7 +4,7 @@
     <div class="login">
       <div class="loginI">
         <div class="loginfirst">
-          <input class="box" name="phone" type="number" placeholder="请输入手机号码" v-model="phone" />
+          <input class="box" type="text" placeholder="请输入手机号码">
           <input class="box" type="text" placeholder="请输入密码">
           <div>
             <input class="boxI" type="text" placeholder="请输入验证码">
@@ -13,8 +13,7 @@
           <a href="#/LoginRegister/forgetThePassword">忘记密码?</a><br>
           <button class="boxII">立即登录</button>
         </div>
-        <p></p>
-        <!-- 中间分割线 -->
+        <p></p><!-- 中间分割线 -->
         <div class="lofinsecond">
           <span>还没有账号？</span><br>
           <a href="#/LoginRegister/register">立即注册>></a>
@@ -38,7 +37,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.hello {
+.hello{
   background-color: #f5f5f5;
 }
 .login {
@@ -85,7 +84,7 @@ export default {
   width: 283px;
   height: 258px;
   margin-top: 40px;
-  span {
+  span{
     display: block;
   }
   a {
@@ -93,7 +92,7 @@ export default {
     color: #2693d4;
     text-decoration: none;
   }
-  img {
+  img{
     margin-left: -15px;
   }
 }
@@ -111,7 +110,7 @@ export default {
   margin-bottom: 24px;
   border-radius: 3px;
 }
-.boxII {
+.boxII{
   width: 280px;
   height: 35px;
   margin-top: 23px;
@@ -120,7 +119,7 @@ export default {
   border-radius: 3px;
   background-color: #fff;
 }
-.bottom {
+.bottom{
   padding-bottom: 150px;
 }
 </style>
