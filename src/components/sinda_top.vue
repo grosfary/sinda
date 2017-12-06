@@ -20,12 +20,13 @@
 </template>
 
 <script>
-import{mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 export default {
   data() {
     return {};
-  },computed:{
-    ...mapGetters(['getNum'])
+  },
+  computed:{
+    ...mapGetters(['getNum'])//{getNum:function(){}}
   }
 };
 </script>
