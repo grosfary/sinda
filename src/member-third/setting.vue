@@ -5,7 +5,7 @@
           <div>账户设置</div>
         </div>
         <div class='password'>
-          <div>修改密码</div>
+          <a href="#/member/modify"><div>修改密码</div></a>
         </div>
         <div>
           <div class='head'>
@@ -179,6 +179,7 @@ export default {
       }
        .top{
            margin-top:233px;
+           margin-left: -64px;
           }
 </style>
 <style lang="less">

@@ -29,11 +29,11 @@
     </div>
     <div class='score'>
       <a>评分：</a>
-      <span :class='index>=0?"active":""' v-on:click='image(0)'></span>
+      <span :class='index>=0?"active":""' @click='image(0)'></span>
       <span :class='index>=1?"active":""' @click='image(1)'></span>
-      <span :class='index>=2?"active":""' v-on:click='image(2)'></span>
-      <span :class='index>=3?"active":""' v-on:click='image(3)'></span>
-      <span :class='index>=4?"active":""' v-on:click='image(4)'></span>
+      <span :class='index>=2?"active":""' @click='image(2)'></span>
+      <span :class='index>=3?"active":""' @click='image(3)'></span>
+      <span :class='index>=4?"active":""' @click='image(4)'></span>
     </div>
     <div class='feel'>
       <span>感受：</span> 
