@@ -57,7 +57,7 @@ export default {
         }))
       .then(function(data) {
         var shop = data.data.data;
-        sessionStorage.setItem("shoppingID",shop);
+        sessionStorage.setItem("shoppingID",JSON.stringify(shop));;
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;

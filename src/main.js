@@ -3,10 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
 import store from './store'
-import qs from "qs"
-
+import axios from 'axios'
+import Distpicker from 'v-distpicker'
+import qs from 'qs'
+// import store from 'store'
+Vue.component('v-distpicker', Distpicker);
+Vue.prototype.qs = qs;
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
 Vue.config.productionTip = false

@@ -14,9 +14,9 @@
               <div><span>12345678912</span></div>
             </div>
             <div class='set'>
-              <div class='backe'><div class='backa'><div>我的订单</div></div></div>
-              <div class='backd'><div class='backb'><div>用户评价</div></div></div>
-              <div class='backf'><div class='backc'><div>账户设置</div></div></div>
+              <div :class='data==0?"backe":""' @click='sum(0)'><div class='backa'><a href="#/member/toeveluete"><div>我的订单</div></a></div></div>
+              <div :class='data==1?"backe":""' @click='sum(1)'><div class='backb'><a href="#/member/myYing"><div>用户评价</div></a></div></div>
+              <div :class='data==2?"backe":""' @click='sum(2)'><div class='backc'><a href="#/member/setting"><div>账户设置</div></a></div></div>
             </div>
           </div>
         </div>
@@ -28,20 +28,28 @@ import sinda_header from "../components/sinda_global_header";
 import sinda_footer from "../components/sinda_global_footer";
 export default {
   data() {
-    name:'sinda_memober'
-    return {};
+    name:'sinda_member'
+    return {
+      data:0
+    };
   },
   components: { sinda_header, sinda_footer },
-  
+  methods:{
+    sum:function(data){
+      this.data = data
+      console.log(data)
+    }
+  }
 };
 </script>
 <style scoped lang="less">
+
   .hello{
     margin-top:-172px;
     margin-left:35px;
   }
   .home{
-      margin-left:235px;
+      margin-left:163px;
       margin-top:203px;
       margin-bottom:25px;
     .homepage{
@@ -69,6 +77,10 @@ export default {
       height:244px;
       margin-top:16px;
       background:#f7f7f7;
+      a{
+        text-decoration:none;
+        color:#000;
+      }
         div{
         width:243px;
         height:62px;
@@ -96,4 +108,7 @@ export default {
       }
     }
   }
+  .backe{
+  background : #e9e9e9
+}
 </style>

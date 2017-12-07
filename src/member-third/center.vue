@@ -28,7 +28,12 @@
       <span>差评</span>
     </div>
     <div class='score'>
-      <span>评分：</span>
+      <a>评分：</a>
+      <span :class='index>=0?"active":""' @click='image(0)'></span>
+      <span :class='index>=1?"active":""' @click='image(1)'></span>
+      <span :class='index>=2?"active":""' @click='image(2)'></span>
+      <span :class='index>=3?"active":""' @click='image(3)'></span>
+      <span :class='index>=4?"active":""' @click='image(4)'></span>
     </div>
     <div class='feel'>
       <span>感受：</span> 
@@ -42,13 +47,22 @@
     </div>
 </template>
 <script>
-import memober from "../views/sinda_memober";
+import member from "../views/sinda_member";
 export default {
   data() {
-    return {};
+    return {
+      index:-1
+    };
   },
-  components: { memober }
+  components: { member },
+  methods:{
+    image:function(index){
+    this.index = index;
+    }
+  }
+
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -100,6 +114,7 @@ export default {
  .score{
    .evaluate;
     margin-top:-363px;
+    margin-left:579px;
     width:180px;
  }
  .feel{
@@ -130,5 +145,20 @@ export default {
  }
  .top{
    margin-top:233px;
+ }
+ .score>span{
+   width:13px;
+   height:13px;
+   background:url('../assets/kehu/Sprites.png') no-repeat -198px -261px;
+   margin-top:12px;
+   &.active{
+     background-position: -221px -261px;
+   }
+ }
+
+ .score>a{
+   line-height: 36px;
+   float:left;
+   font-size:10px;
  }
 </style>

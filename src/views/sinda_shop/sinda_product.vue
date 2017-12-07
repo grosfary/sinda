@@ -10,7 +10,7 @@
 export default {
   created(){
     var shopList = JSON.parse(sessionStorage.getItem("shopping"));
-    console.log(shopList)
+    // console.log(shopList)
     // this.ajax //请求客服
     //   .post(
     //     "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
