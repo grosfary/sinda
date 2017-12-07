@@ -4,10 +4,12 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class="box" type="text" placeholder="请输入手机号">
+          <input class=" box" type="text" placeholder="请输入手机号">
           <div class="verify">
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <div class="verifyI"></div>
+            <div class="verifyI" @click = "imgReflash">
+              <img :src="imgUrl" alt="">
+            </div>
           </div>
           <div class="acquire">
             <input class="boxI" type="text" placeholder="请输入验证码">
@@ -34,7 +36,23 @@
 import LRhead from "../components/sinda_LoginRegister_header";
 export default {
   data() {
-    return {};
+    return {
+      imgUrl:'/xinda-api/ajaxAuthcode',
+      imgCode:'',
+      phone:''
+    };
+  },
+  methods:{
+    imgReflash:function(){
+      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
+    },
+    getCode:function(){
+      this.setNum(0);
+      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
+        console.log(data);
+        
+      })
+    }
   },
   components: { LRhead }
 };
@@ -71,13 +89,14 @@ export default {
 }
 .verify {
   display: flex;
-  justify-content: space-around;
-
+  justify-content: space-between;
   .verifyI {
     width: 85px;
     height: 35px;
     padding-left: 10px;
-    background-color: pink;
+    img{
+    width: 85px;
+    height: 35px;}
   }
 }
 .acquire {

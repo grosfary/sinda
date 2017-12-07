@@ -8,9 +8,11 @@
           <input class="box" type="text" placeholder="请输入密码">
           <div>
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <div class="verify"></div>
+            <div class="verify" @click = "imgReflash">
+              <img :src="imgUrl" alt="">
+            </div>
           </div>
-          <a href="#/LoginRegister/forgetThePassword">忘记密码?</a><br>
+          <a href="#/LoginRegister/forgetPs">忘记密码?</a><br>
           <button class="boxII">立即登录</button>
         </div>
         <p></p><!-- 中间分割线 -->
@@ -29,7 +31,23 @@
 import LRhead from "../components/sinda_LoginRegister_header";
 export default {
   data() {
-    return {};
+    return {
+      imgUrl:'/xinda-api/ajaxAuthcode',
+      imgCode:'',
+      phone:''
+    };
+  },
+  methods:{
+    imgReflash:function(){
+      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
+    },
+    getCode:function(){
+      this.setNum(0);
+      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
+        console.log(data);
+        
+      })
+    }
   },
   components: { LRhead }
 };
@@ -65,12 +83,15 @@ export default {
   margin-top: 50px;
   div {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     div {
       width: 85px;
       height: 35px;
       padding-left: 10px;
-      background-color: pink;
+      img{
+        width: 85px;
+        height: 35px;
+      }
     }
   }
   a {
