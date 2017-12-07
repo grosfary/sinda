@@ -13,6 +13,9 @@ export default new Vuex.Store({
     },
     SET_LOGIN_STATE(state, loginState) {
       state.loginState = loginState;
+    },
+    SET_LIST_STATE(state, loginState) {
+      state.loginState = loginState;
     }
   },
   actions: { //操作集合

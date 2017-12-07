@@ -1,19 +1,20 @@
 <template>
-    <div class="hello">
-        <h3>购物车</h3> 
-    
-    </div>
+  <div class="hello">
+    <h3>购物车</h3>
+  </div>
 </template>
 
 <script>
-import sinda_header from "../components/sinda_global_header";
-import sinda_footer from "../components/sinda_global_footer";
+import sinda_header from "../../components/sinda_global_header";
+import sinda_footer from "../../components/sinda_global_footer";
 export default {
+  name: "sinda_buyCart",
   data() {
-    return {};
+    return {
+      // filed
+    };
   },
-  components: { sinda_header, sinda_footer },
-
+  components: { sinda_header, sinda_footer }
 };
 </script>
 
