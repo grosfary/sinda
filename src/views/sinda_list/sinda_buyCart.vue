@@ -5,16 +5,13 @@
 </template>
 
 <script>
-import sinda_header from "../../components/sinda_global_header";
-import sinda_footer from "../../components/sinda_global_footer";
 export default {
   name: "sinda_buyCart",
   data() {
     return {
-      // filed
+      
     };
   },
-  components: { sinda_header, sinda_footer }
 };
 </script>
 
