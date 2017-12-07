@@ -30,7 +30,12 @@
         <div class="">
 
         </div>
+        <div class="abc">
+
+        </div>
+
   </div>
+
 </template>
 
 <script>
@@ -158,6 +163,22 @@ export default {
   .serving {
     color: #2693d4;
     border-bottom: 2px solid #2693d4;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+
+    .abc{
+    width:1rem;
+    height:1rem;
+    background:red;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+
+    .abc{
+    display:none;
   }
 }
 </style>
