@@ -31,140 +31,98 @@ Vue.use(Router)
 // 再往下肯定还会有三级路由 在views里
 // 我的想法是 如果说要建立三级路由 就建一个跟二级路由相同的文件夹，把三级路由的文件放到这个文件夹中
 export default new Router({
-    routes: [{
-        path: '/',
-        name: 'sinda_global',
-        component: global,
-        children: [{
-            path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
-            component: index
-        }, {
-            path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-            component: list
-        }, {
-            path: 'shop',
-            component: shop
-        }, {
-            path: 'payment',
-            component: payment,
-            children: [{
-<<<<<<< HEAD
-                    path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                    component: index
-                }, {
-                    path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                    component: list
-                }, {
-                    path: 'shop', //这是店铺首页
-                    component: shop,
-                    children: [{
-                        path: '/', //这是三级服务
-                        component: service,
+        routes: [{
+                path: '/',
+                name: 'sinda_global',
+                component: global,
+                children: [{
+                        path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+                        component: index
                     }, {
-                        path: 'product', //这是三级产品
-                        component: product,
+                        path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+                        component: list
                     }, {
-                        path: 'certificate', //这是资质证书
-                        component: certificate,
-                    }]
-                }, {
-                    path: 'payment',
-                    component: payment,
-                    children: [{
-                        path: 'success', //这是成功页面
-                        component: payment_success,
+                        path: 'shop', //这是店铺首页  http://localhost:8081/#/shop
+                        redirect: 'shop/service',
+                        component: shop,
+                        children: [{
+                            path: 'service', //这是三级服务 http://localhost:8081/#/shop/service
+                            component: service,
+                        }, {
+                            path: 'product', //这是三级产品  http://localhost:8081/#/shop/product
+                            component: product,
+                        }, {
+                            path: 'certificate', //这是资质证书  http://localhost:8081/#/shop/certificate
+                            component: certificate,
+                        }]
                     }, {
-                        path: 'failure', //这是失败页面
-                        component: payment_failure,
-                    }]
-                }]
-                // children: [{
-                //     path: '', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                //     component: index
-                //   },
-                //   {
-                //     path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                //     component: list
-                //   },
-                //   {
-                //     path:'memober',//会员中心  如 http://localhost:8081/#/memober
-                //     component: memober,   
-                //     children: [{
-                //         path:'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
-                //         component: myYing          
-                //     },
-                //     {
-                //       path:'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
-                //       component:center
-                //     },
-                //     {
-                //       path:'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
-                //       component:toeveluete
-                //     },
-                //     {
-                //       path:'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-                //       component:setting
-                //     }
-                //   ]
-                //   }
+                        path: 'payment',
+                        component: payment,
+                        children: [{
+                            path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+                            component: index
+                        }, {
+                            path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+                            component: list
+                        }, {
+                            path: 'payment',
+                            component: payment,
+                            children: [{
+                                path: 'success', //这是成功页面
+                                component: payment_success,
+                            }, {
+                                path: 'failure', //这是失败页面
+                                component: payment_failure,
+                            }]
+                        }]
+                    },
+                    {
+                        path: 'memober',
+                        component: memober,
+                        children: [{
+                                path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/memober/myYing
+                                component: myYing
+                            },
+                            {
+                                path: 'center', //会员中心三级页   如 http://localhost:8081/#/memober/center
+                                component: center
+                            },
+                            {
+                                path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/memober/toeveluete
+                                component: toeveluete
+                            },
+                            {
+                                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
+                                component: setting
+                            },
+                            {
+                                path: 'setting', //账户设置三级页   如 http://localhost:8081/#/memober/setting
+                                component: setting
+                            },
+                            {
+                                path: 'modify', //修改密码三级页   如 http://localhost:8081/#/memober/modify
+                                component: modify
+                            }
+                        ]
+                    }
 
-            // ]
-=======
-                path: 'success',
-                component: payment_success,
-            }, {
-                path: 'failure',
-                component: payment_failure,
-            }]
->>>>>>> ad30daf226344d418f042a0e32cea966c7e15e44
-        },
-        {
-            path: 'memober',
-            component: memober,
-            children: [{
-                path: 'myYing',//用户评价三级页   如 http://localhost:8081/#/memober/myYing
-                component: myYing
+                ]
             },
             {
-                path: 'center',//会员中心三级页   如 http://localhost:8081/#/memober/center
-                component: center
-            },
-            {
-                path: 'toeveluete',//去评价三级页   如 http://localhost:8081/#/memober/toeveluete
-                component: toeveluete
-            },
-            {
-                path: 'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-                component: setting
-            },
-            {
-                path: 'setting',//账户设置三级页   如 http://localhost:8081/#/memober/setting
-                component: setting
-            },
-            {
-                path: 'modify',//修改密码三级页   如 http://localhost:8081/#/memober/modify
-                component: modify
+                path: '/LoginRegister',
+                name: 'sinda_LoginRegister',
+                component: LoginRegister,
+                children: [{
+                        path: 'login',
+                        component: login
+                    },
+                    {
+                        path: 'register',
+                        component: register
+                    },
+                ]
             }
-            ]
-        }
-
-        ]
-    },
-    {
-        path: '/LoginRegister',
-        name: 'sinda_LoginRegister',
-        component: LoginRegister,
-        children: [{
-            path: 'login',
-            component: login
-        },
-        {
-            path: 'register',
-            component: register
-        },
         ]
     }
-    ]
-}
 
 )

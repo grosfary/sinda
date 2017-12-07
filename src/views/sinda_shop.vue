@@ -2,7 +2,6 @@
 
 <template>
   <div class="shopList">
-        <!-- <h3>这是店铺首页</h3> -->
         <div class="logo">
             <img src="" alt="">
             <div class="remit">
@@ -16,16 +15,14 @@
                     <h3>公司介绍</h3>
                     <p>{{providerInfo}}</p>
                 </div>
-                <div class="serverLogo">
-                  <!-- <img src="../assets/shop/shopIMG.png" alt=""> -->
-                </div>
+                <img src="../../images/pc/123.png" alt="">
             </div>
 
             <div class="commodityList">
                 <div class="navgation">
-                    <a href="#/shop">服务产品</a>
-                    <a href="#/shop/product">客服</a>
-                    <a href="#/shop/certificate">资质证书</a>
+                  <router-link v-bind:to="{path:'/shop/service'}" class="jump" active-class="serving">服务产品</router-link>
+                  <router-link v-bind:to="{path:'/shop/product'}" class="jump" active-class="serving">客服</router-link>
+                  <router-link v-bind:to="{path:'/shop/certificate'}" class="jump" active-class="serving">资质证书</router-link>
                 </div>
                 <router-view></router-view>
             </div>
@@ -48,150 +45,128 @@ export default {
   created() {
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/provider/grid", {
-        //请求店铺信息
-        productId: "8a82f52b674543e298d2e5f685946e6e"
-      })
+      // .post("http://115.182.107.203:8088/xinda/xinda-api/detial", this.qs.stringify({
+      //   //请求店铺信息
+      //   id: "9080f0c120a64eb3831d50ba93c33e78"
+      // }))
+            .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/provider/detail",
+        this.qs.stringify({
+          id: "9080f0c120a64eb3831d50ba93c33e78"
+          //请求店铺信息
+        }))
       .then(function(data) {
-        console.log(data.data.data[0]);
-        var shop = data.data.data[0];
-        // console.log(shop);
-        that.providerName = shop.providerName;
+        var shop = data.data.data;
+        sessionStorage.setItem("shoppingID",shop);
+        that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
       });
-    // this.ajax //请求店铺商品
-    //   .post(
-    //     "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-    //     {
-    //       start: 0,
-    //       limit: 8,
-    //       productTypeCode: "1",
-    //       productId: "8a82f52b674543e298d2e5f685946e6e",
-    //       sort: 2
-    //     }
-    //   )
-    //   .then(function(data) {
-    //     console.log(data.data.data);
-    //   });
+    this.ajax //请求店铺商品
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        this.qs.stringify({
+          start: 0,
+          limit: 6,
+          providerId: "9080f0c120a64eb3831d50ba93c33e78",
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        // console.log(data.data.data);
+        var shopping = JSON.stringify(data.data.data);
+        sessionStorage.setItem("shopping",shopping);
+      });
+      
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.shopList{
-  width:1200px; 
+.shopList {
+  width: 1200px;
   margin: 50px 170px;
 }
-.logo{
+.logo {
   border: 1px solid #e9e9e9;
   display: flex;
-  img{
+  img {
     border: 1px solid #000;
     margin: 40px 62px;
-    width:78px;
+    width: 78px;
     height: 84px;
   }
-  .remit{
-    margin-left:  50px;
-    h3{
-        margin-top:50px;
-        font-size: 35px;
+  .remit {
+    margin-left: 50px;
+    h3 {
+      margin-top: 50px;
+      font-size: 35px;
     }
-    p{
-      margin-top:16px;
+    p {
+      margin-top: 16px;
       margin-bottom: 60px;
-      font-size:14px;
-      color:#676767;
+      font-size: 14px;
+      color: #676767;
     }
   }
-  
 }
-.body{
-    width:1200px; 
-    height: 585px;
-    margin:23px 0 43px 0;
-    .shopName{
-      border: 1px solid #e9e9e9;
-      width:300px;
-      display: flex;
+.body {
+  width: 1200px;
+  height: 585px;
+  margin: 23px 0 43px 0;
+  display: flex;
+  justify-content: space-between;
+  .shopName {
+    border: 1px solid #e9e9e9;
+    width: 300px;
+    position: relative;
+    img {
+      width: 300px;
+      position: absolute;
+      bottom: 0;
+      border-top: 1px solid #e9e9e9;
     }
+  }
+  .about {
+    h3 {
+      font-size: 20px;
+      color: #000000;
+      font-weight: normal;
+      margin: 15px 35px 0 10px;
+    }
+    p {
+      font-size: 15px;
+      color: #676767;
+      margin: 40px 22px 0 26px;
+      line-height: 28px;
+      text-indent: 2rem;
+    }
+  }
 }
 
-.commodityList{
- 
+.commodityList {
   border: 1px solid #e9e9e9;
-  width:878px;
+  width: 878px;
 }
-
-// .shopList {
-//   width: 1200px;
-//   margin: 0 auto;
-//   margin-top: 10px;
-// }
-// .logo {
-//   display: flex;
-//   align-items: center;
-//   border: 1px solid #e9e9e9;
-//   height: 180px;
-//   margin-bottom: 30px;
-//   img {
-//     width: 80px;
-//     margin: 0 30px 0 60px;
-//     height: 80px;
-//     background: pink;
-//   }
-// }
-// .body{
-//   display: flex;
-//   justify-content: space-between;
-//   height: 580px;
-//   margin-bottom: 40px;
-//   .shopName{
-//     width: 300px;
-//     border: 1px solid #e9e9e9;
-//     position: relative;
-//     h3{
-//       font-size: 23px;
-//       font-weight: normal;
-//       margin: 15px 10px;
-//     }
-//     p{
-//       padding: 25px;
-//       color: #242424;
-//       font-size: 14px;
-//       text-indent: 2rem;
-//     }
-//     .serverLogo{
-//       width: 100%;
-//       height: 250px;
-//       border-top: 1px solid #e9e9e9;      
-//       position: absolute;
-//       bottom: 0;
-//     }
-//   }
-//   .commodityList{
-//     width: 870px;
-//     border: 1px solid #e9e9e9;
-//     .navgation{
-//       height: 40px;
-//       border-bottom: 2px solid #e9e9e9;
-//       a{
-//         display: inline-block;
-//         width: 110px;
-//         height: 40px;
-//         text-decoration: none;
-//         line-height: 50px;
-//         text-align: center;
-//         color: #3f3f3f;
-//         margin: 0 10px;
-//       }
-//       a:nth-child(1){
-//         border-bottom: 2px solid #2693d4;
-//         color: #2693d4;
-//       }
-//     }
-//   }
-// }
+.navgation {
+  border-bottom: 1px solid #e9e9e9;
+  width: 100%;
+  height: 40px;
+  .jump {
+    font-size: 12px;
+    color: #676767;
+    display: inline-block;
+    width: 110px;
+    height: 40px;
+    line-height: 50px;
+    text-align: center;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  .serving {
+    color: #2693d4;
+    border-bottom: 2px solid #2693d4;
+  }
+}
 </style>

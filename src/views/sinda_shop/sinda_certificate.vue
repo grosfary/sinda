@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
-        <h3>证书</h3> 
-        
+
+      <h3>资质证书</h3> 
     </div>
 </template>
 
@@ -10,6 +10,10 @@ export default {
   data() {
     return {};
   },
+  created(){
+    var img = sessionStorage.getItem("shoppingID");
+    console.log(img)
+  }
 };
 </script>
 

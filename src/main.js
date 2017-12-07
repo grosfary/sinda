@@ -4,18 +4,22 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import store from './store'
+import qs from "qs"
 
 Vue.prototype.ajax = axios;
+Vue.prototype.qs = qs;
 Vue.config.productionTip = false
-Vue.config.devtools = false//关闭vue提示
-/* eslint-disable no-new */
+Vue.config.devtools = false //关闭vue提示
+    /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: {
-    App
-  }
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: {
+        App
+    }
 })
 
 
@@ -36,4 +40,3 @@ new Vue({
 //   console.log(1);
 // }, 100);
 // console.log(2);
-
