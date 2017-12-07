@@ -47,13 +47,13 @@ export default new Router({
                     path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
                     component: list
                 }, {
-                    path: 'Join_Us',
+                    path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us
                     component: Join_Us
                 }, {
-                    path: 'line_item',
+                    path: 'line_item', //订单详情  如 http://localhost:8081/#/line_item
                     component: line_item
                 }, {
-                    path: 'store_list',
+                    path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
                     component: store_list
                 }, {
                     path: 'shop',
