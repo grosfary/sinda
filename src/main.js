@@ -7,7 +7,9 @@ import store from './store'
 import axios from 'axios'
 import Distpicker from 'v-distpicker'
 import qs from 'qs'
+import Validator from 'vue-validator'
 // import store from 'store'
+Vue.use(Validator)
 Vue.component('v-distpicker', Distpicker);
 Vue.prototype.qs = qs;
 Vue.prototype.ajax = axios;

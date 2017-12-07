@@ -4,18 +4,21 @@
     <div class="login">
       <div class="loginI">
         <div class="loginfirst">
-          <input class="box" type="text" placeholder="请输入手机号码">
-          <input class="box" type="text" placeholder="请输入密码">
+          <input class="boxT" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号码">
+          <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
+          <input class="boxP" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
+          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
           <div>
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <div class="verify" @click = "imgReflash">
+            <div class="verify" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <a href="#/LoginRegister/forgetPs">忘记密码?</a><br>
           <button class="boxII">立即登录</button>
         </div>
-        <p></p><!-- 中间分割线 -->
+        <p class="partition"></p>
+        <!-- 中间分割线 -->
         <div class="lofinsecond">
           <span>还没有账号？</span><br>
           <a href="#/LoginRegister/register">立即注册>></a>
@@ -32,21 +35,48 @@ import LRhead from "../components/sinda_LoginRegister_header";
 export default {
   data() {
     return {
-      imgUrl:'/xinda-api/ajaxAuthcode',
-      imgCode:'',
-      phone:''
+      imgUrl: "/xinda-api/ajaxAuthcode",
+      imgCode: "",
+      phone: "",
+      boxVal: "",
+      boxTC: false,
+      boxPasw: "",
+      boxPC: false
     };
   },
-  methods:{
-    imgReflash:function(){
-      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
+  methods: {
+    imgReflash: function() {
+      this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    getCode:function(){
+    getCode: function() {
       this.setNum(0);
-      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
-        console.log(data);
-        
-      })
+      this.ajax
+        .post(
+          "/xinda-api/register/sendsms",
+          this.qs.stringify({
+            cellphone: this.phone,
+            smsType: 1,
+            imgCode: this.imgCode
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
+    },
+    onBlur: function() {
+      if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+      } else {
+        this.boxTC = true;
+      }
+    },
+    onBlurI: function() {
+      var pw = this.boxPasw;
+      var md5 = require("md5");
+      console.log(md5(pw));
+      if (/^([a-zA-Z]\w){6,20}$/.test(this.boxPasw)) {
+      } else {
+        this.boxPC = true;
+      }
     }
   },
   components: { LRhead }
@@ -55,7 +85,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.hello{
+.hello {
   background-color: #f5f5f5;
 }
 .login {
@@ -70,7 +100,7 @@ export default {
   display: flex;
   justify-content: space-around;
   background-color: #fff;
-  p {
+  .partition {
     width: 1px;
     height: 260px;
     background-color: #cbcbcb;
@@ -81,6 +111,7 @@ export default {
   width: 283px;
   height: 258px;
   margin-top: 50px;
+  position: relative;
   div {
     display: flex;
     justify-content: space-between;
@@ -88,7 +119,7 @@ export default {
       width: 85px;
       height: 35px;
       padding-left: 10px;
-      img{
+      img {
         width: 85px;
         height: 35px;
       }
@@ -105,7 +136,7 @@ export default {
   width: 283px;
   height: 258px;
   margin-top: 40px;
-  span{
+  span {
     display: block;
   }
   a {
@@ -113,16 +144,39 @@ export default {
     color: #2693d4;
     text-decoration: none;
   }
-  img{
+  img {
     margin-left: -15px;
   }
 }
-.box {
+.boxT {
   width: 280px;
   height: 35px;
   border: 1px solid #cbcbcb;
   margin-bottom: 24px;
   border-radius: 3px;
+}
+.boxP {
+  width: 280px;
+  height: 35px;
+  border: 1px solid #cbcbcb;
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+.boxtel {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 8px;
+  left: 295px;
+  position: absolute;
+}
+.boxpas {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 69px;
+  left: 295px;
+  position: absolute;
 }
 .boxI {
   width: 174px;
@@ -131,7 +185,7 @@ export default {
   margin-bottom: 24px;
   border-radius: 3px;
 }
-.boxII{
+.boxII {
   width: 280px;
   height: 35px;
   margin-top: 23px;
@@ -140,7 +194,7 @@ export default {
   border-radius: 3px;
   background-color: #fff;
 }
-.bottom{
+.bottom {
   padding-bottom: 150px;
 }
 </style>
