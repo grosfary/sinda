@@ -10,7 +10,7 @@
         <ul>
           <li><span class="icon_gouwuche"></span></li>
           <li><span>购物车</span></li>
-          <li><a href="" class="gouwuche_number">{{getNum}}</a></li>
+          <li><a class="gouwuche_number" @click="loginState">0</a></li>
           <li><span>件</span></li>
           <li><a href="">服务商入口</a></li>
         </ul>
@@ -20,13 +20,29 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      state: -1
+    };
   },
-  computed:{
-    ...mapGetters(['getNum'])//{getNum:function(){}}
+  computed: {
+    ...mapGetters(["getNum"]) //{getNum:function(){}}
+  },
+  methods: {
+    loginState: function()  {
+      console.log(this.state)
+      this.state == 0
+        ? (window.location.href = "#/LoginRegister/login")
+        : (window.location.href = "#/cart");
+    }
+  },
+  created() {
+    var that = this;
+    this.ajax.post("/xinda-api/sso/login-info").then((data)=> {
+      that.state = data.data.status;
+    });
   }
 };
 </script>
@@ -81,6 +97,7 @@ ul {
     }
     a.gouwuche_number {
       margin: 0;
+      cursor: pointer;
     }
   }
 }
@@ -90,5 +107,13 @@ ul {
   width: 26px;
   background: url("../assets/pc/Sprites.png") 0 -72px no-repeat;
   margin-top: 7px;
+}
+
+
+@media screen and (max-width: 1200px) {
+  // 手机端样式调整
+  .top_outer {
+    display: none;
+  }
 }
 </style>

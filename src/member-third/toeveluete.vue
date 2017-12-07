@@ -24,24 +24,56 @@
             <div class='state'><div>订单状态</div></div>
             <div class='operation'><div>订单操作</div></div>
           </div>
+        <div>
+          <div class='wares'>
+              <input type='checkbox' class='checkbox'>
+              <span>订单号：</span>
+            <div>
+              <span>下单时间：</span>
+            </div>
+          </div>
+          <div>
+            <div class='details'  v-for='product in products'>
+              <div class='name'><div>{{products.id}}</div></div>
+              <div class='unit'><div>{{products.level}}</div></div>
+              <div class='num'><div>{{products.name}}</div></div>
+              <div class='sum'><div >{{products.parentId}}</div></div>
+              <div class='state'><div>{{products.regionCode}}</div></div>
+              <div class='operation'><div>.submit</div></div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
-        
      
     </div>
 </template>
 <script>
-import memober from "../views/sinda_memober";
+import member from "../views/sinda_member";
 export default {
+  created(){
+    var that = this;
+    this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/select-region').then(function(data){
+      var rData = data.data.data;
+      that.products = rData;
+      console.log(rData)
+    })
+    },
+
   data() {
-    return {};
-  },
-  components: { memober }
+    return {
+      products:[]
+      }
+},
+  components: { member },
+
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+  .checkbox{
+    margin-left:12px;
+  }
   .assess{
     width:875px;
     height:34px;
@@ -109,6 +141,8 @@ export default {
   width:935px;
   height: 35px;
   background:#f7f7f7;
+  font-weight:700;
+  border:1px solid #2693d4;
   div{
     line-height:35px;
     float:left;
@@ -143,5 +177,26 @@ export default {
 }
  .top{
    margin-top:233px;
+   margin-left:-64px;
+ }
+ .wares{
+   .details;
+   margin-top:12px;
+   line-height:35px;
+   font-weight:400;
+   font-size:12px;
+   border:1px solid #e8e8e8;
+   div{
+     width:200px;
+   }
+   input{
+     margin-top:1px;
+   }
+ }
+ .deta{
+   .details;
+   height:68px;
+   background:#fff;
+   border:1px solid #e8e8e8;
  }
 </style>

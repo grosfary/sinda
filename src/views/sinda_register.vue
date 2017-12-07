@@ -6,19 +6,19 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class="box" v-model="phone" type="text">
+          <input class="box" v-model="phone" type="text" placeholder=" 请输入手机号">
           <div class="verify">
-            <input class="boxI" type="text" v-model="imgCode" placeholder="请输入验证码">
+            <input class="boxI" type="text" v-model="imgCode" placeholder=" 请输入验证码">
             <div class="verifyI" @click = "imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <div class="acquire">
-            <input class="boxI" type="text" placeholder="请输入验证码">
+            <input class="boxI" type="text" placeholder=" 请输入验证码">
             <button @click = "getCode">点击获取</button>
           </div>
           <v-distpicker class="register-android-wheel" province="省" city="市" area="区"></v-distpicker>
-          <input class="boxII" type="text">
+          <input class="boxII" type="text" placeholder=" 请设置密码">
           <button class="boxIII">立即注册</button>
           <p>注册及同意遵守
             <a class="agreement" href="">《服务协议》</a>
@@ -63,8 +63,7 @@ export default {
       })
     }
   },
-  components: { LRhead },
-  components: { VDistpicker }
+  components: { LRhead,VDistpicker },
 };
 </script>
 
@@ -108,13 +107,16 @@ export default {
 }
 .verify {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   .verifyI {
     width: 85px;
     height: 35px;
-    padding-left: 10px;
-    background-color: pink;
+    padding-left:10px;
+    img{
+      width: 85px;
+      height: 35px;
+    }
   }
 }
 .acquire {
