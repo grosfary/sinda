@@ -3,7 +3,7 @@
 <template>
   <div class="shopList">
         <div class="logo">
-            <img src="" alt="">
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt="">
             <div class="remit">
               <h3>{{providerName}}</h3>
               <p>{{regionName}}</p>
@@ -39,45 +39,36 @@ export default {
     return {
       providerName: "",
       regionName: "",
-      providerInfo: ""
+      providerInfo: "",
+      shopLOGO:""
     };
   },
   created() {
     var that = this;
+    console.log(that);
     this.ajax
       // .post("http://115.182.107.203:8088/xinda/xinda-api/detial", this.qs.stringify({
       //   //请求店铺信息
       //   id: "9080f0c120a64eb3831d50ba93c33e78"
       // }))
-            .post(
+        .post(
         "http://115.182.107.203:8088/xinda/xinda-api/provider/detail",
         this.qs.stringify({
           id: "9080f0c120a64eb3831d50ba93c33e78"
-          //请求店铺信息
+          //请求客服信息
         }))
       .then(function(data) {
         var shop = data.data.data;
+        console.log(shop);
         sessionStorage.setItem("shoppingID",JSON.stringify(shop));;
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
+        that.shopLOGO = shop.providerImg;
+       
+
       });
-    this.ajax //请求店铺商品
-      .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-        this.qs.stringify({
-          start: 0,
-          limit: 6,
-          providerId: "9080f0c120a64eb3831d50ba93c33e78",
-          sort: 2
-        })
-      )
-      .then(function(data) {
-        // console.log(data.data.data);
-        var shopping = JSON.stringify(data.data.data);
-        sessionStorage.setItem("shopping",shopping);
-      });
-      
+
   }
 };
 </script>
@@ -92,10 +83,10 @@ export default {
   border: 1px solid #e9e9e9;
   display: flex;
   img {
-    border: 1px solid #000;
+    // border: 1px solid #000;
     margin: 40px 62px;
-    width: 78px;
-    height: 84px;
+    width: 220px;
+    height: 95px;
   }
   .remit {
     margin-left: 50px;

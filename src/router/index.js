@@ -57,7 +57,18 @@ export default new Router({
                     component: store_list
                 }, {
                     path: 'shop',
-                    component: shop
+                    component: shop,
+                    redirect: "shop/service",
+                    children: [{
+                        path: 'service',
+                        component: service,
+                    }, {
+                        path: 'product',
+                        component: product,
+                    }, {
+                        path: 'certificate',
+                        component: certificate,
+                    }, ]
                 }, {
                     path: 'payment',
                     component: payment,
