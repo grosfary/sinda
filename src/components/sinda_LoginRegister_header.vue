@@ -7,7 +7,7 @@
             <span class="logo"></span>
             <img src="../assets/pc/xinda.jpg" alt="">
           </div>
-          <p>欢迎登录</p>
+          <p>欢迎{{getloginState}}</p>
         </div>
       </div>
     </div>
@@ -15,9 +15,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters(["getloginState"]) //{getNum:function(){}}
   }
 };
 </script>
@@ -50,7 +54,7 @@ export default {
       height: 41px;
     }
   }
-  p{
+  p {
     padding-left: 26px;
     font-size: 18px;
     line-height: 85px;

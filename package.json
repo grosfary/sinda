@@ -11,10 +11,13 @@
     },
     "dependencies": {
         "axios": "^0.17.1",
+        "md5": "^2.2.1",
         "store": "^2.0.12",
         "v-distpicker": "^1.0.13",
         "vue": "^2.5.2",
         "vue-router": "^3.0.1",
+        "vue-validator": "^3.0.0-alpha.2",
+        "vue-verify-plugin": "^2.0.2",
         "vuex": "^3.0.1"
     },
     "devDependencies": {

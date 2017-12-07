@@ -16,7 +16,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+
+    };
   }
 };
 </script>
@@ -35,7 +37,8 @@ export default {
     margin: 0 auto;
   }
 }
-ul { //©Copyright 2016北京信达科技有限公司 京ICP备 16011621号
+ul {
+  //©Copyright 2016北京信达科技有限公司 京ICP备 16011621号
   width: 403px;
   margin: 0 auto;
   &::after {
@@ -57,6 +60,14 @@ ul { //©Copyright 2016北京信达科技有限公司 京ICP备 16011621号
       display: block;
       line-height: 45px;
     }
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+  // 手机端样式调整
+  .bottom_outer {
+    display: none;
   }
 }
 </style>
