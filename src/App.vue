@@ -24,11 +24,11 @@ export default {
 };
 </script>
 <style lang="less">
-// @media screen and (max-width: 1200px) {
-//   html {
-//     font-size: 625%;
-//   }
-// }
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 625%;
+  }
+}
 
 * {
   margin: 0;
@@ -42,13 +42,5 @@ a {
 }
 a:hover {
   text-decoration: underline;
-}
-.register-android-wheel {
-  select {
-    height: 35px;
-    width: 90px;
-    font-size: 0.9rem;
-    margin-bottom: 26px;
-  }
 }
 </style>

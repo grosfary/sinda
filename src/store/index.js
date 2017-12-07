@@ -5,12 +5,16 @@ export default new Vuex.Store({
   state: { //状态集合
     num: 123,
     loginState: '',
+    listName: 'listName',
   },
   mutations: { //突变集合
     SET_NUM(state, num) {
       state.num = num;
     },
     SET_LOGIN_STATE(state, loginState) {
+      state.loginState = loginState;
+    },
+    SET_LIST_STATE(state, loginState) {
       state.loginState = loginState;
     }
   },
@@ -28,6 +32,7 @@ export default new Vuex.Store({
   },
   getters: { //显示集合
     getNum: state => state.num,
-    getloginState: state => state.loginState
+    getloginState: state => state.loginState,
+    getlistName: state => state.listName
   }
 });
