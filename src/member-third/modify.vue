@@ -144,7 +144,7 @@ export default {
     .pass>.distinct;
   }
    .top{
-   margin-top:233px;
+   margin-top:208px;
    margin-left: -64px;
  }
 </style>
