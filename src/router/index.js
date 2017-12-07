@@ -25,7 +25,7 @@ import modify from '../member-third/modify' //会员中心
 import Join_Us from '../stores/Join_Us' //加盟我们
 import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
-import cart from '../views/sinda_list/sinda_buyCart' //购物车
+// import cart from '../views/sinda_list/sinda_buyCart' //购物车
 Vue.use(Router)
 
 // pc端
