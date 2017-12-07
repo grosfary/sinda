@@ -108,4 +108,12 @@ ul {
   background: url("../assets/pc/Sprites.png") 0 -72px no-repeat;
   margin-top: 7px;
 }
+
+
+@media screen and (max-width: 1200px) {
+  // 手机端样式调整
+  .top_outer {
+    display: none;
+  }
+}
 </style>

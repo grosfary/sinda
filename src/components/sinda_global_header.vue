@@ -95,7 +95,7 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "全部产品", class: "allgoods" },
+        a: { name: "全部产品", class: "allgoods", src: "#/" },
         b: { name: "财税服务", src: "#/list" },
         c: { name: "公司工商", src: "#/" },
         d: { name: "加盟我们", src: "#/Join_Us" },
