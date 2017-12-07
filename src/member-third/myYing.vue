@@ -45,7 +45,7 @@ export default {
     }
   }
  .content{
-    width:949px;
+    width:909px;
     height: 194px;
     border:2px solid #ccc;
     float: left;
@@ -53,7 +53,7 @@ export default {
     margin-left:521px;
     div{
     border-bottom:2px solid #e9e9e9;
-    width:949px;
+    width:909px;
     height:43px;
     background:#f7f7f7;
     div{
@@ -95,5 +95,6 @@ export default {
     }
  .top{
    margin-top:233px;
+   margin-left: -64px;
  }
 </style>

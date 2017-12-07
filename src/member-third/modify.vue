@@ -2,7 +2,7 @@
     <div class="hello">
       <div class='top'>
         <div class='assess'>
-          <div>账户设置</div>
+          <a href="#/member/setting"><div>账户设置</div></a>
         </div>
         <div class='passworld'>
           <div>修改密码</div>
@@ -53,8 +53,7 @@ export default {
     },
     arr:function(){
           if(this.place!==this.fal){
-            console.log('aaa')
-              this.nostyle=true;
+             this.nostyle=true;
           }else{
              this.nostyle=false;
           }
@@ -69,7 +68,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .backe{
-        background:#e9e9e9;
+  background:#e9e9e9;
 }
 .hello{
   font-size:13px;
@@ -146,5 +145,6 @@ export default {
   }
    .top{
    margin-top:233px;
+   margin-left: -64px;
  }
 </style>

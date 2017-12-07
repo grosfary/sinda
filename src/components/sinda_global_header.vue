@@ -2,10 +2,11 @@
 <div class="header_outer"> 
   <!-- 头部外部盒子 -->
   <div class="header_content">
-    <div class="header_logo">
+    <div class="header_logo" @click="index_url">
     <!-- 头部logo部分 -->
       <div class="icon_global">
         <!-- logo图片 -->
+        <!-- window.location.href='#/'; -->
       </div>
       <p>信达</p>
     </div>
@@ -94,11 +95,11 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "全部产品", src: "#/", class: "allgoods" },
+        a: { name: "全部产品", class: "allgoods" },
         b: { name: "财税服务", src: "#/list" },
         c: { name: "公司工商", src: "#/" },
-        d: { name: "加盟我们", src: "#/" },
-        e: { name: "店铺", src: "#/" }
+        d: { name: "加盟我们", src: "#/Join_Us" },
+        e: { name: "店铺", src: "#/store_list" }
       },
       indexs: 0,
       a: function(n) {
@@ -122,6 +123,9 @@ export default {
   methods: {
     relationClick: function(index) {
       this.nowIndex = index;
+    },
+    index_url: () => {
+      window.location.href = "#/";
     }
   },
   computed: {
@@ -178,6 +182,7 @@ export default {
 .header_logo {
   font-size: 30px;
   font-weight: 700;
+  cursor: pointer;
   div,
   p {
     float: left;

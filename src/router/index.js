@@ -20,6 +20,7 @@ import modify from '../member-third/modify' //会员中心
 import Join_Us from '../stores/Join_Us' //加盟我们
 import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue'//忘记密码
+import cart from '../views/sinda_buyCart.vue'//忘记密码
 Vue.use(Router)
 
 // pc端
@@ -91,6 +92,9 @@ export default new Router({
                 component: modify
               }
             ]
+          },{
+            path: 'cart', //购物车页   如 http://localhost:8081/#/cart
+            component: cart
           }
 
         ]
