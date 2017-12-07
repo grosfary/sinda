@@ -12,6 +12,7 @@
 </template>
 
 <script>
+
 import sinda_top from "./components/sinda_top"; // 用变量sinda_top来接收sinda_top.vue里的html内容
 import sinda_bottom from "./components/sinda_bottom"; // 作用同上
 export default {
@@ -23,6 +24,12 @@ export default {
 };
 </script>
 <style lang="less">
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 625%;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -35,13 +42,5 @@ a {
 }
 a:hover {
   text-decoration: underline;
-}
-.register-android-wheel{
-  select {
-  height: 35px;
-  width: 90px;
-  font-size: 0.9rem;
-  margin-bottom: 26px;
-}
 }
 </style>

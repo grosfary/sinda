@@ -17,7 +17,11 @@
           <a href="#/LoginRegister/forgetPs">忘记密码?</a><br>
           <button class="boxII">立即登录</button>
         </div>
+<<<<<<< HEAD
         <p class="partition"></p>
+=======
+        <p></p>
+>>>>>>> c662c1cffa9698d95e83ba8f618313302fc4a080
         <!-- 中间分割线 -->
         <div class="lofinsecond">
           <span>还没有账号？</span><br>
@@ -32,11 +36,13 @@
 
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       imgUrl: "/xinda-api/ajaxAuthcode",
       imgCode: "",
+<<<<<<< HEAD
       phone: "",
       boxVal: "",
       boxTC: false,
@@ -45,6 +51,13 @@ export default {
     };
   },
   methods: {
+=======
+      phone: ""
+    };
+  },
+  methods: {
+    ...mapActions(["setloginState"]),
+>>>>>>> c662c1cffa9698d95e83ba8f618313302fc4a080
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
@@ -62,6 +75,7 @@ export default {
         .then(data => {
           console.log(data);
         });
+<<<<<<< HEAD
     },
     onBlur: function() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
@@ -77,7 +91,12 @@ export default {
       } else {
         this.boxPC = true;
       }
+=======
+>>>>>>> c662c1cffa9698d95e83ba8f618313302fc4a080
     }
+  },
+  created: function() {
+    this.setloginState("登录");
   },
   components: { LRhead }
 };

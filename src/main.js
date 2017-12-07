@@ -13,17 +13,18 @@ Vue.use(Validator)
 Vue.component('v-distpicker', Distpicker);
 Vue.prototype.qs = qs;
 Vue.prototype.ajax = axios;
+Vue.prototype.qs = qs;
 Vue.config.productionTip = false
 Vue.config.devtools = false //关闭vue提示
-/* eslint-disable no-new */
+    /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: {
-    App
-  }
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: {
+        App
+    }
 })
 
 

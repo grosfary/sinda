@@ -9,13 +9,13 @@
           <input class="box" v-model="phone" type="text" placeholder=" 请输入手机号">
           <div class="verify">
             <input class="boxI" type="text" v-model="imgCode" placeholder=" 请输入验证码">
-            <div class="verifyI" @click = "imgReflash">
+            <div class="verifyI" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <div class="acquire">
             <input class="boxI" type="text" placeholder=" 请输入验证码">
-            <button @click = "getCode">点击获取</button>
+            <button @click="getCode">点击获取</button>
           </div>
           <v-distpicker class="register-android-wheel" province="省" city="市" area="区"></v-distpicker>
           <input class="boxII" type="text" placeholder=" 请设置密码">
@@ -40,30 +40,41 @@
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
 import VDistpicker from "v-distpicker";
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      imgUrl:'/xinda-api/ajaxAuthcode',
-      imgCode:'',
-      phone:''
+      imgUrl: "/xinda-api/ajaxAuthcode",
+      imgCode: "",
+      phone: ""
     };
   },
-  methods:{
-    ...mapActions(['setNum']),
-    imgReflash:function(){
-      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
+  methods: {
+    ...mapActions(["setNum", "setloginState"]),
+    imgReflash: function() {
+      this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    getCode:function(){
+    getCode: function() {
       this.setNum(0);
-      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
-        console.log(data);
-        
-      })
+      this.ajax
+        .post(
+          "/xinda-api/register/sendsms",
+          this.qs.stringify({
+            cellphone: this.phone,
+            smsType: 1,
+            imgCode: this.imgCode
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
     }
   },
-  components: { LRhead,VDistpicker },
+  created: function() {
+    this.setloginState("注册");
+  },
+  components: { LRhead, VDistpicker }
 };
 </script>
 
@@ -112,8 +123,8 @@ export default {
   .verifyI {
     width: 85px;
     height: 35px;
-    padding-left:10px;
-    img{
+    padding-left: 10px;
+    img {
       width: 85px;
       height: 35px;
     }

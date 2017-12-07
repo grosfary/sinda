@@ -1,5 +1,6 @@
 <template>
     <div class="body">
+      <!-- 顶部图片文字 -->
        <div class="join">
           <span>
               <div class="lage">
@@ -57,7 +58,7 @@ export default {
     return {};
   },
   components: { sinda_header, sinda_footer },
-  methods: {
+  methods: {//底部动态效果，鼠标上浮文字内容显示，移走消失
     gs: function() {
       var gs = document.getElementById('gs');
       var gsbox = document.getElementById('gsbox');
@@ -109,19 +110,20 @@ export default {
   // height: 850px;;
   margin: 0 auto;
   .join {
+    // 顶部背景图
     span {
       width: 100%;
       height: 395px; //给背景设置宽高
       display: block; //设置为块级元素
-      background: url("../assets/pc/jiameng.jpg") no-repeat 0 0;
+      background: url("../assets/pc/jiameng.jpg") no-repeat 0 0;//背景图
     }
-    .lage {
-      text-align: center;
+    .lage {//顶部文字样式
+      text-align: center;//设置居中
       padding-top: 190px;
       p {
-        color: #2a2a2a;
-        font-size: 23px;
-        font-family: "黑体";
+        color: #2a2a2a;//颜色
+        font-size: 23px;//字体大小
+        font-family: "黑体";//字体格式
       }
     }
   }
