@@ -18,6 +18,8 @@
 </template>
 
 <script>
+
+
 export default {
   created() {
     var that = this;
@@ -33,6 +35,7 @@ export default {
         }
       }
       that.lists = shopping;
+      // console.log(shopping)
     })(shopList);
   },
   data() {
