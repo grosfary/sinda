@@ -1,7 +1,5 @@
 <template>
     <div class="hello">
-
-      <h3>资质证书</h3> 
         <img :src="'http://115.182.107.203:8088/xinda/pic'+img1" alt="">
         <img :src="'http://115.182.107.203:8088/xinda/pic'+img2" alt="">
         <img :src="'http://115.182.107.203:8088/xinda/pic'+img3" alt="">

@@ -96,4 +96,5 @@ export default {
     line-height: 40px;
   }
 }
+
 </style>
