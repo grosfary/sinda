@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="hello">
     <div class="company">
       <div class="top">
@@ -98,20 +99,36 @@
       <div class="picture"></div>
       <div class="below"></div>
     </div>
+=======
+  <div>
+
+>>>>>>> 1d14271f40581f6f3da9a0412d3bf8119c0e7b01
   </div>
 </template>
 
 <script>
-import sinda_header from "../../components/sinda_global_header";
-import sinda_footer from "../../components/sinda_global_footer";
+import { mapActions } from "vuex";
 export default {
   name: "sinda_buyCart",
   data() {
-    return {
-      // filed
-    };
+    return {};
   },
-  components: { sinda_header, sinda_footer }
+  methods: {
+    ...mapActions(["setlistName"])
+  },
+  created() {
+    this.setlistName("购物车");
+    this.ajax
+      .post(
+        "/xinda-api/product/package/detail",
+        this.qs.stringify({
+          sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
+        })
+      )
+      .then(data => {
+        console.log(data);
+      });
+  }
 };
 </script>
 

@@ -54,7 +54,6 @@ export default {
   }
   .footer_title {
     // 标题 关于我们
-    margin-top: 10px;
     line-height: 71px;
     margin-left: 0;
     font-size: 16px;

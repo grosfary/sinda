@@ -28,8 +28,7 @@
             <a href="">服务商</a>
           </li>
           <li>
-            <input type="text" placeholder="搜索您需要的服务或服务商">
-            <button>
+            <input type="text" placeholder="搜索您需要的服务或服务商"><button>
               <span class="icon_global"></span>
             </button>
           </li>
