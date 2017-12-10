@@ -47,7 +47,7 @@
                 <div class="payfangshi">
                 <a href="#" id="success" @click="success">已完成支付</a><a href="" id="failure" @click="failure">支付遇到问题</a>
                 <a class="footerlage" @click='cha'>返回重新选择支付方式
-                    {{message}}
+                    <!-- {{message}} -->
                 </a>
                 </div>
             </div>
