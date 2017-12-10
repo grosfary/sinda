@@ -33,36 +33,72 @@
             </div>
           </div>
           <div>
-            <div class='details'  v-for='product in products'>
-              <div class='name'><div>{{products.id}}</div></div>
-              <div class='unit'><div>{{products.level}}</div></div>
-              <div class='num'><div>{{products.name}}</div></div>
-              <div class='sum'><div >{{products.parentId}}</div></div>
-              <div class='state'><div>{{products.regionCode}}</div></div>
-              <div class='operation'><div>.submit</div></div>
+            <div class='deta'  v-for='(product,abj) in products' :key='product.rData'>
+              <div class='name'><div>{{product.id}}</div></div>
+              <div class='unit'><div>{{product.level}}</div></div>
+              <div class='num'><div>{{product.name}}</div></div>
+              <div class='sum'><div >{{product.parentId}}</div></div>
+              <div class='state'><div>{{product.regionCode}}</div></div>
+              <div class='operation'>
+                <div>
+                  <a href="#/line_item"><input type="submit" class='pay' value="付款"></a>
+                  <input type="submit" class = 'delet' value="删除订单" @click="alert">
+                </div>
+              </div>
             </div>
             </div>
           </div>
         </div>
       </div>
-     
+     <div class='aaa' v-show='show'>
+      <div class='hint'>
+        <div class='infor'>
+            <div class='for'>信息</div>
+            <div class='err' @click='hide'>x</div>
+        </div>
+        <div class='information'>确认删除订单吗</div>
+        <div class='ok'>
+          <input type="submit" value='确定' :class='index==1?"color":""' @mouseenter='submit(1)' @click='hidedate'>
+          <input type="submit" value='取消' :class='index==2?"color":""' @mouseenter='submit(2)' @click='hide'>
+        </div>
+      </div>
+     </div>
     </div>
 </template>
 <script>
 import member from "../views/sinda_member";
 export default {
+  methods:{
+      hidedate:function(){
+        this.show = false
+        this.products.splice(this.abj,1)
+      },
+      hide:function(){
+        this.show = false
+      },
+      alert:function(){
+        this.show = true
+      },
+      submit:function(index){
+        this.index=index;
+      }
+  },
   created(){
     var that = this;
-    this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/common/select-region').then(function(data){
+    this.ajax.post('/xinda-api/common/select-region',{}).then(function(data){
       var rData = data.data.data;
-      that.products = rData;
-      console.log(rData)
+      // that.products = rData;
+      that.products.push(rData);
     })
     },
 
   data() {
     return {
-      products:[]
+      products:[],
+      pay:false,
+      index:'',
+      show:false,
+      abj:'',
       }
 },
   components: { member },
@@ -71,6 +107,79 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.aaa{
+  width:100%;
+  height:100%;
+  left: 0;
+  top:0;
+  position: fixed;
+  filter:alpha(opacity=0);
+}
+.information{
+  height:92px;
+  line-height: 105px;
+  text-indent:90px;
+
+}
+.ok{
+  margin-left:24px;
+  input{
+    background:#fff;
+    border:1px solid #e7e7e7;
+    width:115px;
+    height:30px;
+    margin-left:10px;
+  }
+  .color{
+  background:#2693d4;
+  color:#fff;
+}
+}
+
+.for{
+  float:left;
+  width:40px;
+  height: 32px;
+  line-height:32px;
+  font-size:12px;
+  font-weight:700;
+  text-indent:10px;
+}
+.err{
+  float:right;
+  width:24px;
+  height: 32px;
+  line-height:32px;
+}
+.infor{
+  height: 32px;
+  background:#e8e8e8;
+}
+.hint{
+  width:306px;
+  height: 176px;
+  float:left;
+  margin-top:128px;
+  margin-left:589px;
+  background:#fff;
+  border:1px solid #000;
+}
+.pay{
+  margin-top:0px;
+  margin-left:92px;
+  background:#2693d4;
+  color:#fff;
+  width:56px;
+  height:24px;
+  border:2px solid #2693d4;
+}
+.delet{
+  margin-top:0px;
+  margin-left:92px;
+  background:#fff;
+  border:0;
+  color:red;
+}
   .checkbox{
     margin-left:12px;
   }
@@ -194,9 +303,40 @@ export default {
    }
  }
  .deta{
-   .details;
-   height:68px;
+   display: flex;
+   width:935px;
    background:#fff;
+   font-weight:400;
    border:1px solid #e8e8e8;
+     div{
+    line-height:35px;
+    float:left;
+    div{
+      float:right;
+    }
+ }
+  .name{
+    width:85px;
+    margin-top:2%;
+  }
+  .unit{
+    width:301px;
+    margin-top:2%;
+  }
+  .num{
+    width:114px;
+    margin-top:2%;
+  }
+  .sum{
+    width:127px;
+    margin-top:2%;
+  }
+  .state{
+    width:141px;
+    margin-top:2%;
+  }
+  .operation{
+    width:136px;
+  }
  }
 </style>

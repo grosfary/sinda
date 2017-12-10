@@ -10,7 +10,7 @@
         <ul>
           <li><span class="icon_gouwuche"></span></li>
           <li><span>购物车</span></li>
-          <li><a class="gouwuche_number" @click="loginState">0</a></li>
+          <li><a class="gouwuche_number" @click="loginState">{{getNum}}</a></li>
           <li><span>件</span></li>
           <li><a href="">服务商入口</a></li>
         </ul>

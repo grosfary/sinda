@@ -54,52 +54,51 @@ export default {
   }
   .footer_title {
     // 标题 关于我们
-    margin-top: 10px;
     line-height: 71px;
     margin-left: 0;
     font-size: 16px;
     color: #000000;
   }
 }
-// @media screen and (min-width: 1200px){
-//   .m_footer{
-//     display: none;
-//   }
-// }
-// @media screen and (max-width: 1200px) {
-//   // 手机端样式调整
-//   .footer_outer{
-//     height: auto;
-//   }
-//   .footer_content{
-//     display: none;
-//   }
-//   .m_footer {
-//     width: 100%;
-//     height: 0.88rem;
-//     display: flex;
-//     justify-content: space-around;
-//     font-size: 0.24rem;
-//     color: #99999b;
-//     .bg {
-//       width: 0.34rem;
-//       height: 0.34rem;
-//       background: url("../assets/kehu/Sprites.png") no-repeat;
-//       margin: 0 auto;
-//       // background-size: 100%;
-//     }
-//     .bg_index {
-//       background-position: -12px -317px;
-//     }
-//     .bg_shop {
-//       background-position: -72px -317px;
-//     }
-//     .bg_cart {
-//       background-position: -129px -317px;
-//     }
-//     .bg_my {
-//       background-position: -206px -317px;
-//     }
-//   }
-// }
+@media screen and (min-width: 1200px){
+  .m_footer{
+    display: none;
+  }
+}
+@media screen and (max-width: 1200px) {
+  // 手机端样式调整
+  .footer_outer{
+    height: auto;
+  }
+  .footer_content{
+    display: none;
+  }
+  .m_footer {
+    width: 100%;
+    height: 0.88rem;
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.24rem;
+    color: #99999b;
+    .bg {
+      width: 0.34rem;
+      height: 0.34rem;
+      background: url("../assets/kehu/Sprites.png") no-repeat;
+      margin: 0 auto;
+      // background-size: 100%;
+    }
+    .bg_index {
+      background-position: -12px -317px;
+    }
+    .bg_shop {
+      background-position: -72px -317px;
+    }
+    .bg_cart {
+      background-position: -129px -317px;
+    }
+    .bg_my {
+      background-position: -206px -317px;
+    }
+  }
+}
 </style>

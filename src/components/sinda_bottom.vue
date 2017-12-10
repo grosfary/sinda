@@ -10,12 +10,6 @@
         </ul>
       </div>
     </div>
-    <div class="m_bottom">
-      <div v-for="(i,index) in btn" :key="i.name" >
-        <div class="bg" :class="i.class"></div>
-        <div>{{i.name}}</div>
-      </div>
-    </div>
   </div>
 </template>
 

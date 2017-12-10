@@ -1,74 +1,86 @@
 <template>
-<div class="header_outer"> 
-  <!-- 头部外部盒子 -->
-  <div class="header_content">
-    <div class="header_logo" @click="index_url">
-    <!-- 头部logo部分 -->
-      <div class="icon_global">
-        <!-- logo图片 -->
-        <!-- window.location.href='#/'; -->
-      </div>
-      <p>信达</p>
-    </div>
-    <div class="header_city">
-    <!-- 头部城市部分 -->
-      <ul>
-        <li>北京市</li>
-        <li><a href="">[切换城市]</a></li>
-      </ul>
-    </div>
-    <div class="header_search">
-    <!-- 头部搜索部分 -->
-      <ul>
-        <li><a href="">产品</a><span>|</span><a href="">服务商</a></li>
-        <li>
-          <input type="text" placeholder="搜索您需要的服务或服务商"><button>
-            <span class="icon_global"></span>
-          </button>
-        </li>
-        <li class="hotServer"><span>热门服务：</span><a href="">社保客户</a><a href="">公司注册</a></li>
-      </ul>
-    </div>
-    <div class="header_phone">
-    <!-- 头部电话部分 -->
-      <span class="phone_pic icon_global"></span> 
-      <span>010-83421842</span>
-    </div>
-
-  </div>
-
-
-<!-- <transition name="fade"> -->
-  <div class="header_nav" ref="header_nav">
-      <!-- 头部导航栏部分 -->
-    <ul>
-      <li>
-        <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }"  @click="a(index)" ><span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span><span v-else>{{ind.name}}</span></a>
-      </li>
-    </ul>
-
-<transition name="fade">
-    <div class="header_sidebar" v-if="mark">
-      <!-- 头部侧导航部分 -->
-      <div v-for="(i,index) in sortListarr" :key="i.code" style="font-size:16px;" @mousemove="mark=true" @mouseout="mark=false">
-        <div class="sidebar_left"  @mousemove="relationClick(index)" @mouseout="nowIndex=-1" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
-          <!-- 侧导航左半边 -->
-          <div class="icon_global sidebar_icon"></div>
-          <!-- 侧导航图标 -->
-          <div class="sidebar_title">
-            <!-- 侧导航标题 -->
-            {{i.name}}
-            <ul>
-              <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
-                {{i.name}}
-              </li>
-            </ul>
-          </div>
+  <div class="header_outer">
+    <!-- 头部外部盒子 -->
+    <div class="header_content">
+      <div class="header_logo" @click="index_url">
+        <!-- 头部logo部分 -->
+        <div class="icon_global">
+          <!-- logo图片 -->
+          <!-- window.location.href='#/'; -->
         </div>
-        <div class="sidebar_right"  v-show="index===nowIndex" @mousemove="relationClick(index)" @mouseout="nowIndex=-1">
-          <!-- 侧导航右边 -->
-          <ul>
-            <li v-for="(i,key,index) in i.itemList" :key="i.name">
+        <p>信达</p>
+      </div>
+      <div class="header_city">
+        <!-- 头部城市部分 -->
+        <ul>
+          <li>北京市</li>
+          <li>
+            <a href="">[切换城市]</a>
+          </li>
+        </ul>
+      </div>
+      <div class="header_search">
+        <!-- 头部搜索部分 -->
+        <ul>
+          <li>
+            <a href="">产品</a>
+            <span>|</span>
+            <a href="">服务商</a>
+          </li>
+          <li>
+            <input type="text" placeholder="搜索您需要的服务或服务商"><button>
+              <span class="icon_global"></span>
+            </button>
+          </li>
+          <li class="hotServer">
+            <span>热门服务：</span>
+            <a href="">社保客户</a>
+            <a href="">公司注册</a>
+          </li>
+        </ul>
+      </div>
+      <div class="header_phone">
+        <!-- 头部电话部分 -->
+        <span class="phone_pic icon_global"></span>
+        <span>010-83421842</span>
+      </div>
+
+    </div>
+
+    <!-- <transition name="fade"> -->
+    <div class="header_nav" ref="header_nav">
+      <!-- 头部导航栏部分 -->
+      <ul>
+        <li>
+          <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }" @click="a(index)">
+            <span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span>
+            <span v-else>{{ind.name}}</span>
+          </a>
+        </li>
+      </ul>
+
+      <transition name="fade">
+        <div class="header_sidebar" v-if="mark">
+          <!-- 头部侧导航部分 -->
+          <div v-for="(i,index) in sortListarr" :key="i.code" style="font-size:16px;" @mousemove="mark=true" @mouseout="mark=false">
+            <div class="sidebar_left" @mousemove="relationClick(index)" @mouseout="nowIndex=-1" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
+              <!-- 侧导航左半边 -->
+              <div class="icon_global sidebar_icon"></div>
+              <!-- 侧导航图标 -->
+              <div class="sidebar_title">
+                <!-- 侧导航标题 -->
+                {{i.name}}
+                <ul>
+                  <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
+                    {{i.name}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="sidebar_right" v-show="index===nowIndex" @mousemove="relationClick(index)" @mouseout="nowIndex=-1">
+              <!-- 侧导航右边 -->
+              <ul>
+                <li v-for="(i,key,index) in i.itemList" :key="i.name">
                   <span class="sidebar_subnav">
                     <!-- 侧部导航的子导航 -->
                     <span>{{i.name}}></span>
@@ -79,14 +91,14 @@
                       </span>
                     </div>
                   </span>
-            </li>
-          </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
+      </transition>
     </div>
-</transition>
   </div>
-</div>
 </template>
 
 <script>
