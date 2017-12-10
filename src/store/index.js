@@ -10,7 +10,7 @@ export default new Vuex.Store({
   mutations: { //突变集合
     SET_NUM(state, num) {
       state.num = num;
-    },
+    }, 
     SET_LOGIN_STATE(state, loginState) {
       state.loginState = loginState;
     },
