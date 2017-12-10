@@ -9,13 +9,13 @@
           <input class="boxP" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
           <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
           <div>
-            <input class="boxI" type="text" placeholder="请输入验证码">
+            <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV">
             <div class="verify" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <a href="#/LoginRegister/forgetPs">忘记密码?</a><br>
-          <button class="boxII">立即登录</button>
+          <button class="boxII" @click='iLogin'>立即登录</button>
         </div>
         <p class="partition"></p>
         <!-- 中间分割线 -->
@@ -33,6 +33,7 @@
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
 import { mapActions } from "vuex";
+var md5 = require("md5");
 export default {
   data() {
     return {
@@ -42,7 +43,8 @@ export default {
       boxVal: "",
       boxTC: false,
       boxPasw: "",
-      boxPC: false
+      boxPC: false,
+      imgV: ""
     };
   },
   methods: {
@@ -75,10 +77,29 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^([a-zA-Z]\w){6,20}$/.test(this.boxPasw)) {
+      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
       } else {
         this.boxPC = true;
       }
+    },
+    iLogin() {
+      // this.$router.push({ path: "/" });
+      this.ajax
+        .post(
+          "/xinda-api/sso/login",
+          this.qs.stringify({
+            loginId: this.boxVal,
+            password: md5(this.boxPasw),
+            imgCode: this.imgV
+          })
+        )
+        .then(data => {
+          console.log(data.data.msg, data.data.status);
+          let status = data.data.status;
+          if (status == 1) {
+            this.$router.push({ path: "/" });
+          }
+        });
     }
   },
   created: function() {
