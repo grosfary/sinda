@@ -31,12 +31,26 @@
                   <span ><input type="radio" name="pay" class="radioIV" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
                    <p>注：转账时请将订单编号备注在付款信息里：转账完成后,请通知客服。</p>
              </div>
-            
         </div>
         <div class="Settlement">
             <p>金额总计：</p><br>
-            <button>去结算</button>
+            <button @click="jiesuan">去结算</button>
         </div>
+        <div class="we-pay" id="weipay" style="display:none">
+                <div class="pay-header">
+                    <p class="lageheader">微信支付</p>
+                    <p class="cha" @click='cha'>X</p>
+                </div>
+                <span class="QRcode"></span>
+                <p class="wechatlage">请用微信扫一扫 进行扫码支付</p>
+                <!-- <button id="success" @click="success">已完成支付</button><button>支付遇到问题</button> -->
+                <div class="payfangshi">
+                <a href="#" id="success" @click="success">已完成支付</a><a href="" id="failure" @click="failure">支付遇到问题</a>
+                <a class="footerlage" @click='cha'>返回重新选择支付方式
+                    {{message}}
+                </a>
+                </div>
+            </div>
     </div>
  
 </template>
@@ -48,21 +62,112 @@ export default {
   data() {
     return {};
   },
-  components: { sinda_header, sinda_footer }//暴露头部底部
+  components: { sinda_header, sinda_footer },//暴露头部底部
+  methods:{
+      cha:function(){
+      var weipay=document.getElementById('weipay');
+        weipay.style.display="none";
+      },
+    success:function(){
+        var success=document.getElementById('success');
+        console.log(123)
+        success.href='#/payment/success';
+    },
+      failure:function(){
+        var success=document.getElementById('failure');
+        console.log(123)
+        success.href='#/payment/failure';
+    },
+    jiesuan:function(){
+        var jiesuan=document.getElementById('weipay');
+        var radioII=document.getElementById('wechat');
+        if(wechat.checked==true){
+        weipay.style.display="block";
+        }
+    }
+  
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-// @color: red;
-// div {
-//   color: @color;
-// }
 // 整体盒子样式
 .body{
     width:70%;
     height: 850px;;
     margin: 0 auto;
+      .we-pay{
+        width: 220px;
+        height: 240px;
+        background: #fff;
+        border:1px solid #ccc;
+        border-left: none;
+        border-top: none;
+        margin-top: -340px;
+        margin-left: 439px;
+        font-size: 13px;
+        span{
+            width: 115px;
+            height: 111px;
+            display: block;
+            background: url("../assets/pc/weixin.jpg") no-repeat 0 0;
+            margin: 0 auto;
+            margin-top:15px;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+        .payfangshi{
+            margin-top: 10px;
+        }
+        #success{
+            margin-left: 13px;
+            margin-top: 20px;
+            color:#2693d4;
+            border: #2693d4 1px solid;
+            background: #fff;
+            padding: 5px 4px;
+            border-radius: 5px;
+        }
+        #failure{
+            margin-left: 13px;
+            margin-top: 20px;
+            color:#2693d4;
+            border: #2693d4 1px solid;
+            background: #fff;
+            padding: 5px 4px;
+            border-radius: 5px;
+        }
+        .footerlage{
+            font-size: 10px;
+            color:#2693d4;
+            margin-left:14px;
+            display: block;
+            margin-top: 20px;
+        }
+        .wechatlage{
+            margin-left: 10px;
+        }
+        .pay-header{
+            height: 22px;
+            background: #f7f7f7;
+        p{
+            display: inline;
+            line-height: 22px;
+        }
+           .cha{
+                     margin-left: 140px;
+                     font-size: 13px;
+            }
+            .lageheader{
+                font-size: 13px;
+                margin-left: 5px;
+              
+            }
+           
+        }
+    }
 }
 // 支付头部样式
 .item-header{
@@ -213,5 +318,6 @@ export default {
         border-radius: 4px;//设置圆角边框
         margin-left: 60px;//位置
     }
+  
 }
 </style>
