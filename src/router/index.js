@@ -27,6 +27,8 @@ import Join_Us from '../stores/Join_Us' //加盟我们
 import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import cart from '../views/sinda_list/sinda_buyCart' //购物车
+import cart1 from '../views/sinda_list/sinda_cart' //购物车
+import pro from '../views/sinda_list/sinda_products' //商品详情
 Vue.use(Router)
 
 // pc端
@@ -53,6 +55,12 @@ export default new Router({
           children: [{
             path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
             component: cart
+          }, {
+            path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
+            component: pro
+          },{
+            path: 'cart1', //商品详情页   如 http://localhost:8081/#/list/cart
+            component: cart1
           }]
         }, {
           path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us

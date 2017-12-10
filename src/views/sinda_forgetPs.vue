@@ -4,10 +4,11 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class=" box" type="tel" placeholder="请输入手机号">
+          <input class=" box" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号">
+          <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <div class="verify">
             <input class="boxI" type="text" placeholder="请输入验证码">
-            <div class="verifyI" @click = "imgReflash">
+            <div class="verifyI" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
@@ -15,8 +16,10 @@
             <input class="boxI" type="text" placeholder="请输入验证码">
             <button>点击获取</button>
           </div>
-          <input class="boxII" type="password" placeholder="请输入新密码">
-          <input class="boxII" type="password" placeholder="请再次确认密码">
+          <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入新密码">
+          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <input class="boxII" type="password" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
+          <p class="boxpasI" v-show="boxPCI">*您输入的密码不正确</p>
           <button class="boxIII">确认修改</button>
         </div>
         <p class="division"></p>
@@ -37,20 +40,58 @@ import LRhead from "../components/sinda_LoginRegister_header";
 export default {
   data() {
     return {
-      imgUrl:'/xinda-api/ajaxAuthcode',
-      imgCode:'',
-      phone:''
+      imgUrl: "/xinda-api/ajaxAuthcode",
+      imgCode: "",
+      boxVal: "",
+      boxTC: false,
+      boxPasw: "",
+      boxPC: false,
+      boxPaswI: "",
+      boxPCI: false
     };
   },
-  methods:{
-    imgReflash:function(){
-      this.imgUrl = this.imgUrl+'?t='+new Date().getTime();
+  methods: {
+    imgReflash: function() {
+      this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    getCode:function(){
+    onBlur: function() {
+      if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+      } else {
+        this.boxTC = true;
+      }
+    },
+    onBlurI: function() {
+      var pw = this.boxPasw;
+      var md5 = require("md5");
+      console.log(md5(pw));
+      if (/^([a-zA-Z]\w){6,20}$/.test(this.boxPasw)) {
+      } else {
+        this.boxPC = true;
+      }
+    },
+    onBlurII: function() {
+      var pw = this.boxPaswI;
+      var md5 = require("md5");
+      console.log(md5(pw));
+      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPaswI)) {
+      } else {
+        this.boxPCI = true;
+      }
+    },
+    getCode: function() {
       this.setNum(0);
-      this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:this.phone,smsType:1,imgCode:this.imgCode})).then(data=>{
-        console.log(data);
-      })
+      this.ajax
+        .post(
+          "/xinda-api/register/sendsms",
+          this.qs.stringify({
+            cellphone: this.boxVal,
+            smsType: 1,
+            imgCode: this.imgCode
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
     }
   },
   components: { LRhead }
@@ -85,6 +126,31 @@ export default {
   width: 283px;
   height: 258px;
   margin-top: 50px;
+  position: relative;
+}
+.boxtel {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 8px;
+  left: 295px;
+  position: absolute;
+}
+.boxpas {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 180px;
+  left: 295px;
+  position: absolute;
+}
+.boxpasI {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 240px;
+  left: 295px;
+  position: absolute;
 }
 .verify {
   display: flex;
@@ -93,9 +159,10 @@ export default {
     width: 85px;
     height: 35px;
     padding-left: 10px;
-    img{
-    width: 85px;
-    height: 35px;}
+    img {
+      width: 85px;
+      height: 35px;
+    }
   }
 }
 .acquire {
