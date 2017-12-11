@@ -20,13 +20,15 @@ import member from '../views/sinda_member' //会员中心
 import myYing from '../member-third/myYing' //会员中心
 import center from '../member-third/center' //会员中心
 import toeveluete from '../member-third/toeveluete' //会员中心
+import evalu from '../member-third/evalu' //会员中心
 import setting from '../member-third/setting' //会员中心
 import modify from '../member-third/modify' //会员中心
 import Join_Us from '../stores/Join_Us' //加盟我们
 import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import cart from '../views/sinda_list/sinda_buyCart' //购物车
-import pro from '../views/sinda_list/sinda_products' //购物车
+import cart1 from '../views/sinda_list/sinda_cart' //购物车
+import pro from '../views/sinda_list/sinda_products' //商品详情
 Vue.use(Router)
 
 // pc端
@@ -40,6 +42,7 @@ Vue.use(Router)
 // , {
 //     
 export default new Router({
+<<<<<<< HEAD
     routes: [{
             path: '/',
             name: 'sinda_global',
@@ -120,6 +123,80 @@ export default new Router({
                         }
                     ]
                 }
+=======
+  routes: [{
+      path: '/',
+      name: 'sinda_global',
+      component: global,
+      children: [{
+          path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+          component: index
+        }, {
+          path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+          component: list,
+          children: [{
+            path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
+            component: cart
+          }, {
+            path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
+            component: pro
+          },{
+            path: 'cart1', //商品详情页   如 http://localhost:8081/#/list/cart
+            component: cart1
+          }]
+        }, {
+          path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us
+          component: Join_Us
+        }, {
+          path: 'line_item', //订单详情  如 http://localhost:8081/#/line_item
+          component: line_item
+        }, {
+          path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
+          component: store_list
+        }, {
+          path: 'shop',
+          component: shop
+        }, {
+          path: 'payment',
+          component: payment,
+          children: [{
+            path: 'success',
+            component: payment_success,
+          }, {
+            path: 'failure',
+            component: payment_failure,
+          }]
+        },
+        {
+          path: 'member',
+          component: member,
+          children: [{
+              path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/member/myYing
+              component: myYing
+            },
+            {
+              path: 'center', //会员中心三级页   如 http://localhost:8081/#/member/center
+              component: center
+            },
+            {
+              path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/member/toeveluete
+              component: toeveluete
+            },
+            {
+              path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
+              component: setting
+            },
+            {
+              path: 'evalu', //账户设置三级页   如 http://localhost:8081/#/member/evalu
+              component: evalu
+            },
+            {
+              path: 'modify', //修改密码三级页   如 http://localhost:8081/#/member/modify
+              component: modify
+            }
+          ]
+        }
+>>>>>>> 9cce1d3db1a4a8ecb12b3e30933dc7a72566d824
 
             ]
         },

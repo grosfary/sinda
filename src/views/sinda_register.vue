@@ -6,7 +6,8 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class="box" v-model="phone" type="text" placeholder=" 请输入手机号">
+          <input class="box" @blur="onBlur" v-model="phone" type="tel" placeholder=" 请输入手机号">
+          <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <div class="verify">
             <input class="boxI" type="text" v-model="imgCode" placeholder=" 请输入验证码">
             <div class="verifyI" @click="imgReflash">
@@ -17,9 +18,10 @@
             <input class="boxI" type="text" placeholder=" 请输入验证码">
             <button @click="getCode">点击获取</button>
           </div>
-          <v-distpicker class="register-android-wheel" province="省" city="市" area="区"></v-distpicker>
-          <input class="boxII" type="text" placeholder=" 请设置密码">
-          <button class="boxIII">立即注册</button>
+          <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker>
+          <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
+          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <button class="boxIII" @click="iregister">立即注册</button>
           <p>注册及同意遵守
             <a class="agreement" href="">《服务协议》</a>
           </p>
@@ -41,24 +43,35 @@
 import LRhead from "../components/sinda_LoginRegister_header";
 import VDistpicker from "v-distpicker";
 import { mapActions } from "vuex";
-
+var md5 = require("md5");
 export default {
   data() {
     return {
       imgUrl: "/xinda-api/ajaxAuthcode",
       imgCode: "",
-      phone: ""
+      phone: "",
+      boxTC: false,
+      boxPasw: "",
+      boxPC: false,
+      distCode: "",
+      placeholders: {
+        province: " 省 ",
+        city: " 市 ",
+        area: " 区 "
+      }
     };
   },
   methods: {
     ...mapActions(["setNum", "setloginState"]),
+    selected: function(data) {
+      this.distCode = data.area.code;
+    },
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
     getCode: function() {
       this.setNum(0);
-      this.ajax
-        .post(
+      this.ajax.post(
           "/xinda-api/register/sendsms",
           this.qs.stringify({
             cellphone: this.phone,
@@ -68,6 +81,34 @@ export default {
         )
         .then(data => {
           console.log(data);
+        });
+    },
+    onBlur: function() {
+      if (/^1[34578]\d{9}/.test(this.phone)) {
+      } else {
+        this.boxTC = true;
+      }
+    },
+    onBlurI: function() {
+      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
+      } else {
+        this.boxPC = true;
+      }
+    },
+    iregister() {
+      this.ajax
+        .post(
+          "/xinda-api/register/register",
+          this.qs.stringify({
+            cellphone: this.phone,
+            smsType: 1,
+            validCode: 111111,
+            password: md5(this.boxPasw),
+            regionId: this.distCode
+          })
+        )
+        .then(data => {
+          console.log("注册提交", data.data.msg, data.data.status);
         });
     }
   },
@@ -106,6 +147,7 @@ export default {
   width: 283px;
   height: 258px;
   margin-top: 50px;
+  position: relative;
   p {
     margin-left: 20px;
     font-size: 14px;
@@ -115,6 +157,22 @@ export default {
       text-decoration: none;
     }
   }
+}
+.boxtel {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 8px;
+  left: 295px;
+  position: absolute;
+}
+.boxpas {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 240px;
+  left: 295px;
+  position: absolute;
 }
 .verify {
   display: flex;
