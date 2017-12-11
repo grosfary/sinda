@@ -4,7 +4,7 @@
   <div class="mobile">
     <div class="shopList">
       <div class="logo">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt="">
+        <!-- <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt=""> -->
         <div class="remit">
           <h3>{{providerName}}</h3>
           <p>{{regionName}}</p>
@@ -58,6 +58,7 @@
 
 <script>
 export default {
+  name:"sinda_shop",
   data() {
     return {
       providerName: "",
@@ -78,44 +79,28 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        // console.log(shop);
         sessionStorage.setItem("shoppingID", JSON.stringify(shop));
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
         that.shopLOGO = shop.providerImg;
       });
-    this.ajax
-      .post(//请求首页信息
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-        this.qs.stringify({
-          start: 1,
-          limit: 6,
-          providerId: "9080f0c120a64eb3831d50ba93c33e78",
-          sort: 2
-        })
-      )
-      .then(function(data) {
-        // console.log(data.data.data);
-        var shopping = JSON.stringify(data.data.data);
-        sessionStorage.setItem("shopping",shopping)
-      });
 
-      this.ajax
-      .post(//手机端
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-        this.qs.stringify({
-          start: 1,
-          limit: 6,
-          providerId: "9080f0c120a64eb3831d50ba93c33e78",
-          sort: 2
-        })
-      )
-      .then(function(data) {
-        console.log(data);
-        var shopping = JSON.stringify(data.data.data);
-        sessionStorage.setItem("shopping",shopping)
-      });
+
+      // this.ajax
+      // .post(//手机端
+      //   "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+      //   this.qs.stringify({
+      //     start: 1,
+      //     limit: 6,
+      //     providerId: "9080f0c120a64eb3831d50ba93c33e78",
+      //     sort: 2
+      //   })
+      // )
+      // .then(function(data) {
+      //   var shopping = JSON.stringify(data.data.data);
+      //   sessionStorage.setItem("shopping",shopping)
+      // });
       
   }
 };
@@ -209,15 +194,12 @@ export default {
   }
 
 }
-// .Mobile{
-//    display: none;
-// }
-
-
- 
+.Mobile{
+  //  display: none;
+}
 
 .mobile {
-    display: none;
+    // display: none;
 }
 
 </style>

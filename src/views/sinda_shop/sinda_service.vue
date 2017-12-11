@@ -1,42 +1,54 @@
 <template>
-    <div class="hello">
-      <h1 class="content">
-        服务内容
-      </h1>              
-      <div class="shopping">
-        <div class="serviceItem" v-for="list in lists" :key="list.id">
-          <h3>{{list.serviceName}}</h3>
-          <span></span>
-          <p>{{list.serviceInfo}}</p>
-          <p>销量:</p>
-          <h2>￥ {{list.marketPrice}}.00</h2>
-          <del>原价：￥{{list.price}}.00</del>
-          <a href="">查看详情>></a>
-        </div>
+  <div class="hello">
+    <h1 class="content">
+      服务内容
+    </h1>
+    <div class="shopping">
+      <div class="serviceItem" v-for="list in lists" :key="list.id">
+        <h3>{{list.serviceName}}</h3>
+        <span></span>
+        <p>{{list.serviceInfo}}</p>
+        <p>销量:</p>
+        <h2>￥ {{list.marketPrice}}.00</h2>
+        <del>原价：￥{{list.price}}.00</del>
+        <a href="">查看详情>></a>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-
-
 export default {
   created() {
     var that = this;
-    var shopList = JSON.parse(sessionStorage.getItem("shopping"));
-    !(function(shopping) {
+    this.ajax
+      .post(
+        //请求首页信息
+        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        this.qs.stringify({
+          start: 1,
+          limit: 6,
+          providerId: "9080f0c120a64eb3831d50ba93c33e78",
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        shop(data.data.data)
+      });
+    var shop = function(shopping) {
       for (var key in shopping) {
         shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
         if (shopping[key].serviceName.length > 11) {
-          shopping[key].serviceName = shopping[key].serviceName.substr(0, 11) + "...";
+          shopping[key].serviceName =
+            shopping[key].serviceName.substr(0, 11) + "...";
         }
         if (shopping[key].serviceInfo.length > 16) {
           shopping[key].serviceInfo = shopping[key].serviceInfo.substr(0, 14);
         }
       }
       that.lists = shopping;
-      // console.log(shopping)
-    })(shopList);
+     
+    };
   },
   data() {
     return {
@@ -68,7 +80,7 @@ export default {
     border: 1px solid #b6b6b6;
     margin-bottom: 15px;
     padding: 8px;
-    a{
+    a {
       float: right;
     }
   }
@@ -99,5 +111,4 @@ export default {
     line-height: 40px;
   }
 }
-
 </style>
