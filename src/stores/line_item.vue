@@ -2,7 +2,7 @@
     <div class="body">
         <!-- 支付头部 -->
         <div class="item-header">
-            <a href="#">首页</a>/<p>支付</p>
+            <a href="http://localhost:8080/#/">首页</a>/<p>支付</p>
             <span>订单详情</span>
       </div>
       <!-- 订单详情 -->
@@ -16,7 +16,7 @@
             <span class="fangshi">支付方式</span>
              <p>非网银支付</p><!--网银支付-->
              <div class="Non-bank">
-                 <span ><input type="radio" name="pay" class="radioI" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
+                 <span ><input type="radio" name="pay" class="radioI" id="bank"onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
              </div>
              <p>平台支付</p><!--平台支付-->
               <div class="Platform-to-pay">
@@ -36,7 +36,7 @@
             <p>金额总计：</p><br>
             <button @click="jiesuan">去结算</button>
         </div>
-        <div class="we-pay" id="weipay" style="display:none">
+        <div class="we-pay" id="weipay" v-if="weback">
                 <div class="pay-header">
                     <p class="lageheader">微信支付</p>
                     <p class="cha" @click='cha'>X</p>
@@ -45,12 +45,23 @@
                 <p class="wechatlage">请用微信扫一扫 进行扫码支付</p>
                 <!-- <button id="success" @click="success">已完成支付</button><button>支付遇到问题</button> -->
                 <div class="payfangshi">
-                <a href="#" id="success" @click="success">已完成支付</a><a href="" id="failure" @click="failure">支付遇到问题</a>
-                <a class="footerlage" @click='cha'>返回重新选择支付方式
-                    <!-- {{message}} -->
-                </a>
+                <a href="javascript:void(0)" id="success" @click="success">已完成支付</a><a href="javascript:void(0)" id="failure" @click="failure">支付遇到问题</a>
+                <a class="footerlage" @click='cha'>返回重新选择支付方式</a>
                 </div>
-            </div>
+                
+        </div>
+        <div class="feedback" v-if="feedback">
+                    <div class="feedheader">
+                        <p style="display:inline" class="feedlage">支付反馈</p>
+                        <a href="javascript:void(0)" class="clean" @click="clean">X</a>
+                    </div>
+                        <p class="lagefeed">请您在新打开的页面完成订单付款</p>
+                        <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
+                    <div class="feedbody">
+                        <a class="wancheng"href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)">支付遇到问题</a>
+                     </div>
+                     <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
+                </div>
     </div>
  
 </template>
@@ -60,30 +71,32 @@ import sinda_header from "../components/sinda_global_header";// 公共头部
 import sinda_footer from "../components/sinda_global_footer";//公共底部
 export default {
   data() {
-    return {};
+    return {
+        weback:false,
+        feedback:false,
+    };
+    
   },
   components: { sinda_header, sinda_footer },//暴露头部底部
   methods:{
       cha:function(){
-      var weipay=document.getElementById('weipay');
-        weipay.style.display="none";
+          this.weback=false;
       },
     success:function(){
-        var success=document.getElementById('success');
-        console.log(123)
-        success.href='#/payment/success';
+    location.href="http://localhost:8080/#/payment/success"
     },
       failure:function(){
-        var success=document.getElementById('failure');
-        console.log(123)
-        success.href='#/payment/failure';
+        location.href="http://localhost:8080/#/payment/failure"
     },
     jiesuan:function(){
-        var jiesuan=document.getElementById('weipay');
-        var radioII=document.getElementById('wechat');
         if(wechat.checked==true){
-        weipay.style.display="block";
+        this.weback=true;
+        }else if(bank.checked==true||alipay.checked==true){
+            this.feedback=true;
         }
+    },
+    clean:function(){
+        this.feedback=false;
     }
   
   }
@@ -97,6 +110,78 @@ export default {
     width:70%;
     height: 850px;;
     margin: 0 auto;
+    .feedback{
+        width: 453px;
+        height: 279px;
+        background: #fff;
+        border:1px solid #ccc;
+        border-left: none;
+        border-top: none;
+        margin-top: -340px;
+        margin-left: 309px;
+        font-size: 13px;
+        .feedbody{
+            margin-top: 20px;
+            text-align: center;
+             .wancheng{
+            margin-left: 13px;
+            margin-top: 20px;
+            color:#2693d4;
+            border: #2693d4 1px solid;
+            background: #fff;
+            padding: 10px 40px;
+            border-radius: 5px;
+            font-size: 20px;
+             &:hover{
+                text-decoration: none;
+            }
+        }
+        .shibai{
+            margin-left: 13px;
+            margin-top: 20px;
+            color:#2693d4;
+            border: #2693d4 1px solid;
+            background: #fff;
+            padding: 10px 40px;
+            border-radius: 5px;
+            font-size: 20px;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+        }
+        .feedheader{
+            width: 453px;
+            height: 55px;
+            background: #f8f8f8;
+        }
+        p{
+            margin-left: 30px;
+            line-height: 55px;
+        }
+        .clean{
+            margin-left: 323px;
+            line-height: 55px;
+             &:hover{
+                text-decoration: none;
+            }
+        }
+        .lagefeed{
+            font-size:20px;
+             margin-left: 35px;
+        }
+        .lagefeedI{
+            font-size: 15px;
+              margin-left: 35px;
+            color:#666666;
+        }
+        .lagefeedII{
+        margin-left: 35px;
+            font-size: 15px;
+            color:#2693d4;
+            margin-top: 20px;
+        }
+    }
       .we-pay{
         width: 220px;
         height: 240px;
@@ -106,7 +191,7 @@ export default {
         border-top: none;
         margin-top: -340px;
         margin-left: 439px;
-        font-size: 13px;
+        font-size: 15px;
         span{
             width: 115px;
             height: 111px;

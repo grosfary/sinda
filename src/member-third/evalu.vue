@@ -6,9 +6,9 @@
         </div>
         <div class='content'>
           <div>
-            <div :class='index==1?"notapp":"havebeen"' @click='appraise(1)'>未评价</div>
+            <a href="#/member/myYing"><div class='havebeen'>未评价</div></a>
             <a class='notappa' v-show = 'notappa'></a>
-            <a href="#/member/evalu"><div class='havebeen'>已评价</div></a>
+            <div class='notapp'>已评价</div>
             <a class='notappb' v-show='notappb'></a>
           </div>
           <div class='details'>
@@ -19,7 +19,7 @@
               <div>购买内容：</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
-            <a href="/#/member/center"><button>去评价</button></a>
+            <button>已评价</button>
           </div>
         </div>
       </div>
@@ -30,29 +30,17 @@
 import member from "../views/sinda_member";
 import {formatDate} from '../../config/date';
 export default {
-      filters: {
+       filters: {
         formatDate(time) {
             var date = new Date(time);
             return formatDate(date, 'yyyy-MM-dd hh:mm');
         }
     },
-  methods:{
-    appraise:function(index){
-      this.index=index;
-      if(this.index==1){
-        this.notappa=true
-        this.notappb=false
-      }else{
-        this.notappb=true
-        this.notappa=false
-      }
-    }
-  },
   data() {
     return {
       index:1,
-      notappb:false,
-      notappa:true
+      notappb:true,
+      notappa:false
     };
   },
   components: { member }
@@ -61,7 +49,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-
   .assess{
     width:875px;
     height:34px;
@@ -86,19 +73,27 @@ export default {
     margin-left:521px;
     .details{
       width:100%;
-      height:144px;
+      height:153px;
       background:#fff;
+      margin-top:5px;
       .box{
         width:101px;
-        height:93px;
+        height:102px;
         margin-left:10px;
         margin:25px 10px;
         background:#fff;
         border-bottom:0;
+          .date{
+            width:144px;
+            height:39px;
+            border:1px solid #000;
+            margin-top:-72px;
+            margin-left:179px;
+          }
         div{
           background:#fff;
           width:100%;
-          height:46px;
+          height:51px;
           margin-top:0;
           border:0;
           color:#000;
@@ -114,23 +109,15 @@ export default {
         width:283px;
         line-height:102px;
         color:#000;
-          .date{
-            width:144px;
-            height:39px;
-            border:1px solid #000;
-            margin-top:-72px;
-            margin-left:179px;
-          }
       }
       button{
         width:115px;
         height:39px;
-        border:1px solid #2392d7;
-        border-radius:4px;
+        border-radius:6px;
         margin-left:140px;
         margin-top:55px;
-        background:#fff;
-        color:#2392d7;
+        border:0;
+        color:#fff;
       }
       }
     div{

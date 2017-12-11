@@ -32,20 +32,20 @@
             <span></span>
         </div>
         <div class="iamges">
-            <span class="iamgeI"><p id="gs" v-on:mouseover='gs' v-on:mouseout='gss'>工商注册RIGISTERED</p> </span>
-            <span class="iamgeII"><p id="cw" v-on:mouseover='cs' v-on:mouseout='css'>财税服务SERVICECER</p></span>
-            <span class="iamgeIII"><p id="zs" v-on:mouseover='zs' v-on:mouseout='zss'>知识产权INTELLECTAULPROPERTY</P></span>
-            <span class="iamgeIV"><P id="hr" v-on:mouseover='hr' v-on:mouseout='hrs'>人力外包 HR&nbspOUTSOURCING</P></span>
+            <span class="iamgeI"><p id="gs"   @mouseover="gs">工商注册RIGISTERED</p> </span>
+            <span class="iamgeII"><p id="cw"  @mouseover="cs">财税服务SERVICECER</p></span>
+            <span class="iamgeIII"><p id="zs"  @mouseover="zs">知识产权INTELLECTAULPROPERTY</P></span>
+            <span class="iamgeIV"><P id="hr"   @mouseover="hr">人力外包 HR&nbspOUTSOURCING</P></span>
         </div>
         <p class="footer-lage">我们需要什么样的服务商?</p>
         <div class="lagess">
-        <p class="GS bodybox" id="gsbox">在公司注册、公司变更、资质审批等领域深耕多年，在业内享有一定的知名度，可以提供优质优价的服务；<br>
+        <p class="GS bodybox" id="gsbox" v-if="gsbox">在公司注册、公司变更、资质审批等领域深耕多年，在业内享有一定的知名度，可以提供优质优价的服务；<br>
 与时俱进，视野立足未来，了解创业者的需求，并乐于为创业者服务。</p>
-        <p class="CS bodybox" id="csbox" style="display:none">在代理记账、审计验资等领域深耕多年，可以提供涉足各个行业优秀的财会人员；<br>
+        <p class="CS bodybox" id="csbox" v-if="csbox">在代理记账、审计验资等领域深耕多年，可以提供涉足各个行业优秀的财会人员；<br>
 与时俱进，视野立足未来，了解创业者的需求，并乐于为创业者服务。</p>
-        <p class="ZS bodybox" id="zsbox" style="display:none">在商标注册，版权专利，著作权等领域深耕多年，具有丰富的知识产权经验；<br>
+        <p class="ZS bodybox" id="zsbox" v-if="zsbox">在商标注册，版权专利，著作权等领域深耕多年，具有丰富的知识产权经验；<br>
 与时俱进，视野立足未来，了解创业者的需求，并乐于为创业者服务。</p>
-        <p class="HR bodybox" id="hrbox" style="display:none">在人事代理、企业社保、个人社保等领域深耕多年，具有丰富的社保代理经验。</p>
+        <p class="HR bodybox" id="hrbox" v-if="hrbox">在人事代理、企业社保、个人社保等领域深耕多年，具有丰富的社保代理经验。</p>
         </div>
     </div>
 </template>
@@ -55,50 +55,43 @@ import sinda_header from "../components/sinda_global_header";
 import sinda_footer from "../components/sinda_global_footer";
 export default {
   data() {
-    return {};
+    return {
+      gsbox:true,
+      csbox:false,
+      hrbox:false,
+      zsbox:false,
+    };
   },
   components: { sinda_header, sinda_footer },
   methods: {//底部动态效果，鼠标上浮文字内容显示，移走消失
-    gs: function() {
-      var gs = document.getElementById('gs');
-      var gsbox = document.getElementById('gsbox');
-      gsbox.style.display="block";
-      },
-      gss:function(){
-      var gs = document.getElementById('gs');
-      var gsbox = document.getElementById('gsbox');
-      gsbox.style.display="none";
-      },
-       cs: function() {
-      var gs = document.getElementById('cs');
-      var gsbox = document.getElementById('csbox');
-      csbox.style.display="block";
-      },
-      css:function(){
-      var css = document.getElementById('cs');
-      var cssbox = document.getElementById('csbox');
-      cssbox.style.display="none";
-      },
-      zs: function() {
-      var zs = document.getElementById('zs');
-      var zsbox = document.getElementById('zsbox');
-      zsbox.style.display="block";
-      },
-      zss:function(){
-      var zss = document.getElementById('zs');
-      var zssbox = document.getElementById('zsbox');
-      zssbox.style.display="none";
-      },
-       hr: function() {
-      var hr = document.getElementById('hr');
-      var hrbox = document.getElementById('hrbox');
-      hrbox.style.display="block";
-      },
-     hrs:function(){
-      var hrs = document.getElementById('hr');
-      var hrsbox = document.getElementById('hrbox');
-      hrsbox.style.display="none";
-      }
+    gs:function(){
+      if( this.gsbox=true){
+        this.zsbox=false;
+        this.hrbox=false;
+        this.csbox=false;
+       }
+    },
+     cs:function(){
+        if( this.csbox=true){
+        this.gsbox=false;
+        this.hrbox=false;
+        this.zsbox=false;
+     }
+    },
+    zs:function(){
+       if( this.zsbox=true){
+        this.gsbox=false;
+        this.hrbox=false;
+        this.csbox=false;
+       }
+    },
+    hr:function(){
+       if( this.hrbox=true){
+        this.gsbox=false;
+        this.zsbox=false;
+        this.csbox=false;
+       }
+    }
   }
 };
 </script>

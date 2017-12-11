@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-      <div class="top">
+      <div class="top clear">
         <div class='assess'>
           <div>我的订单</div>
         </div>
@@ -11,8 +11,8 @@
           </div>
           <div class='inputf'>
             <div>
-              <input type="text" class='input' placeholder="请输入订单号查询">
-              <input type="submit" class='submit'>
+              <input type="text" class='input' placeholder="请输入订单号查询" v-model="number">
+              <input type="submit" class='submit' @click='num'>
               </div>
             <div class='date'><input type="date"><input type="date" class='data'></div>
           </div>
@@ -24,21 +24,21 @@
             <div class='state'><div>订单状态</div></div>
             <div class='operation'><div>订单操作</div></div>
           </div>
-        <div>
+        <div  v-for='(product,abj) in products' :key='product.rData'>
           <div class='wares'>
               <input type='checkbox' class='checkbox'>
-              <span>订单号：</span>
+              <span>订单号：{{getNum}}</span>
             <div>
-              <span>下单时间：</span>
+              <span class='floot'>下单时间：</span>
             </div>
           </div>
           <div>
-            <div class='deta'  v-for='(product,abj) in products' :key='product.rData'>
-              <div class='name'><div>{{product.id}}</div></div>
-              <div class='unit'><div>{{product.level}}</div></div>
-              <div class='num'><div>{{product.name}}</div></div>
-              <div class='sum'><div >{{product.parentId}}</div></div>
-              <div class='state'><div>{{product.regionCode}}</div></div>
+            <div class='deta'>
+              <div class='name'><div>{{product.buyNum}}</div></div>
+              <div class='unit'><div>{{product.price}}</div></div>
+              <div class='num'><div>{{product.marketPrice}}</div></div>
+              <div class='sum'><div >{{product.regionId}}</div></div>
+              <div class='state'><div>{{product.unit}}</div></div>
               <div class='operation'>
                 <div>
                   <a href="#/line_item"><input type="submit" class='pay' value="付款"></a>
@@ -48,9 +48,15 @@
             </div>
             </div>
           </div>
+          <div class='inputcopy'>
+            <input type="submit" class='previous' value='上一页' @click='previous'>
+            <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click = 'skip(bum)'>{{button}}</div>           
+            <input type="submit" class='next' value='下一页' @click='next'>
+          </div>
+          
         </div>
       </div>
-     <div class='aaa' v-show='show'>
+     <div class='informations' v-show='show'>
       <div class='hint'>
         <div class='infor'>
             <div class='for'>信息</div>
@@ -67,6 +73,7 @@
 </template>
 <script>
 import member from "../views/sinda_member";
+import {mapGetters} from "vuex";
 export default {
   methods:{
       hidedate:function(){
@@ -81,15 +88,64 @@ export default {
       },
       submit:function(index){
         this.index=index;
-      }
+      },
+      previous:function(){
+        if(this.col==0){
+          this.col = 0;
+        }else{
+          this.col=this.col-1;
+        }
+      },
+      next:function(){
+        if(this.col==this.abb-1){
+          this.col=this.col;
+        }else{
+          this.col=this.col+1;
+        }
+      },
+      num:function(){
+            var that = this;
+            this.ajax.post('/xinda-api/product/package/grid',{businessNo:that.number}).then(function(data){
+            var rData = data.data.data;
+            that.products = [];
+            that.products.push(rData);
+          })
+      },
+         skip:function(bum){
+           var array=[];
+           this.product = [];//清除数据
+            if(this.abb*2-1==this.bum){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.products[this.abb*2-2])//添加数据
+            }else{
+              console.log(this.products)
+              array.push(this.products[(bum+1)*2-2]);
+              array.push(this.products[(bum+1)*2-1]);//添加数据
+              console.log(array)
+            }
+              this.products.concat(array);//将所有数据添加
+              this.col=bum
+            }
   },
   created(){
-    var that = this;
-    this.ajax.post('/xinda-api/common/select-region',{}).then(function(data){
-      var rData = data.data.data;
-      // that.products = rData;
-      that.products.push(rData);
-    })
+      var that = this;
+      this.ajax.post('/xinda-api/product/package/grid',{}).then(function(data){
+        var rData = data.data.data;//所需的数据
+        // that.products = rData;
+        if(rData.length>2){//判断数据是否大于2
+          var arr = []
+          arr.push(rData[0]);//一二条数据相加
+          arr.push(rData[1]);
+          that.products=arr;
+          var numeral = Math.ceil(rData.length/2);//判断应该产生多少按钮
+          for(let i=1;i<=numeral;i++){//循环button按钮
+              that.buttons.push(i)//每个按钮编号
+            }
+          that.abb=numeral;//按钮号
+        }else{
+          that.products=rData;//小于二时，将所有数据添加
+        
+        }
+      })
     },
 
   data() {
@@ -99,7 +155,16 @@ export default {
       index:'',
       show:false,
       abj:'',
+      number:'',
+      numeral:'',
+      buttons:[],
+      bum:'',
+      abb:'',
+      col:0
       }
+},
+computed:{
+  ...mapGetters(['getNum'])
 },
   components: { member },
 
@@ -107,7 +172,47 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.aaa{
+.clear:after{               /*清除浮动*/
+    content: '';
+    display: block;
+    clear: both;
+}
+.inputcopy{
+  display:flex;
+  margin-left:305px;
+  margin-top:36px;
+  input{
+    background:#fff;
+    border:1px solid #ccc;
+  }
+  .page{
+  width:39px;
+  height:34px;
+  color:#2592d3;
+  line-height:34px;
+  margin-left:10px;
+  text-indent:11px;
+  border:1px solid #2592d3;
+}
+  .pages{
+  width:39px;
+  height:34px;
+  color:#ccc;
+  line-height:34px;
+  margin-left:10px;
+  text-indent:11px;
+  border:1px solid #ccc;
+}
+}
+.previous{
+  width:68px;
+  height:36px;
+}
+.next{
+  .previous;
+  margin-left:10px;
+}
+.informations{
   width:100%;
   height:100%;
   left: 0;
@@ -202,7 +307,6 @@ export default {
   }
   .order{
     width:877px;
-    height: 114px;
     float:left;
     margin-top:-438px;
     margin-left:541px;
@@ -228,6 +332,8 @@ export default {
   width:265px;
   height:25px;
   float:left;
+  margin-top:0;
+  margin-left:0;
 }
 .submit{
   width:71px;
@@ -237,6 +343,8 @@ export default {
   background:#fff;
   border:1px solid #2693d4;
   border-radius:2px;
+  margin-top:1px;
+  margin-left:17px;
 }
 .date{
   width:287px;
@@ -297,6 +405,7 @@ export default {
    border:1px solid #e8e8e8;
    div{
      width:200px;
+     margin-left:20px;
    }
    input{
      margin-top:1px;
