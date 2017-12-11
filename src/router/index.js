@@ -20,6 +20,7 @@ import member from '../views/sinda_member' //会员中心
 import myYing from '../member-third/myYing' //会员中心
 import center from '../member-third/center' //会员中心
 import toeveluete from '../member-third/toeveluete' //会员中心
+import evalu from '../member-third/evalu' //会员中心
 import setting from '../member-third/setting' //会员中心
 import modify from '../member-third/modify' //会员中心
 import Join_Us from '../stores/Join_Us' //加盟我们
@@ -104,8 +105,8 @@ export default new Router({
               component: setting
             },
             {
-              path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
-              component: setting
+              path: 'evalu', //账户设置三级页   如 http://localhost:8081/#/member/evalu
+              component: evalu
             },
             {
               path: 'modify', //修改密码三级页   如 http://localhost:8081/#/member/modify

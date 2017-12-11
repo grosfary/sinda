@@ -71,8 +71,7 @@ export default {
     },
     getCode: function() {
       this.setNum(0);
-      this.ajax
-        .post(
+      this.ajax.post(
           "/xinda-api/register/sendsms",
           this.qs.stringify({
             cellphone: this.phone,

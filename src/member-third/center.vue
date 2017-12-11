@@ -1,12 +1,13 @@
 <template>
-    <div class="hello">
-      <div class='top'>
+<div class="hello">
+  <div class='top'>
     <div class='assess'>
           <div>评价</div>
-        </div>
+    </div>
+    <div>
     <div class='evaluate'>
       <div>
-        <span>服务单号：</span>
+        <span>服务单号：{{getNum}}</span>
         <span></span>
       </div>
       <div>
@@ -40,25 +41,38 @@
       <textarea class='textarea'></textarea>   
     </div>
     <div class='sub'>
-      <input type='submit' class='judge'></input>
+      <a href="#/member/evalu"><input type='submit' class='judge'></input></a>
     </div>
-      </div>
-        
-    </div>
+   </div>    
+  </div>
+</div>
 </template>
 <script>
 import member from "../views/sinda_member";
+import {mapGetters} from "vuex";
 export default {
   data() {
     return {
-      index:-1
+      index:-1,
+      buys:[]
     };
+  },
+  computed:{
+    ...mapGetters(['getNum'])
   },
   components: { member },
   methods:{
     image:function(index){
-    this.index = index;
-    }
+        this.index = index;
+    },
+  },
+  created(){
+    var that = this;
+    this.ajax.post('/xinda-api/business-order/detail',{}).then(function(data){
+      var Data=data.data.data
+      console.log(data)
+      that.buys.push(Data)
+    })
   }
 
 };
