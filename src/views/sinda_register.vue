@@ -63,13 +63,31 @@ export default {
   },
   methods: {
     ...mapActions(["setNum", "setloginState"]),
-    selected: function(data) {
+    selected(data) {
       this.distCode = data.area.code;
     },
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    getCode: function() {
+    getCode() {
+      if (this.phone != "") {
+        if (this.imgReflash != "") {
+          var count = 60;
+          var dic = setInterval(function() {
+            count--;
+            按钮.disabled = true; //按钮不可点击
+            按钮.innerHTML = 重新获取 + "count";
+            样式;
+            if (count == 1) {
+              clearInterval(dic);
+              按钮.innerHTML = 点击获取;
+              按钮.disabled = false; //按钮可点击
+              样式;
+            }
+          }, 1000);
+        }
+      } else {
+      }
       this.setNum(0);
       this.ajax
         .post(
@@ -84,13 +102,13 @@ export default {
           console.log(data);
         });
     },
-    onBlur: function() {
+    onBlur() {
       if (/^1[34578]\d{9}/.test(this.phone)) {
       } else {
         this.boxTC = true;
       }
     },
-    onBlurI: function() {
+    onBlurI() {
       if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
       } else {
         this.boxPC = true;
@@ -110,10 +128,13 @@ export default {
         )
         .then(data => {
           console.log("注册提交", data.data.msg, data.data.status);
+          if (status == 1) {
+            this.$router.push({ path: "/LoginRegister/login" });
+          }
         });
     }
   },
-  created: function() {
+  created() {
     this.setloginState("注册");
   },
   components: { LRhead, VDistpicker }
