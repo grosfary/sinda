@@ -18,7 +18,19 @@
             <input class="boxI" type="text" placeholder=" 请输入验证码">
             <button @click="getCode">点击获取</button>
           </div>
-          <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker>
+          <!-- <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker> -->
+          <select name="" class="province" @change="proChange" v-model="province">
+            <option value="0">省</option>
+            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
+          </select>
+          <select name="" class="city" @change="cityChange" v-model="city">
+            <option value="0">市</option>
+            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
+          </select>
+          <select name="" class="area" v-model="area">
+            <option value="0">区</option>
+            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
+          </select>
           <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
           <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
           <button class="boxIII" @click="iregister">立即注册</button>
@@ -41,7 +53,8 @@
 
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
-import VDistpicker from "v-distpicker";
+// import VDistpicker from "v-distpicker";
+import dist from "../districts/districts";
 import { mapActions } from "vuex";
 var md5 = require("md5");
 export default {
@@ -54,15 +67,26 @@ export default {
       boxPasw: "",
       boxPC: false,
       distCode: "",
-      placeholders: {
-        province: " 省 ",
-        city: " 市 ",
-        area: " 区 "
-      }
+      provinces: dist[100000],
+      citys: [],
+      areas: [],
+      province: "0",
+      city: "0",
+      area: "0"
     };
   },
   methods: {
     ...mapActions(["setNum", "setloginState"]),
+    proChange() {
+      this.city = "0";
+      this.area = "0";
+      if (this.province != "0") {
+        this.citys = dist[this.province];
+      }
+    },
+    cityChange() {
+      this.areas = dist[this.city];
+    },
     selected(data) {
       this.distCode = data.area.code;
     },
@@ -89,7 +113,8 @@ export default {
       } else {
       }
       this.setNum(0);
-      this.ajax.post(
+      this.ajax
+        .post(
           "/xinda-api/register/sendsms",
           this.qs.stringify({
             cellphone: this.phone,
@@ -136,12 +161,26 @@ export default {
   created() {
     this.setloginState("注册");
   },
-  components: { LRhead, VDistpicker }
+  components: { LRhead }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.province,
+.city,
+.area {
+  height: 35px;
+  width: 90px;
+  font-size: 0.9rem;
+  margin-bottom: 26px;
+  option {
+    height: 35px;
+    width: 90px;
+    font-size: 0.9rem;
+    margin-bottom: 26px;
+  }
+}
 .hello {
   background-color: #f5f5f5;
 }
