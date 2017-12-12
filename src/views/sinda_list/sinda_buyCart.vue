@@ -101,11 +101,6 @@ export default {
     this.setlistName("购物车");
     this.ajax
       .post(
-<<<<<<< HEAD
-        "/xinda-api/cart/list",
-        this.qs.stringify({
-          // sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
-=======
         //列表商品
         "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
         this.qs.stringify({
@@ -114,7 +109,6 @@ export default {
           productTypeCode: "1",
           productId: "8a82f52b674543e298d2e5f685946e6e",
           sort: 2
->>>>>>> b4b890d08acfa1886dc4b8f0b45872b770bfc2fd
         })
       )
       .then(data => {
