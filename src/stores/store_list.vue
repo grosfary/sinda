@@ -2,7 +2,7 @@
     <div class="body">
         
         <div class="header"><!--头部盒子-->
-            <a href="#">首页/店铺列表</a><!--头部文字-->
+            <a href="http://localhost:8080/#/Join_Us">首页/店铺列表</a><!--头部文字-->
             <div class="header-boxI">
                 <span>服务区域</span><!--服务区域-->
                 <v-distpicker class="sanji" province="北京市" city="市辖区" area=""></v-distpicker><!--省市区三级联动-->
@@ -36,7 +36,7 @@
              <p>累计客户服务次数:{{order}}</p>
              <p class="biaoqian" style="display:inline" v-for="pro in pro" :key="pro.id">{{pro}}</p>
              </div>
-             <button>进入店铺</button><!--点击按钮-->
+             <button @click="open">进入店铺</button><!--点击按钮-->
            </div>
            <div class="listII">
              <div class="imageII"><!--图片盒子-->
@@ -50,7 +50,7 @@
             <p>累计客户服务次数：{{orders}}</p>
               <p  class="biaoqianI" style="display:inline" v-for="pros in pros" :key="pros.id">{{pros}}</p>
               </div>
-              <button>进入店铺</button><!--点击按钮-->
+              <button @click="open">进入店铺</button><!--点击按钮-->
            </div>
           </div>
          
@@ -128,7 +128,12 @@ export default {
       providerImgs:[],
           };
   },
-  components: { sinda_header, sinda_footer, VDistpicker }
+  components: { sinda_header, sinda_footer, VDistpicker },
+  methods:{
+    open:function(){
+    location.href="http://localhost:8080/#/shop";
+    }
+  }
 };
 </script>
 

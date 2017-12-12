@@ -83,7 +83,6 @@ export default {
       }
     },
     iLogin() {
-      // this.$router.push({ path: "/" });
       this.ajax
         .post(
           "/xinda-api/sso/login",
