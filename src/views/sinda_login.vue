@@ -48,7 +48,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setloginState"]),
+    ...mapActions(["setloginState","setuserName"]),
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
@@ -98,6 +98,7 @@ export default {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
           if (status == 1) {
+            this.setuserName(this.boxVal);
             this.$router.push({ path: "/" });
           }
         });
