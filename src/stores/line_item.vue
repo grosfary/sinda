@@ -36,7 +36,8 @@
             <p>金额总计：</p><br>
             <button @click="jiesuan">去结算</button>
         </div>
-        <div class="we-pay" id="weipay" v-if="weback">
+        <div class="bigbox" v-if="bigbox">
+            <div class="we-pay" id="weipay" v-if="weback">
                 <div class="pay-header">
                     <p class="lageheader">微信支付</p>
                     <p class="cha" @click='cha'>X</p>
@@ -47,8 +48,8 @@
                 <div class="payfangshi">
                 <a href="javascript:void(0)" id="success" @click="success">已完成支付</a><a href="javascript:void(0)" id="failure" @click="failure">支付遇到问题</a>
                 <a class="footerlage" @click='cha'>返回重新选择支付方式</a>
-                </div>
-                
+                </div>  
+            </div>
         </div>
         <div class="feedback" v-if="feedback">
                     <div class="feedheader">
@@ -74,6 +75,7 @@ export default {
     return {
         weback:false,
         feedback:false,
+        bigbox:false,
     };
     
   },
@@ -81,6 +83,7 @@ export default {
   methods:{
       cha:function(){
           this.weback=false;
+          this.bigbox=false;
       },
     success:function(){
     location.href="http://localhost:8080/#/payment/success"
@@ -91,12 +94,15 @@ export default {
     jiesuan:function(){
         if(wechat.checked==true){
         this.weback=true;
+        this.bigbox=true;
         }else if(bank.checked==true||alipay.checked==true){
             this.feedback=true;
+             this.bigbox=true;
         }
     },
     clean:function(){
         this.feedback=false;
+        this.bigbox=false;
     }
   
   }
@@ -117,9 +123,10 @@ export default {
         border:1px solid #ccc;
         border-left: none;
         border-top: none;
-        margin-top: -340px;
+        margin-top: -300px;
         margin-left: 309px;
         font-size: 13px;
+        position:relative;
         .feedbody{
             margin-top: 20px;
             text-align: center;
@@ -182,6 +189,15 @@ export default {
             margin-top: 20px;
         }
     }
+    .bigbox{
+        width:1000px;
+        height:305px;
+        // background:#000;
+        margin-top: -340px;
+        margin-left: 0px;
+        position:absolute
+        
+    }
       .we-pay{
         width: 220px;
         height: 240px;
@@ -189,9 +205,9 @@ export default {
         border:1px solid #ccc;
         border-left: none;
         border-top: none;
-        margin-top: -340px;
         margin-left: 439px;
         font-size: 15px;
+         position:relative;
         span{
             width: 115px;
             height: 111px;

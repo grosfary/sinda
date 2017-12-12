@@ -96,7 +96,7 @@ export default {
       })
       .then(function(data) {
         var list = data.data.data;
-        console.log(list);
+        // console.log(list);
         var list0 = list[0];
         that.pro = list0.productTypes.split(",");
         that.order=list0.orderNum;
@@ -109,8 +109,8 @@ export default {
         that.regions=listI.regionName;
         that.pros=listI.productTypes.split(",");
         that.providerImgs='http://115.182.107.203:8088/xinda/pic'+listI.providerImg;//数据图片
-        console.log(that.pro);
-        console.log(that.providerImg);
+        // console.log(that.pro);
+        // console.log(that.providerImg);
       });
   },
   data() {
@@ -133,6 +133,9 @@ export default {
     open:function(){
     location.href="http://localhost:8080/#/shop";
     }
+  },
+  linehead:function(){
+   
   }
 };
 </script>
