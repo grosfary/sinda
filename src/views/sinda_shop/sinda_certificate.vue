@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import shop from "../sinda_shop";
+
 export default {
   data() {
     return {

@@ -20,7 +20,7 @@
           <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
           <input class="boxII" type="password" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
           <p class="boxpasI" v-show="boxPCI">*您输入的密码不正确</p>
-          <button class="boxIII">确认修改</button>
+          <button class="boxIII" @click="affirm">确认修改</button>
         </div>
         <p class="division"></p>
         <!-- 中间分割线 -->
