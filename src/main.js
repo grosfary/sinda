@@ -16,6 +16,7 @@ Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
 Vue.config.productionTip = false
 Vue.config.devtools = false //关闭vue提示
+
     /* eslint-disable no-new */
 new Vue({
     el: '#app',

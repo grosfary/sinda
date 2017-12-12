@@ -6,6 +6,7 @@ export default new Vuex.Store({
     num: 123,
     loginState: '',
     listName: 'listName',
+    userName: '',
   },
   mutations: { //突变集合
     SET_NUM(state, num) { // 购物车数量
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     },
     SET_LIST_NAME(state, listName) { // 当前列表页
       state.listName = listName;
+    },
+    SET_USER_NAME(state, userName) { // 当前用户
+      state.userName = userName;
     }
   },
   actions: { //操作集合
@@ -33,11 +37,17 @@ export default new Vuex.Store({
       commit
     }, listName) {
       commit('SET_LIST_NAME', listName);
+    },
+    setuserName({
+      commit
+    }, userName) {
+      commit('SET_USER_NAME', userName);
     }
   },
   getters: { //显示集合
     getNum: state => state.num,
     getloginState: state => state.loginState,
-    getlistName: state => state.listName
+    getlistName: state => state.listName,
+    getuserName: state => state.userName
   }
 });

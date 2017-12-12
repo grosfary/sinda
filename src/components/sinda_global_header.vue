@@ -52,7 +52,7 @@
       <!-- 头部导航栏部分 -->
       <ul>
         <li>
-          <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }" @click="a(index)">
+          <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index  ) }" @click="a(index)">
             <span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span>
             <span v-else>{{ind.name}}</span>
           </a>

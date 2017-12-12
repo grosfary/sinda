@@ -33,7 +33,7 @@
           </li>
           <li>
             <button>立即购买</button>
-            <button>加入购物车</button>
+            <button @click="cartAdd">加入购物车</button>
           </li>
         </ul>
       </div>
@@ -84,6 +84,19 @@ export default {
     ...mapActions(["setlistName"]),
     titleBg: function(index) {
       this.nowIndex = index;
+    },
+    cartAdd() {
+      this.ajax
+        .post(
+          "/xinda-api/cart/add",
+          this.qs.stringify({
+            id: "0cb85ec6b63b41fc8aa07133b6144ea3",
+            num: 1
+          })
+        )
+        .then(data => {
+          console.log(data)
+        });
     }
   },
   created() {
@@ -198,7 +211,7 @@ export default {
 .banner {
   // 广告栏
   background: url("../../assets/pc/waiguoren.jpg") 0 0 no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%;                                                                                                                              
   height: 98px;
   margin-top: 22px !important;
   margin-bottom: 38px !important;

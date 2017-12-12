@@ -18,9 +18,9 @@ export default {
     this.setlistName("购物车");
     this.ajax
       .post(
-        "/xinda-api/product/package/detail",
+        "/xinda-api/cart/list",
         this.qs.stringify({
-          sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
+          // sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
         })
       )
       .then(data => {
