@@ -28,12 +28,12 @@
           </li>
           <li>地　区：{{regionText}}</li>
           <li>购买数量：
-            <button>-</button><input type="text" value="1">
-            <button>+</button>
+            <button @click="nSub">-</button><input type="text" v-model="number" readonly="readonly">
+            <button @click="nAdd">+</button>
           </li>
           <li>
             <button>立即购买</button>
-            <button>加入购物车</button>
+            <button @click="cartAdd">加入购物车</button>
           </li>
         </ul>
       </div>
@@ -77,13 +77,36 @@ export default {
       },
       product: {},
       providerProduct: {},
-      regionText: {}
+      regionText: {},
+      number: 1
     };
   },
   methods: {
     ...mapActions(["setlistName"]),
     titleBg: function(index) {
       this.nowIndex = index;
+    },
+    cartAdd() {
+      // 加入购物车按钮
+      this.ajax
+        .post(
+          "/xinda-api/cart/add",
+          this.qs.stringify({
+            id: this.$route.query.id,
+            num: this.number
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
+    },
+    nAdd() {
+      this.number += 1;
+    },
+    nSub() {
+      if (this.number > 1) {
+        this.number -= 1;
+      }
     }
   },
   created() {
@@ -93,7 +116,7 @@ export default {
       .post(
         "/xinda-api/product/package/detail",
         this.qs.stringify({
-          sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
+          sId: this.$route.query.id
         })
       )
       .then(data => {

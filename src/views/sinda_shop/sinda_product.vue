@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import shop from "../sinda_shop";
+
 export default {
   created(){
     var that=this;

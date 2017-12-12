@@ -17,10 +17,10 @@
             <button>点击获取</button>
           </div>
           <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入新密码">
-          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <input class="boxII" type="password" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
-          <p class="boxpasI" v-show="boxPCI">*您输入的密码不正确</p>
-          <button class="boxIII">确认修改</button>
+          <p class="boxpasI" v-show="boxPCI">*两次输入密码不一致</p>
+          <button class="boxIII" @click="affirm">确认修改</button>
         </div>
         <p class="division"></p>
         <!-- 中间分割线 -->
@@ -56,6 +56,7 @@ export default {
     },
     onBlur: function() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+        this.boxTC = false;
       } else {
         this.boxTC = true;
       }
@@ -64,7 +65,12 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^([a-zA-Z]\w){6,20}$/.test(this.boxPasw)) {
+      if (
+        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
+        this.boxPC = false;
       } else {
         this.boxPC = true;
       }
@@ -73,7 +79,8 @@ export default {
       var pw = this.boxPaswI;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPaswI)) {
+      if (this.boxPaswI == this.boxPasw) {
+        this.boxPCI = false;
       } else {
         this.boxPCI = true;
       }
@@ -92,10 +99,19 @@ export default {
         .then(data => {
           console.log(data);
         });
+    },
+    affirm() {
+      this.ajax.post("/xinda-api/register/findpas"),
+        this.qs.stringify({
+          cellphone:this.boxVal,
+          smsType: 1,
+          validCode: gb4n,
+          password: this.boxPasw
+        });
     }
   },
   components: { LRhead }
-};
+};                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

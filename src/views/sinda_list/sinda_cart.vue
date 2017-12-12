@@ -7,6 +7,7 @@
       <div class="hot_server">
           <p>热门服务</p>
           <span></span>
+          <div> </div>
       </div>
   </div>
 </template>
