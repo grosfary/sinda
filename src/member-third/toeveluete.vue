@@ -14,7 +14,10 @@
               <input type="text" class='input' placeholder="请输入订单号查询" v-model="number">
               <input type="submit" class='submit' @click='num'>
               </div>
-            <div class='date'><input type="date"><input type="date" class='data'></div>
+            <div class='date'>
+              <input type="date" v-on:change='change' v-model='changes' min="2015-11-25T00:00">
+              <input type="date" class='data' v-on:change='onchange' v-model='onchanges'>
+            </div>
           </div>
           <div class='details'>
             <div class='name'><div>商品名称</div></div>
@@ -76,6 +79,12 @@ import member from "../views/sinda_member";
 import {mapGetters} from "vuex";
 export default {
   methods:{
+    change:function(){
+      console.log(this.changes)
+    },
+    onchange:function(){
+      console.log(this.onchanges)
+    },
       hidedate:function(){
         this.show = false
         this.products.splice(this.abj,1)
@@ -89,11 +98,20 @@ export default {
       submit:function(index){
         this.index=index;
       },
-      previous:function(){
+      previous:function(bum){
         if(this.col==0){
           this.col = 0;
         }else{
           this.col=this.col-1;
+            var array=[];
+           this.product = [];//清除数据
+            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[this.abb*2-2])//添加数据
+            }else{
+              array.push(this.rData[(this.col+1)*2-2]);
+              array.push(this.rData[(this.col+1)*2-1]);//添加数据
+            }
+              this.products=array;//将所有数据添加
         }
       },
       next:function(){
@@ -101,6 +119,15 @@ export default {
           this.col=this.col;
         }else{
           this.col=this.col+1;
+            var array=[];
+           this.product = [];//清除数据
+            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[this.abb*2-2])//添加数据
+            }else{
+              array.push(this.rData[(this.col+1)*2-2]);
+              array.push(this.rData[(this.col+1)*2-1]);//添加数据
+            }
+              this.products=array;//将所有数据添加
         }
       },
       num:function(){
@@ -115,34 +142,32 @@ export default {
            var array=[];
            this.product = [];//清除数据
             if(this.abb*2-1==this.bum){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.products[this.abb*2-2])//添加数据
+              array.push(this.rData[this.abb*2-2])//添加数据
             }else{
-              console.log(this.products)
-              array.push(this.products[(bum+1)*2-2]);
-              array.push(this.products[(bum+1)*2-1]);//添加数据
-              console.log(array)
+              array.push(this.rData[(bum+1)*2-2]);
+              array.push(this.rData[(bum+1)*2-1]);//添加数据
             }
-              this.products.concat(array);//将所有数据添加
+              this.products=array;//将所有数据添加
               this.col=bum
             }
   },
   created(){
       var that = this;
       this.ajax.post('/xinda-api/product/package/grid',{}).then(function(data){
-        var rData = data.data.data;//所需的数据
+         that.rData = data.data.data;//所需的数据
         // that.products = rData;
-        if(rData.length>2){//判断数据是否大于2
+        if(that.rData.length>2){//判断数据是否大于2
           var arr = []
-          arr.push(rData[0]);//一二条数据相加
-          arr.push(rData[1]);
+          arr.push(that.rData[0]);//一二条数据相加
+          arr.push(that.rData[1]);
           that.products=arr;
-          var numeral = Math.ceil(rData.length/2);//判断应该产生多少按钮
+          var numeral = Math.ceil(that.rData.length/2);//判断应该产生多少按钮
           for(let i=1;i<=numeral;i++){//循环button按钮
               that.buttons.push(i)//每个按钮编号
             }
           that.abb=numeral;//按钮号
         }else{
-          that.products=rData;//小于二时，将所有数据添加
+          that.products=that.rData;//小于二时，将所有数据添加
         
         }
       })
@@ -160,7 +185,10 @@ export default {
       buttons:[],
       bum:'',
       abb:'',
-      col:0
+      col:0,
+      rData:[],
+      changes:'',
+      onchanges:'',
       }
 },
 computed:{
@@ -179,8 +207,8 @@ computed:{
 }
 .inputcopy{
   display:flex;
-  margin-left:305px;
   margin-top:36px;
+  justify-content: center;
   input{
     background:#fff;
     border:1px solid #ccc;
@@ -350,9 +378,6 @@ computed:{
   width:287px;
   height: 26px;
   margin-top:30px;
-  .data{
-    margin-left:16px;
-  }
 }
 .details{
   width:935px;
