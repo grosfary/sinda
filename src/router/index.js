@@ -42,88 +42,6 @@ Vue.use(Router)
 // , {
 //     
 export default new Router({
-<<<<<<< HEAD
-    routes: [{
-            path: '/',
-            name: 'sinda_global',
-            component: global,
-            children: [{
-                    path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
-                    component: index
-                }, {
-                    path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
-                    component: list,
-                    children: [{
-                        path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
-                        component: cart
-                    }, {
-                        path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
-                        component: pro
-                    }]
-                }, {
-                    path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us
-                    component: Join_Us
-                }, {
-                    path: 'line_item', //订单详情  如 http://localhost:8081/#/line_item
-                    component: line_item
-                }, {
-                    path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
-                    component: store_list
-                }, {
-                    path: 'shop',
-                    component: shop,
-                    redirect: 'shop/service',
-                    children: [{
-                        path: 'certificate',
-                        component: certificate,
-                    }, {
-                        path: 'product',
-                        component: product,
-                    }, {
-                        path: 'service',
-                        component: service,
-                    }]
-                }, {
-                    path: 'payment',
-                    component: payment,
-                    children: [{
-                        path: 'success',
-                        component: payment_success,
-                    }, {
-                        path: 'failure',
-                        component: payment_failure,
-                    }]
-                },
-                {
-                    path: 'member',
-                    component: member,
-                    children: [{
-                            path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/member/myYing
-                            component: myYing
-                        },
-                        {
-                            path: 'center', //会员中心三级页   如 http://localhost:8081/#/member/center
-                            component: center
-                        },
-                        {
-                            path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/member/toeveluete
-                            component: toeveluete
-                        },
-                        {
-                            path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
-                            component: setting
-                        },
-                        {
-                            path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
-                            component: setting
-                        },
-                        {
-                            path: 'modify', //修改密码三级页   如 http://localhost:8081/#/member/modify
-                            component: modify
-                        }
-                    ]
-                }
-=======
   routes: [{
       path: '/',
       name: 'sinda_global',
@@ -196,7 +114,6 @@ export default new Router({
             }
           ]
         }
->>>>>>> 9cce1d3db1a4a8ecb12b3e30933dc7a72566d824
 
             ]
         },

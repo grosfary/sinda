@@ -7,7 +7,7 @@
           <input class="boxT" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号码">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <input class="boxP" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
-          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <div>
             <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV">
             <div class="verify" @click="imgReflash">
@@ -69,6 +69,7 @@ export default {
     },
     onBlur: function() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+        this.boxTC = false;
       } else {
         this.boxTC = true;
       }
@@ -77,7 +78,8 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
+      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+        this.boxTC = false;
       } else {
         this.boxPC = true;
       }
@@ -196,11 +198,11 @@ export default {
   position: absolute;
 }
 .boxpas {
-  width: 150px;
+  width: 180px;
   color: #fb81fd;
-  font-size: 14px;
-  top: 69px;
-  left: 295px;
+  font-size: 12px;
+  top: 64px;
+  left: 285px;
   position: absolute;
 }
 .boxI {
