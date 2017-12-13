@@ -141,7 +141,7 @@ export default {
           productTypeCode: "0",
           productId: "0ed787f42fe94b30b85e6a88f56e4614",
           sort: 3
-        })
+        })   
       )
       .then(data => {
         this.Rdata = data.data.data;

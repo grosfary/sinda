@@ -13,11 +13,11 @@
 
 <script>
 if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-  window.location.href = "#/m.sinda";
+  // window.location.href = "#/m.sinda";
   var html = document.getElementsByTagName("html");
   html[0].style.fontSize = "625%";
 } else {
-  window.location.href = "#/";
+  // window.location.href = "#/";
 }
 // import sinda_top from "./components/sinda_top"; // 用变量sinda_top来接收sinda_top.vue里的html内容
 // import sinda_bottom from "./components/sinda_bottom"; // 作用同上
