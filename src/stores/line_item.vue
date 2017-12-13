@@ -6,9 +6,9 @@
             <span>订单详情</span>
       </div>
       <!-- 订单详情 -->
-      <div class="item-order-number">
+      <div class="itemorder">
           <p class="lage">订单编号:</p><span></span><p>创建时间：</p><p>订单总额：</p>
-          <div class="Details"> <span>订单明细</span></div>
+          <div class="Details"> <span @click="detail">订单明细</span></div>
          
       </div>
       <!-- 支付方式 -->
@@ -76,6 +76,7 @@ export default {
         weback:false,
         feedback:false,
         bigbox:false,
+
     };
     
   },
@@ -84,14 +85,14 @@ export default {
       cha:function(){
           this.weback=false;
           this.bigbox=false;
-      },
-    success:function(){
-    location.href="http://localhost:8080/#/payment/success"
-    },
-      failure:function(){
+        },
+        success:function(){
+        location.href="http://localhost:8080/#/payment/success"
+        },
+        failure:function(){
         location.href="http://localhost:8080/#/payment/failure"
-    },
-    jiesuan:function(){
+        },
+        jiesuan:function(){
         if(wechat.checked==true){
         this.weback=true;
         this.bigbox=true;
@@ -99,12 +100,14 @@ export default {
             this.feedback=true;
              this.bigbox=true;
         }
-    },
-    clean:function(){
+         },
+        clean:function(){
         this.feedback=false;
         this.bigbox=false;
+    },
+    detail:function(){
+       
     }
-  
   }
 };
 </script>
@@ -293,7 +296,7 @@ export default {
     }
 }
 // 订单详情样式
-.item-order-number{
+.itemorder{
     height: 60px;//盒子高度
     background: #f7f7f7;//背景颜色
     border:solid 1px #b6b6b6;//边框样式
