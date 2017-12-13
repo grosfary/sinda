@@ -68,18 +68,18 @@ export default {
       }
     },
     getcode() {
-      // this.ajax.post(
-      //   "/xinda-api/register/sendsms",
-      //   this.qs
-      //     .stringify({
-      //       cellphone: this.boxVal,
-      //       smsType: 1,
-      //       imgCode: this.imgV
-      //     }))
-      //     .then(data => {
-      //       console.log("点击验证码", data.data.msg, data.data.status);
-      //     }
-      // );
+      this.ajax.post(
+        "/xinda-api/register/sendsms",
+        this.qs
+          .stringify({
+            cellphone: this.boxVal,
+            smsType: 1,
+            imgCode: this.imgV
+          }))
+          .then(data => {
+            console.log("点击验证码", data.data.msg, data.data.status);
+          }
+      );
     },
     onBlurI: function() {
       var pw = this.boxPasw;
@@ -152,7 +152,7 @@ export default {
           "/xinda-api/register/findpas",
           this.qs.stringify({
             cellphone: this.boxVal,
-            smsType: 2,
+            smsType: 1,
             password: md5(this.boxPasw),
             validCode: 111111
           })
