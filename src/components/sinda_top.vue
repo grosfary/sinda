@@ -99,7 +99,7 @@ export default {
       this.ajax.post("/xinda-api/sso/login-info").then(data => {
         // 判断当前是否为登录状态
         this.state = data.data.status;
-        console.log(data.data)
+        console.log(data.data);
         if (this.state == 1) {
           this.setuserName(data.data.data.loginId);
         }
@@ -216,5 +216,4 @@ ul {
     z-index: 100;
   }
 }
-
 </style>

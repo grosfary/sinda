@@ -9,28 +9,19 @@
           <input class="box" @blur="onBlur" v-model="phone" type="tel" placeholder=" 请输入手机号">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <div class="verify">
-            <input class="boxI" type="text" v-model="imgCode" placeholder=" 请输入验证码">
+            <input class="boxI" type="text" v-model="imgCode" placeholder=" 请输入验证码" @blur="verCode">
+            <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
             <div class="verifyI" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <div class="acquire">
-            <input class="boxI" type="text" placeholder=" 请输入验证码">
+            <input class="boxI" type="text" placeholder=" 请输入验证码" v-model="sjCode" @blur="sjCodeI" @click="mobile">
+            <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
             <button @click="getCode">点击获取</button>
           </div>
           <!-- <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker> -->
-          <select name="" class="province" @change="proChange" v-model="province">
-            <option value="0">省</option>
-            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
-          </select>
-          <select name="" class="city" @change="cityChange" v-model="city">
-            <option value="0">市</option>
-            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
-          </select>
-          <select name="" class="area" v-model="area">
-            <option value="0">区</option>
-            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
-          </select>
+         <dist @selected="selected"></dist>
           <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <button class="boxIII" @click="iregister">立即注册</button>
@@ -54,7 +45,7 @@
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
 // import VDistpicker from "v-distpicker";
-import dist from "../districts/districts";
+import dist from '../components/distpicker';
 import { mapActions } from "vuex";
 var md5 = require("md5");
 export default {
@@ -67,51 +58,36 @@ export default {
       boxPasw: "",
       boxPC: false,
       distCode: "",
-      provinces: dist[100000],
-      citys: [],
-      areas: [],
-      province: "0",
-      city: "0",
-      area: "0"
+      imgCode: "",
+      boxCode: false,
+      sjCode: "",
+      sCode: false
     };
   },
   methods: {
     ...mapActions(["setNum", "setloginState"]),
-    proChange() {
-      this.city = "0";
-      this.area = "0";
-      if (this.province != "0") {
-        this.citys = dist[this.province];
-      }
-    },
-    cityChange() {
-      this.areas = dist[this.city];
-    },
-    selected(data) {
-      this.distCode = data.area.code;
+    
+    selected(code) {
+      this.distCode = code;
     },
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
+     verCode() {
+      if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+        this.boxCode = false;
+      } else {
+        this.boxCode = true;
+      }
+    },
+    sjCodeI() {
+      if (/^[0-9]{6}$/.test(this.sjCode)) {
+        this.sCode = false;
+      } else {
+        this.sCode = true;
+      }
+    },
     getCode() {
-      // if (this.phone != "") {
-      //   if (this.imgReflash != "") {
-      //     var count = 60;
-      //     var dic = setInterval(function() {
-      //       count--;
-      //       按钮.disabled = true; //按钮不可点击
-      //       按钮.innerHTML = 重新获取 + "count";
-      //       样式;
-      //       if (count == 1) {
-      //         clearInterval(dic);
-      //         按钮.innerHTML = 点击获取;
-      //         按钮.disabled = false; //按钮可点击
-      //         样式;
-      //       }
-      //     }, 1000);
-      //   }
-      // } else {
-      // }
       this.setNum(0);
       this.ajax
         .post(
@@ -134,11 +110,25 @@ export default {
       }
     },
     onBlurI() {
-      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+      if (
+        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
         this.boxPC = false;
       } else {
         this.boxPC = true;
       }
+    },
+    mobile() {
+      // this.ajax.post(
+      //   "/xinda-api/register/findpas",
+      //   this.qs.stringify({
+      //     cellphone: this.boxVal,
+      //     smsType: 1,
+      //     validCode:111111
+      //   })
+      // );
     },
     iregister() {
       this.ajax
@@ -163,26 +153,13 @@ export default {
   created() {
     this.setloginState("注册");
   },
-  components: { LRhead }
+  components: { LRhead,dist }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.province,
-.city,
-.area {
-  height: 35px;
-  width: 90px;
-  font-size: 0.9rem;
-  margin-bottom: 26px;
-  option {
-    height: 35px;
-    width: 90px;
-    font-size: 0.9rem;
-    margin-bottom: 26px;
-  }
-}
+
 .hello {
   background-color: #f5f5f5;
 }
@@ -234,6 +211,22 @@ export default {
   font-size: 12px;
   top: 230px;
   left: 275px;
+  position: absolute;
+}
+.vCode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 65px;
+  left: 295px;
+  position: absolute;
+}
+.sCode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 125px;
+  left: 295px;
   position: absolute;
 }
 .verify {

@@ -1,10 +1,10 @@
 
 
 <template>
-  <div class="mobile">
+  <div class="Mobile">
     <div class="shopList">
       <div class="logo">
-        <!-- <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt=""> -->
+        <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt="">
         <div class="remit">
           <h3>{{providerName}}</h3>
           <p>{{regionName}}</p>
@@ -29,36 +29,14 @@
         </div>
       </div>
       <div class=""></div>
-
-      
-      <div class="Mobile">
-        <div class="top">
-          <img src="" alt="">
-          <h3></h3>
-          <p></p>
-        </div>
-        <div class="center">
-          <p>所有服务</p>
-        </div>
-        <div class="below">
-          <span></span>
-          <h3></h3>
-          <p></p>
-          <div>
-            <img src="" alt="">
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </div>
-
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
-  name:"sinda_shop",
+  name: "sinda_shop",
   data() {
     return {
       providerName: "",
@@ -71,7 +49,7 @@ export default {
     var that = this;
     this.ajax
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/provider/detail",
+        "/xinda-api/provider/detail",
         this.qs.stringify({
           id: "9080f0c120a64eb3831d50ba93c33e78"
           //请求店铺信息
@@ -86,22 +64,21 @@ export default {
         that.shopLOGO = shop.providerImg;
       });
 
-
-      // this.ajax
-      // .post(//手机端
-      //   "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-      //   this.qs.stringify({
-      //     start: 1,
-      //     limit: 6,
-      //     providerId: "9080f0c120a64eb3831d50ba93c33e78",
-      //     sort: 2
-      //   })
-      // )
-      // .then(function(data) {
-      //   var shopping = JSON.stringify(data.data.data);
-      //   sessionStorage.setItem("shopping",shopping)
-      // });
-      
+    that.ajax
+      .post(
+        //请求店铺商品信息
+        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        that.qs.stringify({
+          start: 0,
+          //不加限制条数的参数，获取所有数据
+          providerId: "9080f0c120a64eb3831d50ba93c33e78",
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        var shop = data.data.data;
+        console.log(shop);
+      });
   }
 };
 </script>
@@ -111,18 +88,18 @@ export default {
 .shopList {
   width: 1200px;
   margin: 50px 170px;
+  display: none;
 }
 .logo {
   border: 1px solid #e9e9e9;
   display: flex;
+  align-items: center;
   img {
-    // border: 1px solid #000;
-    margin: 40px 62px;
+    margin-left: 40px;
     width: 220px;
-   
   }
   .remit {
-    margin-left: 50px;
+    margin-left: 20px;
     h3 {
       margin-top: 50px;
       font-size: 35px;
@@ -192,14 +169,5 @@ export default {
     color: #2693d4;
     border-bottom: 2px solid #2693d4;
   }
-
 }
-.Mobile{
-  //  display: none;
-}
-
-.mobile {
-    // display: none;
-}
-
 </style>

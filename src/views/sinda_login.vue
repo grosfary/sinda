@@ -71,9 +71,9 @@ export default {
     },
     onBlur() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
-        this.boxCode = false;
+        this.boxTC = false;
       } else {
-        this.boxCode = true;
+        this.boxTC = true;
       }
     },
     onBlurI() {
@@ -81,7 +81,7 @@ export default {
       var md5 = require("md5");
       console.log(md5(pw));
       if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
-        this.boxTC = false;
+        this.boxPC = false;
       } else {
         this.boxPC = true;
       }
