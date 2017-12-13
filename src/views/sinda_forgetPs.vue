@@ -105,22 +105,6 @@ export default {
         this.boxPCI = true;
       }
     },
-    // getCode: function() {
-    //   this.setNum(0);
-    //   this.ajax
-    //     .post(
-    //       "/xinda-api/register/sendsms",
-    //       this.qs.stringify({
-    //         cellphone: this.boxVal,
-    //         smsType: 1,
-    //         imgCode: this.imgCode
-    //       })
-    //     )
-    //     .then(data => {
-    //       console.log(data);
-    //     });
-    // },
-    
     verCode() {
       if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
         this.boxCode = false;

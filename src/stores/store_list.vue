@@ -63,8 +63,7 @@
 
 <script>
 import sinda_header from "../components/sinda_global_header";
-import sinda_footer from "../components/sinda_global_footer";
-import VDistpicker from "v-distpicker"; //省市区三级联动插件
+import sinda_footer from "../components/sinda_global_footer";//省市区三级联动插件
 export default {
   // 数据获取
   created() {
@@ -128,7 +127,7 @@ export default {
       providerImgs:[],
           };
   },
-  components: { sinda_header, sinda_footer, VDistpicker },
+  components: { sinda_header, sinda_footer },
   methods:{
     open:function(){
     location.href="http://localhost:8080/#/shop";
