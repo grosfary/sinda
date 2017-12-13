@@ -32,7 +32,7 @@
             <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
           </select>
           <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
-          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <button class="boxIII" @click="iregister">立即注册</button>
           <p>注册及同意遵守
             <a class="agreement" href="">《服务协议》</a>
@@ -94,24 +94,24 @@ export default {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
     getCode() {
-      if (this.phone != "") {
-        if (this.imgReflash != "") {
-          var count = 60;
-          var dic = setInterval(function() {
-            count--;
-            按钮.disabled = true; //按钮不可点击
-            按钮.innerHTML = 重新获取 + "count";
-            样式;
-            if (count == 1) {
-              clearInterval(dic);
-              按钮.innerHTML = 点击获取;
-              按钮.disabled = false; //按钮可点击
-              样式;
-            }
-          }, 1000);
-        }
-      } else {
-      }
+      // if (this.phone != "") {
+      //   if (this.imgReflash != "") {
+      //     var count = 60;
+      //     var dic = setInterval(function() {
+      //       count--;
+      //       按钮.disabled = true; //按钮不可点击
+      //       按钮.innerHTML = 重新获取 + "count";
+      //       样式;
+      //       if (count == 1) {
+      //         clearInterval(dic);
+      //         按钮.innerHTML = 点击获取;
+      //         按钮.disabled = false; //按钮可点击
+      //         样式;
+      //       }
+      //     }, 1000);
+      //   }
+      // } else {
+      // }
       this.setNum(0);
       this.ajax
         .post(
@@ -127,13 +127,15 @@ export default {
         });
     },
     onBlur() {
-      if (/^1[34578]\d{9}/.test(this.phone)) {
+      if (/^1[34578]\d{9}$/.test(this.phone)) {
+        this.boxTC = false;
       } else {
         this.boxTC = true;
       }
     },
     onBlurI() {
-      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
+      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+        this.boxPC = false;
       } else {
         this.boxPC = true;
       }
@@ -227,11 +229,11 @@ export default {
   position: absolute;
 }
 .boxpas {
-  width: 150px;
+  width: 180px;
   color: #fb81fd;
-  font-size: 14px;
-  top: 240px;
-  left: 295px;
+  font-size: 12px;
+  top: 230px;
+  left: 275px;
   position: absolute;
 }
 .verify {
