@@ -26,9 +26,16 @@ import modify from '../member-third/modify' //会员中心
 import Join_Us from '../stores/Join_Us' //加盟我们
 import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
-import cart from '../views/sinda_list/sinda_buyCart' //购物车
-import cart1 from '../views/sinda_list/sinda_cart' //购物车
+import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
+import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
+// -----------------------------------------------------------------------------------------------------------------------
+// 手机端
+import m_global from '../components/m_global' //手机端公共页
+import m_index from '../m_sinda/m_index' //手机端首页
+import m_shop from '../m_sinda/m_shop' //手机shop
+import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
+import m_out from '../components/m_out' //手机端公共页
 Vue.use(Router)
 
 // pc端
@@ -46,21 +53,22 @@ export default new Router({
             path: '/',
             name: 'sinda_global',
             component: global,
+            redirect: 'index',
             children: [{
-                    path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+                    path: 'index', // path为路径  在这里为首页   如 http://localhost:8081/#/
                     component: index
                 }, {
                     path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
                     component: list,
                     children: [{
-                        path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
-                        component: cart
+                        path: 'tax', //财税服务页   如 http://localhost:8081/#/list/tax
+                        component: tax
                     }, {
                         path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
                         component: pro
                     }, {
-                        path: 'cart1', //商品详情页   如 http://localhost:8081/#/list/cart
-                        component: cart1
+                        path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
+                        component: cart
                     }]
                 }, {
                     path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us
@@ -71,7 +79,9 @@ export default new Router({
                 }, {
                     path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
                     component: store_list
-                }, {
+                },
+
+                {
                     path: '/shop',
                     component: shop,
                     redirect: "/shop/service",
@@ -126,7 +136,6 @@ export default new Router({
                         }
                     ]
                 }
-
             ]
         },
         {
@@ -146,6 +155,28 @@ export default new Router({
                     component: forgetPs
                 },
             ]
+        }, {
+            path: '/m.sinda',
+            name: 'm.sinda',
+            component: m_global,
+            children: [{
+                path: '',
+                component: m_index
+            }, {
+                path: 'shop',
+                component: m_shop,
+                children: [{
+                    path: 'service',
+                    component: m_shop_service,
+                }]
+            }]
+
+        }, {
+            path: '/m.out',
+            name: 'm.out',
+            component: m_out
+                // children: [{}]
         }
+
     ]
 })

@@ -10,12 +10,13 @@
         <div>
           <div class='oldpassworld'>
             <span class='old'>旧密码：</span>
-            <input type="password">
+            <input type="password" v-model='password' @blur='blur'>
+            <p class='none' v-show='sty'>旧密码错误</p>
           </div>
           <div class='newpassworld'>
             <span class='new'>新密码：</span>
             <input class='newpass' type="password" @blur='abl' v-model='place'>
-            <p class='none' v-show='style'>请输入密码</p>
+            <p class='none' v-show='style'>请输入新密码</p>
           </div>
           <div class='pass'>
             <span class='event'>再次输入新密码：</span>
@@ -32,17 +33,23 @@
 </template>
 <script>
 import member from "../views/sinda_member";
+var md5 = require('md5')
 export default {
   data() {
     return {
       place:'',
       fal:'',
+      sty:false,
       style:false,
-      nostyle:false
+      nostyle:false,
+      password:''
     };
   },
   components: { member },
    methods:{
+     blur:function(){
+       console.log(md5('this.password'))
+     },
     abl:function(){
       var that=this
         if(this.place==''){
@@ -52,11 +59,34 @@ export default {
         }
     },
     arr:function(){
-          if(this.place!==this.fal){
+      var that=this;
+      if(this.password==''){//判断旧密码是否输入
+          this.sty=true;
+      }else if(this.place==''){//判断新密码是否输入
+        this.sty=false;
+        this.style=true
+      }else if(this.place!==this.fal){//判断新密码与再次输入是否相同
+             this.sty=false;
+             this.style=false;
              this.nostyle=true;
           }else{
              this.nostyle=false;
-          }
+             this.ajax.post(
+                '/xinda-api/sso/change-pwd',
+                 this.qs.stringify({
+                 oldPwd:md5('this.password'),
+                 newPwd:md5('this.place')
+              })
+            ).then(function(data){
+                if(data.data.msg =='旧密码错误'){
+                        that.password=[]
+                  that.sty=true;
+                }else{
+                  alert('登陆成功')
+                }
+              })
+         
+        }
     }
 
   }

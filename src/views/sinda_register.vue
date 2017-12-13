@@ -18,9 +18,21 @@
             <input class="boxI" type="text" placeholder=" 请输入验证码">
             <button @click="getCode">点击获取</button>
           </div>
-          <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker>
+          <!-- <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker> -->
+          <select name="" class="province" @change="proChange" v-model="province">
+            <option value="0">省</option>
+            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
+          </select>
+          <select name="" class="city" @change="cityChange" v-model="city">
+            <option value="0">市</option>
+            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
+          </select>
+          <select name="" class="area" v-model="area">
+            <option value="0">区</option>
+            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
+          </select>
           <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
-          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <button class="boxIII" @click="iregister">立即注册</button>
           <p>注册及同意遵守
             <a class="agreement" href="">《服务协议》</a>
@@ -41,7 +53,8 @@
 
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
-import VDistpicker from "v-distpicker";
+// import VDistpicker from "v-distpicker";
+import dist from "../districts/districts";
 import { mapActions } from "vuex";
 var md5 = require("md5");
 export default {
@@ -54,24 +67,54 @@ export default {
       boxPasw: "",
       boxPC: false,
       distCode: "",
-      placeholders: {
-        province: " 省 ",
-        city: " 市 ",
-        area: " 区 "
-      }
+      provinces: dist[100000],
+      citys: [],
+      areas: [],
+      province: "0",
+      city: "0",
+      area: "0"
     };
   },
   methods: {
     ...mapActions(["setNum", "setloginState"]),
-    selected: function(data) {
+    proChange() {
+      this.city = "0";
+      this.area = "0";
+      if (this.province != "0") {
+        this.citys = dist[this.province];
+      }
+    },
+    cityChange() {
+      this.areas = dist[this.city];
+    },
+    selected(data) {
       this.distCode = data.area.code;
     },
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    getCode: function() {
+    getCode() {
+      // if (this.phone != "") {
+      //   if (this.imgReflash != "") {
+      //     var count = 60;
+      //     var dic = setInterval(function() {
+      //       count--;
+      //       按钮.disabled = true; //按钮不可点击
+      //       按钮.innerHTML = 重新获取 + "count";
+      //       样式;
+      //       if (count == 1) {
+      //         clearInterval(dic);
+      //         按钮.innerHTML = 点击获取;
+      //         按钮.disabled = false; //按钮可点击
+      //         样式;
+      //       }
+      //     }, 1000);
+      //   }
+      // } else {
+      // }
       this.setNum(0);
-      this.ajax.post(
+      this.ajax
+        .post(
           "/xinda-api/register/sendsms",
           this.qs.stringify({
             cellphone: this.phone,
@@ -83,14 +126,16 @@ export default {
           console.log(data);
         });
     },
-    onBlur: function() {
-      if (/^1[34578]\d{9}/.test(this.phone)) {
+    onBlur() {
+      if (/^1[34578]\d{9}$/.test(this.phone)) {
+        this.boxTC = false;
       } else {
         this.boxTC = true;
       }
     },
-    onBlurI: function() {
-      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
+    onBlurI() {
+      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+        this.boxPC = false;
       } else {
         this.boxPC = true;
       }
@@ -109,18 +154,35 @@ export default {
         )
         .then(data => {
           console.log("注册提交", data.data.msg, data.data.status);
+          if (status == 1) {
+            this.$router.push({ path: "/LoginRegister/login" });
+          }
         });
     }
   },
-  created: function() {
+  created() {
     this.setloginState("注册");
   },
-  components: { LRhead, VDistpicker }
+  components: { LRhead }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.province,
+.city,
+.area {
+  height: 35px;
+  width: 90px;
+  font-size: 0.9rem;
+  margin-bottom: 26px;
+  option {
+    height: 35px;
+    width: 90px;
+    font-size: 0.9rem;
+    margin-bottom: 26px;
+  }
+}
 .hello {
   background-color: #f5f5f5;
 }
@@ -167,11 +229,11 @@ export default {
   position: absolute;
 }
 .boxpas {
-  width: 150px;
+  width: 180px;
   color: #fb81fd;
-  font-size: 14px;
-  top: 240px;
-  left: 295px;
+  font-size: 12px;
+  top: 230px;
+  left: 275px;
   position: absolute;
 }
 .verify {
