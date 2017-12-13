@@ -52,10 +52,10 @@
       <!-- 头部导航栏部分 -->
       <ul>
         <li>
-          <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index  ) }" @click="a(index)">
+          <router-link tag="a" :to="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" active-class="active" @click="a(index)">
             <span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span>
             <span v-else>{{ind.name}}</span>
-          </a>
+          </router-link>
         </li>
       </ul>
 
@@ -107,11 +107,11 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "全部产品", class: "allgoods", src: "#/" },
-        b: { name: "财税服务", src: "#/list" },
-        c: { name: "公司工商", src: "#/" },
-        d: { name: "加盟我们", src: "#/Join_Us" },
-        e: { name: "店铺", src: "#/store_list" }
+        a: { name: "全部产品", class: "allgoods", src: "/index" },
+        b: { name: "财税服务", src: "/list/tax" },
+        c: { name: "公司工商", src: "/list/cart" },
+        d: { name: "加盟我们", src: "/Join_Us" },
+        e: { name: "店铺", src: "/store_list" }
       },
       indexs: 0,
       a: function(n) {
@@ -166,8 +166,7 @@ export default {
   height: 148px;
   border-bottom: 1px solid #2693d4;
   > div {
-    max-width: 1200px;
-    width: 100%;
+    width: 1200px;
     margin: 0 auto;
     &::after {
       content: "";
