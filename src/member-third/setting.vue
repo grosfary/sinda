@@ -14,13 +14,14 @@
           </div>
           <div class='name'>
               <span>姓名：</span>
-              <input type="text" placeholder="请输入姓名">
+              <input type="text" placeholder="请输入姓名" v-model="name" @blur='names'>
+              <p class='namt' v-show="namt">姓名不能为空</p>
           </div>
           <div class='sex'>
               <span>性别：</span>
-              <input type="radio" name='sex'>
+              <input type="radio" name='sex' checked='true'  @click='sexo'>
               <span>男</span>
-              <input type="radio" name='sex'>
+              <input type="radio" name='sex' @click='sext'>
               <span>女</span>
           </div>
           <div>
@@ -32,10 +33,10 @@
           </div>
           <div class='area'>
               <span>所在地区：</span>
-              <v-distpicker class='picker'></v-distpicker>
+              <v-distpicker class='picker' @selected="onSelected"></v-distpicker>
           </div>
           <div class='keep'>
-              <input type="submit">
+              <input type="submit" @click='submit'>
           </div>
         </div>
       </div>
@@ -49,11 +50,21 @@ export default {
   data() {
     return {
       post:'',
-      box:false
+      box:false,
+      name:'',
+      namt:false,
+      code:'',
+      value:1
     };
   },
   components: { member,VDistpicker },
   methods:{
+  sexo:function(){
+      this.value = 1;
+  },
+  sext:function(){
+      this.value = 2;
+  },
   key:function(){
     var reg =/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/
       if(reg.test(this.post)){
@@ -61,6 +72,43 @@ export default {
       }else {
         this.box=true;
       }
+  },
+  nam:function(){
+      if(this.name==''){
+        this.box=true;
+      }else {
+        this.box=false;
+      }
+  },
+  names:function(){
+      if(this.name==''){
+        this.namt=true;
+      }else {
+        this.namt=false;
+      }
+  },
+  onSelected:function(data){
+      this.code = data.area.code;
+  },
+  submit:function(){
+    var that = this;
+    if(this.name==''){
+      this.namt=true;
+    }else if(this.post==''){
+      this.box=true
+    }else{
+      alert('登陆成功');
+         this.ajax.post(
+         '/xinda-api/member/info',this.qs.stringify({
+           name:this.name,
+           gender:this.value,
+           email:this.post,
+           regionId:this.code
+                    }))
+          .then(function(data){
+      console.log(data.data)
+    })
+    }
   }
     }
 
@@ -69,10 +117,10 @@ export default {
 </script>
 <style scoped lang="less">
 .backe{
-        background:#e9e9e9;
+    background:#e9e9e9;
 }
 .hello{
-  font-size:13px;
+    font-size:13px;
 }
   .assess{
     width:875px;
@@ -166,6 +214,9 @@ export default {
       margin-top:-24px;
       margin-left:275px;
       color:red;
+  }
+  .namt{
+    .box;
   }
       .imt{
         width:97px;

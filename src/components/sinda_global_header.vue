@@ -52,7 +52,7 @@
       <!-- 头部导航栏部分 -->
       <ul>
         <li>
-          <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }" @click="a(index)">
+          <a :href="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" :class="{active : (indexs==index  ) }" @click="a(index)">
             <span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span>
             <span v-else>{{ind.name}}</span>
           </a>
@@ -108,7 +108,7 @@ export default {
     return {
       btn: {
         a: { name: "全部产品", class: "allgoods", src: "#/" },
-        b: { name: "财税服务", src: "#/list" },
+        b: { name: "财税服务", src: "#/list/tax" },
         c: { name: "公司工商", src: "#/" },
         d: { name: "加盟我们", src: "#/Join_Us" },
         e: { name: "店铺", src: "#/store_list" }

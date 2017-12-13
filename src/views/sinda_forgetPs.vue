@@ -7,19 +7,21 @@
           <input class=" box" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <div class="verify">
-            <input class="boxI" type="text" placeholder="请输入验证码">
+            <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
+            <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
             <div class="verifyI" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <div class="acquire">
-            <input class="boxI" type="text" placeholder="请输入验证码">
-            <button>点击获取</button>
+            <input class="boxI" type="text" placeholder="请输入验证码" v-model="sjCode" @blur="sjCodeI" @click="mobile">
+            <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
+            <button @click="getcode">点击获取</button>
           </div>
           <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入新密码">
-          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <input class="boxII" type="password" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
-          <p class="boxpasI" v-show="boxPCI">*您输入的密码不正确</p>
+          <p class="boxpasI" v-show="boxPCI">*两次输入密码不一致</p>
           <button class="boxIII" @click="affirm">确认修改</button>
         </div>
         <p class="division"></p>
@@ -47,7 +49,11 @@ export default {
       boxPasw: "",
       boxPC: false,
       boxPaswI: "",
-      boxPCI: false
+      boxPCI: false,
+      imgV: "",
+      boxCode: false,
+      sjCode: "",
+      sCode: false
     };
   },
   methods: {
@@ -56,15 +62,35 @@ export default {
     },
     onBlur: function() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+        this.boxTC = false;
       } else {
         this.boxTC = true;
       }
+    },
+    getcode() {
+      // this.ajax.post(
+      //   "/xinda-api/register/sendsms",
+      //   this.qs
+      //     .stringify({
+      //       cellphone: this.boxVal,
+      //       smsType: 1,
+      //       imgCode: this.imgV
+      //     }))
+      //     .then(data => {
+      //       console.log("点击验证码", data.data.msg, data.data.status);
+      //     }
+      // );
     },
     onBlurI: function() {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^([a-zA-Z]\w){6,20}$/.test(this.boxPasw)) {
+      if (
+        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
+        this.boxPC = false;
       } else {
         this.boxPC = true;
       }
@@ -73,26 +99,71 @@ export default {
       var pw = this.boxPaswI;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPaswI)) {
+      if (this.boxPaswI == this.boxPasw) {
+        this.boxPCI = false;
       } else {
         this.boxPCI = true;
       }
     },
-    getCode: function() {
-      this.setNum(0);
+    // getCode: function() {
+    //   this.setNum(0);
+    //   this.ajax
+    //     .post(
+    //       "/xinda-api/register/sendsms",
+    //       this.qs.stringify({
+    //         cellphone: this.boxVal,
+    //         smsType: 1,
+    //         imgCode: this.imgCode
+    //       })
+    //     )
+    //     .then(data => {
+    //       console.log(data);
+    //     });
+    // },
+    
+    verCode() {
+      if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
+        this.boxCode = false;
+      } else {
+        this.boxCode = true;
+      }
+    },
+    sjCodeI() {
+      if (/^[0-9]{6}$/.test(this.sjCode)) {
+        this.sCode = false;
+      } else {
+        this.sCode = true;
+      }
+    },
+    mobile() {
+      // this.ajax.post(
+      //   "/xinda-api/register/findpas",
+      //   this.qs.stringify({
+      //     cellphone: this.boxVal,
+      //     smsType: 1,
+      //     validCode:111111
+      //   })
+      // );
+    },
+    affirm() {
+      var md5 = require('md5');
       this.ajax
         .post(
-          "/xinda-api/register/sendsms",
+          "/xinda-api/register/findpas",
           this.qs.stringify({
             cellphone: this.boxVal,
-            smsType: 1,
-            imgCode: this.imgCode
+            smsType: 2,
+            password: md5(this.boxPasw),
+            validCode: 111111
           })
         )
         .then(data => {
-          console.log(data);
+          console.log("忘记密码121", data.data.msg, data.data.status);
+          if (status == 1) {
+            this.$router.push({ path: "/LoginRegister/login" });
+          }
         });
-    }
+    },
   },
   components: { LRhead }
 };
@@ -149,6 +220,22 @@ export default {
   color: #fb81fd;
   font-size: 14px;
   top: 240px;
+  left: 295px;
+  position: absolute;
+}
+.vCode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 65px;
+  left: 295px;
+  position: absolute;
+}
+.sCode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 125px;
   left: 295px;
   position: absolute;
 }

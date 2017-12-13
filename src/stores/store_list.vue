@@ -31,23 +31,23 @@
                <span></span><p class="wenzi">金牌服务商</p><!--金牌背景图-->
              <div class="lageI"><!--数据获取文字信息-->
              <p>{{provider}}</p>
-             <p>信誉</p>
+             <p>信誉:★★★★★</p>
              <p>{{region}}</p>
-             <p>累计客户服务次数:{{order}}</p>
+             <p>累计客户服务次数:{{order}}丨好评率：100%</p>
              <p class="biaoqian" style="display:inline" v-for="pro in pro" :key="pro.id">{{pro}}</p>
              </div>
              <button @click="open">进入店铺</button><!--点击按钮-->
            </div>
            <div class="listII">
-             <div class="imageII"><!--图片盒子-->
+             <div class="imageII"><!--图片盒子--> 
              <img :src="providerImgs"><!--获取数据图片-->
              </div>
               <span></span><p class="wenziI">金牌服务商</p><!--金牌背景图-->
              <div class="lageII"><!--数据获取文字信息-->
              <p>{{providers}}</p>
-             <p>信誉</p>
+             <p>信誉:★★★★☆</p>
              <p>{{regions}}</p>
-            <p>累计客户服务次数：{{orders}}</p>
+            <p>累计客户服务次数：{{orders}}丨好评率：100%</p>
               <p  class="biaoqianI" style="display:inline" v-for="pros in pros" :key="pros.id">{{pros}}</p>
               </div>
               <button @click="open">进入店铺</button><!--点击按钮-->
@@ -135,7 +135,7 @@ export default {
     }
   },
   linehead:function(){
-   
+    
   }
 };
 </script>

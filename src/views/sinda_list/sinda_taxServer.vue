@@ -8,15 +8,15 @@
         <div class="server">
           <div class="Server">服务分类</div>
           <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==1">
-            <a v-for="itemListII in itemList1.itemList" :key="itemListII.id" href="javascript:viod(0)">{{itemListII.name}}</a>
+            <span v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" @click="nowIndexII(index)" :class="{title_bg:(index==IndexII)}">{{itemListII.name}}</span>
           </div>
         </div>
 
         <div>
           <div class="Server">类型</div>
           <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==1">
-            <div v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" v-if="index==1">
-              <a v-for="itemListIII in itemListII.itemList" :key="itemListIII.id" href="javascript:viod(0)">{{itemListIII.name}}</a>
+            <div v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" v-if="index==IndexII">
+              <span v-for="(itemListIII,key,index) in itemListII.itemList" :key="itemListIII.id" @click="nowIndexIII(index,itemListIII.id)" :class="{title_bg:(index==IndexIII)}">{{itemListIII.name}}</span>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
                 <div>
                   <img :src="'http://115.182.107.203:8088/xinda/pic' + product.productImg" alt="">
                 </div>
-                <div class="details">
+                <div class="details" @click="toDetail(product.id)">
                   <h3>{{product.providerName}}</h3>
                   <p>{{product.serviceName}}</p>
                   <span>{{product.serviceInfo}}</span>
@@ -91,28 +91,61 @@ export default {
   data() {
     return {
       itemLists: [],
-      Rdata: []
+      Rdata: [],
+      IndexII: 0,
+      IndexIII: 0,
+      pro_type_id: ""
     };
   },
   methods: {
-    ...mapActions(["setlistName"])
+    ...mapActions(["setlistName"]),
+    nowIndexII: function(index) {
+      this.IndexII = index;
+      this.IndexIII = 0;
+    },
+    nowIndexIII: function(index, id) {
+      var that = this;
+      this.IndexIII = index;
+      this.pro_type_id = id;
+      this.ajax
+        .post(
+          //列表商品
+          "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0,
+            limit: 800,
+            productTypeCode: "0",
+            productId: that.pro_type_id,
+            sort: 3
+          })
+        )
+        .then(data => {
+          that.Rdata = data.data.data;
+          console.log(that.Rdata);
+        });
+    },
+    toDetail: function(id) {
+      this.$router.push({path:'/list/pro',query:{id:id}});
+    }
   },
   created() {
-    this.setlistName("购物车");
+    var that = this;
+    this.setlistName("财税服务");
     this.ajax
       .post(
         //列表商品
         "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 8,
-          productTypeCode: "1",
-          productId: "8a82f52b674543e298d2e5f685946e6e",
-          sort: 2
+          limit: 800,
+          productTypeCode: "0",
+          productId: "2cc17cc0fb7e4b79b3d961cdcb57c260",
+          sort: 3
         })
       )
       .then(data => {
         this.Rdata = data.data.data;
+        console.log(that.pro_type_id);
       });
     this.ajax
       .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
@@ -158,14 +191,20 @@ export default {
 .type {
   padding: 10px;
   width: 849px;
-  a {
+  cursor: pointer;
+  span {
     display: inline-block;
     height: 25px;
     text-decoration: none;
     color: #333333;
     padding: 2px 5px;
   }
-  a:nth-child(1) {
+  // span {
+  //   background: #2693d4;
+  //   color: #ffffff;
+  //   border-radius: 5px;
+  // }
+  .title_bg {
     background: #2693d4;
     color: #ffffff;
     border-radius: 5px;
@@ -221,6 +260,7 @@ export default {
         display: flex;
         .details {
           width: 560px;
+          cursor: pointer;
           padding: 15px 10px;
         }
         img {
@@ -230,7 +270,7 @@ export default {
           margin: 15px;
         }
       }
-      .shopright{
+      .shopright {
         padding: 20px 5px;
       }
       .shopright p {

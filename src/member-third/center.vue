@@ -163,13 +163,12 @@ export default {
  .score>span{
    width:13px;
    height:13px;
-   background:url('../assets/kehu/Sprites.png') no-repeat -198px -261px;
+   background:url('../assets/pc/Sprites.png') no-repeat -198px -261px;
    margin-top:12px;
    &.active{
      background-position: -221px -261px;
    }
  }
-
  .score>a{
    line-height: 36px;
    float:left;

@@ -7,9 +7,10 @@
           <input class="boxT" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号码">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <input class="boxP" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
-          <p class="boxpas" v-show="boxPC">*您输入的密码不正确</p>
+          <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <div>
-            <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV">
+          <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
+          <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>            
             <div class="verify" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
@@ -44,11 +45,12 @@ export default {
       boxTC: false,
       boxPasw: "",
       boxPC: false,
-      imgV: ""
+      imgV: "",
+      boxCode:false
     };
   },
   methods: {
-    ...mapActions(["setloginState"]),
+    ...mapActions(["setloginState","setuserName"]),
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
@@ -67,17 +69,19 @@ export default {
           console.log(data);
         });
     },
-    onBlur: function() {
+    onBlur() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+        this.boxCode = false;
       } else {
-        this.boxTC = true;
+        this.boxCode = true;
       }
     },
-    onBlurI: function() {
+    onBlurI() {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^[a-zA-Z\d_]{8,}$/.test(this.boxPasw)) {
+      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+        this.boxTC = false;
       } else {
         this.boxPC = true;
       }
@@ -96,9 +100,17 @@ export default {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
           if (status == 1) {
+            this.setuserName(this.boxVal);
             this.$router.push({ path: "/" });
           }
         });
+    },
+    verCode(){
+      if(/^[a-zA-Z0-9]{4}$/.test(this.imgV)){
+        this.boxCode = false;
+      }else{
+        this.boxCode = true;
+      }
     }
   },
   created: function() {
@@ -196,10 +208,18 @@ export default {
   position: absolute;
 }
 .boxpas {
-  width: 150px;
+  width: 180px;
   color: #fb81fd;
-  font-size: 14px;
-  top: 69px;
+  font-size: 12px;
+  top: 64px;
+  left: 285px;
+  position: absolute;
+}
+.vCode{
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 129px;
   left: 295px;
   position: absolute;
 }
