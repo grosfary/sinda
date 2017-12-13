@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-      <div class="top">
+      <div class="top clear">
         <div class='assess'>
           <div>我的评价</div>
         </div>
@@ -11,17 +11,22 @@
             <a href="#/member/evalu"><div class='havebeen'>已评价</div></a>
             <a class='notappb' v-show='notappb'></a>
           </div>
-          <div class='details'>
+          <div class='details' v-for='detail in details' :key='detail'>
             <div class='box'></div>
             <div class='infor'>
               <div></div>
-              <div>服务单号：</div>
+              <div>服务单号：{{detail.buyNum}}</div>
               <div>购买内容：</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
             <a href="/#/member/center"><button>去评价</button></a>
           </div>
         </div>
+          <div class='inputcopy'>
+            <input type="submit" class='previous' value='上一页' @click='previous'>
+            <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click = 'skip(bum)'>{{button}}</div>           
+            <input type="submit" class='next' value='下一页' @click='next'>
+          </div>
       </div>
         
     </div>
@@ -30,6 +35,17 @@
 import member from "../views/sinda_member";
 import {formatDate} from '../../config/date';
 export default {
+  created(){
+      var that = this;
+      this.ajax.post(
+        '/xinda-api/product/package/grid'
+        ,{}).then(
+          function(data){
+            console.log(data)
+            that.details = data.data.data
+          }
+        )
+  },
       filters: {
         formatDate(time) {
             var date = new Date(time);
@@ -52,7 +68,8 @@ export default {
     return {
       index:1,
       notappb:false,
-      notappa:true
+      notappa:true,
+      details:[]
     };
   },
   components: { member }
@@ -61,7 +78,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-
+.clear:after{               /*清除浮动*/
+    content: '';
+    display: block;
+    clear: both;
+}
   .assess{
     width:875px;
     height:34px;

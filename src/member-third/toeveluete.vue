@@ -153,7 +153,13 @@ export default {
   },
   created(){
       var that = this;
-      this.ajax.post('/xinda-api/product/package/grid',{}).then(function(data){
+      this.ajax.post(
+        '/xinda-api/product/package/grid'
+        ,{
+          startTime:this.changes,
+          endTime:this.onchanges
+        }).then(
+          function(data){
          that.rData = data.data.data;//所需的数据
         // that.products = rData;
         if(that.rData.length>2){//判断数据是否大于2
