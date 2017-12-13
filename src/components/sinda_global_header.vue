@@ -108,7 +108,7 @@ export default {
     return {
       btn: {
         a: { name: "全部产品", class: "allgoods", src: "#/" },
-        b: { name: "财税服务", src: "#/list" },
+        b: { name: "财税服务", src: "#/list/tax" },
         c: { name: "公司工商", src: "#/" },
         d: { name: "加盟我们", src: "#/Join_Us" },
         e: { name: "店铺", src: "#/store_list" }

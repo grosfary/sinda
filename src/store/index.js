@@ -3,14 +3,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: { //状态集合
-    num: 123,
+    num: 0,
     loginState: '',
     listName: 'listName',
     userName: '',
   },
   mutations: { //突变集合
     SET_NUM(state, num) { // 购物车数量
-      state.num = num;
+      state.num -= -(num);
     },
     SET_LOGIN_STATE(state, loginState) { // 登录状态
       state.loginState = loginState;

@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "sinda_buyCart",
   data() {
@@ -82,7 +82,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setlistName"]),
+    ...mapActions(["setlistName", "setNum"]),
+    ...mapGetters(["getuserName"]),
     titleBg: function(index) {
       this.nowIndex = index;
     },
@@ -97,7 +98,13 @@ export default {
           })
         )
         .then(data => {
-          console.log(data);
+          // console.log(data);
+          if (this.getuserName) {
+            this.setNum(this.number);
+            // console.log(this.getuserName);
+          } else {
+            window.location.href = "#/LoginRegister/login";
+          }
         });
     },
     nAdd() {
@@ -120,11 +127,11 @@ export default {
         })
       )
       .then(data => {
-        console.log(data.data.data);
+        // console.log(data.data.data);
         that.product = data.data.data.product;
         that.providerProduct = data.data.data.providerProduct;
         that.regionText = data.data.data.regionText;
-        console.log(that.product);
+        // console.log(that.product);
       });
     // this.ajax
     //   .post(

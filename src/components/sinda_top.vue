@@ -68,7 +68,7 @@ export default {
     ...mapGetters(["getNum", "getuserName"]) //{getNum:function(){}}
   },
   methods: {
-    ...mapActions(["setuserName"]),
+    ...mapActions(["setuserName", "setNum"]),
     loginState: function() {
       // var that = this;
       if (this.getuserName) {
@@ -99,7 +99,7 @@ export default {
       this.ajax.post("/xinda-api/sso/login-info").then(data => {
         // 判断当前是否为登录状态
         this.state = data.data.status;
-        console.log("login-info===", this.state);
+        console.log(data.data)
         if (this.state == 1) {
           this.setuserName(data.data.data.loginId);
         }
@@ -109,6 +109,10 @@ export default {
   },
   created() {
     this.login_info();
+    this.setNum(sessionStorage.getItem("cartNumber"));
+  },
+  updated() {
+    sessionStorage.setItem("cartNumber", this.getNum);
   }
 };
 </script>
