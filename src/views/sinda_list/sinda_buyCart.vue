@@ -76,6 +76,9 @@
         </div>
       </div>
       <div class="list">
+        <button>上一页</button>
+        
+        <button>下一页</button>
         这是页面标签
       </div>
     </div>
@@ -118,6 +121,7 @@ export default {
       .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
       .then(data => {
         //列表信息
+      
         console.log(data.data.data);
         var rData = data.data.data;
         this.itemLists = rData;

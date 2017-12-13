@@ -3,16 +3,32 @@
     <div class="top_outer">
       <div class="top_content">
         <ul class="top_welcome">
-          <li><span>欢迎来到信达！</span></li>
-          <li><a href="#/LoginRegister/login">登录</a></li>
-          <li><a href="#/LoginRegister/register">快速注册</a></li>
+          <li>
+            <span>欢迎来到信达！</span>
+          </li>
+          <li>
+            <a href="#/LoginRegister/login">登录</a>
+          </li>
+          <li>
+            <a href="#/LoginRegister/register">快速注册</a>
+          </li>
         </ul>
         <ul>
-          <li><span class="icon_gouwuche"></span></li>
-          <li><span>购物车</span></li>
-          <li><a class="gouwuche_number" @click="loginState">{{getNum}}</a></li>
-          <li><span>件</span></li>
-          <li><a href="">服务商入口</a></li>
+          <li>
+            <span class="icon_gouwuche"></span>
+          </li>
+          <li>
+            <span>购物车</span>
+          </li>
+          <li>
+            <a class="gouwuche_number" @click="loginState">{{getNum}}</a>
+          </li>
+          <li>
+            <span>件</span>
+          </li>
+          <li>
+            <a href="">服务商入口</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -31,8 +47,8 @@ export default {
     ...mapGetters(["getNum"]) //{getNum:function(){}}
   },
   methods: {
-    loginState: function()  {
-      console.log(this.state)
+    loginState: function() {
+      console.log(this.state);
       this.state == 0
         ? (window.location.href = "#/LoginRegister/login")
         : (window.location.href = "#/cart");
@@ -40,7 +56,7 @@ export default {
   },
   created() {
     var that = this;
-    this.ajax.post("/xinda-api/sso/login-info").then((data)=> {
+    this.ajax.post("/xinda-api/sso/login-info").then(data => {
       that.state = data.data.status;
     });
   }
@@ -107,13 +123,5 @@ ul {
   width: 26px;
   background: url("../assets/pc/Sprites.png") 0 -72px no-repeat;
   margin-top: 7px;
-}
-
-
-@media screen and (max-width: 1200px) {
-  // 手机端样式调整
-  .top_outer {
-    display: none;
-  }
 }
 </style>

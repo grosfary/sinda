@@ -457,4 +457,10 @@ export default {
   opacity: 0;
 }
 // 头部侧导航部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+@media screen and (max-width: 1200px) {
+  // 手机端样式调整
+  .header_outer {
+    display: none!important;
+  }
+}
 </style>
