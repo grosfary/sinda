@@ -76,6 +76,9 @@
         </div>
       </div>
       <div class="list">
+        <button>上一页</button>
+        
+        <button>下一页</button>
         这是页面标签
       </div>
     </div>
@@ -139,7 +142,7 @@ export default {
           start: 0,
           limit: 800,
           productTypeCode: "0",
-          productId: "2cc17cc0fb7e4b79b3d961cdcb57c260",
+          productId: "0ed787f42fe94b30b85e6a88f56e4614",
           sort: 3
         })
       )
@@ -151,6 +154,7 @@ export default {
       .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
       .then(data => {
         //列表信息
+      
         console.log(data.data.data);
         var rData = data.data.data;
         this.itemLists = rData;

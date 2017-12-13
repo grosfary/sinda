@@ -55,7 +55,7 @@ export default {
     return {
       index:-1,
       buys:[],
-      sum:1,
+      sumes:1,
     };
   },
   computed:{
@@ -69,9 +69,9 @@ export default {
     judge:function(){
       console.log()
     },
-    sum:function(sum){
-      console.log(sum)
-      this.sum = sum;
+    sum:function(sumes){
+      console.log(sumes)
+      this.sumes = sumes;
     }
   },
   created(){

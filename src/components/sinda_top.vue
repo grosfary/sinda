@@ -100,6 +100,7 @@ export default {
         // 判断当前是否为登录状态
         this.state = data.data.status;
         // console.log(data.data)
+
         if (this.state == 1) {
           this.setuserName(data.data.data.loginId);
         }
@@ -214,13 +215,6 @@ ul {
     left: 0;
     background: #e1d69a;
     z-index: 100;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  // 手机端样式调整
-  .top_outer {
-    display: none;
   }
 }
 </style>
