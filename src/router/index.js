@@ -29,6 +29,10 @@ import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
+// -----------------------------------------------------------------------------------------------------------------------
+// 手机端
+import m_global from '../components/m_global' //手机端公共页
+import m_index from '../m_sinda/m_index' //手机端首页
 Vue.use(Router)
 
 // pc端
@@ -46,8 +50,9 @@ export default new Router({
       path: '/',
       name: 'sinda_global',
       component: global,
+      redirect: 'index',
       children: [{
-          path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+          path: 'index', // path为路径  在这里为首页   如 http://localhost:8081/#/
           component: index
         }, {
           path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
@@ -58,7 +63,7 @@ export default new Router({
           }, {
             path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
             component: pro
-          },{
+          }, {
             path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
             component: cart
           }]
@@ -114,26 +119,34 @@ export default new Router({
             }
           ]
         }
-
-            ]
+      ]
+    },
+    {
+      path: '/LoginRegister',
+      name: 'sinda_LoginRegister',
+      component: LoginRegister,
+      children: [{
+          path: 'login',
+          component: login
         },
         {
-            path: '/LoginRegister',
-            name: 'sinda_LoginRegister',
-            component: LoginRegister,
-            children: [{
-                    path: 'login',
-                    component: login
-                },
-                {
-                    path: 'register',
-                    component: register
-                },
-                {
-                    path: 'forgetPs',
-                    component: forgetPs
-                },
-            ]
-        }
-    ]
+          path: 'register',
+          component: register
+        },
+        {
+          path: 'forgetPs',
+          component: forgetPs
+        },
+      ]
+    }, {
+      path: '/m.sinda',
+      name: 'm.sinda',
+      component: m_global,
+      children: [{
+        path: '',
+        component: m_index
+      }]
+    }
+
+  ]
 })
