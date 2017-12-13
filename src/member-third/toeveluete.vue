@@ -37,10 +37,15 @@
           </div>
           <div>
             <div class='deta'>
-              <div class='name'><div>{{product.buyNum}}</div></div>
-              <div class='unit'><div>{{product.price}}</div></div>
-              <div class='num'><div>{{product.marketPrice}}</div></div>
-              <div class='sum'><div >{{product.regionId}}</div></div>
+              <div class='name'>
+                <div>{{product.serviceName}}</div>
+                <div class='img'>
+
+                </div>
+              </div>
+              <div class='unit'><div>{{product.unitPrice}}</div></div>
+              <div class='num'><div>{{product.buyNum}}</div></div>
+              <div class='sum'><div >{{product.totalPrice}}</div></div>
               <div class='state'><div>{{product.unit}}</div></div>
               <div class='operation'>
                 <div>
@@ -51,7 +56,7 @@
             </div>
             </div>
           </div>
-          <div class='inputcopy'>
+          <div class='inputcopy'v-show='ned'>
             <input type="submit" class='previous' value='上一页' @click='previous'>
             <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click = 'skip(bum)'>{{button}}</div>           
             <input type="submit" class='next' value='下一页' @click='next'>
@@ -80,10 +85,10 @@ import {mapGetters} from "vuex";
 export default {
   methods:{
     change:function(){
-      console.log(this.changes)
+      // console.log(this.changes)
     },
     onchange:function(){
-      console.log(this.onchanges)
+      // console.log(this.onchanges)
     },
       hidedate:function(){
         this.show = false
@@ -98,7 +103,7 @@ export default {
       submit:function(index){
         this.index=index;
       },
-      previous:function(bum){
+      previous:function(){
         if(this.col==0){
           this.col = 0;
         }else{
@@ -132,10 +137,13 @@ export default {
       },
       num:function(){
             var that = this;
-            this.ajax.post('/xinda-api/product/package/grid',{businessNo:that.number}).then(function(data){
+            this.ajax.post('/xinda-api/service-order/grid',{
+              businessNo:that.number,
+              }).then(function(data){
             var rData = data.data.data;
             that.products = [];
-            that.products.push(rData);
+            that.products=rData;
+            console.log(rData)
           })
       },
          skip:function(bum){
@@ -154,15 +162,18 @@ export default {
   created(){
       var that = this;
       this.ajax.post(
-        '/xinda-api/product/package/grid'
+        '/xinda-api/service-order/grid'
         ,{
-          startTime:this.changes,
-          endTime:this.onchanges
+          // startTime:this.changes,
+          // endTime:this.onchanges--S1712130636102806089
+          businessNo:'S1712130631102004024'
         }).then(
           function(data){
          that.rData = data.data.data;//所需的数据
+         console.log(that.rData)
         // that.products = rData;
-        if(that.rData.length>2){//判断数据是否大于2
+        if(that.rData.length>2){//判断数据长度是否大于2
+        that.ned=true;
           var arr = []
           arr.push(that.rData[0]);//一二条数据相加
           arr.push(that.rData[1]);
@@ -174,7 +185,7 @@ export default {
           that.abb=numeral;//按钮号
         }else{
           that.products=that.rData;//小于二时，将所有数据添加
-        
+        that.ned=false
         }
       })
     },
@@ -195,6 +206,7 @@ export default {
       rData:[],
       changes:'',
       onchanges:'',
+      ned:true
       }
 },
 computed:{
@@ -210,6 +222,10 @@ computed:{
     content: '';
     display: block;
     clear: both;
+}
+.img{
+  height:100%;
+  width:78px;
 }
 .inputcopy{
   display:flex;
@@ -399,11 +415,12 @@ computed:{
     }
   }
   .name{
-    width:85px;
+    width:178px;
     height:35px;
+    text-indent:10px;
   }
   .unit{
-    width:301px;
+    width:191px;
     height:35px;
   }
   .num{
@@ -456,11 +473,11 @@ computed:{
     }
  }
   .name{
-    width:85px;
+    width:178px;
     margin-top:2%;
   }
   .unit{
-    width:301px;
+    width:191px;
     margin-top:2%;
   }
   .num{

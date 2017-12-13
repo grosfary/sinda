@@ -14,9 +14,9 @@
               <div><span>12345678912</span></div>
             </div>
             <div class='set'>
-              <div :class='data==0?"backe":""' @click='sum(0)'><div class='backa'><a href="#/member/toeveluete"><div>我的订单</div></a></div></div>
-              <div :class='data==1?"backe":""' @click='sum(1)'><div class='backb'><a href="#/member/myYing"><div>用户评价</div></a></div></div>
-              <div :class='data==2?"backe":""' @click='sum(2)'><div class='backc'><a href="#/member/setting"><div>账户设置</div></a></div></div>
+              <div><router-link tag='a' active-class="backe" to="/member/toeveluete"><div><div class='backa'><span>我的订单</span></div></div></router-link></div>
+              <div><router-link tag='a' active-class="backe" to="/member/myYing"><div><div class='backb'><span>用户评价</span></div></div></router-link></div>
+              <div><router-link tag='a' active-class="backe" to="/member/setting"><div><div class='backc'><span>账户设置</span></div></div></router-link></div>
             </div>
           </div>
         </div>
@@ -26,19 +26,19 @@
 <script>
 import sinda_header from "../components/sinda_global_header";
 import sinda_footer from "../components/sinda_global_footer";
-export default {
-  data() {
+  export function data() {
     name:'sinda_member'
     return {
-      data:0
+      data:''
     };
-  },
+  }
+export default {
   components: { sinda_header, sinda_footer },
   methods:{
     sum:function(data){
       this.data = data
       console.log(data)
-    }
+    },
   }
 };
 </script>
@@ -77,6 +77,10 @@ export default {
       height:244px;
       margin-top:16px;
       background:#f7f7f7;
+      span{
+        margin-left:95px;
+        white-space:nowrap;
+      }
       a{
         text-decoration:none;
         color:#000;
@@ -86,21 +90,20 @@ export default {
         height:62px;
         font-size:17px;
         line-height:62px;
-        text-indent:90px;
       .backa{
-      width:101px;
+      width:100%;
       height:62px;
       font-size:17px;
       background:url(../assets/pc/Sprites.png) no-repeat -476px -294px;
     }
       .backb{
-      width:101px;
+      width:46%;
       height:62px;
       font-size:17px;
       background:url(../assets/pc/Sprites.png) no-repeat -324px -294px;
     }
       .backc{
-      width:101px;
+      width:46%;
       height:62px;
       font-size:17px;
       background:url(../assets/pc/Sprites.png) no-repeat -403px -294px;
@@ -109,6 +112,11 @@ export default {
     }
   }
   .backe{
-  background : #e9e9e9
+    width:243px;
+    height:62px;
+    display: inline-block;
+    background : #e9e9e9
 }
+ 
+
 </style>
