@@ -52,8 +52,8 @@
 
 <script>
 import sinda_header from "../components/sinda_global_header";
-import dist from "../components/distpicker";
-import sinda_footer from "../components/sinda_global_footer"; //省市区三级联动插件
+import dist from "../components/distpicker";//省市区三级联动插件
+import sinda_footer from "../components/sinda_global_footer"; 
 export default {
   // 数据获取
   created() {
