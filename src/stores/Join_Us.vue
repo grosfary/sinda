@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="body" style="width:1200px;">
       <!-- 顶部图片文字 -->
        <div class="join">
           <span>
@@ -263,7 +263,7 @@ export default {
       height: 165px;
       display: block;
       background: url("../assets/pc/gongshang.jpg") no-repeat;
-      margin-left: 110px;
+      margin-left: 30px;
     }
     .iamgeII {
       width: 155px;
