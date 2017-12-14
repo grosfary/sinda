@@ -1,18 +1,18 @@
 <template>
-    <div>
-        <select name="" class="province" @change="proChange" v-model="province">
-            <option value="0">省</option>
-            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
-        </select>
-        <select name="" class="city" @change="cityChange" v-model="city">
-            <option value="0">市</option>
-            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
-        </select>
-        <select name="" class="area" v-model="area" @change="areaChange">
-            <option value="0">区</option>
-            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
-        </select>
-    </div>
+  <div>
+    <select name="" class="province" @change="proChange" v-model="province">
+      <option value="0">省</option>
+      <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
+    </select>
+    <select name="" class="city" @change="cityChange" v-model="city">
+      <option value="0">市</option>
+      <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
+    </select>
+    <select name="" class="area" v-model="area" @change="areaChange">
+      <option value="0">区</option>
+      <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
+    </select>
+  </div>
 
 </template>
 <script>
@@ -28,19 +28,22 @@ export default {
       areas: []
     };
   },
-  methods:{
-      proChange() {
+  methods: {
+    proChange() {
       this.city = "0";
       this.area = "0";
       if (this.province != "0") {
         this.citys = dist[this.province];
+      } else {
+        this.citys = [];
+        this.areas = [];
       }
     },
     cityChange() {
       this.areas = dist[this.city];
     },
-    areaChange(){
-        this.$emit('selected',this.area);
+    areaChange() {
+      this.$emit("selected", this.area);
     }
   }
 };

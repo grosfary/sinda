@@ -51,17 +51,19 @@ export default {
       .post(
         "/xinda-api/provider/detail",
         this.qs.stringify({
-          id: "9080f0c120a64eb3831d50ba93c33e78"
+          id: this.$route.query.id
           //请求店铺信息
         })
       )
       .then(function(data) {
         var shop = data.data.data;
+        // console.log('shop==',shop);
         sessionStorage.setItem("shoppingID", JSON.stringify(shop));
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
-        that.shopLOGO = shop.providerImg;
+        that.shopLOGO = that.$route.query.img;
+        console.log(that.shopLOGO);
       });
 
     that.ajax
@@ -88,7 +90,7 @@ export default {
 .shopList {
   width: 1200px;
   margin: 50px 170px;
-  display: none;
+  // display: none; 
 }
 .logo {
   border: 1px solid #e9e9e9;
