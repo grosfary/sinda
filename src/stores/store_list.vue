@@ -38,7 +38,8 @@
              <p>累计客户服务次数:{{list.orderNum}}丨好评率：100%</p>
              <p class="biaoqian" style="display:inline" v-for="pro in list.productTypes" :key="pro.id">{{pro}}</p>
              </div>
-             <button @click="open">进入店铺</button><!--点击按钮-->
+             <button @click="open(list.providerName,list.id,list.providerImg)">进入店铺</button><!--点击按钮-->
+
            </div>
            </div>
           </div>
@@ -88,22 +89,31 @@ export default {
         var lists = data.data.data;
         for (var key in lists) {
           lists[key].productTypes = lists[key].productTypes.split(",");
+       
+            // console.log(that.providerName);
+        
+            //  console.log(that.prozeroId);
         }
         that.lists = lists;
-        console.log(that.lists);
+     
+       
+      
+       
       });
   },
   data() {
     return {
       names: [],
-      lists: []
-      
+      lists: [],
     };
   },
   components: { sinda_header, sinda_footer, dist },
   methods: {
-    open: function() {
-      location.href = "http://localhost:8080/#/shop";
+    open: function(name,id,image) {
+      // console.log(this.prozeroId,this.providerName)
+      console.log(this.lists)
+      console.log(name,id)
+      this.$router.push({path:'/shop/service',query:{id:id,Name:name,img:image}});
     }
   },
   linehead: function() {}
