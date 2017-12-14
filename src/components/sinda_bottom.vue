@@ -64,10 +64,5 @@ ul {
 }
 
 
-@media screen and (max-width: 1200px) {
-  // 手机端样式调整
-  .bottom_outer {
-    display: none;
-  }
-}
+
 </style>

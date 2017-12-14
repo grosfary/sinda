@@ -44,7 +44,6 @@
     </div>
 </template>
 <script>
-import VDistpicker from 'v-distpicker'
 import member from "../views/sinda_member";
 export default {
   data() {
@@ -57,7 +56,7 @@ export default {
       value:1
     };
   },
-  components: { member,VDistpicker },
+  components: { member },
   methods:{
   sexo:function(){
       this.value = 1;

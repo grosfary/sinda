@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="body" style="width:1200px">
         <!-- 支付头部 -->
         <div class="item-header">
             <a href="http://localhost:8080/#/">首页</a>/<p>支付</p>
@@ -59,7 +59,7 @@
                         <p class="lagefeed">请您在新打开的页面完成订单付款</p>
                         <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
                     <div class="feedbody">
-                        <a class="wancheng"href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)">支付遇到问题</a>
+                        <a class="wancheng"href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
                      </div>
                      <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
                 </div>

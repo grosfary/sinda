@@ -29,6 +29,13 @@ import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
+// -----------------------------------------------------------------------------------------------------------------------
+// 手机端
+import m_global from '../components/m_global' //手机端公共页
+import m_index from '../m_sinda/m_index' //手机端首页
+import m_shop from '../m_sinda/m_shop' //手机shop
+import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
+import m_out from '../components/m_out' //手机端公共页
 Vue.use(Router)
 
 // pc端
@@ -46,14 +53,15 @@ export default new Router({
             path: '/',
             name: 'sinda_global',
             component: global,
+            redirect: 'index',
             children: [{
-                    path: '/', // path为路径  在这里为首页   如 http://localhost:8081/#/
+                    path: 'index', // path为路径  在这里为首页   如 http://localhost:8081/#/
                     component: index
                 }, {
                     path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
                     component: list,
                     children: [{
-                        path: 'tax', //财税服务页   如 http://localhost:8081/#/list/cart
+                        path: 'tax', //财税服务页   如 http://localhost:8081/#/list/tax
                         component: tax
                     }, {
                         path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
@@ -71,20 +79,23 @@ export default new Router({
                 }, {
                     path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
                     component: store_list
-                }, {
-                    path: 'shop',
+                },
+
+                {
+                    path: '/shop',
                     component: shop,
-                    redirect: 'shop/service',
+                    redirect: "/shop/service",
                     children: [{
-                        path: 'certificate',
-                        component: certificate,
+                        path: 'service',
+                        component: service,
                     }, {
                         path: 'product',
                         component: product,
                     }, {
-                        path: 'service',
-                        component: service,
+                        path: 'certificate',
+                        component: certificate,
                     }]
+
                 }, {
                     path: 'payment',
                     component: payment,
@@ -116,7 +127,7 @@ export default new Router({
                             component: setting
                         },
                         {
-                            path: 'evalu', //账户设置三级页   如 http://localhost:8081/#/member/setting
+                            path: 'evalu', //账户设置三级页   如 http://localhost:8081/#/member/evalu
                             component: evalu
                         },
                         {
@@ -125,7 +136,6 @@ export default new Router({
                         }
                     ]
                 }
-
             ]
         },
         {
@@ -145,6 +155,28 @@ export default new Router({
                     component: forgetPs
                 },
             ]
+        }, {
+            path: '/m.sinda',
+            name: 'm.sinda',
+            component: m_global,
+            children: [{
+                path: '',
+                component: m_index
+            }, {
+                path: 'shop',
+                component: m_shop,
+                children: [{
+                    path: 'service',
+                    component: m_shop_service,
+                }]
+            }]
+
+        }, {
+            path: '/m.out',
+            name: 'm.out',
+            component: m_out
+                // children: [{}]
         }
+
     ]
 })
