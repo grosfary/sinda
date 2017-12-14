@@ -7,7 +7,7 @@
     <div>
     <div class='evaluate'>
       <div>
-        <span>服务单号：{{getNum}}</span>
+        <span>服务单号：{{setnumtoeva}}</span>
         <span></span>
       </div>
       <div>
@@ -21,11 +21,11 @@
     </div>
     <div class='evalu'>
       <span>评价：</span>
-      <input type="radio" name='radio'>
+      <input type="radio" name='radio' @click="sum(3)">
       <span>好评</span>
-      <input type="radio" name='radio'>
+      <input type="radio" name='radio' @click="sum(2)">
       <span>中评</span>
-      <input type="radio" name='radio'>
+      <input type="radio" name='radio' @click="sum(1)" checked="checked">
       <span>差评</span>
     </div>
     <div class='score'>
@@ -41,7 +41,7 @@
       <textarea class='textarea'></textarea>   
     </div>
     <div class='sub'>
-      <a href="#/member/evalu"><input type='submit' class='judge'></input></a>
+      <a href="#/member/evalu"><input type='submit' class='judge' @click='judge'></input></a>
     </div>
    </div>    
   </div>
@@ -54,17 +54,25 @@ export default {
   data() {
     return {
       index:-1,
-      buys:[]
+      buys:[],
+      sumes:1,
     };
   },
   computed:{
-    ...mapGetters(['getNum'])
+    ...mapGetters(['setnumtoeva'])
   },
   components: { member },
   methods:{
     image:function(index){
         this.index = index;
     },
+    judge:function(){
+      console.log()
+    },
+    sum:function(sumes){
+      console.log(sumes)
+      this.sumes = sumes;
+    }
   },
   created(){
     var that = this;

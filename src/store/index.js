@@ -7,6 +7,7 @@ export default new Vuex.Store({
     loginState: '',
     listName: 'listName',
     userName: '',
+    toeva:'',//去评价
   },
   mutations: { //突变集合
     SET_NUM(state, num) { // 购物车数量
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     SET_USER_NAME(state, userName) { // 当前用户
       state.userName = userName;
       // }
+    },
+    SET_NUM_TOEVA(state,toeva){//去评价
+      state.toeva = toeva;
     }
   },
 
@@ -44,12 +48,18 @@ export default new Vuex.Store({
       commit
     }, userName) {
       commit('SET_USER_NAME', userName);
+    },
+    setnumtoeva({//去评价
+      commit
+    },toeva){
+      commit('SET_NUM_TOEVA',toeva)
     }
   },
   getters: { //显示集合
     getNum: state => state.num,
     getloginState: state => state.loginState,
     getlistName: state => state.listName,
-    getuserName: state => state.userName
+    getuserName: state => state.userName,
+    setnumtoeva: state => state.toeva
   }
 });

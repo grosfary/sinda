@@ -40,8 +40,6 @@ export default {
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据
-          
-          // providerId: "9080f0c120a64eb3831d50ba93c33e78",
           providerId:that.$route.query.id,
           providerName:that.$route.query.Name,
           sort: 2
@@ -51,8 +49,6 @@ export default {
         var shop = data.data.data;
         shops(shop);
         pages(shop);
-        console.log('this.$route.query.id==',that.$route.query.id)
-        
       });
     //数据处理函数
     var shops = function(shopping) {

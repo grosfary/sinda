@@ -5,17 +5,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import Distpicker from 'v-distpicker'
 import qs from 'qs'
 import Validator from 'vue-validator'
 // import store from 'store'
 Vue.use(Validator)
-Vue.component('v-distpicker', Distpicker);
 Vue.prototype.qs = qs;
 Vue.prototype.ajax = axios;
 Vue.config.productionTip = false
 Vue.config.devtools = false //关闭vue提示
-
     /* eslint-disable no-new */
 new Vue({
     el: '#app',
