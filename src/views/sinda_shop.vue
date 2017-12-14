@@ -57,6 +57,7 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
+        // console.log('shop==',shop);
         sessionStorage.setItem("shoppingID", JSON.stringify(shop));
         that.providerName = shop.name;
         that.regionName = shop.regionName;
@@ -88,7 +89,7 @@ export default {
 .shopList {
   width: 1200px;
   margin: 50px 170px;
-  display: none;
+  // display: none; 
 }
 .logo {
   border: 1px solid #e9e9e9;

@@ -96,21 +96,28 @@ export default {
       })
       .then(function(data) {
         var list = data.data.data;
-        console.log(list);
+        
         var list0 = list[0];
+        // console.log(list0);
         that.pro = list0.productTypes.split(",");
         that.order=list0.orderNum;
         that.provider=list0.providerName;
         that.region=list0.regionName;
         that.providerImg='http://115.182.107.203:8088/xinda/pic'+list0.providerImg;//数据图片
         var listI=list[1];
+        // console.log('listI',listI)
         that.orders=listI.orderNum;//文字信息
         that.providers=listI.providerName;
         that.regions=listI.regionName;
         that.pros=listI.productTypes.split(",");
         that.providerImgs='http://115.182.107.203:8088/xinda/pic'+listI.providerImg;//数据图片
-        console.log(that.pro);
-        console.log(that.providerImg);
+        // console.log(that.pro);
+        // console.log(that.providerImg);
+        console.log('id111=====',list[0].providerName)
+         that.providerName=list[0].providerName
+        that.proFristId=list[0].id
+       that.prozeroId=list[1].id
+       
       });
   },
   data() {
@@ -121,17 +128,27 @@ export default {
       order:[],
       provider:[],
       region:[],
-       orders:[],
+      orders:[],
       providers:[],
       regions:[],
       providerImg:[],
       providerImgs:[],
+      proFristId:'',//第一个产品的id
+      prozeroId:'',//第二个产品的id
+      providerName:'',
           };
   },
   components: { sinda_header, sinda_footer, VDistpicker },
   methods:{
     open:function(){
-    location.href="http://localhost:8080/#/shop";
+      
+    // location.href="http://localhost:8080/#/shop/service";
+    console.log('this.prozeroId==',this.prozeroId);
+    console.log('this.providerName==',this.providerName);
+     this.$router.push({path:'/shop/service',query:{id:this.prozeroId,Name:this.providerName}});
+    //  this.$router.push({path:'/shop/service',query:{Name:this.providerName}});
+    // this.$router.push({path:'/shop/service',query:{id:this.proFristId}});
+
     }
   }
 };

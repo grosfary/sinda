@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="phoneservice">
         <div class="center">
             <p>所有服务
                 <span></span>
@@ -30,7 +30,7 @@ export default {
       .post(
         //请求店铺商品信息
         "/xinda-api/product/package/grid",
-        // "http://115.182.107.203:8088/xinda/xinda-api/product/package/detail",
+       
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据
@@ -41,7 +41,7 @@ export default {
       .then(function(data) {
         var shop = data.data.data;
         shops(shop);
-        pages(shop);
+        // pages(shop);
       });
     //数据处理函数
     var shops = function(shopping) {
@@ -118,6 +118,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.phoneservice{
+    display: none;
+}
 .center {
   position: relative;
 }

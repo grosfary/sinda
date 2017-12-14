@@ -156,15 +156,16 @@ export default new Router({
                 },
             ]
         }, {
-            path: '/m.sinda',
+            path: '/m.sinda', // 手机端公共页面 包含公共底部
             name: 'm.sinda',
             component: m_global,
             children: [{
-                path: '',
+                path: '', // 手机端的首页
                 component: m_index
             }, {
-                path: 'shop',
+                path: 'shop', // 手机端的店铺页
                 component: m_shop,
+                redirect: "/service",
                 children: [{
                     path: 'service',
                     component: m_shop_service,
@@ -172,7 +173,7 @@ export default new Router({
             }]
 
         }, {
-            path: '/m.out',
+            path: '/m.out', // 手机端公共页面 不包含底部
             name: 'm.out',
             component: m_out
                 // children: [{}]
