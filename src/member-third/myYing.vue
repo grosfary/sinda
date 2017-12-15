@@ -1,25 +1,30 @@
 <template>
     <div class="hello">
-      <div class="top">
+      <div class="top clear">
         <div class='assess'>
           <div>我的评价</div>
         </div>
         <div class='content'>
-          <div>
+          <div class = 'contes'>
             <div :class='index==1?"notapp":"havebeen"' @click='appraise(1)'>未评价</div>
             <a class='notappa' v-show = 'notappa'></a>
             <a href="#/member/evalu"><div class='havebeen'>已评价</div></a>
             <a class='notappb' v-show='notappb'></a>
           </div>
-          <div class='details'>
+          <div class='details' v-for='(product,key) in products' :key='product.rData'>
             <div class='box'></div>
             <div class='infor'>
               <div></div>
-              <div>服务单号：</div>
+              <div>服务单号：{{product.serviceNo}}</div>
               <div>购买内容：</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
-            <a href="/#/member/center"><button>去评价</button></a>
+            <a @click='tail(product.id)'><button @click='toeva(key)'>去评价</button></a>
+          </div>
+           <div class='inputcopy' v-show='ned'>
+            <input type="submit" class='previous' value='上一页' @click='previous'>
+            <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click = 'skip(bum)'>{{button}}</div>           
+            <input type="submit" class='next' value='下一页' @click='next'>
           </div>
         </div>
       </div>
@@ -29,7 +34,36 @@
 <script>
 import member from "../views/sinda_member";
 import {formatDate} from '../../config/date';
+import {mapActions} from 'vuex'
 export default {
+    created(){
+      var that = this;
+      this.ajax.post(
+        '/xinda-api/service-order/grid'
+        ,{
+          // startTime:this.changes,
+          // endTime:this.onchanges--S1712130636102806089
+          businessNo:'S1712130642023214030'
+        }).then(
+          function(data){
+         that.rData = data.data.data;//所需的数据
+        if(that.rData.length>2){//判断数据长度是否大于2
+        that.ned=true;
+          var arr = []
+          arr.push(that.rData[0]);//一二条数据相加
+          arr.push(that.rData[1]);
+          that.products=arr;
+          var numeral = Math.ceil(that.rData.length/2);//判断应该产生多少按钮
+          for(let i=1;i<=numeral;i++){//循环button按钮
+              that.buttons.push(i)//每个按钮编号
+            }
+          that.abb=numeral;//按钮号
+        }else{
+          that.products=that.rData;//小于二时，将所有数据添加
+          that.ned=false;
+        }
+      })
+  },
       filters: {
         formatDate(time) {
             var date = new Date(time);
@@ -37,6 +71,14 @@ export default {
         }
     },
   methods:{
+    ...mapActions(['setnumtoeva']),
+    tail(id){
+      this.$router.push({path:'./center',query:{id:id}})
+    },
+    toeva:function(key){
+      this.setnumtoeva(this.products[key].serviceNo)
+      // console.log(this.products[key])
+    },
     appraise:function(index){
       this.index=index;
       if(this.index==1){
@@ -46,13 +88,66 @@ export default {
         this.notappb=true
         this.notappa=false
       }
-    }
+        
+    },
+      previous:function(){
+        if(this.col==0){
+          this.col = 0;
+        }else{
+          this.col=this.col-1;
+            var array=[];
+           this.product = [];//清除数据
+            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[this.abb*2-2])//添加数据
+            }else{
+              array.push(this.rData[(this.col+1)*2-2]);
+              array.push(this.rData[(this.col+1)*2-1]);//添加数据
+            }
+              this.products=array;//将所有数据添加
+        }
+      },
+      next:function(){
+        if(this.col==this.abb-1){
+          this.col=this.col;
+        }else{
+          this.col=this.col+1;
+            var array=[];
+           this.product = [];//清除数据
+            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[this.abb*2-2])//添加数据
+            }else{
+              array.push(this.rData[(this.col+1)*2-2]);
+              array.push(this.rData[(this.col+1)*2-1]);//添加数据
+            }
+              this.products=array;//将所有数据添加
+        }
+      },
+         skip:function(bum){
+           var array=[];
+           this.product = [];//清除数据
+            if(this.abb*2-1==this.bum){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[this.abb*2-2])//添加数据
+            }else{
+              array.push(this.rData[(bum+1)*2-2]);
+              array.push(this.rData[(bum+1)*2-1]);//添加数据
+            }
+              this.products=array;//将所有数据添加
+              this.col=bum
+            },
   },
   data() {
     return {
       index:1,
       notappb:false,
-      notappa:true
+      notappa:true,
+      products:[],
+      buttons:[],
+      bum:'',
+      abb:'',
+      col:0,
+      rData:[],
+      ned:true,
+      nones:[]
     };
   },
   components: { member }
@@ -61,7 +156,51 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+.clear:after{               /*清除浮动*/
+    content: '';
+    display: block;
+    clear: both;
+}
 
+.contes{
+    border:1px solid #ccc;
+}
+.content .inputcopy{
+  display:flex;
+  margin-top:36px;
+  justify-content: center;
+  background:#fff;
+  input{
+    background:#fff;
+    border:1px solid #ccc;
+  }
+  .page{
+  width:39px;
+  height:34px;
+  color:#2592d3;
+  line-height:34px;
+  margin-left:10px;
+  text-indent:11px;
+  border:1px solid #2592d3;
+}
+  .pages{
+  width:39px;
+  height:34px;
+  color:#ccc;
+  line-height:34px;
+  margin-left:10px;
+  text-indent:11px;
+  border:1px solid #ccc;
+}
+}
+.previous{
+  width:68px;
+  height:36px;
+}
+.next{
+  .previous;
+  margin-left:10px;
+}
   .assess{
     width:875px;
     height:34px;
@@ -80,11 +219,11 @@ export default {
   }
  .content{
     width:909px;
-    border:2px solid #ccc;
     float: left;
     margin-top:-411px;
     margin-left:521px;
     .details{
+      border:1px solid #ccc;
       width:100%;
       height:144px;
       background:#fff;
@@ -134,7 +273,6 @@ export default {
       }
       }
     div{
-    border-bottom:2px solid #e9e9e9;
     width:909px;
     height:43px;
     background:#f7f7f7;

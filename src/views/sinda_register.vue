@@ -22,7 +22,8 @@
           </div>
           <!-- <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker> -->
          <dist @selected="selected"></dist>
-          <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
+          <input id="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码" @click="concealPS">
+          <div id="shiyan"></div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <button class="boxIII" @click="iregister">立即注册</button>
           <p>注册及同意遵守
@@ -70,7 +71,7 @@ export default {
     selected(code) {
       this.distCode = code;
     },
-    imgReflash: function() {
+    imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
      verCode() {
@@ -148,6 +149,9 @@ export default {
             this.$router.push({ path: "/LoginRegister/login" });
           }
         });
+    },
+    concealPS(){
+
     }
   },
   created() {
@@ -285,11 +289,13 @@ export default {
   margin-bottom: 20px;
   border-radius: 3px;
 }
-.boxII {
+#boxII {
   width: 280px;
   height: 35px;
   border: 1px solid #cbcbcb;
   border-radius: 3px;
+  background-size: 20px 20px;
+  // background-size: 20px 20px;
 }
 .boxIII {
   width: 280px;
@@ -298,8 +304,20 @@ export default {
   border: 1px solid #2693d4;
   color: #2693d4;
   border-radius: 3px;
-  background-color: #fff;
+  background-color: #fff; 
+  position: relative;
 }
+#shiyan{
+    width: 20px;
+    height: 25px;
+    position: absolute;
+    z-index: 20;
+    top: 237px;
+    left: 253px;
+    background-image: url(../assets/pc/suo.jpg);
+    background-repeat: no-repeat;
+    // background-size: 600px 500px;
+  }
 .bottom {
   padding-bottom: 150px;
 }

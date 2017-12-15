@@ -38,6 +38,8 @@ import m_index from '../m_sinda/m_index' //手机端首页
 import m_shop from '../m_sinda/m_shop' //手机shop
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
 import m_out from '../components/m_out' //手机端公共页
+import generic from '../components/generic' //手机端公共页
+import logged from '../components/logged' //手机端公共页
 Vue.use(Router)
 
 // pc端
@@ -164,15 +166,16 @@ export default new Router({
                 },
             ]
         }, {
-            path: '/m.sinda',
+            path: '/m.sinda', // 手机端公共页面 包含公共底部
             name: 'm.sinda',
             component: m_global,
             children: [{
-                path: '',
+                path: '', // 手机端的首页
                 component: m_index
             }, {
-                path: 'shop',
+                path: 'shop', // 手机端的店铺页
                 component: m_shop,
+                redirect: "/service",
                 children: [{
                     path: 'service',
                     component: m_shop_service,
@@ -180,10 +183,18 @@ export default new Router({
             }]
 
         }, {
-            path: '/m.out',
+            path: '/m.out', // 手机端公共页面 不包含底部
             name: 'm.out',
             component: m_out
                 // children: [{}]
+        }, {
+            path: '/generic',//未注册
+            name: 'generic',
+            component:generic
+        }, {
+            path: '/logged',//已登录
+            name: 'logged',
+            component:logged
         }
 
     ]

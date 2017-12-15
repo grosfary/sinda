@@ -1,14 +1,14 @@
 <template>
-    <div class="body">
+    <div class="body" style="width:1200px">
         <!-- 支付头部 -->
         <div class="item-header">
             <a href="http://localhost:8080/#/">首页</a>/<p>支付</p>
             <span>订单详情</span>
       </div>
       <!-- 订单详情 -->
-      <div class="item-order-number">
+      <div class="itemorder">
           <p class="lage">订单编号:</p><span></span><p>创建时间：</p><p>订单总额：</p>
-          <div class="Details"> <span>订单明细</span></div>
+          <div class="Details"> <span @click="detail">订单明细</span></div>
          
       </div>
       <!-- 支付方式 -->
@@ -36,7 +36,8 @@
             <p>金额总计：</p><br>
             <button @click="jiesuan">去结算</button>
         </div>
-        <div class="we-pay" id="weipay" v-if="weback">
+        <div class="bigbox" v-if="bigbox">
+            <div class="we-pay" id="weipay" v-if="weback">
                 <div class="pay-header">
                     <p class="lageheader">微信支付</p>
                     <p class="cha" @click='cha'>X</p>
@@ -47,8 +48,8 @@
                 <div class="payfangshi">
                 <a href="javascript:void(0)" id="success" @click="success">已完成支付</a><a href="javascript:void(0)" id="failure" @click="failure">支付遇到问题</a>
                 <a class="footerlage" @click='cha'>返回重新选择支付方式</a>
-                </div>
-                
+                </div>  
+            </div>
         </div>
         <div class="feedback" v-if="feedback">
                     <div class="feedheader">
@@ -58,7 +59,7 @@
                         <p class="lagefeed">请您在新打开的页面完成订单付款</p>
                         <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
                     <div class="feedbody">
-                        <a class="wancheng"href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)">支付遇到问题</a>
+                        <a class="wancheng"href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
                      </div>
                      <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
                 </div>
@@ -74,6 +75,8 @@ export default {
     return {
         weback:false,
         feedback:false,
+        bigbox:false,
+
     };
     
   },
@@ -81,24 +84,30 @@ export default {
   methods:{
       cha:function(){
           this.weback=false;
-      },
-    success:function(){
-    location.href="http://localhost:8080/#/payment/success"
-    },
-      failure:function(){
+          this.bigbox=false;
+        },
+        success:function(){
+        location.href="http://localhost:8080/#/payment/success"
+        },
+        failure:function(){
         location.href="http://localhost:8080/#/payment/failure"
-    },
-    jiesuan:function(){
+        },
+        jiesuan:function(){
         if(wechat.checked==true){
         this.weback=true;
+        this.bigbox=true;
         }else if(bank.checked==true||alipay.checked==true){
             this.feedback=true;
+             this.bigbox=true;
         }
-    },
-    clean:function(){
+         },
+        clean:function(){
         this.feedback=false;
+        this.bigbox=false;
+    },
+    detail:function(){
+       
     }
-  
   }
 };
 </script>
@@ -117,9 +126,10 @@ export default {
         border:1px solid #ccc;
         border-left: none;
         border-top: none;
-        margin-top: -340px;
+        margin-top: -300px;
         margin-left: 309px;
         font-size: 13px;
+        position:relative;
         .feedbody{
             margin-top: 20px;
             text-align: center;
@@ -182,6 +192,15 @@ export default {
             margin-top: 20px;
         }
     }
+    .bigbox{
+        width:1000px;
+        height:305px;
+        // background:#000;
+        margin-top: -340px;
+        margin-left: 0px;
+        position:absolute
+        
+    }
       .we-pay{
         width: 220px;
         height: 240px;
@@ -189,9 +208,9 @@ export default {
         border:1px solid #ccc;
         border-left: none;
         border-top: none;
-        margin-top: -340px;
         margin-left: 439px;
         font-size: 15px;
+         position:relative;
         span{
             width: 115px;
             height: 111px;
@@ -277,7 +296,7 @@ export default {
     }
 }
 // 订单详情样式
-.item-order-number{
+.itemorder{
     height: 60px;//盒子高度
     background: #f7f7f7;//背景颜色
     border:solid 1px #b6b6b6;//边框样式

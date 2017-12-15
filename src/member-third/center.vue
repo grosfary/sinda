@@ -7,7 +7,7 @@
     <div>
     <div class='evaluate'>
       <div>
-        <span>服务单号：{{getNum}}</span>
+        <span>服务单号：{{setnumtoeva}}</span>
         <span></span>
       </div>
       <div>
@@ -21,11 +21,11 @@
     </div>
     <div class='evalu'>
       <span>评价：</span>
-      <input type="radio" name='radio'>
+      <input type="radio" name='radio' @click="sum(3)">
       <span>好评</span>
-      <input type="radio" name='radio'>
+      <input type="radio" name='radio' @click="sum(2)">
       <span>中评</span>
-      <input type="radio" name='radio'>
+      <input type="radio" name='radio' @click="sum(1)" checked="checked">
       <span>差评</span>
     </div>
     <div class='score'>
@@ -38,10 +38,10 @@
     </div>
     <div class='feel'>
       <span>感受：</span> 
-      <textarea class='textarea'></textarea>   
+      <textarea class='textarea' v-model="textarea"></textarea>   
     </div>
     <div class='sub'>
-      <a href="#/member/evalu"><input type='submit' class='judge'></input></a>
+      <a href="#/member/evalu"><input type='submit' class='judge' @click='judge'></input></a>
     </div>
    </div>    
   </div>
@@ -54,23 +54,43 @@ export default {
   data() {
     return {
       index:-1,
-      buys:[]
+      buys:[],
+      sumes:1,
+      textarea:''
     };
   },
   computed:{
-    ...mapGetters(['getNum'])
+    ...mapGetters(['setnumtoeva'])
   },
   components: { member },
   methods:{
     image:function(index){
         this.index = index;
     },
+    judge:function(){
+      var that = this;
+      console.log(that.index+1)
+      console.log(that.textarea)
+      console.log(that.sumes)
+      that.ajax.post(
+        '/xinda-api/service/judge/submit',that.qs.stringify({
+          id:that.$route.query.id,
+          type:that.sumes,
+          score:that.index+1,
+          content:that.textarea
+        })).then(function(data){
+          console.log(data.data)
+      })
+    },
+    sum:function(sumes){
+      // console.log(sumes)
+      this.sumes = sumes;
+    }
   },
   created(){
     var that = this;
     this.ajax.post('/xinda-api/business-order/detail',{}).then(function(data){
       var Data=data.data.data
-      console.log(data)
       that.buys.push(Data)
     })
   }
