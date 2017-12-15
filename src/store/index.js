@@ -21,6 +21,10 @@ export default new Vuex.Store({
     },
     SET_USER_NAME(state, userName) { // 当前用户
       state.userName = userName;
+      // if (sessionStorage.getItem("userName")) {
+      //   state.userName = sessionStorage.getItem("userName");
+      // } else {
+      //   state.userName = userName;
       // }
     },
     SET_NUM_TOEVA(state,toeva){//去评价
@@ -59,7 +63,13 @@ export default new Vuex.Store({
     getNum: state => state.num,
     getloginState: state => state.loginState,
     getlistName: state => state.listName,
-    getuserName: state => state.userName,
+    getuserName: state => {
+      if (state.userName) {
+        return state.userName
+      } else {
+        return sessionStorage.getItem("userName");
+      }
+    },
     setnumtoeva: state => state.toeva
   }
 });

@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       state: -1,
-      show: false,
+      show: true,
       logshow: false
     };
   },
@@ -70,11 +70,10 @@ export default {
   methods: {
     ...mapActions(["setuserName", "setNum"]),
     loginState: function() {
-      // var that = this;
       if (this.getuserName) {
-        window.location.href = "#/list/cart";
+        this.$router.push({ path: "/list/cart" });
       } else {
-        window.location.href = "#/LoginRegister/login";
+        this.$router.push({ path: "/LoginRegister/login" });
       }
     },
     logOutBox: function() {
@@ -89,6 +88,7 @@ export default {
       this.ajax.post("/xinda-api/sso/ logout").then(data => {
         // 发送一个退出登录请求
         if (data.data.status === 1) {
+          sessionStorage.setItem("userName", ""); // 退出时，清空用户名
           this.state = 0;
           // 如果请求返回为1，则成功退出
           this.setuserName("");
@@ -99,8 +99,6 @@ export default {
       this.ajax.post("/xinda-api/sso/login-info").then(data => {
         // 判断当前是否为登录状态
         this.state = data.data.status;
-        // console.log(data.data)
-
         if (this.state == 1) {
           this.setuserName(data.data.data.loginId);
         }
@@ -109,7 +107,7 @@ export default {
     }
   },
   created() {
-    this.login_info();
+    // this.login_info();
     this.setNum(sessionStorage.getItem("cartNumber"));
   },
   updated() {
