@@ -34,7 +34,7 @@
         <ul>
           <li>金额总计</li>
           <li>
-            <button>继续购物</button>
+            <button @click="continueShopping">继续购物</button>
             <button @click="cart_submit">去结算</button>
           </li>
         </ul>
@@ -87,8 +87,10 @@ export default {
         .then(data => {
           console.log(data);
           this.setNum(-sessionStorage.getItem("cartNumber"));
-          
         });
+    },
+    continueShopping() { // 继续购物
+      window.location = "/#/";
     }
   },
   created() {

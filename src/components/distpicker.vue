@@ -13,7 +13,6 @@
             <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
         </select>
     </div>
-
 </template>
 <script>
 import dist from "../districts/districts";

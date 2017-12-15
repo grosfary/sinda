@@ -29,6 +29,8 @@ import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
+import com from '../views/sinda_list/company' //公司工商
+import list_list from '../views/sinda_list/list_list' //公司工商
 // -----------------------------------------------------------------------------------------------------------------------
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
@@ -69,6 +71,12 @@ export default new Router({
                     }, {
                         path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
                         component: cart
+                    }, {
+                        path: 'com', //公司工商页   如 http://localhost:8081/#/list/cart
+                        component: com
+                    }, {
+                        path: 'list', //公司工商页   如 http://localhost:8081/#/list/cart
+                        component: list_list
                     }]
                 }, {
                     path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us

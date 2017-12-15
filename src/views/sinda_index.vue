@@ -1,23 +1,23 @@
 <template>
-<div class="sinda_index">
-  <div class="carousel">
-    <div class="carousel_inner" @mousemove="stopPlay()" @mouseout="play()">
-      <transition-group tag="ul" name="image">
-        <li v-for="(image,index) in img" :key="index" v-if="index===mark">
-          <a href="#/"><img :src="image"></a>
-        </li>
-      </transition-group>
+  <div class="sinda_index">
+    <div class="carousel">
+      <div class="carousel_inner" @mousemove="stopPlay()" @mouseout="play()">
+        <transition-group tag="ul" name="image">
+          <li v-for="(image,index) in img" :key="index" v-if="index===mark">
+            <a href="#/"><img :src="image"></a>
+          </li>
+        </transition-group>
+      </div>
+      <div class="bullet">
+        <span v-for="(item,index) in img.length" :class="{'active':index===mark}" @click="change(index)" :key="index" @mousemove="stopPlay()" @mouseout="play()"></span>
+      </div>
     </div>
-    <div class="bullet">
-      <span v-for="(item,index) in img.length" :class="{'active':index===mark}" @click="change(index)" :key="index" @mousemove="stopPlay()" @mouseout="play()"></span>
-    </div>
-  </div>
-  <div class="starGoods">
-    <div class="index_title">
-      <p>明星产品推荐</p>
-      <span></span>
-    </div>
-          <div class="star_main" >
+    <div class="starGoods">
+      <div class="index_title">
+        <p>明星产品推荐</p>
+        <span></span>
+      </div>
+      <div class="star_main">
         <div class="star_pro" v-for="(i,index) in noviceMust" :key="i.id">
           <!-- 初创企业必备产品 -->
           <div>
@@ -30,99 +30,111 @@
           <!-- 产品名称 -->
           <p class="star_Info">{{i.serviceInfo}}</p>
           <!-- 产品内容 -->
-          <p>￥{{i.marketPrice}}<span>{{i.unit}}</span></p>
+          <p>￥{{i.marketPrice}}
+            <span>{{i.unit}}</span>
+          </p>
           <!-- 产品价格 -->
         </div>
       </div>
-  </div>
-  <div class="noviceMust">
-    <!-- 初创企业必备部分 -->
-    <div class="index_title">
-      <p>初创企业必备</p>
-      <span></span>
     </div>
-    <div class="novice_main">
-      <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
-        <!-- 初创企业必备产品 -->
-        <div>
-          <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
-          <!-- 公司logo -->
-          <p>{{i.providerName}}</p>
-          <!-- 公司名称 -->
+    <div class="noviceMust">
+      <!-- 初创企业必备部分 -->
+      <div class="index_title">
+        <p>初创企业必备</p>
+        <span></span>
+      </div>
+      <div class="novice_main">
+        <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
+          <!-- 初创企业必备产品 -->
+          <div>
+            <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+            <!-- 公司logo -->
+            <p>{{i.providerName}}</p>
+            <!-- 公司名称 -->
+          </div>
+          <h4>{{i.serviceName}}</h4>
+          <!-- 产品名称 -->
+          <p class="novice_Info">{{i.serviceInfo}}</p>
+          <!-- 产品内容 -->
+          <p>￥{{i.marketPrice}}
+            <span>{{i.unit}}</span>
+          </p>
+          <!-- 产品价格 -->
+          <button>查看详情</button>
+          <!-- 查看详情按钮 -->
         </div>
-        <h4>{{i.serviceName}}</h4>
-        <!-- 产品名称 -->
-        <p class="novice_Info">{{i.serviceInfo}}</p>
-        <!-- 产品内容 -->
-        <p>￥{{i.marketPrice}}<span>{{i.unit}}</span></p>
-        <!-- 产品价格 -->
-        <button>查看详情</button>
-        <!-- 查看详情按钮 -->
       </div>
     </div>
-  </div>
-  <div class="knowledge">
-    <div class="index_title">
-      <p>知识产权</p>
-      <span></span>
-    </div>
-    <div class="know_main">
-      <div class="know_Zs">
-        <ul class="title">
-          <li>知识产权</li>
-        </ul>
-        <ul>
-          <li>| 商标注册</li>
-          <li>| 版权注册</li>
-          <li>| 专利申请</li>
-        </ul>
+    <div class="knowledge">
+      <div class="index_title">
+        <p>知识产权</p>
+        <span></span>
       </div>
-      <div>
-        <div class="SB">
-          <div class="SB_SB">
-            <ul>
-              <li class="ZSCQ_title">商标注册</li>
-              <li class="ZSCQ_info">极速申报，办理简单</li>
-              <li class="ZSCQ_price"><span class="price">￥1000</span><span>/次</span></li>
-            </ul>
-          </div>
-          <div class="SB_BQ">
-            <ul>
-              <li class="ZSCQ_title">版权专利</li>
-              <li class="ZSCQ_info">快速提交，全程跟踪</li>
-              <li class="ZSCQ_price"><span class="price">￥1000</span><span>/次</span></li>
-            </ul>
-          </div>
-        </div>
-        <div class="Zz" >
+      <div class="know_main">
+        <div class="know_Zs">
+          <ul class="title">
+            <li>知识产权</li>
+          </ul>
           <ul>
-            <li class="ZSCQ_title">著作权</li>
-            <li class="ZSCQ_info">专业顾问，经验丰富，快速响应，顺利拿证。</li>
-            <li class="ZSCQ_price"><span class="price">￥1000</span><span>/次</span></li>
+            <li>| 商标注册</li>
+            <li>| 版权注册</li>
+            <li>| 专利申请</li>
+          </ul>
+        </div>
+        <div>
+          <div class="SB">
+            <div class="SB_SB">
+              <ul>
+                <li class="ZSCQ_title">商标注册</li>
+                <li class="ZSCQ_info">极速申报，办理简单</li>
+                <li class="ZSCQ_price">
+                  <span class="price">￥1000</span>
+                  <span>/次</span>
+                </li>
+              </ul>
+            </div>
+            <div class="SB_BQ">
+              <ul>
+                <li class="ZSCQ_title">版权专利</li>
+                <li class="ZSCQ_info">快速提交，全程跟踪</li>
+                <li class="ZSCQ_price">
+                  <span class="price">￥1000</span>
+                  <span>/次</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="Zz">
+            <ul>
+              <li class="ZSCQ_title">著作权</li>
+              <li class="ZSCQ_info">专业顾问，经验丰富，快速响应，顺利拿证。</li>
+              <li class="ZSCQ_price">
+                <span class="price">￥1000</span>
+                <span>/次</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="know_footer">
+        <div v-for="(i,index) in zscqObj" :key="i.class">
+          <div :class="i.class" class="know_f_bg icon_global"></div>
+          <ul>
+            <li class="know_f_t">{{i.title}}</li>
+            <li>{{i.info}}</li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="know_footer">
-      <div v-for="(i,index) in zscqObj" :key="i.class">
-        <div :class="i.class" class="know_f_bg icon_global"></div>
-        <ul>
-          <li class="know_f_t">{{i.title}}</li>
-          <li>{{i.info}}</li>
-        </ul>
+    <div class="server">
+      <div class="server_title">
+        <div>
+          <a :key="ind.name" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }" @click="a(index)">
+            {{ind.name}}
+          </a>
+        </div>
+        <span></span>
       </div>
-    </div>
-  </div>
-  <div class="server">
-    <div class="server_title">
-       <div>
-        <a :key="ind.name" v-for="(ind,key,index) in btn" :class="{active : (indexs==index) }"  @click="a(index)" >
-          {{ind.name}}
-        </a>
-      </div>
-      <span></span>
-    </div>
-    
 
       <div class="server_pro" v-for="(i,index) in serverArr" :key="i.id" v-show="indexs==0">
         <!-- 推荐服务商 -->
@@ -143,8 +155,6 @@
         <span>{{i.serviceName}}</span>
       </div>
 
-
-
       <div class="novice_main" v-show="indexs==1">
         <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
           <!-- 初创企业必备产品 -->
@@ -158,28 +168,28 @@
           <!-- 产品名称 -->
           <p class="novice_Info">{{i.serviceInfo}}</p>
           <!-- 产品内容 -->
-          <p>￥{{i.marketPrice}}<span>{{i.unit}}</span></p>
+          <p>￥{{i.marketPrice}}
+            <span>{{i.unit}}</span>
+          </p>
           <!-- 产品价格 -->
           <button>查看详情</button>
           <!-- 查看详情按钮 -->
         </div>
       </div>
 
+    </div>
 
-
+    <div class="sindaFriend">
+      <!-- 信达合作伙伴部分 -->
+      <div class="index_title">
+        <p>合作伙伴</p>
+        <span></span>
+      </div>
+      <div class="friend_main">
+      </div>
+    </div>
   </div>
 
-  <div class="sindaFriend">
-    <!-- 信达合作伙伴部分 -->
-    <div class="index_title">
-      <p>合作伙伴</p>
-      <span></span>
-    </div>
-    <div class="friend_main">
-    </div>
-  </div>
-</div>
-  
 </template>
 
 <script>
@@ -251,7 +261,6 @@ export default {
       )
       .then(data => {
         this.serverArr = data.data.data;
-        console.log(this.serverArr);
       });
   },
   destroyed: function() {
