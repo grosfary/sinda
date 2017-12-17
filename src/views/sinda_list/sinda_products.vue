@@ -9,21 +9,21 @@
           <li>
             <h2>{{providerProduct.serviceName}}</h2>
           </li>
-          <li>{{providerProduct.serviceInfo}}</li>
+          <li class="account">{{providerProduct.serviceInfo}}</li>
           <li>
-            <div>
+            <div class="price">
               <p>
                 市场价：
                 <del>￥{{product.marketPrice}}.00</del>
               </p>
               <p>
                 价　格：
-                <strong>￥ {{providerProduct.price}}.00</strong>
+                <strong class="cost">￥ {{providerProduct.price}}.00</strong>
                 <span>{{providerProduct.unit}}</span>
               </p>
             </div>
           </li>
-          <li>类　型：
+          <li class="type">类　型：
             <span>{{product.name}}</span>
           </li>
           <li>地　区：{{regionText}}</li>
@@ -132,7 +132,37 @@ export default {
         that.providerProduct = data.data.data.providerProduct;
         that.regionText = data.data.data.regionText;
         // console.log(that.product);
+        // console.log(this.$route.query.id);
       });
+    // console.log(this.$route.query.detialId)
+    // console.log(this.$route.query.id)
+    // this.ajax
+    //   .post(
+    //     "/xinda-api/product/package/detail",
+    //     this.qs.stringify({
+    //       sId: this.$route.query.id
+    //     })
+    //   )
+    //   .then(data => {
+    //     console.log(data.data.data);
+    //     // that.product = data.data.data.product;
+    //     // that.providerProduct = data.data.data.providerProduct;
+    //     // that.regionText = data.data.data.regionText;
+    //     // console.log(that.product);
+    //   });
+    // this.ajax.post(
+    //   //请求店铺商品信息
+    //   "/xinda-api/product/package/grid",
+
+    //   that.qs.stringify({
+    //     start: 0,
+    //     //不加限制条数的参数，获取所有数据
+    //     providerId: that.$route.query.id,
+    //     providerName: that.$route.query.Name,
+    //     providerImg: that.$route.query.img,
+    //     sort: 2
+    //   })
+    // )
     // this.ajax
     //   .post(
     //     "/xinda-api/product/judge/grid",
@@ -176,11 +206,43 @@ export default {
     height: 100%;
   }
 }
+
 .pro_info {
   // 商品信息
   margin-left: 32px;
   width: 444px;
   height: 393px;
+  h2 {
+    font-size: 23px;
+    color: #000000;
+  }
+  .account {
+    line-height: 36px;
+    
+  }
+  .type{
+      // line-height: 40px;
+      span{
+          border: 1px solid #2693d4;
+          display: inline-block;
+          color:#2693d4;
+          width: 100px;
+          height: 29px;
+      }
+    }
+  li {
+    font-size: 13px;
+    color: #636363;
+    
+  }
+  .price{
+    display: flex;
+    height: 75px;
+    flex-direction: column;
+    background: #f7f7f7;
+    justify-content: center;
+    
+  }
 }
 .pro_server {
   // 顶级服务商

@@ -116,7 +116,7 @@ export default {
           "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 0,
-            limit: 800,
+            limit: 2,
             productTypeCode: "0",
             productId: that.pro_type_id,
             sort: 3
@@ -124,7 +124,7 @@ export default {
         )
         .then(data => {
           that.Rdata = data.data.data;
-          console.log(that.Rdata);
+          console.log(data);
         });
     },
     toDetail: function(id) {
@@ -147,8 +147,8 @@ export default {
         })
       )
       .then(data => {
-        this.Rdata = data.data.data;
-        console.log(that.pro_type_id);
+        that.Rdata = data;
+        console.log(that.Rdata);
       });
     this.ajax
       .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
