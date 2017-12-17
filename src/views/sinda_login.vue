@@ -9,8 +9,8 @@
           <input class="boxP" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <div>
-          <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
-          <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>            
+            <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
+            <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
             <div class="verify" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
@@ -46,11 +46,11 @@ export default {
       boxPasw: "",
       boxPC: false,
       imgV: "",
-      boxCode:false
+      boxCode: false
     };
   },
   methods: {
-    ...mapActions(["setloginState","setuserName"]),
+    ...mapActions(["setloginState", "setuserName"]),
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
@@ -80,7 +80,11 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+      if (
+        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
         this.boxPC = false;
       } else {
         this.boxPC = true;
@@ -106,10 +110,10 @@ export default {
           }
         });
     },
-    verCode(){
-      if(/^[a-zA-Z0-9]{4}$/.test(this.imgV)){
+    verCode() {
+      if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
         this.boxCode = false;
-      }else{
+      } else {
         this.boxCode = true;
       }
     }
@@ -216,7 +220,7 @@ export default {
   left: 285px;
   position: absolute;
 }
-.vCode{
+.vCode {
   width: 180px;
   color: #fb81fd;
   font-size: 12px;
