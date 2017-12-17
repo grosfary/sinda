@@ -46,7 +46,6 @@ export default {
 
   .hello{
     margin-top:-172px;
-    margin-left:35px;
   }
   .home{
       margin-left:163px;
@@ -77,6 +76,7 @@ export default {
       height:244px;
       margin-top:16px;
       background:#f7f7f7;
+      // position: fixed;
       span{
         margin-left:95px;
         white-space:nowrap;

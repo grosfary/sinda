@@ -27,26 +27,26 @@
             <div class='state'><div>订单状态</div></div>
             <div class='operation'><div>订单操作</div></div>
           </div>
-        <div  v-for='(product,abj) in products' :key='product.rData'>
+        <div v-for='(product,abj) in products' :key='product.rData'>
           <div class='wares'>
               <input type='checkbox' class='checkbox'>
-              <span>订单号：{{getNum}}</span>
+              <span>订单号：{{product.businessNo}}</span>
             <div>
-              <span class='floot'>下单时间：</span>
+              <span class='floot'>下单时间：{{product.createTime | formatDate}}</span>
             </div>
           </div>
-          <div>
+          <div v-for="prod in product.subItem" :key="prod.id">
             <div class='deta'>
               <div class='name'>
-                <div>{{product.serviceName}}</div>
+                <div>{{prod.serviceName}}</div>
                 <div class='img'>
 
                 </div>
               </div>
-              <div class='unit'><div>{{product.unitPrice}}</div></div>
-              <div class='num'><div>{{product.buyNum}}</div></div>
-              <div class='sum'><div >{{product.totalPrice}}</div></div>
-              <div class='state'><div>{{product.unit}}</div></div>
+              <div class='unit'><div>{{prod.status}}</div></div>
+              <div class='num'><div>{{prod.buyNum}}</div></div>
+              <div class='sum'><div >{{prod.totalPrice}}</div></div>
+              <div class='state'><div>{{prod.unit}}</div></div>
               <div class='operation'>
                 <div>
                   <a href="#/line_item"><input type="submit" class='pay' value="付款"></a>
@@ -58,7 +58,7 @@
           </div>
           <div class='inputcopy'v-show='ned'>
             <input type="submit" class='previous' value='上一页' @click='previous'>
-            <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click = 'skip(bum)'>{{button}}</div>           
+            <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click='skip(bum)'>{{button}}</div>           
             <input type="submit" class='next' value='下一页' @click='next'>
           </div>
           
@@ -82,13 +82,18 @@
 <script>
 import member from "../views/sinda_member";
 import {mapGetters} from "vuex";
+import {formatDate} from '../../config/date';
 export default {
+  filters: {
+  formatDate(time) {
+      var date = new Date(time);
+      return formatDate(date, 'yyyy-MM-dd hh:mm');
+        }
+    },
   methods:{
     change:function(){
-      // console.log(this.changes)
     },
     onchange:function(){
-      // console.log(this.onchanges)
     },
       hidedate:function(){
         this.show = false
@@ -110,12 +115,8 @@ export default {
           this.col=this.col-1;
             var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
-            }else{
               array.push(this.rData[(this.col+1)*2-2]);
               array.push(this.rData[(this.col+1)*2-1]);//添加数据
-            }
               this.products=array;//将所有数据添加
         }
       },
@@ -126,8 +127,8 @@ export default {
           this.col=this.col+1;
             var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
+            if((this.col+1)*2-1==this.rData.length){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[(this.col+1)*2-2])//添加数据
             }else{
               array.push(this.rData[(this.col+1)*2-2]);
               array.push(this.rData[(this.col+1)*2-1]);//添加数据
@@ -137,23 +138,34 @@ export default {
       },
       num:function(){
             var that = this;
-            this.ajax.post('/xinda-api/service-order/grid',{
+            this.ajax.post('/xinda-api/service-order/grid',this.qs.stringify({
               businessNo:that.number,
-              }).then(function(data){
-            var rData = data.data.data;
-            that.products = [];
-            that.products=rData;
-            console.log(rData)
+              })).then(function(data){
+                 var data = data.data.data;
+          var tempData = {};
+          for (var key in data) {
+            var businessNo = data[key].businessNo;
+            if(!tempData[businessNo]){
+              tempData[businessNo] = data[key];
+              tempData[businessNo].subItem = [];
+            }
+            tempData[businessNo].subItem.push(data[key]);   
+              that.products = tempData;
+          }
           })
       },
          skip:function(bum){
-           var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.bum){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
+           var array = [];
+           console.log(this);
+            if((bum+1)*2-1==this.rData.length){//判断products里元素是否跟要加入数组的最后一个元素相同
+
+              array.push(this.rData[(bum+1)*2-2])//添加数据
             }else{
-              array.push(this.rData[(bum+1)*2-2]);
-              array.push(this.rData[(bum+1)*2-1]);//添加数据
+              console.log(this.rData[(bum+1)*2-2]);
+              array.push(this.rData[(bum+1)*2-2])
+              array.push(this.rData[(bum+1)*2-1]);
+              // array.push(this.rData[(bum+1)*2-1]);//添加数据
             }
               this.products=array;//将所有数据添加
               this.col=bum
@@ -162,34 +174,45 @@ export default {
   created(){
       var that = this;
       this.ajax.post(
-        '/xinda-api/service-order/grid'
-        ,{
-          // startTime:this.changes,
-          // endTime:this.onchanges--S1712130636102806089
-          businessNo:'S1712150723041410097'
+        '/xinda-api/service-order/grid',{
         }).then(
           function(data){
-         that.rData = data.data.data;//所需的数据
-         console.log(that.rData)
-        // that.products = rData;
-        if(that.rData.length>2){//判断数据长度是否大于2
+          var data = data.data.data;
+          var tempData = {};
+          for (var key in data) {
+            var businessNo = data[key].businessNo;
+            if(!tempData[businessNo]){
+              tempData[businessNo] = data[key];
+              tempData[businessNo].subItem = [];
+            }
+            tempData[businessNo].subItem.push(data[key]);   
+              that.products = tempData;
+          }
+        var aaa=[];
+        for(key in tempData){
+            aaa.push(tempData[key])
+        }
+         that.rData = aaa;//所需的数据
+        if(aaa.length>2){//判断数据长度是否大于2
+        that.array.push(that.rData[0])
         that.ned=true;
           var arr = []
           arr.push(that.rData[0]);//一二条数据相加
           arr.push(that.rData[1]);
           that.products=arr;
-          var numeral = Math.ceil(that.rData.length/2);//判断应该产生多少按钮
+          var numeral = Math.ceil(aaa.length/2);//判断应该产生多少按钮
           for(let i=1;i<=numeral;i++){//循环button按钮
-              that.buttons.push(i)//每个按钮编号
+              (function(j){
+                that.buttons.push(i)//每个按钮编号
+                that.abb=numeral;//按钮号
+              })(i)
             }
-          that.abb=numeral;//按钮号
         }else{
           that.products=that.rData;//小于二时，将所有数据添加
         that.ned=false
         }
       })
     },
-
   data() {
     return {
       products:[],
@@ -206,7 +229,10 @@ export default {
       rData:[],
       changes:'',
       onchanges:'',
-      ned:true
+      ned:true,
+      date:'',
+      array:[],
+      arr:[]
       }
 },
 computed:{
@@ -359,7 +385,7 @@ computed:{
     width:877px;
     float:left;
     margin-top:-438px;
-    margin-left:541px;
+    margin-left:496px;
     .ordero{
       width:77px;
       height:114px;
