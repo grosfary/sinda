@@ -1,90 +1,94 @@
 <template>
-    <div class="cart">
+  <div class="cart">
 
-        <div class="company">
+    <div class="company">
 
-            <div class="head">
+      <div class="head">
 
-                <div class="server">
-                    <div class="Server">服务分类</div>
-                    <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="(index==indexs-1)">
-                        <span v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" @click="nowIndexII(index,itemListII)" :class="{title_bg:(index==IndexII)}">{{itemListII.name}}</span>
-                    </div>
-                </div>
+        <div class="server">
+          <div class="Server">服务分类</div>
+          <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="(index==indexs-1)">
+            <span v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" @click="nowIndexII(index,itemListII)" :class="{title_bg:(index==IndexII)}">{{itemListII.name}}</span>
+          </div>
+        </div>
 
+        <div>
+          <div class="Server">类型</div>
+          <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==(indexs-1)">
+            <div v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" v-if="index==IndexII">
+              <span v-for="(itemListIII,key,index) in itemListII.itemList" :key="itemListIII.id" @click="nowIndexIII(index,itemListIII.id)" :class="{title_bg:(index==IndexIII)}">{{itemListIII.name}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="area">
+          <div class="Server">服务区域</div>
+          <div class="type">
+            <select>
+              <option value="">省</option>
+            </select>
+            <select>
+              <option value="">市</option>
+            </select>
+            <select>
+              <option value="">区</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+      <div class="body">
+        <div class="rank">
+          <button class="sort">综合排序
+          </button>
+          <ul>
+            <li v-for="(i,key,index) in sortObj" :key="key">
+              <button @click="sortord(index)" v-if="index==sortIndex">{{i}}
+                <span></span>
+              </button>
+            </li>
+          </ul>
+
+        </div>
+        <div class="shop">
+          <div class="shoptop">
+            <p>商品</p>
+            <p>价格</p>
+          </div>
+          <div class="shopbody">
+            <div class="first">
+              <div class="shopleft" v-for="(product,key,index) in Rdata" :key='product.id'>
                 <div>
-                    <div class="Server">类型</div>
-                    <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==(indexs-1)">
-                        <div v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" v-if="index==IndexII">
-                            <span v-for="(itemListIII,key,index) in itemListII.itemList" :key="itemListIII.id" @click="nowIndexIII(index,itemListIII.id)" :class="{title_bg:(index==IndexIII)}">{{itemListIII.name}}</span>
-                        </div>
-                    </div>
+                  <img :src="'http://115.182.107.203:8088/xinda/pic' + product.productImg" alt="">
                 </div>
-
-                <div class="area">
-                    <div class="Server">服务区域</div>
-                    <div class="type">
-                        <select>
-                            <option value="">省</option>
-                        </select>
-                        <select>
-                            <option value="">市</option>
-                        </select>
-                        <select>
-                            <option value="">区</option>
-                        </select>
-                    </div>
+                <div class="details" @click="toDetail(product.id)">
+                  <h3>{{product.providerName}}</h3>
+                  <p>{{product.serviceName}}</p>
+                  <span>{{product.serviceInfo}}</span>
+                  <span>{{product.regionName}}</span>
                 </div>
-
+                <div class="shopright">
+                  <p>￥ {{product.price}}.00</p>
+                  <button>立即购买</button>
+                  <button>加入购物车</button>
+                </div>
+              </div>
             </div>
-            <div class="body">
-                <div class="rank">
-                    <button class="sort">综合排序
-                        <span></span>
-                    </button>
-                    <button>价格↑↑
-                        <span></span>
-                    </button>
-                </div>
-                <div class="shop">
-                    <div class="shoptop">
-                        <p>商品</p>
-                        <p>价格</p>
-                    </div>
-                    <div class="shopbody">
-                        <div class="first">
-                            <div class="shopleft" v-for="(product,key,index) in Rdata" :key='product.id'>
-                                <div>
-                                    <img :src="'http://115.182.107.203:8088/xinda/pic' + product.productImg" alt="">
-                                </div>
-                                <div class="details" @click="toDetail(product.id)">
-                                    <h3>{{product.providerName}}</h3>
-                                    <p>{{product.serviceName}}</p>
-                                    <span>{{product.serviceInfo}}</span>
-                                    <span>{{product.regionName}}</span>
-                                </div>
-                                <div class="shopright">
-                                    <p>￥ {{product.marketPrice}}</p>
-                                    <button>立即购买</button>
-                                    <button>加入购物车</button>
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
+          </div>
 
-                </div>
-            </div>
-            <div class="list">
-                <button>上一页</button>
-
-                <button>下一页</button>
-                这是页面标签
-            </div>
         </div>
-        <div class="side">
-        </div>
+      </div>
+      <div class="list">
+        <button>上一页</button>
+        <span v-for="(i,index) in limitArr" :key="i" @click="option(index)">{{i}}</span>
+        <button>下一页</button>
+        这是页面标签
+      </div>
     </div>
+    <div class="side">
+    </div>
+  </div>
 </template>
 
 <script>
@@ -98,12 +102,19 @@ export default {
       IndexII: 0,
       IndexIII: 0,
       pro_type_id: "",
-      indexs: ""
+      indexs: "",
+      limit: 3,
+      totalCount: "",
+      limitArr: [],
+      start: 0,
+      sortObj: { a: "价格从高到低", b: "价格从低到高" },
+      sortIndex: 0,
+      sort: "",
     };
   },
   methods: {
     ...mapActions(["setlistName"]),
-    nowIndexII: function(index,i) {
+    nowIndexII: function(index, i) {
       this.IndexII = index;
       this.IndexIII = 0;
       var arr = [];
@@ -134,17 +145,32 @@ export default {
           //列表商品
           "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
           this.qs.stringify({
-            start: 0,
-            limit: 800,
+            start: this.start,
+            limit: this.limit,
             productTypeCode: "0",
             productId: id,
-            sort: 3
+            sort: this.sort
           })
         )
         .then(data => {
+          this.limitArr = [1];
           this.Rdata = data.data.data;
-          //   console.log(data.data.data)
+          console.log(this.Rdata)
+          this.totalCount = Math.ceil(data.data.totalCount / this.limit);
+          for (var i = 2; i < this.totalCount + 1; i++) {
+            this.limitArr.push(i);
+          }
         });
+    },
+    option(index) {
+      this.start = index * this.limit;
+      this.liebiao(this.pro_type_id);
+    },
+    sortord(index) {
+      index == 0 ? (this.sortIndex = 1) : (this.sortIndex = 0);
+      index == 0 ? (this.sort = 2) : (this.sort = 3);
+      this.liebiao(this.pro_type_id);
+      
     },
     nowIndexIII: function(index, id) {
       // 三级标题点击事件
@@ -228,18 +254,37 @@ export default {
     height: 45px;
     border-bottom: 1px solid #cccccc;
     background: #f7f7f7;
+    position: relative;
+    ul {
+      position: absolute;
+      top: 0;
+      left: 107px;
+      button {
+        cursor: pointer;
+        &:hover {
+          color: #2693d4;
+        }
+      }
+    }
     button {
       width: 107px;
       height: 45px;
       background: #f7f7f7;
       border: none;
       outline: none;
+      span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background: url("../../assets/pc/icon_sort.gif") 0 0 no-repeat;
+      }
     }
     .sort {
       background: #2693d4;
       color: #ffffff;
       position: relative;
-      span {
+      &::after {
+        content: "";
         position: absolute;
         display: block;
         left: 48px;
@@ -320,6 +365,16 @@ export default {
 .list {
   text-align: center;
   margin-bottom: 200px;
+  span {
+    display: inline-block;
+    width: 37px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    color: #cbcbcb;
+    border: 1px solid #cbcbcb;
+    cursor: pointer;
+  }
 }
 .side {
   width: 235px;
