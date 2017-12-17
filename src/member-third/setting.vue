@@ -114,7 +114,6 @@ export default {
     }
 
 };
-
 </script>
 <style scoped lang="less">
 .clear:after{               /*清除浮动*/

@@ -40,6 +40,7 @@ import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop servi
 import m_out from '../components/m_out' //手机端公共页
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
+import set from '../components/set' //手机端公共页
 Vue.use(Router)
 
 // pc端
@@ -195,6 +196,10 @@ export default new Router({
             path: '/logged',//已登录
             name: 'logged',
             component:logged
+        }, {
+            path: '/set',//已登录
+            name: 'set',
+            component:set
         }
 
     ]

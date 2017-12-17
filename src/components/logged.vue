@@ -17,14 +17,6 @@
 </template>
 
 <script>
-import m_footer from "./m_global_footer";
-export default {
-  name: "sinda_global",
-  data() {
-    return {};
-  },
-  components: {  m_footer }
-};
 </script>
 
 <style scoped lang="less">
@@ -44,7 +36,6 @@ export default {
       left: 50%;
       -webkit-transform: translateX(-50%) translateY(-50%);
       .set{
-        width:100%;
         margin-top:0.5rem;
         div{
           margin:0 auto;
@@ -99,6 +90,9 @@ export default {
   @media screen and (max-width: 670px) {
     .hello>.generic>.set>div{
       width:100%;
+    }
+    .hello>.generic{
+      width:90%;
     }
 }
  @media screen and (max-width: 380px) {

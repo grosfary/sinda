@@ -19,14 +19,6 @@
 </template>
 
 <script>
-import m_footer from "./m_global_footer";
-export default {
-  name: "sinda_global",
-  data() {
-    return {};
-  },
-  components: {  m_footer }
-};
 </script>
 
 <style scoped lang="less">
