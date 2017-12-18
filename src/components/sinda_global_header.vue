@@ -15,9 +15,18 @@
         <ul>
           <li>北京市</li>
           <li>
-            <a href="">[切换城市]</a>
+            <a>[切换城市]</a>
           </li>
         </ul>
+        <!-- <div class="SelectCity">
+          <div>
+            <div>
+              <h3>城市选择</h3>
+              <p></p>
+            </div>
+            <span></span>
+          </div>
+        </div> -->
       </div>
       <div class="header_search">
         <!-- 头部搜索部分 -->
@@ -28,7 +37,8 @@
             <a href="">服务商</a>
           </li>
           <li>
-            <input type="text" placeholder="搜索您需要的服务或服务商"><button>
+            <input type="text" placeholder="搜索您需要的服务或服务商">
+            <button>
               <span class="icon_global"></span>
             </button>
           </li>
@@ -52,9 +62,11 @@
       <!-- 头部导航栏部分 -->
       <ul>
         <li>
+          <a @click.native="dianji" style="cursor: pointer">
+            <span v-on:click="cmark" style="display:block">全部产品</span>
+          </a>
           <router-link tag="a" :to="ind.src" :key="ind.id" v-for="(ind,key,index) in btn" active-class="active" @click="a(index)">
-            <span v-if="index==0" v-on:mousemove="mark = true" v-on:mouseout="mark = false" style="display:block">{{ind.name}}</span>
-            <span v-else>{{ind.name}}</span>
+            <span style="display:block">{{ind.name}}</span>
           </router-link>
         </li>
       </ul>
@@ -62,8 +74,8 @@
       <transition name="fade">
         <div class="header_sidebar" v-if="mark">
           <!-- 头部侧导航部分 -->
-          <div v-for="(i,index) in sortListarr" :key="i.code" style="font-size:16px;" @mousemove="mark=true" @mouseout="mark=false">
-            <div class="sidebar_left" @mousemove="relationClick(index)" @mouseout="nowIndex=-1" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
+          <div v-for="(i,index) in sortListarr" :key="i.code" style="font-size:16px;">
+            <div class="sidebar_left" @mouseover="relationClick(index)" @mouseout="nowIndex=-1" @click="linkHref(sortListarr,index)" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
               <!-- 侧导航左半边 -->
               <div class="icon_global sidebar_icon"></div>
               <!-- 侧导航图标 -->
@@ -107,9 +119,9 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "全部产品", class: "allgoods", src: "/index" },
+        // a: { name: "全部产品", src: "/index" },
         b: { name: "财税服务", src: "/list/tax" },
-        c: { name: "公司工商", src: "/list/cart" },
+        c: { name: "公司工商", src: "/list/com" },
         d: { name: "加盟我们", src: "/Join_Us" },
         e: { name: "店铺", src: "/store_list" }
       },
@@ -133,11 +145,33 @@ export default {
   },
   mounted() {},
   methods: {
+    dianji: function() {
+      return false;
+    },
     relationClick: function(index) {
       this.nowIndex = index;
     },
     index_url: () => {
       window.location.href = "#/";
+    },
+    linkHref: function(sortListarr, index) {
+      var obj = sortListarr[index].itemList;
+      var id = "";
+      for (var i in obj) {
+        if (obj[i].name == "审计报告") id = "0ed787f42fe94b30b85e6a88f56e4614";
+        if (obj[i].name == "公司注册") id = "19b94314bc1a4b078d2402f8727c388b";
+        if (obj[i].name == "专利申请") id = "24d919ba0eb545dd9a3132dfb87cf599";
+        if (obj[i].name == "企业社保") id = "0e46c4b27e2a41aab572e11837ea0c9f";
+      }
+      console.log(index);
+      this.$router.push({
+        path: "/list/list",
+        query: { name: sortListarr[index].name, id: id, index: index }
+      });
+    },
+    cmark() {
+      !this.mark ? (this.mark = true) : (this.mark = false);
+      console.log(this.mark);
     }
   },
   computed: {
@@ -223,6 +257,31 @@ export default {
     // 切换城市
     color: #2693d4;
     line-height: 21px;
+    cursor: pointer;
+  }
+}
+
+.SelectCity {
+  // 选择城市
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 10;
+
+  > div {
+    border-radius: 6px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    width: 787px;
+    height: 191px;
   }
 }
 // 头部城市部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -340,9 +399,9 @@ export default {
     display: inline-block;
     text-decoration: none;
     color: #000;
-    height: 38px;
+    height: 36.5px;
     text-align: center;
-    line-height: 38px;
+    line-height: 36.5px;
     box-sizing: border-box;
     &:hover {
       color: #2693d4;
@@ -359,7 +418,7 @@ export default {
 // 头部侧导航部分--------start------------↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 .header_sidebar {
   position: absolute;
-  z-index: 100;
+  z-index: 100000000;
   width: 1200px;
   height: 400px;
   color: #e2e4e6;
@@ -370,6 +429,7 @@ export default {
 .sidebar_left {
   // 侧部导航左边
   width: 199px;
+  cursor: pointer;
   background: #16263c;
   vertical-align: top;
   &.sidebar_left_active {
@@ -412,6 +472,7 @@ export default {
 
 .sidebar_right {
   // 侧部导航右边
+  cursor: pointer;
   height: inherit;
   display: inline-block;
   vertical-align: top;
@@ -447,13 +508,31 @@ export default {
     }
   }
 }
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
+.fade-enter-active {
+  transition: all 0.5s;
+  animation: bounce-in 0.3s;
 }
-.fade-enter,
+.fade-leave-active {
+  transition: all 0.3s;
+  // animation: bounce-in .5s reverse;
+}
+.fade-enter {
+  // transform: translateX(150px);
+}
 .fade-leave-to {
   opacity: 0;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: translateX(100px);
+  }
+  20% {
+    transform: translateX(-25px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
 // 头部侧导航部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 </style>

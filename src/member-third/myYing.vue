@@ -19,7 +19,7 @@
               <div>购买内容：</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
-            <a href="/#/member/center"><button @click='toeva(key)'>去评价</button></a>
+            <a @click='tail(product.id)'><button @click='toeva(key)'>去评价</button></a>
           </div>
            <div class='inputcopy' v-show='ned'>
             <input type="submit" class='previous' value='上一页' @click='previous'>
@@ -47,7 +47,6 @@ export default {
         }).then(
           function(data){
          that.rData = data.data.data;//所需的数据
-        // that.products = rData;
         if(that.rData.length>2){//判断数据长度是否大于2
         that.ned=true;
           var arr = []
@@ -56,9 +55,11 @@ export default {
           that.products=arr;
           var numeral = Math.ceil(that.rData.length/2);//判断应该产生多少按钮
           for(let i=1;i<=numeral;i++){//循环button按钮
-              that.buttons.push(i)//每个按钮编号
+                (function(j){
+                that.buttons.push(i)//每个按钮编号
+                that.abb=numeral;//按钮号
+              })(i)
             }
-          that.abb=numeral;//按钮号
         }else{
           that.products=that.rData;//小于二时，将所有数据添加
           that.ned=false;
@@ -73,8 +74,12 @@ export default {
     },
   methods:{
     ...mapActions(['setnumtoeva']),
+    tail(id){
+      this.$router.push({path:'./center',query:{id:id}})
+    },
     toeva:function(key){
       this.setnumtoeva(this.products[key].serviceNo)
+      // console.log(this.products[key])
     },
     appraise:function(index){
       this.index=index;
@@ -110,8 +115,8 @@ export default {
           this.col=this.col+1;
             var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
+            if((this.col+1)*2-1==this.rData.length){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[(this.col+1)*2-2])//添加数据
             }else{
               array.push(this.rData[(this.col+1)*2-2]);
               array.push(this.rData[(this.col+1)*2-1]);//添加数据
@@ -122,8 +127,8 @@ export default {
          skip:function(bum){
            var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.bum){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
+            if((bum+1)*2-1==this.rData.length){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[(bum+1)*2-2])//添加数据
             }else{
               array.push(this.rData[(bum+1)*2-2]);
               array.push(this.rData[(bum+1)*2-1]);//添加数据
@@ -143,7 +148,8 @@ export default {
       abb:'',
       col:0,
       rData:[],
-      ned:true
+      ned:true,
+      nones:[]
     };
   },
   components: { member }
@@ -157,6 +163,7 @@ export default {
     display: block;
     clear: both;
 }
+
 .contes{
     border:1px solid #ccc;
 }
@@ -172,7 +179,8 @@ export default {
   .page{
   width:39px;
   height:34px;
-  color:#2592d3;
+  color:#ccc;
+  background:#fff;
   line-height:34px;
   margin-left:10px;
   text-indent:11px;
@@ -182,6 +190,7 @@ export default {
   width:39px;
   height:34px;
   color:#ccc;
+  background:#fff;
   line-height:34px;
   margin-left:10px;
   text-indent:11px;

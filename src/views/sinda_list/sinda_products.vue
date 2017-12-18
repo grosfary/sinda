@@ -1,67 +1,87 @@
 <template>
-  <div class="pro">
-    <div class="pro_header">
-      <div class="pro_img">
-        <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
-      </div>
-      <div class="pro_info">
-        <ul>
-          <li>
-            <h2>{{providerProduct.serviceName}}</h2>
-          </li>
-          <li>{{providerProduct.serviceInfo}}</li>
-          <li>
-            <div>
-              <p>
-                市场价：
-                <del>￥{{product.marketPrice}}.00</del>
-              </p>
-              <p>
-                价　格：
-                <strong>￥ {{providerProduct.price}}.00</strong>
-                <span>{{providerProduct.unit}}</span>
-              </p>
-            </div>
-          </li>
-          <li>类　型：
-            <span>{{product.name}}</span>
-          </li>
-          <li>地　区：{{regionText}}</li>
-          <li>购买数量：
-            <button @click="nSub">-</button><input type="text" v-model="number" readonly="readonly">
-            <button @click="nAdd">+</button>
-          </li>
-          <li>
-            <button>立即购买</button>
-            <button @click="cartAdd">加入购物车</button>
-          </li>
-        </ul>
-      </div>
-      <div class="pro_server">
-        <h2>顶级服务商</h2>
-        <p>北京信达服务中心</p>
-        <button>马上咨询</button>
-        <div class="check_server">
-          <button>查看服务商</button>
+  <div>
+    
+    <div class="pro">
+      <div class="pro_header">
+        <div class="pro_img">
+          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+        </div>
+        <div class="pro_info">
+          <ul>
+            <li>
+              <h2>{{providerProduct.serviceName}}</h2>
+            </li>
+            <li class="account">{{providerProduct.serviceInfo}}</li>
+            <li>
+              <div class="price">
+                <p>
+                  市场价：
+                  <del>￥{{product.marketPrice}}.00</del>
+                </p>
+                <p>
+                  价　格：
+                  <strong class="cost">￥ {{providerProduct.price}}.00</strong>
+                  <span>{{providerProduct.unit}}</span>
+                </p>
+              </div>
+            </li>
+            <li class="type">类　型：
+              <span>{{product.name}}</span>
+            </li>
+            <li class="area">地　区：{{regionText}}</li>
+            <li class="number">购买数量：
+              <button class="less" @click="nSub">-</button><input type="text" v-model="number" readonly="readonly">
+              <button class="more" @click="nAdd">+</button>
+            </li>
+            <li class="once">
+              <button class="buy">立即购买</button>
+              <button class="join" @click="cartAdd">加入购物车</button>
+            </li>
+          </ul>
+        </div>
+        <div class="pro_server">
+          <h2>顶级服务商</h2>
+          <p>北京信达服务中心</p>
+          <button>马上咨询</button>
+          <div class="check_server">
+            <button>查看服务商</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="banner">
-    </div>
-    <div class="pro_main">
-      <div class="main_title">
-        <ul>
-          <li v-for="(i,key,index) in proMainTitle" :key="i.tit" @click="titleBg(index)" :class="{bg:(index==nowIndex)}">
-            {{i.tit}}
-          </li>
-        </ul>
+
+      <div class="banner">
       </div>
-      <div class="main_main" v-for="(i,key,index) in proMainTitle" :key="i.tit" v-if="index==nowIndex">
-        <div v-html="providerProduct.serviceContent" v-if="index==0"></div>
-        <div v-if="index!=0">暂无评价</div>
+      <div class="pro_main">
+        <div class="main_title">
+          <ul>
+            <li v-for="(i,key,index) in proMainTitle" :key="i.tit" @click="titleBg(index)" :class="{bg:(index==nowIndex)}">
+              {{i.tit}}
+            </li>
+          </ul>
+        </div>
+        <div class="main_main" v-for="(i,key,index) in proMainTitle" :key="i.tit" v-if="index==nowIndex">
+          <div v-html="providerProduct.serviceContent" v-if="index==0"></div>
+          <div v-if="index!=0">暂无评价</div>
+        </div>
       </div>
+
+      <transition name="reversal">
+        <div class="message" v-if="show">
+
+          <div v-if="show">
+            <h3>请您先登录</h3>
+            <p>马上登录账号？</p>
+            <button @click="queding">确定
+              <span></span>
+            </button>
+            <button @click="quxiao">取消</button>
+          </div>
+
+        </div>
+      </transition>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -78,7 +98,8 @@ export default {
       product: {},
       providerProduct: {},
       regionText: {},
-      number: 1
+      number: 1,
+      show: false
     };
   },
   methods: {
@@ -89,23 +110,25 @@ export default {
     },
     cartAdd() {
       // 加入购物车按钮
-      this.ajax
-        .post(
-          "/xinda-api/cart/add",
-          this.qs.stringify({
-            id: this.$route.query.id,
-            num: this.number
-          })
-        )
-        .then(data => {
-          // console.log(data);
-          if (this.getuserName) {
-            this.setNum(this.number);
-            // console.log(this.getuserName);
-          } else {
-            window.location.href = "#/LoginRegister/login";
-          }
-        });
+      if (sessionStorage.getItem("userName")) {
+        this.ajax
+          .post(
+            "/xinda-api/cart/add",
+            this.qs.stringify({
+              id: this.$route.query.id,
+              num: this.number
+            })
+          )
+          .then(data => {
+            // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
+            data.data.status == 1
+              ? this.setNum(this.number)
+              : console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
+              location.href="http://localhost:8080/#/list/cart"//暂时直接跳转
+          });
+      } else {
+        this.show = true;
+      }
     },
     nAdd() {
       this.number += 1;
@@ -114,6 +137,12 @@ export default {
       if (this.number > 1) {
         this.number -= 1;
       }
+    },
+    queding() {
+      this.$router.push({ path: "/LoginRegister/login" });
+    },
+    quxiao() {
+      this.show = false;
     }
   },
   created() {
@@ -127,26 +156,10 @@ export default {
         })
       )
       .then(data => {
-        // console.log(data.data.data);
         that.product = data.data.data.product;
         that.providerProduct = data.data.data.providerProduct;
         that.regionText = data.data.data.regionText;
-        // console.log(that.product);
       });
-    // this.ajax
-    //   .post(
-    //     "/xinda-api/product/judge/grid",
-    //     this.qs.stringify({
-    //       start: 1,
-    //       limit: 1,
-    //       serviceId: "efddc8a338944e998ff2a7142246362b",
-    //       type: 1
-    //     })
-    //   )
-    //   .then(data => {
-    //     console.log(data);
-    //     // that.product = data.data.data.product;
-    //   });
   }
 };
 </script>
@@ -176,14 +189,96 @@ export default {
     height: 100%;
   }
 }
+
 .pro_info {
   // 商品信息
   margin-left: 32px;
-  width: 444px;
+  margin-right: 52px;
+  width: 390px;
   height: 393px;
+  h2 {
+    font-size: 23px;
+    color: #000000;
+  }
+  .account {
+    line-height: 36px;
+  }
+
+  .area {
+    line-height: 38px;
+  }
+  .number {
+    line-height: 40px;
+
+    .less {
+      height: 26px;
+      width: 30px;
+      background: #f7f8fa;
+      outline: none;
+      border: 1px solid #cccccc;
+      border-right: 0;
+    }
+    .more {
+      height: 26px;
+      width: 30px;
+      background: #f7f8fa;
+      outline: none;
+      border: 1px solid #cccccc;
+      border-left: 0;
+    }
+    input {
+      height: 24px;
+      width: 49px;
+      border: 1px solid #cccccc;
+      text-align: center;
+    }
+  }
+  .once {
+    margin-left: 60px;
+    margin-top: 20px;
+
+    .buy {
+      height: 27px;
+      width: 95px;
+      background: #2693d4;
+      color: #fff;
+      margin-right: 15px;
+      outline: none;
+      border: none;
+    }
+    .join {
+      height: 27px;
+      width: 95px;
+      color: #2693d4;
+      outline: none;
+      border: 1px solid #2693d4;
+      background: #ffffff;
+    }
+  }
+  .type span {
+    border: 1px solid #2693d4;
+    display: inline-block;
+    color: #2693d4;
+    line-height: 20px;
+    padding: 5px;
+    // height: 20px;
+    margin: 10px 0;
+  }
+  li {
+    font-size: 13px;
+    color: #636363;
+  }
+  .price {
+    display: flex;
+    height: 75px;
+    flex-direction: column;
+    background: #f7f7f7;
+    justify-content: center;
+  }
 }
 .pro_server {
   // 顶级服务商
+
   width: 197px;
   height: 223px;
   border: 1px solid #2793d4;
@@ -267,10 +362,68 @@ export default {
   }
 }
 .main_main {
+  padding: 22px;
   width: 1198px;
   height: 743px;
   border: 1px solid #cccccc;
   border-top: none;
   margin-bottom: 69px;
+}
+
+// 登录消息提示框
+
+.message {
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  > div {
+    border-radius: 6px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    width: 384px;
+    height: 200px;
+    h3 {
+      line-height: 53px;
+      text-align: center;
+      background: #f2f2f2;
+    }
+    p {
+      padding-left: 28px;
+      line-height: 70px;
+      color: #797a8b;
+    }
+    button {
+      font-size: 18px;
+      border-radius: 6px;
+      width: 150px;
+      height: 45px;
+      background: #d8d8d8;
+      border: none;
+      margin-left: 28px;
+      cursor: pointer;
+    }
+  }
+}
+
+.reversal-enter-active {
+  transition: all 0.3s ease;
+}
+.reversal-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.reversal-enter {
+  transform: translateX(100px);
+  opacity: 0;
+}
+.reversal-leave-to {
+  opacity: 0;
 }
 </style>

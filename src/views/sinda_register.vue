@@ -6,7 +6,7 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class="box" @blur="onBlur" v-model="phone" type="tel" placeholder=" 请输入手机号">
+          <input class="box" @blur="onBlur" v-model="phone" type="number" placeholder=" 请输入手机号">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <div class="verify">
             <input class="boxI" type="text" v-model="imgCode" placeholder=" 请输入验证码" @blur="verCode">
@@ -16,14 +16,19 @@
             </div>
           </div>
           <div class="acquire">
-            <input class="boxI" type="text" placeholder=" 请输入验证码" v-model="sjCode" @blur="sjCodeI" @click="mobile">
+            <input class="boxI" type="text" placeholder=" 请输入验证码" v-model="sjCode" @blur="sjCodeI">
             <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
-            <button @click="getCode">点击获取</button>
+            <div @click="getCoBut">
+              <button v-show="get" class="getblue">点击获取</button>
+              <button v-show="getNew" class="getgray" disabled>重新获取{{count}}</button>
+            </div>
           </div>
           <!-- <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker> -->
-         <dist @selected="selected"></dist>
-          <input id="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码" @click="concealPS">
-          <div id="shiyan"></div>
+          <dist @selected="selected"></dist>
+          <input :type="pswd" id="boxII" @blur="onBlurI" v-model="boxPasw" placeholder=" 请设置密码">
+          <div id="xianshi" @click="concealPS">
+            <img id="cloImg" :src="suo" alt="">
+          </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <button class="boxIII" @click="iregister">立即注册</button>
           <p>注册及同意遵守
@@ -46,8 +51,10 @@
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
 // import VDistpicker from "v-distpicker";
-import dist from '../components/distpicker';
+import dist from "../components/distpicker";
 import { mapActions } from "vuex";
+const head = require("../assets/pc/suo.jpg");
+const headO = require("../assets/pc/suoo.jpg");
 var md5 = require("md5");
 export default {
   data() {
@@ -62,19 +69,24 @@ export default {
       imgCode: "",
       boxCode: false,
       sjCode: "",
-      sCode: false
+      sCode: false,
+      pswd: "password",
+      suo: head,
+      count: "60",
+      get: true,
+      getNew: false
     };
   },
   methods: {
     ...mapActions(["setNum", "setloginState"]),
-    
+
     selected(code) {
       this.distCode = code;
     },
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-     verCode() {
+    verCode() {
       if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
         this.boxCode = false;
       } else {
@@ -87,21 +99,6 @@ export default {
       } else {
         this.sCode = true;
       }
-    },
-    getCode() {
-      this.setNum(0);
-      this.ajax
-        .post(
-          "/xinda-api/register/sendsms",
-          this.qs.stringify({
-            cellphone: this.phone,
-            smsType: 1,
-            imgCode: this.imgCode
-          })
-        )
-        .then(data => {
-          console.log(data);
-        });
     },
     onBlur() {
       if (/^1[34578]\d{9}$/.test(this.phone)) {
@@ -121,15 +118,31 @@ export default {
         this.boxPC = true;
       }
     },
-    mobile() {
-      // this.ajax.post(
-      //   "/xinda-api/register/findpas",
-      //   this.qs.stringify({
-      //     cellphone: this.boxVal,
-      //     smsType: 1,
-      //     validCode:111111
-      //   })
-      // );
+    getCoBut() {
+      this.setNum(0);
+      this.get = false;
+      this.getNew = true;
+      this.ajax
+        .post(
+          "/xinda-api/register/sendsms",
+          this.qs.stringify({
+            cellphone: this.phone,
+            smsType: 1,
+            imgCode: this.imgCode
+          })
+        )
+        .then(data => {
+          // console.log(data);
+        });
+      var that = this;
+      var dic = setInterval(function() {
+        that.count--;
+        if (that.count == 1) {
+          clearInterval(dic);
+          that.get = true;
+          that.getNew = false;
+        }
+      }, 1000);
     },
     iregister() {
       this.ajax
@@ -150,20 +163,25 @@ export default {
           }
         });
     },
-    concealPS(){
-
+    concealPS() {
+      if (this.pswd == "password") {
+        this.pswd = "text";
+        this.suo = headO;
+      } else {
+        this.pswd = "password";
+        this.suo = head;
+      }
     }
   },
   created() {
     this.setloginState("注册");
   },
-  components: { LRhead,dist }
+  components: { LRhead, dist }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-
 .hello {
   background-color: #f5f5f5;
 }
@@ -250,14 +268,22 @@ export default {
 .acquire {
   display: flex;
   justify-content: space-around;
-  button {
-    width: 98px;
-    height: 35px;
-    border: 1px solid #2693d4;
-    border-radius: 3px;
-    background-color: #fff;
-    color: #2693d4;
-  }
+}
+.getblue {
+  width: 98px;
+  height: 35px;
+  border: 1px solid #2693d4;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #2693d4;
+}
+.getgray {
+  width: 98px;
+  height: 35px;
+  border-radius: 3px;
+  border: 1px solid #aeadae;
+  background-color: #aeadae;
+  color: #fff;
 }
 .registersecond {
   width: 283px;
@@ -282,6 +308,12 @@ export default {
   margin-bottom: 20px;
   border-radius: 3px;
 }
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
 .boxI {
   width: 174px;
   height: 35px;
@@ -304,20 +336,20 @@ export default {
   border: 1px solid #2693d4;
   color: #2693d4;
   border-radius: 3px;
-  background-color: #fff; 
+  background-color: #fff;
   position: relative;
 }
-#shiyan{
-    width: 20px;
-    height: 25px;
-    position: absolute;
-    z-index: 20;
-    top: 237px;
-    left: 253px;
-    background-image: url(../assets/pc/suo.jpg);
-    background-repeat: no-repeat;
-    // background-size: 600px 500px;
-  }
+#xianshi {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 235px;
+  left: 248px;
+}
+#cloImg {
+  width: 30px;
+  height: 30px;
+}
 .bottom {
   padding-bottom: 150px;
 }

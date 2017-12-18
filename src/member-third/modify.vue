@@ -10,7 +10,7 @@
         <div>
           <div class='oldpassworld'>
             <span class='old'>旧密码：</span>
-            <input type="password" v-model='password' @blur='blur'>
+            <input type="password" v-model='password'>
             <p class='none' v-show='sty'>旧密码错误</p>
           </div>
           <div class='newpassworld'>
@@ -47,9 +47,6 @@ export default {
   },
   components: { member },
    methods:{
-     blur:function(){
-       console.log(md5('this.password'))
-     },
     abl:function(){
       var that=this
         if(this.place==''){
@@ -74,12 +71,12 @@ export default {
              this.ajax.post(
                 '/xinda-api/sso/change-pwd',
                  this.qs.stringify({
-                 oldPwd:md5('this.password'),
-                 newPwd:md5('this.place')
+                 oldPwd:md5(this.password),
+                 newPwd:md5(this.place)
               })
             ).then(function(data){
                 if(data.data.msg =='旧密码错误'){
-                        that.password=[]
+                  that.password=[]
                   that.sty=true;
                 }else{
                   alert('登陆成功')

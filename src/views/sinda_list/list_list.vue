@@ -95,7 +95,7 @@ export default {
       Rdata: [],
       IndexII: 0,
       IndexIII: 0,
-      pro_type_id: "0ed787f42fe94b30b85e6a88f56e4614",
+      pro_type_id: this.$route.query.id,
       indexs: "",
       limit: 3,
       totalCount: "",
@@ -151,7 +151,6 @@ export default {
         .then(data => {
           this.limitArr = [1];
           this.Rdata = data.data.data;
-          console.log(this.Rdata);
           this.totalCount = Math.ceil(data.data.totalCount / this.limit);
           for (var i = 2; i < this.totalCount + 1; i++) {
             this.limitArr.push(i);
@@ -160,6 +159,9 @@ export default {
     },
     option(index) {
       // 列表索引 1 2 3 4 5 6 7 8 9
+      if (this.optionIndex == index) {
+        return;
+      }
       this.optionIndex = index;
       this.start = index * this.limit;
       this.liebiao(this.pro_type_id);
@@ -193,13 +195,22 @@ export default {
     },
     shangpinxinxi: function() {
       // 获取全部产品的传参并设置当前三级商品id
-      this.liebiao("0ed787f42fe94b30b85e6a88f56e4614");
+      this.liebiao(this.$route.query.id);
     }
   },
 
+  watch: {
+    $route: function() {
+      // 路由监听
+      this.setlistName(this.$route.query.name);
+      this.shangpinxinxi(); // 获取商品信息
+      this.indexs = this.$route.query.index; // 获取当前索引值
+      this.pro_type_id = this.$route.query.id;
+    }
+  },
   created() {
-    this.indexs = 1; // 获取当前索引值
-    this.setlistName("财税服务"); // 设置本页名
+    this.indexs = this.$route.query.index; // 获取当前索引值
+    this.setlistName(this.$route.query.name); // 设置本页名
     this.liebiaoxinxi(); // 获取列表信息
     this.shangpinxinxi(); // 获取商品信息
   }

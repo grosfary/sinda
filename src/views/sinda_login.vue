@@ -4,13 +4,16 @@
     <div class="login">
       <div class="loginI">
         <div class="loginfirst">
-          <input class="boxT" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号码">
+          <input class="boxT" type="number" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号码">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
-          <input class="boxP" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
+          <input :type="pswd" class="boxP" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
+          <div id="xianshi" @click="concealPS">
+            <img id="cloImg" :src="suo" alt="">
+          </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <div>
-          <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
-          <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>            
+            <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
+            <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
             <div class="verify" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
@@ -34,6 +37,8 @@
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
 import { mapActions } from "vuex";
+const head = require("../assets/pc/suo.jpg");
+const headO = require("../assets/pc/suoo.jpg");
 var md5 = require("md5");
 export default {
   data() {
@@ -46,15 +51,17 @@ export default {
       boxPasw: "",
       boxPC: false,
       imgV: "",
-      boxCode:false
+      boxCode:false,
+      pswd: "password",
+      suo: head,
     };
   },
   methods: {
-    ...mapActions(["setloginState","setuserName"]),
+    ...mapActions(["setloginState", "setuserName"]),
     imgReflash: function() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    getCode: function() {
+    getCode() {
       this.setNum(0);
       this.ajax
         .post(
@@ -80,10 +87,23 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if (/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(this.boxPasw)) {
+      if (
+        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
         this.boxPC = false;
       } else {
         this.boxPC = true;
+      }
+    },
+    concealPS() {
+      if (this.pswd == "password") {
+        this.pswd = "text";
+        this.suo = headO;
+      } else {
+        this.pswd = "password";
+        this.suo = head;
       }
     },
     iLogin() {
@@ -101,14 +121,15 @@ export default {
           let status = data.data.status;
           if (status == 1) {
             this.setuserName(this.boxVal);
+            sessionStorage.setItem("userName", this.boxVal);
             this.$router.push({ path: "/" });
           }
         });
     },
-    verCode(){
-      if(/^[a-zA-Z0-9]{4}$/.test(this.imgV)){
+    verCode() {
+      if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
         this.boxCode = false;
-      }else{
+      } else {
         this.boxCode = true;
       }
     }
@@ -192,12 +213,29 @@ export default {
   margin-bottom: 24px;
   border-radius: 3px;
 }
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
 .boxP {
   width: 280px;
   height: 35px;
   border: 1px solid #cbcbcb;
   margin-bottom: 24px;
   border-radius: 3px;
+}
+#xianshi {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 65px;
+  left: 248px;
+}
+#cloImg {
+  width: 30px;
+  height: 30px;
 }
 .boxtel {
   width: 150px;
@@ -215,7 +253,7 @@ export default {
   left: 285px;
   position: absolute;
 }
-.vCode{
+.vCode {
   width: 180px;
   color: #fb81fd;
   font-size: 12px;
