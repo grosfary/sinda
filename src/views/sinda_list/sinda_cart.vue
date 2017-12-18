@@ -22,7 +22,11 @@
             <li><img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt=""></li>
             <li>{{i.serviceName}}</li>
             <li>{{i.unitPrice}}</li>
-            <li>{{i.buyNum}}</li>
+            <li class="number">
+              <button>-</button>
+              <span>{{i.buyNum}}</span>
+              <button>+</button>
+            </li>
             <li>{{i.totalPrice}}</li>
             <li>
               <button>删除</button>
@@ -31,11 +35,13 @@
         </div>
       </div>
       <div>
-        <ul>
-          <li>金额总计</li>
-          <li>
-            <button>继续购物</button>
-            <button @click="cart_submit">去结算</button>
+        <ul class="sum">
+          <li class="money">金额总计
+            <span>￥ 800.00</span>
+          </li>
+          <li class="Shopping">
+            <button class="continue" @click="continueShopping">继续购物</button>
+            <button  @click="cart_submit">去结算</button>
           </li>
         </ul>
       </div>
@@ -87,8 +93,11 @@ export default {
         .then(data => {
           console.log(data);
           this.setNum(-sessionStorage.getItem("cartNumber"));
-          
         });
+    },
+    continueShopping() {
+      // 继续购物
+      window.location = "/#/";
     }
   },
   created() {
@@ -97,7 +106,7 @@ export default {
       .post(
         "/xinda-api/cart/list",
         this.qs.stringify({
-          //   sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
+            sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
         })
       )
       .then(data => {
@@ -109,7 +118,7 @@ export default {
       .post(
         "/xinda-api/recommend/list",
         this.qs.stringify({
-          //   sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
+            sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
         })
       )
       .then(data => {
@@ -134,7 +143,32 @@ export default {
   }
 }
 .all_pro {
-  span {
+  .sum {
+    margin: 0 0 60px 1000px;
+    width: 200px;
+    .money{
+         margin: 27px 0 17px 0;
+    }
+    
+    li {
+      button {
+        display: block;
+        border: 1px solid #2692d2;
+        border-radius: 5px;
+        background: #fff;
+        color: #2692d2;
+        text-align: center;
+        padding: 6px;
+      }
+    }
+    .Shopping {
+      display: flex;
+      .continue{
+        margin-right: 6px;
+      }
+    }
+  }
+  & > span {
     display: block;
     height: 1px;
     width: 100%;
@@ -152,6 +186,8 @@ export default {
     color: #272727;
     margin-top: 18.5px;
     li {
+      font-size: 13px;
+      color: #686868;
       width: 1px;
       white-space: nowrap;
     }
@@ -161,19 +197,54 @@ export default {
     font-size: 14px;
     line-height: 29px;
     color: #272727;
+    li {
+      font-size: 13px;
+      color: #686868;
+    }
   }
   .cart_main {
+    margin-top: 24px;
     display: flex;
     justify-content: space-between;
+
     li {
-      width: 1px;
+      font-size: 13px;
+      color: #686868;
+      display: inline;
       white-space: nowrap;
+      span {
+        display: inline-block;
+      }
+      button{
+         color: #686868;
+      }
+    }
+    .number {
+      white-space: nowrap;
+      span {
+        display: inline-block;
+        width: 33px;
+        height: 20px;
+        background: #fff;
+        text-align: center;
+        line-height: 20px;
+      }
+      button {
+        width: 20px;
+        height: 20px;
+        color: #000;
+        background: #bcbebd;
+        text-align: center;
+        line-height: 20px;
+        border: none;
+        cursor: pointer;
+      }
     }
   }
 }
 // -----------------------------------------------------------------------------------------------------------
 .hot_server {
-  > span {
+  & > span {
     display: block;
     height: 1px;
     width: 100%;

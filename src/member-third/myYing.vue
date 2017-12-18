@@ -19,7 +19,7 @@
               <div>购买内容：</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
-            <a href="/#/member/center"><button @click='toeva(key)'>去评价</button></a>
+            <a @click='tail(product.id)'><button @click='toeva(key)'>去评价</button></a>
           </div>
            <div class='inputcopy' v-show='ned'>
             <input type="submit" class='previous' value='上一页' @click='previous'>
@@ -47,7 +47,6 @@ export default {
         }).then(
           function(data){
          that.rData = data.data.data;//所需的数据
-        // that.products = rData;
         if(that.rData.length>2){//判断数据长度是否大于2
         that.ned=true;
           var arr = []
@@ -73,8 +72,12 @@ export default {
     },
   methods:{
     ...mapActions(['setnumtoeva']),
+    tail(id){
+      this.$router.push({path:'./center',query:{id:id}})
+    },
     toeva:function(key){
       this.setnumtoeva(this.products[key].serviceNo)
+      // console.log(this.products[key])
     },
     appraise:function(index){
       this.index=index;
@@ -143,7 +146,8 @@ export default {
       abb:'',
       col:0,
       rData:[],
-      ned:true
+      ned:true,
+      nones:[]
     };
   },
   components: { member }
@@ -157,6 +161,7 @@ export default {
     display: block;
     clear: both;
 }
+
 .contes{
     border:1px solid #ccc;
 }

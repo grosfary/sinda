@@ -6,6 +6,7 @@ import index from '../views/sinda_index' // 首页
 import list from '../views/sinda_list' // 列表页
 import shop from '../views/sinda_shop' // 店铺页
 
+
 import service from '../views/sinda_shop/sinda_service' // 三级服务页
 import product from '../views/sinda_shop/sinda_product' // 三级产品页
 import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书页
@@ -29,6 +30,8 @@ import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
+import com from '../views/sinda_list/company' //公司工商
+import list_list from '../views/sinda_list/list_list' //公司工商
 // -----------------------------------------------------------------------------------------------------------------------
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
@@ -36,6 +39,9 @@ import m_index from '../m_sinda/m_index' //手机端首页
 import m_shop from '../m_sinda/m_shop' //手机shop
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
 import m_out from '../components/m_out' //手机端公共页
+import generic from '../components/generic' //手机端公共页
+import logged from '../components/logged' //手机端公共页
+import set from '../components/set' //手机端公共页
 Vue.use(Router)
 
 // pc端
@@ -69,6 +75,12 @@ export default new Router({
                     }, {
                         path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
                         component: cart
+                    }, {
+                        path: 'com', //公司工商页   如 http://localhost:8081/#/list/cart
+                        component: com
+                    }, {
+                        path: 'list', //公司工商页   如 http://localhost:8081/#/list/cart
+                        component: list_list
                     }]
                 }, {
                     path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us
@@ -177,6 +189,18 @@ export default new Router({
             name: 'm.out',
             component: m_out
                 // children: [{}]
+        }, {
+            path: '/generic', //未注册
+            name: 'generic',
+            component: generic
+        }, {
+            path: '/logged', //已登录
+            name: 'logged',
+            component: logged
+        }, {
+            path: '/set', //已登录
+            name: 'set',
+            component: set
         }
 
     ]

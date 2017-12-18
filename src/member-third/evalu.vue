@@ -38,7 +38,7 @@ export default {
      created(){
       var that = this;
       this.ajax.post(
-        '/xinda-api/service-order/grid'
+        '/xinda-api/service/judge/grid'
         ,{
           // startTime:this.changes,
           // endTime:this.onchanges--S1712130636102806089
@@ -46,7 +46,6 @@ export default {
         }).then(
           function(data){
          that.rData = data.data.data;//所需的数据
-         console.log(that.rData.length)
         // that.products = rData;
         if(that.rData.length>2){//判断数据长度是否大于2
         that.ned=true;
@@ -62,7 +61,6 @@ export default {
         }else{
           that.products=that.rData;//小于二时，将所有数据添加
           that.ned=false;
-        console.log(that.products)
         }
       })
   },

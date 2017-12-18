@@ -7,7 +7,7 @@
         <div class='password'>
           <a href="#/member/modify"><div>修改密码</div></a>
         </div>
-        <div>
+        <div class='clear'>
           <div class='head'>
             <span>当前头像：</span>
             <div class='imt'><img src="../assets/pc/u5086.jpg" alt=""></div>
@@ -33,7 +33,7 @@
           </div>
           <div class='area'>
               <span>所在地区：</span>
-              <v-distpicker class='picker' @selected="onSelected"></v-distpicker>
+              <dist @selected="selected"></dist>
           </div>
           <div class='keep'>
               <input type="submit" @click='submit'>
@@ -44,6 +44,7 @@
     </div>
 </template>
 <script>
+import dist from "../components/distpicker"
 import member from "../views/sinda_member";
 export default {
   data() {
@@ -53,11 +54,15 @@ export default {
       name:'',
       namt:false,
       code:'',
-      value:1
+      value:1,
+      distCode:''
     };
   },
-  components: { member },
+  components: { member,dist },
   methods:{
+      selected(code) {
+      this.distCode = code;
+    },
   sexo:function(){
       this.value = 1;
   },
@@ -86,9 +91,6 @@ export default {
         this.namt=false;
       }
   },
-  onSelected:function(data){
-      this.code = data.area.code;
-  },
   submit:function(){
     var that = this;
     if(this.name==''){
@@ -102,7 +104,7 @@ export default {
            name:this.name,
            gender:this.value,
            email:this.post,
-           regionId:this.code
+           regionId:this.distCode
                     }))
           .then(function(data){
       console.log(data.data)
@@ -112,9 +114,13 @@ export default {
     }
 
 };
-
 </script>
 <style scoped lang="less">
+.clear:after{               /*清除浮动*/
+    content: '';
+    display: block;
+    clear: both;
+}
 .backe{
     background:#e9e9e9;
 }
@@ -189,7 +195,7 @@ export default {
   .area{
     .name;
       margin-top:-146px;
-      width:328px;
+      width:374px;
     .picker{
       margin-top: -25px;
       margin-left: 74px;
@@ -233,9 +239,10 @@ export default {
           }
 </style>
 <style lang="less">
-  .hello>.top>div>.area>.picker>select{
+  .hello>.top>div>.area>div{
     height: 28px;
-    padding-top: 1px;
+    margin-top: -27px;
     padding-bottom: 1px;
+    margin-left: 74px;
   }
 </style>

@@ -7,14 +7,14 @@
 
         <div class="server">
           <div class="Server">服务分类</div>
-          <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==1">
+          <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="(index==indexs-1)">
             <span v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" @click="nowIndexII(index,itemListII)" :class="{title_bg:(index==IndexII)}">{{itemListII.name}}</span>
           </div>
         </div>
 
         <div>
           <div class="Server">类型</div>
-          <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==1">
+          <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="index==(indexs-1)">
             <div v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" v-if="index==IndexII">
               <span v-for="(itemListIII,key,index) in itemListII.itemList" :key="itemListIII.id" @click="nowIndexIII(index,itemListIII.id)" :class="{title_bg:(index==IndexIII)}">{{itemListIII.name}}</span>
             </div>
@@ -40,11 +40,15 @@
       <div class="body">
         <div class="rank">
           <button class="sort">综合排序
-            <span></span>
           </button>
-          <button>价格↑↑
-            <span></span>
-          </button>
+          <ul>
+            <li v-for="(i,key,index) in sortObj" :key="key">
+              <button @click="sortord(index)" v-if="index==sortIndex">{{i}}
+                <span></span>
+              </button>
+            </li>
+          </ul>
+
         </div>
         <div class="shop">
           <div class="shoptop">
@@ -64,7 +68,7 @@
                   <span>{{product.regionName}}</span>
                 </div>
                 <div class="shopright">
-                  <p>￥ {{product.marketPrice}}</p>
+                  <p>￥ {{product.price}}.00</p>
                   <button>立即购买</button>
                   <button>加入购物车</button>
                 </div>
@@ -77,7 +81,7 @@
       </div>
       <div class="list">
         <button>上一页</button>
-
+        <span v-for="(i,index) in limitArr" :key="i" @click="option(index)">{{i}}</span>
         <button>下一页</button>
         这是页面标签
       </div>
@@ -97,7 +101,15 @@ export default {
       Rdata: [],
       IndexII: 0,
       IndexIII: 0,
-      pro_type_id: ""
+      pro_type_id: "",
+      indexs: "",
+      limit: 3,
+      totalCount: "",
+      limitArr: [],
+      start: 0,
+      sortObj: { a: "价格从高到低", b: "价格从低到高" },
+      sortIndex: 0,
+      sort: "",
     };
   },
   methods: {
@@ -111,62 +123,80 @@ export default {
       }
       this.nowIndexIII(0, arr[0].id); // 每当点击二级标题时，重置三级标题的商品
     },
-    nowIndexIII: function(index, id) {
-      var that = this;
-      this.IndexIII = index;
-      this.pro_type_id = id;
+    toDetail: function(id) {
+      this.$router.push({ path: "/list/pro", query: { id: id } });
+    },
+    liebiaoxinxi: function() {
+      this.ajax
+        .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+        .then(data => {
+          //获取列表信息
+          var obj = {};
+          for (var i in data.data.data) {
+            obj[data.data.data[i].code] = data.data.data[i];
+          }
+          this.itemLists = obj;
+        });
+    },
+    liebiao: function(id) {
+      // 当前三级标题所选显示的商品
       this.ajax
         .post(
           //列表商品
           "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
           this.qs.stringify({
-            start: 0,
-            limit: 2,
+            start: this.start,
+            limit: this.limit,
             productTypeCode: "0",
-            productId: that.pro_type_id,
-            sort: 3
+            // productId: id,
+            sort: this.sort
           })
         )
         .then(data => {
-          that.Rdata = data.data.data;
-          console.log(data);
+          this.limitArr = [1];
+          this.Rdata = data.data.data;
+          console.log(this.Rdata)
+          this.totalCount = Math.ceil(data.data.totalCount / this.limit);
+          for (var i = 2; i < this.totalCount + 1; i++) {
+            this.limitArr.push(i);
+          }
         });
     },
-    toDetail: function(id) {
-      this.$router.push({ path: "/list/pro", query: { id: id } });
+    option(index) {
+      this.start = index * this.limit;
+      this.liebiao(this.pro_type_id);
+    },
+    sortord(index) {
+      index == 0 ? (this.sortIndex = 1) : (this.sortIndex = 0);
+      index == 0 ? (this.sort = 2) : (this.sort = 3);
+      this.liebiao(this.pro_type_id);
+      
+    },
+    nowIndexIII: function(index, id) {
+      // 三级标题点击事件
+      this.IndexIII = index;
+      this.pro_type_id = id;
+      this.liebiao(this.pro_type_id);
+    },
+    shangpinxinxi: function() {
+      // 获取全部产品的传参并设置当前三级商品id
+      this.liebiao(this.$route.query.id);
+    }
+  },
+
+  watch: {
+    $route: function() {
+      // 路由监听
+      this.setlistName(this.$route.query.name);
+      this.shangpinxinxi(); // 获取商品信息
+      this.indexs = this.$route.query.index; // 获取当前索引值
     }
   },
   created() {
-    var that = this;
-    this.setlistName("财税服务");
-    this.ajax
-      .post(
-        //列表商品
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-        this.qs.stringify({
-          start: 0,
-          limit: 800,
-          productTypeCode: "0",
-          productId: "0ed787f42fe94b30b85e6a88f56e4614",
-          sort: 3
-        })
-      )
-      .then(data => {
-        this.Rdata = data.data.data;
-      });
-    this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
-      .then(data => {
-        //列表信息
-        var rData = data.data.data;
-        this.itemLists = rData;
-        // console.log(this.itemLists);
-        for (var i in this.itemLists) {
-          if (this.itemLists[i].code == 1) {
-            this.ListsObj = this.itemLists[i].itemList;
-          }
-        }
-      });
+    this.indexs = this.$route.query.index; // 获取当前索引值
+    this.setlistName(this.$route.query.name); // 设置本页名
+    this.liebiaoxinxi(); // 获取列表信息
+    this.shangpinxinxi(); // 获取商品信息
   }
 };
 </script>
@@ -224,18 +254,37 @@ export default {
     height: 45px;
     border-bottom: 1px solid #cccccc;
     background: #f7f7f7;
+    position: relative;
+    ul {
+      position: absolute;
+      top: 0;
+      left: 107px;
+      button {
+        cursor: pointer;
+        &:hover {
+          color: #2693d4;
+        }
+      }
+    }
     button {
       width: 107px;
       height: 45px;
       background: #f7f7f7;
       border: none;
       outline: none;
+      span {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background: url("../../assets/pc/icon_sort.gif") 0 0 no-repeat;
+      }
     }
     .sort {
       background: #2693d4;
       color: #ffffff;
       position: relative;
-      span {
+      &::after {
+        content: "";
         position: absolute;
         display: block;
         left: 48px;
@@ -316,6 +365,16 @@ export default {
 .list {
   text-align: center;
   margin-bottom: 200px;
+  span {
+    display: inline-block;
+    width: 37px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    color: #cbcbcb;
+    border: 1px solid #cbcbcb;
+    cursor: pointer;
+  }
 }
 .side {
   width: 235px;
