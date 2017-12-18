@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <div class="hello">
       <h1 class="content">
         服务内容
@@ -12,7 +12,7 @@
           <p>销量:</p>
           <h2>￥ {{list.marketPrice}}.00</h2>
           <del>原价：￥{{list.price}}.00</del>
-          <a href="">查看详情>></a>
+          <a  @click="detail(list.id)">查看详情>></a>
         </div>
       </div>
       <div class="number">
@@ -22,26 +22,26 @@
       </div>
     </div>
 
-</div>
+  </div>
 
-  
 </template>
 
 <script>
 export default {
   created() {
     var that = this;
-    console.log('this.$route.query.Name==',that.$route.query.Name)
+    // console.log('this.$route.query.Name==',that.$route.query.Name)
     that.ajax
       .post(
         //请求店铺商品信息
         "/xinda-api/product/package/grid",
-       
+
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据
-          providerId:that.$route.query.id,
-          providerName:that.$route.query.Name,
+          providerId: that.$route.query.id,
+          providerName: that.$route.query.Name,
+          providerImg: that.$route.query.img,
           sort: 2
         })
       )
@@ -62,8 +62,8 @@ export default {
           shopping[key].serviceInfo = shopping[key].serviceInfo.substr(0, 14);
         }
       }
-      that.getPage(1, shopping);//调用页数跳转函数
-      that.dat = shopping;//所有数据存储在dat里面
+      that.getPage(1, shopping); //调用页数跳转函数
+      that.dat = shopping; //所有数据存储在dat里面
     };
     //分页函数
     var pages = function(shopping) {
@@ -85,38 +85,48 @@ export default {
       lists: [],
       dat: [],
       number: [],
-      page: 1,
+      page: 1
       // shop:[],
-     
     };
   },
 
   methods: {
     //页数跳转函数
     getPage(num, data) {
-      var len = data.length;//总数据长度
-      var nu = len % 6;//余数
+      var len = data.length; //总数据长度
+      var nu = len % 6; //余数
       if (nu == 0) {
-        var page = len / 6;//共分几页
+        var page = len / 6; //共分几页
       } else {
         var page = (len - nu) / 6 + 1;
       }
-      if (num < 1) {//如果页数小于1，则修改为第一页
+      if (num < 1) {
+        //如果页数小于1，则修改为第一页
         num = 1;
-      } else if (num > page) {//判断如果输入的页面超过了最大页数，则修改为最后一页
+      } else if (num > page) {
+        //判断如果输入的页面超过了最大页数，则修改为最后一页
         num = page;
       }
-      var a = (num - 1) * 6;//a为当前跳转页的起始条目
-      var b = a + 6;//b为终止条目
-      if (b > len) {//判断如果b的值超出了数据长度，则重新赋值为数据长度
+      var a = (num - 1) * 6; //a为当前跳转页的起始条目
+      var b = a + 6; //b为终止条目
+      if (b > len) {
+        //判断如果b的值超出了数据长度，则重新赋值为数据长度
         b = len;
       }
-      this.lists = [];//清除原有内容      
+      this.lists = []; //清除原有内容
       for (var i = a; i < b; i++) {
-        this.lists.push(data[i]);//根据页数重新填充数据
+        this.lists.push(data[i]); //根据页数重新填充数据
       }
-      this.page = num;//重新记录页数数据，以便下次调用
+      this.page = num; //重新记录页数数据，以便下次调用
+    },
+    detail: function(id) {
+      // console.log(id);
+      this.$router.push({
+        path: "/list/pro",
+        query: { id: id }
+      });
     }
+  
   }
 };
 </script>
@@ -175,24 +185,22 @@ export default {
     line-height: 40px;
   }
 }
-.hello{
+.hello {
   position: relative;
   // display: none;
 }
-.number{
+.number {
   position: absolute;
   top: 560px;
   left: 50px;
-  button{
+  button {
     width: 30px;
     height: 30px;
     vertical-align: bottom;
     background: #ffffff;
   }
-  .page{
+  .page {
     width: 60px;
   }
 }
-
- 
 </style>

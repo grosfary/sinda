@@ -148,7 +148,7 @@ export default {
             start: this.start,
             limit: this.limit,
             productTypeCode: "0",
-            productId: id,
+            // productId: id,
             sort: this.sort
           })
         )
