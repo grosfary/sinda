@@ -51,13 +51,9 @@ export default {
       boxPasw: "",
       boxPC: false,
       imgV: "",
-<<<<<<< HEAD
       boxCode:false,
       pswd: "password",
       suo: head,
-=======
-      boxCode: false
->>>>>>> dc41b8522d38691bae207744a425ee0854b54c0a
     };
   },
   methods: {
