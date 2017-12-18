@@ -99,7 +99,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .body {
-  width: 100%;
+  // width: 100%;
   // height: 850px;;
   margin: 0 auto;
   .join {
@@ -206,7 +206,7 @@ export default {
     }
   }
   .jiamengshang {
-    margin-left: 275px;
+    margin-left: 220px;
     // display: inline;
     p {
       margin-left: 100px;

@@ -91,7 +91,7 @@ export default {
           })
         )
         .then(data => {
-          console.log(data);
+          console.log(data);0
           this.setNum(-sessionStorage.getItem("cartNumber"));
         });
     },
