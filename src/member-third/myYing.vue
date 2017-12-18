@@ -55,9 +55,11 @@ export default {
           that.products=arr;
           var numeral = Math.ceil(that.rData.length/2);//判断应该产生多少按钮
           for(let i=1;i<=numeral;i++){//循环button按钮
-              that.buttons.push(i)//每个按钮编号
+                (function(j){
+                that.buttons.push(i)//每个按钮编号
+                that.abb=numeral;//按钮号
+              })(i)
             }
-          that.abb=numeral;//按钮号
         }else{
           that.products=that.rData;//小于二时，将所有数据添加
           that.ned=false;
@@ -113,8 +115,8 @@ export default {
           this.col=this.col+1;
             var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.col){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
+            if((this.col+1)*2-1==this.rData.length){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[(this.col+1)*2-2])//添加数据
             }else{
               array.push(this.rData[(this.col+1)*2-2]);
               array.push(this.rData[(this.col+1)*2-1]);//添加数据
@@ -125,8 +127,8 @@ export default {
          skip:function(bum){
            var array=[];
            this.product = [];//清除数据
-            if(this.abb*2-1==this.bum){//判断products里元素是否跟要加入数组的最后一个元素相同
-              array.push(this.rData[this.abb*2-2])//添加数据
+            if((bum+1)*2-1==this.rData.length){//判断products里元素是否跟要加入数组的最后一个元素相同
+              array.push(this.rData[(bum+1)*2-2])//添加数据
             }else{
               array.push(this.rData[(bum+1)*2-2]);
               array.push(this.rData[(bum+1)*2-1]);//添加数据
@@ -177,7 +179,8 @@ export default {
   .page{
   width:39px;
   height:34px;
-  color:#2592d3;
+  color:#ccc;
+  background:#fff;
   line-height:34px;
   margin-left:10px;
   text-indent:11px;
@@ -187,6 +190,7 @@ export default {
   width:39px;
   height:34px;
   color:#ccc;
+  background:#fff;
   line-height:34px;
   margin-left:10px;
   text-indent:11px;

@@ -4,23 +4,34 @@
     <div class="register">
       <div class="registerI">
         <div class="registerfirst">
-          <input class=" box" type="tel" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号">
+          <input class="box" type="number" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
           <div class="verify">
             <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
             <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
+            <!-- 图片验证 -->
             <div class="verifyI" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
           </div>
           <div class="acquire">
-            <input class="boxI" type="text" placeholder="请输入验证码" v-model="sjCode" @blur="sjCodeI" @click="mobile">
+            <input class="boxI" type="text" placeholder="请输入验证码" v-model="sjCode" @blur="sjCodeI">
             <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
-            <button @click="getcode">点击获取</button>
+            <!-- 倒计时 -->
+            <div @click="getCoBut">
+              <button v-show="get" class="getblue">点击获取</button>
+              <button v-show="getNew" class="getgray" disabled>重新获取{{count}}</button>
+            </div>
           </div>
-          <input class="boxII" type="password" @blur="onBlurI" v-model="boxPasw" placeholder="请输入新密码">
+          <input :type="pswd" class="boxII" @blur="onBlurI" v-model="boxPasw" placeholder="请输入新密码">
+          <div id="xianshi" @click="concealPS">
+            <img id="cloImg" :src="closuo" alt="">
+          </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
-          <input class="boxII" type="password" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
+          <input  :type="pad" class="boxII" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
+          <div id="yincang" @click="concealPW">
+            <img id="cloImg" :src="suo" alt="">
+          </div>
           <p class="boxpasI" v-show="boxPCI">*两次输入密码不一致</p>
           <button class="boxIII" @click="affirm">确认修改</button>
         </div>
@@ -39,48 +50,87 @@
 
 <script>
 import LRhead from "../components/sinda_LoginRegister_header";
+//密码显示隐藏图片
+const head = require("../assets/pc/suo.jpg");
+const headO = require("../assets/pc/suoo.jpg");
 export default {
   data() {
     return {
+      //图片验证码
       imgUrl: "/xinda-api/ajaxAuthcode",
       imgCode: "",
+      //手机验证
       boxVal: "",
       boxTC: false,
+      //密码验证
       boxPasw: "",
       boxPC: false,
       boxPaswI: "",
       boxPCI: false,
+      //验证码验证
       imgV: "",
       boxCode: false,
+      //手机验证码
       sjCode: "",
-      sCode: false
+      sCode: false,
+      //密码显示隐藏
+      pswd: "password",
+      pad: "password",
+      closuo: head,
+      suo: head,
+      //倒计时
+      count: "60",
+      get: true,
+      getNew: false
     };
   },
   methods: {
-    imgReflash: function() {
+    //图片验证
+    imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    onBlur: function() {
+    //手机验证
+    onBlur() {
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
         this.boxTC = false;
       } else {
         this.boxTC = true;
       }
     },
-    getcode() {
-      this.ajax.post(
-        "/xinda-api/register/sendsms",
-        this.qs
-          .stringify({
-            cellphone: this.boxVal,
-            smsType: 1,
-            imgCode: this.imgV
-          }))
-          .then(data => {
-            console.log("点击验证码", data.data.msg, data.data.status);
-          }
-      );
+    //密码显示隐藏
+    concealPS() {
+      if (this.pswd == "password") {
+        this.pswd = "text";
+        this.closuo = headO;
+      } else {
+        this.pswd = "password";
+        this.closuo = head;
+      }
     },
+    //再次输入密码显示隐藏
+    concealPW() {
+      if (this.pad == "password") {
+        this.pad = "text";
+        this.suo = headO;
+      } else {
+        this.pad = "password";
+        this.suo = head;
+      }
+    },
+    // getcode() {
+    //   this.ajax
+    //     .post(
+    //       "/xinda-api/register/sendsms",
+    //       this.qs.stringify({
+    //         cellphone: this.boxVal,
+    //         smsType: 1,
+    //         imgCode: this.imgV
+    //       })
+    //     )
+    //     .then(data => {
+    //       console.log("点击验证码", data.data.msg, data.data.status);
+    //     });
+    // },
     onBlurI: function() {
       var pw = this.boxPasw;
       var md5 = require("md5");
@@ -119,18 +169,21 @@ export default {
         this.sCode = true;
       }
     },
-    mobile() {
-      // this.ajax.post(
-      //   "/xinda-api/register/findpas",
-      //   this.qs.stringify({
-      //     cellphone: this.boxVal,
-      //     smsType: 1,
-      //     validCode:111111
-      //   })
-      // );
+    getCoBut() {
+      this.get = false;
+      this.getNew = true;
+      var that = this;
+      var dic = setInterval(function() {
+        that.count--;
+        if (that.count == 1) {
+          clearInterval(dic);
+          that.get = true;
+          that.getNew = false;
+        }
+      }, 1000);
     },
     affirm() {
-      var md5 = require('md5');
+      var md5 = require("md5");
       this.ajax
         .post(
           "/xinda-api/register/findpas",
@@ -147,7 +200,7 @@ export default {
             this.$router.push({ path: "/LoginRegister/login" });
           }
         });
-    },
+    }
   },
   components: { LRhead }
 };
@@ -190,6 +243,8 @@ export default {
   top: 8px;
   left: 295px;
   position: absolute;
+  border: 1px solid #fb81fd;
+  border-radius: 3px;
 }
 .boxpas {
   width: 150px;
@@ -239,14 +294,22 @@ export default {
 .acquire {
   display: flex;
   justify-content: space-around;
-  button {
-    width: 98px;
-    height: 35px;
-    border: 1px solid #2693d4;
-    border-radius: 3px;
-    background-color: #fff;
-    color: #2693d4;
-  }
+}
+.getblue {
+  width: 98px;
+  height: 35px;
+  border: 1px solid #2693d4;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #2693d4;
+}
+.getgray {
+  width: 98px;
+  height: 35px;
+  border-radius: 3px;
+  border: 1px solid #aeadae;
+  background-color: #aeadae;
+  color: #fff;
 }
 .registersecond {
   width: 283px;
@@ -271,6 +334,12 @@ export default {
   margin-bottom: 20px;
   border-radius: 3px;
 }
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
 .boxI {
   width: 174px;
   height: 35px;
@@ -284,6 +353,24 @@ export default {
   margin-bottom: 27px;
   border: 1px solid #cbcbcb;
   border-radius: 3px;
+}
+#xianshi {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 175px;
+  left: 248px;
+}
+#yincang {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 239px;
+  left: 248px;
+}
+#cloImg {
+  width: 30px;
+  height: 30px;
 }
 .boxIII {
   width: 280px;

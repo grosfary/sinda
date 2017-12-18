@@ -13,7 +13,7 @@
           <li>姓名：<input type="text"></li>
           <li>性别：<input type="radio" name='radio'>男<input type="radio" name='radio' class='girl'>女</li>
           <li>邮箱：<input type="text"></li>
-          <li>所在地区：<dist @selected='selected'></dist></li>
+          <li>所在地区：</li>
         </ul>
       </div>
     </div>
@@ -70,10 +70,11 @@
           font-size:0.22rem;
           margin-top:0.12rem;
           white-space:nowrap; 
+          display: flex;
         div{
-          .province{
+          select{
             option{
-              font-size:0.22rem;
+              font-size:22px;
             }
           }
         }
@@ -108,4 +109,16 @@
       
     }
 }
+</style>
+<style lang="less">
+     #dist{
+       select{
+          font-size:0.2rem;
+         option{
+            font-size:0.2rem;
+                     width:10px;
+
+         }
+       }
+     }
 </style>

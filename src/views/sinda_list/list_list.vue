@@ -151,7 +151,6 @@ export default {
         .then(data => {
           this.limitArr = [1];
           this.Rdata = data.data.data;
-          console.log(this.Rdata);
           this.totalCount = Math.ceil(data.data.totalCount / this.limit);
           for (var i = 2; i < this.totalCount + 1; i++) {
             this.limitArr.push(i);
@@ -160,18 +159,23 @@ export default {
     },
     option(index) {
       // 列表索引 1 2 3 4 5 6 7 8 9
+      if (this.optionIndex == index) {
+        return;
+      }
       this.optionIndex = index;
       this.start = index * this.limit;
       this.liebiao(this.pro_type_id);
     },
-    nextOption() { // 下一页按钮
+    nextOption() {
+      // 下一页按钮
       if (this.optionIndex < this.totalCount - 1) {
         this.optionIndex += 1;
         this.start += 3;
         this.liebiao(this.pro_type_id);
       }
     },
-    beforeOption() { // 上一页按钮
+    beforeOption() {
+      // 上一页按钮
       if (this.optionIndex != 0) {
         this.optionIndex -= 1;
         this.start -= 3;
@@ -201,6 +205,7 @@ export default {
       this.setlistName(this.$route.query.name);
       this.shangpinxinxi(); // 获取商品信息
       this.indexs = this.$route.query.index; // 获取当前索引值
+      this.pro_type_id = this.$route.query.id;
     }
   },
   created() {
@@ -377,7 +382,7 @@ export default {
 .list {
   text-align: center;
   margin-bottom: 200px;
-  button{
+  button {
     display: inline-block;
     width: 66px;
     height: 34px;
