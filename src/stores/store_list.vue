@@ -1,5 +1,5 @@
 <template>
-    <div class="body" style="width:1200px">
+    <div class="body" style="width:1200px;">
         
         <div class="header"><!--头部盒子-->
             <a href="http://localhost:8080/#/Join_Us">首页/店铺列表</a><!--头部文字-->
@@ -68,10 +68,8 @@ export default {
         for (var key in rData) {
           //循环数据
           var name = rData[key].itemList;
-          // console.log(name);
           for (var j in name) {
             names.push(name[j].name); //提取二级标题
-            // console.log(names)
           }
           that.names = names;
         }
@@ -89,10 +87,6 @@ export default {
         var lists = data.data.data;
         for (var key in lists) {
           lists[key].productTypes = lists[key].productTypes.split(",");
-       
-            // console.log(that.providerName);
-        
-            //  console.log(that.prozeroId);
         }
         that.lists = lists;
      
@@ -110,9 +104,6 @@ export default {
   components: { sinda_header, sinda_footer, dist },
   methods: {
     open: function(name,id,image) {
-      // console.log(this.prozeroId,this.providerName)
-      console.log(this.lists)
-      console.log(name,id)
       this.$router.push({path:'/shop/service',query:{id:id,Name:name,img:image}});
     }
   },
@@ -124,6 +115,8 @@ export default {
 
 <style scoped lang="less">
 .body {
+  
+  margin: auto;
   .header {
     .sanji {
       //三级联动位置调整
