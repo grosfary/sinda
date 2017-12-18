@@ -126,8 +126,7 @@ export default {
   color: #2a2a2a;
   .top_content {
     // 1200px居中的盒子
-    max-width: 1200px;
-    width: 100%;
+    width: 1200px;
     margin: 0 auto;
     &::after {
       //清除浮动
