@@ -6,6 +6,7 @@ import index from '../views/sinda_index' // 首页
 import list from '../views/sinda_list' // 列表页
 import shop from '../views/sinda_shop' // 店铺页
 
+
 import service from '../views/sinda_shop/sinda_service' // 三级服务页
 import product from '../views/sinda_shop/sinda_product' // 三级产品页
 import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书页
@@ -189,17 +190,17 @@ export default new Router({
             component: m_out
                 // children: [{}]
         }, {
-            path: '/generic',//未注册
+            path: '/generic', //未注册
             name: 'generic',
-            component:generic
+            component: generic
         }, {
-            path: '/logged',//已登录
+            path: '/logged', //已登录
             name: 'logged',
-            component:logged
+            component: logged
         }, {
-            path: '/set',//已登录
+            path: '/set', //已登录
             name: 'set',
-            component:set
+            component: set
         }
 
     ]

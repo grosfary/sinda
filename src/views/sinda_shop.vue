@@ -62,8 +62,8 @@ export default {
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
-        that.shopLOGO = that.$route.query.img;
-        console.log(that.shopLOGO);
+        that.shopLOGO = shop.providerImg;
+        // console.log(that.shopLOGO);
       });
 
     that.ajax
@@ -79,7 +79,7 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        console.log(shop);
+        // console.log(shop);
       });
   }
 };
