@@ -1,10 +1,10 @@
 <template>
   <div>
-    
+
     <div class="pro">
       <div class="pro_header">
         <div class="pro_img">
-          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" :onerror="errorImg" >
         </div>
         <div class="pro_info">
           <ul>
@@ -34,7 +34,7 @@
               <button class="more" @click="nAdd">+</button>
             </li>
             <li class="once">
-              <button class="buy">立即购买</button>
+              <button class="buy" @click="nowBuy">立即购买</button>
               <button class="join" @click="cartAdd">加入购物车</button>
             </li>
           </ul>
@@ -99,7 +99,8 @@ export default {
       providerProduct: {},
       regionText: {},
       number: 1,
-      show: false
+      show: false,
+      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"'
     };
   },
   methods: {
@@ -108,27 +109,39 @@ export default {
     titleBg: function(index) {
       this.nowIndex = index;
     },
-    cartAdd() {
-      // 加入购物车按钮
+    addtoCart(jump,id,num) { // 立即购买或者加入购物车
       if (sessionStorage.getItem("userName")) {
+        // 判断现在是否为登录状态
         this.ajax
           .post(
             "/xinda-api/cart/add",
             this.qs.stringify({
-              id: this.$route.query.id,
-              num: this.number
+              id: id,
+              num: num
             })
           )
           .then(data => {
             // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
-            data.data.status == 1
-              ? this.setNum(this.number)
-              : console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
-              location.href="http://localhost:8080/#/list/cart"//暂时直接跳转
+            if (data.data.status == 1) {
+              this.setNum();
+            } else {
+              console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
+            }
+            if (jump) {
+              this.$router.push({ path: "/list/cart" });
+            }
           });
       } else {
         this.show = true;
       }
+    },
+    nowBuy() {
+      // 立即购买按钮
+      this.addtoCart(true,(this.$route.query.id),this.number);
+    },
+    cartAdd() {
+      // 加入购物车按钮
+      this.addtoCart(false,(this.$route.query.id),this.number);
     },
     nAdd() {
       this.number += 1;
@@ -372,11 +385,11 @@ export default {
 
 // 登录消息提示框
 
-.message {
+.pro .message {
   background: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
-  width: 100%;
+  max-width: 100% !important;
   height: 100%;
   position: fixed;
   > div {
