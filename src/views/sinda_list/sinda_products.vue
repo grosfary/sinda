@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <div class="pro">
       <div class="pro_header">
         <div class="pro_img">
@@ -61,10 +61,45 @@
         </div>
         <div class="main_main" v-for="(i,key,index) in proMainTitle" :key="i.tit" v-if="index==nowIndex">
           <div v-html="providerProduct.serviceContent" v-if="index==0"></div>
-          <div v-if="index!=0">暂无评价</div>
+          <div v-if="index!=0">
+            <div class="estimate">
+              <h1>0%</h1>
+              <span>好评</span>
+              <div class="appraise">
+                <div class="apra">
+                  <p class="evaluate">好评 （0%）</p>
+                  <p class="grey"></p>
+                </div>
+                <div class="apra">
+                  <p class="evaluate">中评 （0%）</p>
+                  <p class="grey"></p>
+                </div>
+                <div class="apra">
+                  <p class="evaluate">差评 （0%）</p>
+                  <p class="grey"></p>
+                </div>
+              </div>
+              <p class="thread"></p>
+              <div class="impression">
+                <p>客户印象</p>
+                <p>暂无添加印象的标签</p>
+              </div>
+            </div>
+            <div class="whole">
+              <p>全部评价 （0）</p>
+              <p>好评 （0）</p>
+              <p>中评 （0）</p>
+              <p>差评 （0）</p>
+            </div>
+            <div class="satisfaction">
+              <p>评价</p>
+              <p>满意度</p>
+              <p>用户</p>
+            </div>
+            
+          </div>
         </div>
       </div>
-
       <transition name="reversal">
         <div class="message" v-if="show">
 
@@ -124,7 +159,7 @@ export default {
             data.data.status == 1
               ? this.setNum(this.number)
               : console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
-              location.href="http://localhost:8080/#/list/cart"//暂时直接跳转
+            location.href = "http://localhost:8080/#/list/cart"; //暂时直接跳转
           });
       } else {
         this.show = true;
@@ -362,7 +397,7 @@ export default {
   }
 }
 .main_main {
-  padding: 22px;
+  // padding: 22px;
   width: 1198px;
   height: 743px;
   border: 1px solid #cccccc;
@@ -425,5 +460,88 @@ export default {
 }
 .reversal-leave-to {
   opacity: 0;
+}
+
+.estimate {
+  width: 1180px;
+  height: 120px;
+  border-top: 1px solid #e1e1e1;
+  color: #169bd5;
+  display: flex;
+  padding-left: 20px;
+  h1 {
+    width: 65px;
+    height: 120px;
+    color: #169bd5;
+    line-height: 100px;
+  }
+  span {
+    font-size: 16px;
+    line-height: 120px;
+  }
+}
+.appraise {
+  width: 300px;
+  height: 110px;
+  color: #333;
+  display: flex;
+  flex-wrap: wrap;
+}
+.apra{
+  margin-top: 15px;
+  margin-left: 20px;
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.evaluate {
+  width: 100px;
+  height: 20px;
+}
+.grey {
+  width: 167px;
+  height: 20px;
+  background-color: #e4e4e4;
+}
+.thread{
+  width: 1px;
+  height: 83px;
+  margin-left: 440px;
+  background-color: #bcbcbc;
+  margin-top: 12px;
+}
+.impression{
+  font-size: 15px;
+  margin-left: 25px;
+  color: #333;
+  margin-top: 20px;
+}
+.whole{
+  width: 1200px;
+  height: 50px;
+  background-color: #f2f2f2;
+  display: flex;
+  p{
+    width: 170px;
+    height: 50px;
+    border-right: 1px solid #d7d7d7;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+.satisfaction{
+  width: 1150px;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  p{
+    width:380px;
+    height: 50px;
+    border-bottom: 1px solid #e6e6e6;
+    line-height: 50px;
+    text-align: center;
+    color: #766674;
+    font-size: 12px;
+  }
 }
 </style>
