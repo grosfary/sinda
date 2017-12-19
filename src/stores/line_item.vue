@@ -59,7 +59,7 @@
                         <p class="lagefeed">请您在新打开的页面完成订单付款</p>
                         <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
                     <div class="feedbody">
-                        <a class="wancheng"href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
+                        <a class="wancheng" href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
                      </div>
                      <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
                 </div>
@@ -87,10 +87,10 @@ export default {
           this.bigbox=false;
         },
         success:function(){
-        location.href="http://localhost:8080/#/payment/success"
+        location.href="/#/payment/success"
         },
         failure:function(){
-        location.href="http://localhost:8080/#/payment/failure"
+        location.href="/#/payment/failure"
         },
         jiesuan:function(){
         if(wechat.checked==true){
@@ -116,7 +116,7 @@ export default {
 <style scoped lang="less">
 // 整体盒子样式
 .body{
-    width:70%;
+    // width:70%;
     height: 850px;;
     margin: 0 auto;
     .feedback{

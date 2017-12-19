@@ -91,7 +91,7 @@ export default {
           })
         )
         .then(data => {
-          console.log(data);
+          console.log(data);0
           this.setNum(-sessionStorage.getItem("cartNumber"));
         });
     },
@@ -208,6 +208,7 @@ export default {
     justify-content: space-between;
 
     li {
+      width: 1px;
       font-size: 13px;
       color: #686868;
       display: inline;
