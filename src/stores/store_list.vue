@@ -71,8 +71,8 @@
 
 <script>
 import sinda_header from "../components/sinda_global_header";
-import dist from "../components/distpicker";
-import sinda_footer from "../components/sinda_global_footer"; //省市区三级联动插件
+import dist from "../components/distpicker";//省市区三级联动插件
+import sinda_footer from "../components/sinda_global_footer"; 
 export default {
   // 数据获取
   created() {
@@ -87,10 +87,8 @@ export default {
         for (var key in rData) {
           //循环数据
           var name = rData[key].itemList;
-          // console.log(name);
           for (var j in name) {
             names.push(name[j].name); //提取二级标题
-            // console.log(names)
           }
           that.names = names;
         }
@@ -141,6 +139,8 @@ export default {
 
 <style scoped lang="less">
 .body {
+  
+  margin: auto;
   .header {
     .sanji {
       //三级联动位置调整

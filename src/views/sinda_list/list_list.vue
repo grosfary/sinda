@@ -24,15 +24,7 @@
         <div class="area">
           <div class="Server">服务区域</div>
           <div class="type">
-            <select>
-              <option value="">省</option>
-            </select>
-            <select>
-              <option value="">市</option>
-            </select>
-            <select>
-              <option value="">区</option>
-            </select>
+            <dist></dist>
           </div>
         </div>
 
@@ -59,41 +51,58 @@
             <div class="first">
               <div class="shopleft" v-for="(product,key,index) in Rdata" :key='product.id'>
                 <div>
-                  <img :src="'http://115.182.107.203:8088/xinda/pic' + product.productImg" alt="">
+                  <img :src="('http://115.182.107.203:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
                 </div>
                 <div class="details" @click="toDetail(product.id)">
                   <h3>{{product.providerName}}</h3>
                   <p>{{product.serviceName}}</p>
-                  <span>{{product.serviceInfo}}</span>
-                  <span>{{product.regionName}}</span>
+                  <span style="white-space:nowrap; max-width:400px;display:inline-block;text-overflow:ellipsis;overflow:hidden;" :title="product.serviceInfo">{{product.serviceInfo}}</span>
+                  <span style="white-space:nowrap; max-width:200px;display:inline-block;text-overflow:ellipsis;overflow:hidden;">{{product.regionName}}</span>
                 </div>
                 <div class="shopright">
                   <p>￥ {{product.price}}.00</p>
-                  <button>立即购买</button>
-                  <button>加入购物车</button>
+                  <button @click="nowBuy(product.id)">立即购买</button>
+                  <button @click="cartAdd(product.id)">加入购物车</button>
                 </div>
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
       <div class="list">
-        <button>上一页</button>
-        <span v-for="(i,index) in limitArr" :key="i" @click="option(index)">{{i}}</span>
-        <button>下一页</button>
-        这是页面标签
+        <button @click="beforeOption">上一页</button>
+        <span v-for="(i,index) in limitArr" :key="i" @click="option(index)" :class="{bg_2693d4:(index==optionIndex)}">{{i}}</span>
+        <button @click="nextOption">下一页</button>
       </div>
     </div>
     <div class="side">
     </div>
+          <transition name="reversal">
+        <div class="message" v-if="show">
+
+          <div v-if="show">
+            <h3>请您先登录</h3>
+            <p>马上登录账号？</p>
+            <button @click="queding">确定
+              <span></span>
+            </button>
+            <button @click="quxiao">取消</button>
+          </div>
+
+        </div>
+      </transition>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import dist from "../../components/distpicker";
+
 export default {
+    ...mapActions(["setlistName", "setNum"]),
+  components: {
+    dist
+  },
   name: "sinda_taxServer",
   data() {
     return {
@@ -101,7 +110,7 @@ export default {
       Rdata: [],
       IndexII: 0,
       IndexIII: 0,
-      pro_type_id: "",
+      pro_type_id: this.$route.query.id,
       indexs: "",
       limit: 3,
       totalCount: "",
@@ -110,10 +119,13 @@ export default {
       sortObj: { a: "价格从高到低", b: "价格从低到高" },
       sortIndex: 0,
       sort: "",
+      optionIndex: 0,
+      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"',
+      show:false
     };
   },
   methods: {
-    ...mapActions(["setlistName"]),
+    ...mapActions(["setlistName","setNum"]),
     nowIndexII: function(index, i) {
       this.IndexII = index;
       this.IndexIII = 0;
@@ -143,34 +155,95 @@ export default {
       this.ajax
         .post(
           //列表商品
-          "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+          "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: this.start,
             limit: this.limit,
             productTypeCode: "0",
-            // productId: id,
+            productId: id,
             sort: this.sort
           })
         )
         .then(data => {
           this.limitArr = [1];
           this.Rdata = data.data.data;
-          console.log(this.Rdata)
           this.totalCount = Math.ceil(data.data.totalCount / this.limit);
           for (var i = 2; i < this.totalCount + 1; i++) {
             this.limitArr.push(i);
           }
         });
     },
+    addtoCart(jump, id, num) {
+      // 立即购买或者加入购物车
+      console.log(sessionStorage.getItem("userName"))
+      if (sessionStorage.getItem("userName")) {
+        console.log(123)
+        // 判断现在是否为登录状态
+        this.ajax
+          .post(
+            "/xinda-api/cart/add",
+            this.qs.stringify({
+              id: id,
+              num: num
+            })
+          )
+          .then(data => {
+            // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
+            console.log(data.data)
+            if (data.data.status == 1) {
+              this.setNum();
+            } else {
+              console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
+            }
+            if (jump) {
+              this.$router.push({ path: "/list/cart" });
+            }
+          });
+      } else {
+        this.show = true;
+      }
+    },
+    queding() {
+      this.$router.push({ path: "/LoginRegister/login" });
+    },
+    quxiao() {
+      this.show = false;
+    },
+    nowBuy(id) {
+      this.addtoCart(true, id, 1);
+    },
+    cartAdd(id) {
+      this.addtoCart(false, id, 1);
+    },
     option(index) {
+      // 列表索引 1 2 3 4 5 6 7 8 9
+      if (this.optionIndex == index) {
+        return;
+      }
+      this.optionIndex = index;
       this.start = index * this.limit;
       this.liebiao(this.pro_type_id);
+    },
+    nextOption() {
+      // 下一页按钮
+      if (this.optionIndex < this.totalCount - 1) {
+        this.optionIndex += 1;
+        this.start += 3;
+        this.liebiao(this.pro_type_id);
+      }
+    },
+    beforeOption() {
+      // 上一页按钮
+      if (this.optionIndex != 0) {
+        this.optionIndex -= 1;
+        this.start -= 3;
+        this.liebiao(this.pro_type_id);
+      }
     },
     sortord(index) {
       index == 0 ? (this.sortIndex = 1) : (this.sortIndex = 0);
       index == 0 ? (this.sort = 2) : (this.sort = 3);
       this.liebiao(this.pro_type_id);
-      
     },
     nowIndexIII: function(index, id) {
       // 三级标题点击事件
@@ -190,6 +263,7 @@ export default {
       this.setlistName(this.$route.query.name);
       this.shangpinxinxi(); // 获取商品信息
       this.indexs = this.$route.query.index; // 获取当前索引值
+      this.pro_type_id = this.$route.query.id;
     }
   },
   created() {
@@ -302,6 +376,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding: 20px;
+      padding-top: 0;
       p {
         font-size: 14px;
         color: #676767;
@@ -365,8 +440,22 @@ export default {
 .list {
   text-align: center;
   margin-bottom: 200px;
-  span {
+  button {
     display: inline-block;
+    width: 66px;
+    height: 34px;
+    color: #cbcbcb;
+    border: 1px solid #cbcbcb;
+    font-size: 14px;
+    text-align: center;
+    line-height: 34px;
+    background: #fff;
+  }
+  span {
+    margin: 3px;
+    margin-top: 6px;
+    display: inline-block;
+    box-sizing: border-box;
     width: 37px;
     height: 34px;
     line-height: 34px;
@@ -375,6 +464,11 @@ export default {
     border: 1px solid #cbcbcb;
     cursor: pointer;
   }
+
+  .bg_2693d4 {
+    border: 1px solid #2693d4;
+    color: #2693d4;
+  }
 }
 .side {
   width: 235px;
@@ -382,5 +476,62 @@ export default {
   border: 1px solid #cccccc;
   margin-bottom: 200px;
   background: url("../../assets/pc/left.png");
+}
+
+
+.cart .message {
+  
+  position: fixed;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100%;
+  > div {
+    border-radius: 6px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    width: 384px;
+    height: 200px;
+    h3 {
+      line-height: 53px;
+      text-align: center;
+      background: #f2f2f2;
+    }
+    p {
+      padding-left: 28px;
+      line-height: 70px;
+      color: #797a8b;
+    }
+    button {
+      font-size: 18px;
+      border-radius: 6px;
+      width: 150px;
+      height: 45px;
+      background: #d8d8d8;
+      border: none;
+      margin-left: 28px;
+      cursor: pointer;
+    }
+  }
+}
+
+.reversal-enter-active {
+  transition: all 0.3s ease;
+}
+.reversal-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.reversal-enter {
+  transform: translateX(100px);
+  opacity: 0;
+}
+.reversal-leave-to {
+  opacity: 0;
 }
 </style>

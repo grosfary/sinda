@@ -41,6 +41,8 @@ import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop servi
 import m_success from '../m_sinda/m_success.vue' //手机支付成功
 import m_failure from '../m_sinda/m_failure.vue' //手机支付失败
 import m_out from '../components/m_out' //手机端公共页
+import m_storelist from '../m_sinda/m_storelist' //手机端店铺
+import m_joinus from '../m_sinda/m_joinus' //手机端加盟我们 
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
 import set from '../components/set' //手机端公共页
@@ -176,15 +178,28 @@ export default new Router({
             children: [{
                     path: '', // 手机端的首页
                     component: m_index
+<<<<<<< HEAD
                 }, {
                     path: 'shop', // 手机端的店铺页
                     component: m_shop,
                     redirect: "shop/service",
+=======
+                },
+                {
+                    path: 'shop', // 手机端的店铺页
+                    component: m_shop,
+                    redirect: "/service",
+>>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
                     children: [{
                         path: 'service',
                         component: m_shop_service,
                     }]
+<<<<<<< HEAD
                 }, {
+=======
+                }
+            ]
+>>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
 
                     path: 'success', // 手机端的支付成功
                     name: 'm_success',
@@ -201,8 +216,28 @@ export default new Router({
         {
             path: '/m.out', // 手机端公共页面 不包含底部
             name: 'm.out',
-            component: m_out
+            component: m_out,
+            children: [{
+                    path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+                    component: m_storelist
+                }, {
+                    path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
+                    component: m_joinus,
+                }, {
+                    path: '/generic', //未注册
+                    name: 'generic',
+                    component: generic
+                }, {
+                    path: '/logged', //已登录
+                    name: 'logged',
+                    component: logged
+                }, {
+                    path: '/set', //已登录
+                    name: 'set',
+                    component: set
+                }]
                 // children: [{}]
+<<<<<<< HEAD
         },
         {
             path: '/generic', //未注册
@@ -219,6 +254,9 @@ export default new Router({
             name: 'set',
             component: set
         },
+=======
+        }
+>>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
 
     ]
 })
