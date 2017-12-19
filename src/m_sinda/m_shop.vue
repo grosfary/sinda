@@ -49,10 +49,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   .mobile {
-<<<<<<< HEAD
     width:7.5rem;
-=======
->>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
     margin: 0.64rem auto;
     .Logo img{
       display:block;
