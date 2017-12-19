@@ -21,7 +21,7 @@ export default {
       providerName: "",
       regionName: "",
       providerInfo: "",
-      shopLOGO: ""
+      shopLOGO: "",
     };
   },
   created() {

@@ -4,7 +4,9 @@
         <p class="pay">支付失败</p> 
     </div>
     <div class="bodyed">
-      <div class="logo"></div>
+      <div class="logo">
+         <img src="../../assets/gongyon/failure.jpg" alt="">
+      </div>
       <div class="right">
           <p class="alipay">支付失败!</p>
           <div class="payment">
@@ -47,50 +49,51 @@ export default {
   height: 210px;
   margin-top: 50px;
   margin-left: 133px;
-  background: url(../../../images/pc/Sprites.png) no-repeat -600px 0px;
+  
 }
 .pay {
   padding: 10px 0;
   border-bottom: 1px solid #ccc;
-  color: #4eb5ba;
+  color: #2793d3;
 }
 .payment {
   display: flex;
   flex-wrap: nowrap;
-  margin-top: 70px;
-  border-top: 1px solid #cccccc;
+  margin-top: 20px;
+
   p {
     color: #333333;
-    font-size: 19px;
-    margin-top: 10px;
+    font-size: 18px;
+    line-height: 50px;
   }
   a {
-    border: 1px solid #4eb5ba;
+    border: 1px solid #2793d3;
     border-radius: 5px;
     width: 100px;
     text-align: center;
-    color: #4eb5ba;
+    text-decoration: none;
+    line-height: 38px;
+    color: #2793d3;
     margin: 10px 10px;
   }
 }
 .alipay {
   font-size: 30px;
-  color: #4eb5ba;
+  color: #2793d3;
   padding-top: 60px;
 }
 .problem {
-  color: #666666;
-  font-size: 15px;
+  color: #020202;
+  font-size: 14px;
 }
 .phone {
-  color: #4ec3d6;
+  color: #000;
+  font-weight: bold;
 }
 .right {
   margin-left: 400px;
 }
-.question {
-  margin-top: 25px;
-}
+
 </style>
 
 
