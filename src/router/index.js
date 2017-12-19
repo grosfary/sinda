@@ -38,6 +38,8 @@ import m_global from '../components/m_global' //手机端公共页
 import m_index from '../m_sinda/m_index' //手机端首页
 import m_shop from '../m_sinda/m_shop' //手机shop
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
+import m_success from '../m_sinda/m_success.vue' //手机支付成功
+import m_failure from '../m_sinda/m_failure.vue' //手机支付失败
 import m_out from '../components/m_out' //手机端公共页
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
@@ -172,36 +174,51 @@ export default new Router({
             name: 'm.sinda',
             component: m_global,
             children: [{
-                path: '', // 手机端的首页
-                component: m_index
-            }, {
-                path: 'shop', // 手机端的店铺页
-                component: m_shop,
-                redirect: "/service",
-                children: [{
-                    path: 'service',
-                    component: m_shop_service,
-                }]
-            }]
+                    path: '', // 手机端的首页
+                    component: m_index
+                }, {
+                    path: 'shop', // 手机端的店铺页
+                    component: m_shop,
+                    redirect: "shop/service",
+                    children: [{
+                        path: 'service',
+                        component: m_shop_service,
+                    }]
+                }, {
 
-        }, {
+                    path: 'success', // 手机端的支付成功
+                    name: 'm_success',
+                    component: m_success
+                },
+                {
+                    path: 'failure', // 手机端的支付失败
+                    name: 'm_failure',
+                    component: m_failure
+                }
+            ]
+
+        },
+        {
             path: '/m.out', // 手机端公共页面 不包含底部
             name: 'm.out',
             component: m_out
                 // children: [{}]
-        }, {
+        },
+        {
             path: '/generic', //未注册
             name: 'generic',
             component: generic
-        }, {
+        },
+        {
             path: '/logged', //已登录
             name: 'logged',
             component: logged
-        }, {
+        },
+        {
             path: '/set', //已登录
             name: 'set',
             component: set
-        }
+        },
 
     ]
 })

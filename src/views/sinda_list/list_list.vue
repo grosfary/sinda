@@ -381,6 +381,6 @@ export default {
   height: 660px;
   border: 1px solid #cccccc;
   margin-bottom: 200px;
-  background: url("../../../images/pc/left.png");
+  background: url("../../assets/pc/left.png");
 }
 </style>

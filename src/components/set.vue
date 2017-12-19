@@ -9,7 +9,7 @@
     <div class='content'>
       <div>
         <ul>
-          <li class='portrait'>当前头像：<div><img src="../../images/pc/u5086.jpg" alt=""></div></li>
+          <li class='portrait'>当前头像：<div><img src="../assets/pc/u5086.jpg" alt=""></div></li>
           <li>姓名：<input type="text"></li>
           <li>性别：<input type="radio" name='radio'>男<input type="radio" name='radio' class='girl'>女</li>
           <li>邮箱：<input type="text"></li>

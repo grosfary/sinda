@@ -79,7 +79,7 @@
         <button>上一页</button>
 
         <button>下一页</button>
-        这是页面标签
+     
       </div>
     </div>
     <div class="side">
@@ -322,6 +322,6 @@ export default {
   height: 660px;
   border: 1px solid #cccccc;
   margin-bottom: 200px;
-  background: url("../../../images/pc/left.png");
+  background: url("../../assets/pc/left.png");
 }
 </style>

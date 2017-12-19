@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <!-- <h3>这是公共页面部分</h3>       -->
     <router-view/>
     <m_footer></m_footer>
