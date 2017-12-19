@@ -38,12 +38,11 @@ import m_global from '../components/m_global' //手机端公共页
 import m_index from '../m_sinda/m_index' //手机端首页
 import m_shop from '../m_sinda/m_shop' //手机shop
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
-import m_success from '../m_sinda/m_success.vue' //手机支付成功
-import m_failure from '../m_sinda/m_failure.vue' //手机支付失败
 import m_out from '../components/m_out' //手机端公共页
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
 import set from '../components/set' //手机端公共页
+import registerP from '../components/registerP' //手机端注册
 Vue.use(Router)
 
 // pc端
@@ -57,6 +56,7 @@ Vue.use(Router)
 // , {
 //     
 export default new Router({
+<<<<<<< HEAD
     routes: [{
         path: '/',
         name: 'sinda_global',
@@ -210,3 +210,170 @@ export default new Router({
         component: set
     }]
 })
+=======
+  routes: [{
+      path: '/',
+      name: 'sinda_global',
+      component: global,
+      redirect: 'index',
+      children: [{
+          path: 'index', // path为路径  在这里为首页   如 http://localhost:8081/#/
+          component: index
+        }, {
+          path: 'list', // 在这里为列表页   如 http://localhost:8081/#/list
+          component: list,
+          children: [{
+            path: 'tax', //财税服务页   如 http://localhost:8081/#/list/tax
+            component: tax
+          }, {
+            path: 'pro', //商品详情页   如 http://localhost:8081/#/list/cart
+            component: pro
+          }, {
+            path: 'cart', //购物车页   如 http://localhost:8081/#/list/cart
+            component: cart
+          }, {
+            path: 'com', //公司工商页   如 http://localhost:8081/#/list/cart
+            component: com
+          }, {
+            path: 'list', //公司工商页   如 http://localhost:8081/#/list/cart
+            component: list_list
+          }]
+        }, {
+          path: 'Join_Us', //加盟我们  如 http://localhost:8081/#/Join_Us
+          component: Join_Us
+        }, {
+          path: 'line_item', //订单详情  如 http://localhost:8081/#/line_item
+          component: line_item
+        }, {
+          path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
+          component: store_list
+        },
+
+        {
+          path: '/shop',
+          component: shop,
+          redirect: "/shop/service",
+          children: [{
+            path: 'service',
+            component: service,
+          }, {
+            path: 'product',
+            component: product,
+          }, {
+            path: 'certificate',
+            component: certificate,
+          }]
+
+        }, {
+          path: 'payment',
+          component: payment,
+          children: [{
+            path: 'success',
+            component: payment_success,
+          }, {
+            path: 'failure',
+            component: payment_failure,
+          }]
+        },
+        {
+          path: 'member',
+          component: member,
+          children: [{
+              path: 'myYing', //用户评价三级页   如 http://localhost:8081/#/member/myYing
+              component: myYing
+            },
+            {
+              path: 'center', //会员中心三级页   如 http://localhost:8081/#/member/center
+              component: center
+            },
+            {
+              path: 'toeveluete', //去评价三级页   如 http://localhost:8081/#/member/toeveluete
+              component: toeveluete
+            },
+            {
+              path: 'setting', //账户设置三级页   如 http://localhost:8081/#/member/setting
+              component: setting
+            },
+            {
+              path: 'evalu', //账户设置三级页   如 http://localhost:8081/#/member/evalu
+              component: evalu
+            },
+            {
+              path: 'modify', //修改密码三级页   如 http://localhost:8081/#/member/modify
+              component: modify
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: '/LoginRegister',
+      name: 'sinda_LoginRegister',
+      component: LoginRegister,
+      children: [{
+          path: 'login',
+          component: login
+        },
+        {
+          path: 'register',
+          component: register
+        },
+        {
+          path: 'forgetPs',
+          component: forgetPs
+        },
+      ]
+    }, {
+      path: '/m.sinda', // 手机端公共页面 包含公共底部
+      name: 'm.sinda',
+      component: m_global,
+      children: [{
+          path: '', // 手机端的首页
+          component: m_index
+        },
+        {
+          path: 'shop', // 手机端的店铺页
+          component: m_shop,
+          redirect: "/service",
+          children: [{
+            path: 'service',
+            component: m_shop_service,
+          }]
+        }
+      ]
+
+    }, {
+      path: '/m.out', // 手机端公共页面 不包含底部
+      name: 'm.out',
+      component: m_out,
+      children: [{
+          path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+          component: m_storelist
+        }, {
+          path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
+          component: m_joinus,
+        }, {
+          path: '/generic', //未注册
+          name: 'generic',
+          component: generic
+        }, {
+          path: '/logged', //已登录
+          name: 'logged',
+          component: logged
+        }, {
+          path: '/set', //已登录
+          name: 'set',
+          component: set
+        },
+        {
+          path: '/registerP', //注册
+          name: 'registerP',
+          component: registerP
+        }
+      ]
+      // children: [{}]
+    }
+
+  ]
+})
+>>>>>>> e8dc9ce8951439a9089a0de3cdb267032d8d0626
