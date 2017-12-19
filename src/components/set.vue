@@ -10,6 +10,7 @@
     <div class='content'>
       <div>
         <ul>
+<<<<<<< HEAD
           <li class='portrait'>
             <p class='area'>当前头像：<span></span></p>
             <div class='photofath'>
@@ -23,6 +24,21 @@
           </li> 
           <li><div class='area'>所在地区：</div><dist @selected="selected" id='dist'></dist></li>
           <p class='box' v-show="box">邮箱格式不正确</p> 
+=======
+<<<<<<< HEAD
+          <li class='portrait'>当前头像：<div><img src="../assets/pc/u5086.jpg" alt=""></div></li>
+          <li>姓名：<input type="text"></li>
+          <li>性别：<input type="radio" name='radio'>男<input type="radio" name='radio' class='girl'>女</li>
+          <li>邮箱：<input type="text"></li>
+          <li>所在地区：</li>
+=======
+          <li class='portrait'><p class='area'>当 前 头 像：<span></span></p><div><img src="../../images/pc/u5086.png" alt=""></div></li> 
+          <li><p class='areas'>姓 名：</p><input type="text"  class='input'></li> 
+          <li class='areassex'><div class='areas'>性 别：</div><input type="radio" name='radio' checked="checked">男<input type="radio" name='radio' class='girl'>女</li> 
+          <li><div class='areas'>邮 箱：</div><input type="text" class='input'></li> 
+          <li><div class='area'>所 在 地 区：</div><dist @selected="selected" id='dist'></dist></li> 
+>>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
+>>>>>>> bf41090a25750ea73d42df015c03254f24e8fd48
         </ul>
       </div>
     </div>

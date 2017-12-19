@@ -208,6 +208,7 @@ export default {
     justify-content: space-between;
 
     li {
+      width: 1px;
       font-size: 13px;
       color: #686868;
       display: inline;
