@@ -8,8 +8,8 @@
         <div class='name'>ajax</div>
       </div>
       <div class='set'>
-        <div class='myorder'>我的订单</div>
-        <div class='myset'><div>账户设置</div></div>
+        <a href="#/myOrder"><div class='myorder'>我的订单</div></a>
+        <a href="#/generic"><div class='myset'><div>账户设置</div></div></a>
       </div>
       <input type="submit" value='退出登录' class='quit'>
     </div>

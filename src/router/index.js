@@ -44,6 +44,7 @@ import m_joinus from '../m_sinda/m_joinus' //手机端加盟我们
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
 import set from '../components/set' //手机端公共页
+import myOrder from '../components/myOrder' //手机端公共页
 Vue.use(Router)
 
 // pc端
@@ -210,6 +211,10 @@ export default new Router({
                     path: '/set', //已登录
                     name: 'set',
                     component: set
+                }, {
+                    path: '/myOrder', //已登录
+                    name: 'myOrder',
+                    component: myOrder
                 }]
                 // children: [{}]
         }

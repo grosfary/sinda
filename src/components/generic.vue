@@ -34,23 +34,23 @@
       width:100%;
       overflow-x: scroll;
       position: fixed;
-      top: 40%;
+      top: 38%;
       left: 50%;
       -webkit-transform: translateX(-50%) translateY(-50%);
       .set{
         div{
           margin:0 auto;
           width:6.7rem;
-          height:0.76rem;
+          height:0.56rem;
           margin-top:10px;
           font-size:22px;
-          line-height:0.76rem;
+          line-height:0.56rem;
         }
          .myset{
             div{
               width:64px;
               margin:0 0;
-              background:url(../assets/pc/Sprites.png) no-repeat -410px -288px;
+              background:url(../assets/pc/Sprites.png) no-repeat -410px -300px;
               white-space:nowrap;
             }
               background:#e9e9e9;
@@ -70,8 +70,8 @@
   .submit{
     text-align:center;
     input{
-      width:1.56rem;
-      height:0.6rem;
+      width:1.16rem;
+      height:0.5rem;
       font-size:22px;
       background:#2693d4;
       color:#fff;
@@ -83,11 +83,11 @@
  .myorder{
    white-space:nowrap;
    text-indent:83px;
-   background:#e9e9e9 url(../assets/pc/Sprites.png) no-repeat -486px -286px;
+   background:#e9e9e9 url(../assets/pc/Sprites.png) no-repeat -486px -292px;
  }
- @media screen and (max-width: 670px) {
+ @media screen and (max-width: 730px) {
     .hello>.generic>.set>div{
-      width:100%;
+      width:90%;
     }
 }
  @media screen and (max-width: 380px) {
