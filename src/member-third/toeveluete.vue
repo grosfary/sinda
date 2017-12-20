@@ -15,7 +15,7 @@
               <input type="submit" class='submit' @click='num'>
               </div>
             <div class='date'>
-              <input type="date" v-on:change='change' v-model='changes' min="2015-11-25T00:00">
+              <input type="date" v-on:change='change' v-model='changes'>
               <input type="date" class='data' v-on:change='onchange' v-model='onchanges'>
             </div>
           </div>
@@ -61,7 +61,6 @@
             <div :class='col==bum?"page":"pages"' v-for='(button,bum) in buttons' :key='button' @click='skip(bum)'>{{button}}</div>           
             <input type="submit" class='next' value='下一页' @click='next'>
           </div>
-          
         </div>
       </div>
      <div class='informations' v-show='show'>

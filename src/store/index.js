@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+import qs from 'qs'
+
+Vue.prototype.qs = qs;
+
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: { //状态集合
@@ -7,11 +12,15 @@ export default new Vuex.Store({
     loginState: '',
     listName: 'listName',
     userName: '',
-    toeva:'',//去评价
+    toeva: '', //去评价
   },
   mutations: { //突变集合
     SET_NUM(state, num) { // 购物车数量
-      state.num -= -(num);
+      axios.post("/xinda-api/cart/cart-num").then(data => {
+        if (data.data.status == 1) {
+          state.num = (data.data.data.cartNum);
+        }
+      });
     },
     SET_LOGIN_STATE(state, loginState) { // 登录状态
       state.loginState = loginState;
@@ -21,13 +30,8 @@ export default new Vuex.Store({
     },
     SET_USER_NAME(state, userName) { // 当前用户
       state.userName = userName;
-      // if (sessionStorage.getItem("userName")) {
-      //   state.userName = sessionStorage.getItem("userName");
-      // } else {
-      //   state.userName = userName;
-      // }
     },
-    SET_NUM_TOEVA(state,toeva){//去评价
+    SET_NUM_TOEVA(state, toeva) { //去评价
       state.toeva = toeva;
     }
   },
@@ -53,14 +57,16 @@ export default new Vuex.Store({
     }, userName) {
       commit('SET_USER_NAME', userName);
     },
-    setnumtoeva({//去评价
+    setnumtoeva({ //去评价
       commit
-    },toeva){
-      commit('SET_NUM_TOEVA',toeva)
+    }, toeva) {
+      commit('SET_NUM_TOEVA', toeva)
     }
   },
   getters: { //显示集合
-    getNum: state => state.num,
+    getNum: function(state) {
+      return state.num
+    },
     getloginState: state => state.loginState,
     getlistName: state => state.listName,
     getuserName: state => {

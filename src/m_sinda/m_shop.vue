@@ -21,7 +21,7 @@ export default {
       providerName: "",
       regionName: "",
       providerInfo: "",
-      shopLOGO: ""
+      shopLOGO: "",
     };
   },
   created() {
@@ -49,7 +49,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   .mobile {
-    display: none;
+    width:7.5rem;
     margin: 0.64rem auto;
     .Logo img{
       display:block;

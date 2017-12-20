@@ -1,3 +1,4 @@
+
 <template>
     <div class="phoneservice">
         <div class="center">
@@ -12,10 +13,9 @@
                 </div>
                 <div class="shopright">
                     <h3>{{list.providerName}}</h3>
-                    <p>{{list.serviceInfo}}</p>
-                    <span></span>
+                    <p title="list.serviceInfo">{{list.serviceInfo}}</p>
                     <span>{{list.regionName}}</span>
-                    <del>￥ {{list.marketPrice}}元</del>
+                    <span class="money">￥ {{list.marketPrice}}元</span>
                 </div>
             </div>
         </div>
@@ -119,7 +119,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .phoneservice{
-    display: none;
+    display: block;
+     width:7.5rem;
 }
 .center {
   position: relative;
@@ -144,12 +145,14 @@ export default {
   border-bottom: 1px solid #cfcfcf;
   padding: 0.3rem 0.2rem;
   display: flex;
-  .picture {
-    border: 1px solid #cfcfcf;
-  }
-  .picture img {
-    align-items: center;
-    display: inline-block;
+ 
+  .shopright{
+    width:5.08rem;
+    margin-left: 0.25rem;
+    .money{
+        font-size: 0.18rem;
+        color: red;
+    }
   }
   h3 {
     font-size: 0.3rem;
@@ -162,10 +165,6 @@ export default {
   span {
     font-size: 0.18rem;
     color: #010101;
-  }
-  del {
-    font-size: 0.18rem;
-    color: red;
   }
 }
 </style>

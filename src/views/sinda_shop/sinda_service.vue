@@ -7,7 +7,6 @@
       <div class="shopping">
         <div class="serviceItem" v-for="list in lists" :key="list.id">
           <h3>{{list.serviceName}}</h3>
-          <span></span>
           <p>{{list.serviceInfo}}</p>
           <p>销量:</p>
           <h2>￥ {{list.marketPrice}}.00</h2>
@@ -163,7 +162,7 @@ export default {
   }
   span {
     display: block;
-    background: url("../../../images/pc/Sprites.png") no-repeat -210px -486px;
+
     width: 165px;
     height: 10px;
   }

@@ -7,6 +7,7 @@
 <script>
 if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
   // window.location.href = "#/";
+<<<<<<< HEAD
   var html = document.getElementsByTagName("html");(function (doc, win) {
         var docEl = doc.documentElement,
             resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
@@ -24,9 +25,30 @@ if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
         win.addEventListener(resizeEvt, recalc, false);
         doc.addEventListener('DOMContentLoaded', recalc, false);
     })(document, window);
+=======
+  (function(doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt =
+        "orientationchange" in window ? "orientationchange" : "resize",
+      recalc = function() {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        if (clientWidth >= 750) {
+          docEl.style.fontSize = "100px";
+        } else {
+          docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
+        }
+      };
+
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener("DOMContentLoaded", recalc, false);
+  })(document, window);
+>>>>>>> b26cfcf40a105440abe822ec375d3a8dad893743
 } else {
   // window.location.href = "#/m.sinda";
 }
+
 // import sinda_top from "./components/sinda_top"; // 用变量sinda_top来接收sinda_top.vue里的html内容
 // import sinda_bottom from "./components/sinda_bottom"; // 作用同上
 export default {

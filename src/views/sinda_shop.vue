@@ -16,7 +16,7 @@
             <h3>公司介绍</h3>
             <p>{{providerInfo}}</p>
           </div>
-          <img src="../../images/pc/123.png" alt="">
+         <img src="../assets/pc/123.png" alt="">
         </div>
 
         <div class="commodityList">

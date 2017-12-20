@@ -1,10 +1,10 @@
 <template>
   <div>
-    
+
     <div class="pro">
       <div class="pro_header">
         <div class="pro_img">
-          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" :onerror="errorImg" >
         </div>
         <div class="pro_info">
           <ul>
@@ -34,7 +34,7 @@
               <button class="more" @click="nAdd">+</button>
             </li>
             <li class="once">
-              <button class="buy">立即购买</button>
+              <button class="buy" @click="nowBuy">立即购买</button>
               <button class="join" @click="cartAdd">加入购物车</button>
             </li>
           </ul>
@@ -61,10 +61,45 @@
         </div>
         <div class="main_main" v-for="(i,key,index) in proMainTitle" :key="i.tit" v-if="index==nowIndex">
           <div v-html="providerProduct.serviceContent" v-if="index==0"></div>
-          <div v-if="index!=0">暂无评价</div>
+          <div v-if="index!=0">
+            <div class="estimate">
+              <h1>0%</h1>
+              <span>好评</span>
+              <div class="appraise">
+                <div class="apra">
+                  <p class="evaluate">好评 （0%）</p>
+                  <p class="grey"></p>
+                </div>
+                <div class="apra">
+                  <p class="evaluate">中评 （0%）</p>
+                  <p class="grey"></p>
+                </div>
+                <div class="apra">
+                  <p class="evaluate">差评 （0%）</p>
+                  <p class="grey"></p>
+                </div>
+              </div>
+              <p class="thread"></p>
+              <div class="impression">
+                <p>客户印象</p>
+                <p>暂无添加印象的标签</p>
+              </div>
+            </div>
+            <div class="whole">
+              <p>全部评价 （0）</p>
+              <p>好评 （0）</p>
+              <p>中评 （0）</p>
+              <p>差评 （0）</p>
+            </div>
+            <div class="satisfaction">
+              <p>评价</p>
+              <p>满意度</p>
+              <p>用户</p>
+            </div>
+            
+          </div>
         </div>
       </div>
-
       <transition name="reversal">
         <div class="message" v-if="show">
 
@@ -99,7 +134,8 @@ export default {
       providerProduct: {},
       regionText: {},
       number: 1,
-      show: false
+      show: false,
+      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"'
     };
   },
   methods: {
@@ -108,27 +144,39 @@ export default {
     titleBg: function(index) {
       this.nowIndex = index;
     },
-    cartAdd() {
-      // 加入购物车按钮
+    addtoCart(jump,id,num) { // 立即购买或者加入购物车
       if (sessionStorage.getItem("userName")) {
+        // 判断现在是否为登录状态
         this.ajax
           .post(
             "/xinda-api/cart/add",
             this.qs.stringify({
-              id: this.$route.query.id,
-              num: this.number
+              id: id,
+              num: num
             })
           )
           .then(data => {
             // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
-            data.data.status == 1
-              ? this.setNum(this.number)
-              : console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
-              location.href="http://localhost:8080/#/list/cart"//暂时直接跳转
+            if (data.data.status == 1) {
+              this.setNum();
+            } else {
+              console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
+            }
+            if (jump) {
+              this.$router.push({ path: "/list/cart" });
+            }
           });
       } else {
         this.show = true;
       }
+    },
+    nowBuy() {
+      // 立即购买按钮
+      this.addtoCart(true,(this.$route.query.id),this.number);
+    },
+    cartAdd() {
+      // 加入购物车按钮
+      this.addtoCart(false,(this.$route.query.id),this.number);
     },
     nAdd() {
       this.number += 1;
@@ -362,7 +410,7 @@ export default {
   }
 }
 .main_main {
-  padding: 22px;
+  // padding: 22px;
   width: 1198px;
   height: 743px;
   border: 1px solid #cccccc;
@@ -372,11 +420,11 @@ export default {
 
 // 登录消息提示框
 
-.message {
+.pro .message {
   background: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
-  width: 100%;
+  max-width: 100% !important;
   height: 100%;
   position: fixed;
   > div {
@@ -425,5 +473,88 @@ export default {
 }
 .reversal-leave-to {
   opacity: 0;
+}
+
+.estimate {
+  width: 1180px;
+  height: 120px;
+  border-top: 1px solid #e1e1e1;
+  color: #169bd5;
+  display: flex;
+  padding-left: 20px;
+  h1 {
+    width: 65px;
+    height: 120px;
+    color: #169bd5;
+    line-height: 100px;
+  }
+  span {
+    font-size: 16px;
+    line-height: 120px;
+  }
+}
+.appraise {
+  width: 300px;
+  height: 110px;
+  color: #333;
+  display: flex;
+  flex-wrap: wrap;
+}
+.apra{
+  margin-top: 15px;
+  margin-left: 20px;
+  width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.evaluate {
+  width: 100px;
+  height: 20px;
+}
+.grey {
+  width: 167px;
+  height: 20px;
+  background-color: #e4e4e4;
+}
+.thread{
+  width: 1px;
+  height: 83px;
+  margin-left: 440px;
+  background-color: #bcbcbc;
+  margin-top: 12px;
+}
+.impression{
+  font-size: 15px;
+  margin-left: 25px;
+  color: #333;
+  margin-top: 20px;
+}
+.whole{
+  width: 1200px;
+  height: 50px;
+  background-color: #f2f2f2;
+  display: flex;
+  p{
+    width: 170px;
+    height: 50px;
+    border-right: 1px solid #d7d7d7;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+.satisfaction{
+  width: 1150px;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  p{
+    width:380px;
+    height: 50px;
+    border-bottom: 1px solid #e6e6e6;
+    line-height: 50px;
+    text-align: center;
+    color: #766674;
+    font-size: 12px;
+  }
 }
 </style>

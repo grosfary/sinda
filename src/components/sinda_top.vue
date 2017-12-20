@@ -19,7 +19,7 @@
                 <a href="/#/member/setting">{{getuserName}}</a>
               </li>
               <li v-if="getuserName">
-                <a href="/#" @click="logOutBox">退出登录</a>
+                <a @click="logOutBox" style="cursor: pointer;">退出登录</a>
                 <div name="logOutX" class="logOut" v-if="logshow">
                   <p :key="'a'">您确定要
                     <a @click="logOutBtn">退出</a>当前登录吗？
@@ -61,7 +61,8 @@ export default {
     return {
       state: -1,
       show: true,
-      logshow: false
+      logshow: false,
+      zero:0,
     };
   },
   computed: {
@@ -85,30 +86,31 @@ export default {
     logOutBtn: function() {
       this.logshow = false;
       // 退出当前登录
-      this.ajax.post("/xinda-api/sso/ logout").then(data => {
+      this.ajax.post("/xinda-api/sso/logout").then(data => {
         // 发送一个退出登录请求
         if (data.data.status === 1) {
-          sessionStorage.setItem("userName", ""); // 退出时，清空用户名
-          this.state = 0;
           // 如果请求返回为1，则成功退出
-          this.setuserName("");
+          sessionStorage.setItem("userName", ""); // 退出时，清空缓存用户名
+          this.setuserName(""); // 清空vuex显示的用户名
+          sessionStorage.setItem("cartNumber",this.zero); // 清空购物车
+          this.state = 0;
+          this.$router.go(0); // 刷新当前页面
         }
       });
     },
-    login_info: function() {
-      this.ajax.post("/xinda-api/sso/login-info").then(data => {
-        // 判断当前是否为登录状态
+    cart_num: function() {
+      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         this.state = data.data.status;
         if (this.state == 1) {
-          this.setuserName(data.data.data.loginId);
+          this.setNum(data.data.data.cartNum)
+          // console.log(data)
         }
-        this.show = true;
       });
     }
   },
   created() {
-    // this.login_info();
-    this.setNum(sessionStorage.getItem("cartNumber"));
+    this.cart_num();
+    // this.setNum(sessionStorage.getItem("cartNumber"));
   },
   updated() {
     sessionStorage.setItem("cartNumber", this.getNum);
