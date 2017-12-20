@@ -41,6 +41,7 @@ import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop servi
 import m_out from '../components/m_out' //手机端公共页
 import m_storelist from '../m_sinda/m_storelist' //手机端店铺
 import m_joinus from '../m_sinda/m_joinus' //手机端加盟我们 
+import m_lineitem from '../m_sinda/m_lineitem' //手机端支付页
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
 import set from '../components/set' //手机端公共页
@@ -193,24 +194,30 @@ export default new Router({
             name: 'm.out',
             component: m_out,
             children: [{
-                    path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
-                    component: m_storelist
-                }, {
-                    path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
-                    component: m_joinus,
-                }, {
-                    path: '/generic', //未注册
-                    name: 'generic',
-                    component: generic
-                }, {
-                    path: '/logged', //已登录
-                    name: 'logged',
-                    component: logged
-                }, {
-                    path: '/set', //已登录
-                    name: 'set',
-                    component: set
-                }]
+                        path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+                        component: m_storelist
+                    }, {
+                        path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
+                        component: m_joinus,
+                    },
+                    {
+                        path: 'm_lineitem',
+                        component: m_lineitem,
+
+                    }, {
+                        path: '/generic', //未注册
+                        name: 'generic',
+                        component: generic
+                    }, {
+                        path: '/logged', //已登录
+                        name: 'logged',
+                        component: logged
+                    }, {
+                        path: '/set', //已登录
+                        name: 'set',
+                        component: set
+                    }
+                ]
                 // children: [{}]
         }
 
