@@ -70,16 +70,9 @@
         </div>
       </div>
       <div class="list">
-<<<<<<< HEAD
-        <button>上一页</button>
-
-        <button>下一页</button>
-     
-=======
         <button @click="beforeOption">上一页</button>
         <span v-for="(i,index) in limitArr" :key="i" @click="option(index)" :class="{bg_2693d4:(index==optionIndex)}">{{i}}</span>
         <button @click="nextOption">下一页</button>
->>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
       </div>
     </div>
     <div class="side">
