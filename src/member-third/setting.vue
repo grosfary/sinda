@@ -27,7 +27,7 @@
           <div>
               <div class='postbox'>
               <span>邮箱：</span>
-              <input type="text" placeholder="请输入邮箱地址" class='post'  v-on:keyup='key' v-model='post'>
+              <input type="text" placeholder="请输入邮箱地址"  v-on:keyup='key' v-model='post'>
               <p class='box' v-show="box">邮箱格式不正确</p>
           </div>
           </div>
@@ -107,7 +107,6 @@ export default {
            regionId:this.distCode
                     }))
           .then(function(data){
-      console.log(data.data)
     })
     }
   }

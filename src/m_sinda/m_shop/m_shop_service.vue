@@ -119,6 +119,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .phoneservice{
+    display: block;
+     width:7.5rem;
 }
 .center {
   position: relative;
@@ -143,14 +145,7 @@ export default {
   border-bottom: 1px solid #cfcfcf;
   padding: 0.3rem 0.2rem;
   display: flex;
-  .picture {
-    width:1.66rem;
-    height: 1.66rem;
-    // border: 1px solid #cfcfcf;
-  }
-  .picture img {
-    margin-top: 0.5rem;
-  }
+ 
   .shopright{
     width:5.08rem;
     margin-left: 0.25rem;
