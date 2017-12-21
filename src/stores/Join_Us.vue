@@ -1,5 +1,6 @@
 <template>
-    <div class="body" style="width:1200px;">
+<div style="width:100%">
+    <div class="body" style="width:1200px;margin: 0 auto;">
       <!-- 顶部图片文字 -->
        <div class="join">
           <span>
@@ -47,6 +48,7 @@
 与时俱进，视野立足未来，了解创业者的需求，并乐于为创业者服务。</p>
         <p class="HR bodybox" id="hrbox" v-if="hrbox">在人事代理、企业社保、个人社保等领域深耕多年，具有丰富的社保代理经验。</p>
         </div>
+    </div>
     </div>
 </template>
 
@@ -300,6 +302,7 @@ export default {
     p {
       text-align: center;
       line-height: 60px;
+      font-size: 0.5rem;
     }
   }
 }
