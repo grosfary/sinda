@@ -39,22 +39,16 @@ import m_index from '../m_sinda/m_index' //手机端首页
 import m_success from '../m_sinda/m_success' //手机端首页
 import m_failure from '../m_sinda/m_failure' //手机端首页
 import m_shop from '../m_sinda/m_shop' //手机shop
+import m_storelist from '../m_sinda/m_storelist' //手机shop
+import m_joinus from '../m_sinda/m_joinus' //手机shop
+import m_lineitem from '../m_sinda/m_lineitem'
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
 import m_out from '../components/m_out' //手机端公共页
-<<<<<<< HEAD
-import m_storelist from '../m_sinda/m_storelist' //手机端店铺
-import m_joinus from '../m_sinda/m_joinus' //手机端加盟我们 
-import m_lineitem from '../m_sinda/m_lineitem' //手机端支付页
-=======
->>>>>>> b26cfcf40a105440abe822ec375d3a8dad893743
 import generic from '../components/generic' //手机端公共页
 import logged from '../components/logged' //手机端公共页
 import set from '../components/set' //手机端公共页
-<<<<<<< HEAD
 import myOrder from '../components/myOrder' //手机端公共页
-=======
 import registerP from '../components/registerP' //手机端注册
->>>>>>> bf41090a25750ea73d42df015c03254f24e8fd48
 Vue.use(Router)
 
 // pc端
@@ -183,89 +177,42 @@ export default new Router({
         name: 'm.sinda',
         component: m_global,
         children: [{
-            path: '/', // 手机端的首页
-            component: m_index
-        }, {
-            path: 'shop', // 手机端的店铺页
-            component: m_shop,
-            redirect: "shop/service",
-            children: [{
-                path: 'service',
-                component: m_shop_service,
-            }]
-        }, {
-<<<<<<< HEAD
-            path: '/m.out', // 手机端公共页面 不包含底部
-            name: 'm.out',
-            component: m_out,
-            children: [{
-<<<<<<< HEAD
+                path: '/', // 手机端的首页
+                component: m_index
+            }, {
+                path: 'shop', // 手机端的店铺页
+                component: m_shop,
+                redirect: "shop/service",
+                children: [{
+                    path: 'service',
+                    component: m_shop_service,
+                }]
+            }, {
+                path: '/m.out', // 手机端公共页面 不包含底部
+                name: 'm.out',
+                component: m_out,
+                children: [{
                         path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
                         component: m_storelist
                     }, {
                         path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
                         component: m_joinus,
-                    },
-                    {
+                    }, {
+                        path: 'success', // 手机端的支付成功
+                        name: 'm_success',
+                        component: m_success
+                    }, {
                         path: 'm_lineitem',
-                        component: m_lineitem,
+                        component: m_lineitem
+                    }, {
+                        path: 'failure', // 手机端的支付失
+                        name: 'm_failure',
+                        component: m_failure
+                    }]
+                    // children: [{}]
+            }
 
-                    }, {
-                        path: '/generic', //未注册
-                        name: 'generic',
-                        component: generic
-                    }, {
-                        path: '/logged', //已登录
-                        name: 'logged',
-                        component: logged
-                    }, {
-                        path: '/set', //已登录
-                        name: 'set',
-                        component: set
-                    }
-                ]
-=======
-                    path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
-                    component: m_storelist
-                }, {
-                    path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
-                    component: m_joinus,
-                }, {
-                    path: '/generic', //未注册
-                    name: 'generic',
-                    component: generic
-                }, {
-                    path: '/logged', //已登录
-                    name: 'logged',
-                    component: logged
-                }, {
-                    path: '/set', //已登录
-                    name: 'set',
-                    component: set
-                }, {
-                    path: '/myOrder', //已登录
-                    name: 'myOrder',
-                    component: myOrder
-                }]
->>>>>>> b26cfcf40a105440abe822ec375d3a8dad893743
-                // children: [{}]
-        }
-
-    ]
-=======
-            path: 'success', // 手机端的支付成功
-            name: 'm_success',
-            component: m_success
-        }, {
-            path: 'failure', // 手机端的支付失
-            name: 'm_failure',
-            component: m_failure
-        }]
-    }, {
-        path: '/m.out', // 手机端公共页面 不包含底部
-        name: 'm.out',
-        component: m_out
-            // children: [{}]
+        ]
     }, {
         path: '/generic', //未注册
         name: 'generic',
@@ -278,6 +225,9 @@ export default new Router({
         path: '/set', //已登录
         name: 'set',
         component: set
+    }, {
+        path: '/myOrder', //已登录
+        name: 'myOrder',
+        component: myOrder
     }]
->>>>>>> bf41090a25750ea73d42df015c03254f24e8fd48
 })

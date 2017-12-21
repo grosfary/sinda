@@ -3,13 +3,13 @@
         <div class="pay" style="width:100%">
             <p>选择支付方式</p>
             
-                <span class="no-bank"><input type="radio"  onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
-                <span class="wechat"><input type="radio" id="wechat" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
-                <span class="alipay"><input type="radio" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
-                <span class="bank"><input type="radio" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
+                <span class="no-bank"><input type="radio" name="pay"></span>
+                <span class="wechat"><input type="radio" name="pay" id="wechat" checked="checked"></span>
+                <span class="alipay"><input type="radio" name="pay"></span>
+                <span class="bank"><input type="radio" name="pay"></span>
         
         </div>
-        <div class="Clearing">
+        <div class="Clearing">  
             <p>
                 金额总计：
             </p>

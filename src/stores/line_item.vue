@@ -16,19 +16,19 @@
             <span class="fangshi">支付方式</span>
              <p>非网银支付</p><!--网银支付-->
              <div class="Non-bank">
-                 <span ><input type="radio" name="pay" class="radioI" id="bank" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
+                 <span ><input type="radio" name="pay" class="radioI" id="bank" ></span>
              </div>
              <p>平台支付</p><!--平台支付-->
               <div class="Platform-to-pay">
                   <!-- 单选框 -->
-                 <span ><input type="radio" name="pay" class="radioII" id="wechat" checked="checked" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0">
-                 <input type="radio"  name="pay" class="radioIII" id="alipay" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
+                 <span ><input type="radio" name="pay" class="radioII" id="wechat" checked="checked">
+                 <input type="radio"  name="pay" class="radioIII" id="alipay"></span>
              </div>
              <div class="lages"><!--自助转账-->
              <p >自助转账</p><p class="lageI">因限额不能支付时,建议自助转账</p>
              </div>
              <div class="Self-help">
-                  <span ><input type="radio" name="pay" class="radioIV" onclick= "if(this.c==1){this.c=0;this.checked=0}else{this.c=1}"   c="0"></span>
+                  <span ><input type="radio" name="pay" class="radioIV"></span>
                    <p>注：转账时请将订单编号备注在付款信息里：转账完成后,请通知客服。</p>
              </div>
         </div>

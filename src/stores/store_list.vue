@@ -14,9 +14,9 @@
       <div class="header-boxII">
         <!--产品类型标签盒子-->
         <span>产品类型</span>
-        <p>所有</p>
+        <p :class="{blue:show==true}" @click="changebgAll">所有</p>
         <div class="lages">
-          <p v-for="name in names" :key="name">
+          <p :class="{blue:inner==name}" v-for="name in names" :key="name" @click="changebg(name)">
             <!--数据内容：二级标题-->
             {{name}}
           </p>
@@ -35,14 +35,14 @@
         </ul>
       </div>
       <div class="lister">
-        <div class="lists" v-for="list in listt" :key="list.id">
+        <div class="lists" v-for="list in disStores" :key="list.id">
           <div class="image">
             <!--图片盒子-->
             <img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg">
             <!--数据获取图片-->
           </div>
           <span></span>
-          <p class="wenzi">金牌服务商</p>
+          <p class="medal">金牌服务商</p>
           <!--金牌背景图-->
           <div class="lage">
             <!--数据获取文字信息-->
@@ -50,7 +50,7 @@
             <p>信誉:★★★★★</p>
             <p>{{list.regionName}}</p>
             <p>累计客户服务次数:{{list.orderNum}}丨好评率：100%</p>
-            <p class="biaoqian" style="display:inline" v-for="pro in list.productTypes" :key="pro.id">{{pro}}</p>
+            <p class="thirdname" style="display:inline" v-for="pro in list.productTypes" :key="pro.id">{{pro}}</p>
           </div>
           <button @click="open(list.providerName,list.id,list.providerImg)">进入店铺</button>
           <!--点击按钮-->
@@ -103,22 +103,20 @@ export default {
       })
       .then(function(data) {
         var listt = data.data.data;
-        // console.log(lists);
         for (var key in listt) {
           listt[key].productTypes = listt[key].productTypes.split(",");
-
-          // console.log(that.providerName);
-
-          //  console.log(that.prozeroId);
-          // console.log(lists[key].id)
         }
         that.listt = listt;
+        that.disStores=listt;
       });
   },
   data() {
     return {
       names: [],
-      listt: []
+      listt: [],
+      disStores:[],
+      inner:"",
+      show:true,
     };
   },
   components: { sinda_header, sinda_footer, dist },
@@ -128,9 +126,30 @@ export default {
         path: "/shop/service",
         query: { id: id, Name: name, img: image }
       });
-    }
+    },
+      changebg(name) {
+      this.inner = name;
+      this.show = false;
+      var tempArr = [];
+      for (var key in this.listt) {
+        for (var i = 0; i < this.listt[key].productTypes.length; i++) {
+          var codeDes = this.listt[key].productTypes[i];
+          if (codeDes == this.inner) {
+            tempArr.push(this.listt[key]);
+            break;
+          }
+        }
+      }
+      this.disStores = tempArr;
+    },
+    changebgAll() {
+      this.show = true;
+      this.inner = "";
+      this.disStores = this.listt;
+    },
+
   },
-  linehead: function() {}
+
 };
 </script>
 
@@ -182,6 +201,11 @@ export default {
       background: #f7f7f7; //背景颜色
       border: 1px solid #cccccc; //边框
       border-top: none; //下边框设置无
+      .blue{
+        background: #2693d4;
+        border-radius: 10px;
+        color:#fff;
+      }
       .lages {
         //数据获取盒子
         margin-left: 200px;
@@ -240,7 +264,7 @@ export default {
         margin-top: 60px;
         margin-left: 27px;
       }
-      .wenzi {
+      .medal {
         margin-left: 60px;
         margin-top: -24px;
       }
@@ -259,7 +283,7 @@ export default {
         line-height: 30px;
         height: 210px;
 
-        .biaoqian {
+        .thirdname {
           background: #2693d4;
           margin: 5px;
           border-radius: 10px;
