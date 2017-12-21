@@ -4,7 +4,7 @@
     <div class="pro">
       <div class="pro_header">
         <div class="pro_img">
-          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" :onerror="errorImg" >
+          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" :onerror="errorImg">
         </div>
         <div class="pro_info">
           <ul>
@@ -29,12 +29,13 @@
               <span>{{product.name}}</span>
             </li>
             <li class="area">地　区：{{regionText}}</li>
-            <li class="number">购买数量：
+            <li class="number">
+              <span>购买数量：</span>
               <button class="less" @click="nSub">-</button><input type="text" v-model="number" readonly="readonly">
               <button class="more" @click="nAdd">+</button>
             </li>
             <li class="once">
-              <button class="buy" @click="nowBuy">立即购买</button>
+              <button class="buy" @click="flag && nowBuy()">立即购买</button>
               <button class="join" @click="cartAdd">加入购物车</button>
             </li>
           </ul>
@@ -96,7 +97,7 @@
               <p>满意度</p>
               <p>用户</p>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -135,7 +136,8 @@ export default {
       regionText: {},
       number: 1,
       show: false,
-      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"'
+      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"',
+      flag: true
     };
   },
   methods: {
@@ -144,7 +146,8 @@ export default {
     titleBg: function(index) {
       this.nowIndex = index;
     },
-    addtoCart(jump,id,num) { // 立即购买或者加入购物车
+    addtoCart(jump, id, num) {
+      // 立即购买或者加入购物车
       if (sessionStorage.getItem("userName")) {
         // 判断现在是否为登录状态
         this.ajax
@@ -172,11 +175,16 @@ export default {
     },
     nowBuy() {
       // 立即购买按钮
-      this.addtoCart(true,(this.$route.query.id),this.number);
+      if (sessionStorage.getItem("userName")) {
+        this.flag = false;
+        this.addtoCart(true, this.$route.query.id, this.number);
+      } else {
+        this.addtoCart(true, this.$route.query.id, this.number);
+      }
     },
     cartAdd() {
       // 加入购物车按钮
-      this.addtoCart(false,(this.$route.query.id),this.number);
+      this.addtoCart(false, this.$route.query.id, this.number);
     },
     nAdd() {
       this.number += 1;
@@ -257,8 +265,17 @@ export default {
   }
   .number {
     line-height: 40px;
-
+    font-size: 0;
+    &::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    span {
+      font-size: 13px;
+    }
     .less {
+      // float: left;
       height: 26px;
       width: 30px;
       background: #f7f8fa;
@@ -267,6 +284,7 @@ export default {
       border-right: 0;
     }
     .more {
+      // float: left;
       height: 26px;
       width: 30px;
       background: #f7f8fa;
@@ -275,6 +293,7 @@ export default {
       border-left: 0;
     }
     input {
+      // float: left;
       height: 24px;
       width: 49px;
       border: 1px solid #cccccc;
@@ -500,7 +519,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-.apra{
+.apra {
   margin-top: 15px;
   margin-left: 20px;
   width: 300px;
@@ -516,25 +535,25 @@ export default {
   height: 20px;
   background-color: #e4e4e4;
 }
-.thread{
+.thread {
   width: 1px;
   height: 83px;
   margin-left: 440px;
   background-color: #bcbcbc;
   margin-top: 12px;
 }
-.impression{
+.impression {
   font-size: 15px;
   margin-left: 25px;
   color: #333;
   margin-top: 20px;
 }
-.whole{
+.whole {
   width: 1200px;
   height: 50px;
   background-color: #f2f2f2;
   display: flex;
-  p{
+  p {
     width: 170px;
     height: 50px;
     border-right: 1px solid #d7d7d7;
@@ -542,13 +561,13 @@ export default {
     text-align: center;
   }
 }
-.satisfaction{
+.satisfaction {
   width: 1150px;
   height: 50px;
   margin: 0 auto;
   display: flex;
-  p{
-    width:380px;
+  p {
+    width: 380px;
     height: 50px;
     border-bottom: 1px solid #e6e6e6;
     line-height: 50px;

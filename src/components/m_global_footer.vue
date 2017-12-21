@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-</template>
+</template> 
 
 <script>
 export default {
@@ -29,13 +29,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   // 手机端样式调整
-  .footer_outer{
-    height: auto;
-  }
+
   .footer_content{
     display: none;
   }
   .m_footer {
+    position: fixed;
+    bottom:0;
     width: 100%;
     height: 0.88rem;
     display: flex;
@@ -45,21 +45,25 @@ export default {
     .bg {
       width: 0.34rem;
       height: 0.34rem;
-      background: url("../assets/kehu/Sprites.png") no-repeat;
       margin: 0 auto;
-      // background-size: 100%;
+      // background-size: 33px 33px;
+      //  background-size: 0.34rem 5.55rem;
     }
     .bg_index {
-      background-position: -12px -317px;
+      background: url("../assets/kehu/icon_index_02.png") no-repeat 0 0;
+      background-size: 100% 100%;
     }
     .bg_shop {
-      background-position: -72px -317px;
+      background: url("../assets/kehu/icon_shop_02.png") no-repeat 0 0;
+      background-size: 100% 100%;
     }
     .bg_cart {
-      background-position: -129px -317px;
+      background: url("../assets/kehu/icon_cart_02.png") no-repeat 0 0;
+      background-size: 100% 100%;
     }
     .bg_my {
-      background-position: -206px -317px;
+      background: url("../assets/kehu/icon_my_02.gif") no-repeat 0 0;
+      background-size: 100% 100%;
     }
   }
 

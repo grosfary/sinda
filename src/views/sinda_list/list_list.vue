@@ -61,7 +61,7 @@
                 </div>
                 <div class="shopright">
                   <p>￥ {{product.price}}.00</p>
-                  <button @click="nowBuy(product.id)">立即购买</button>
+                  <button @click="flag && nowBuy(product.id)">立即购买</button>
                   <button @click="cartAdd(product.id)">加入购物车</button>
                 </div>
               </div>
@@ -77,20 +77,20 @@
     </div>
     <div class="side">
     </div>
-          <transition name="reversal">
-        <div class="message" v-if="show">
+    <transition name="reversal">
+      <div class="message" v-if="show">
 
-          <div v-if="show">
-            <h3>请您先登录</h3>
-            <p>马上登录账号？</p>
-            <button @click="queding">确定
-              <span></span>
-            </button>
-            <button @click="quxiao">取消</button>
-          </div>
-
+        <div v-if="show">
+          <h3>请您先登录</h3>
+          <p>马上登录账号？</p>
+          <button @click="queding">确定
+            <span></span>
+          </button>
+          <button @click="quxiao">取消</button>
         </div>
-      </transition>
+
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -99,7 +99,6 @@ import { mapActions } from "vuex";
 import dist from "../../components/distpicker";
 
 export default {
-    ...mapActions(["setlistName", "setNum"]),
   components: {
     dist
   },
@@ -121,11 +120,12 @@ export default {
       sort: "",
       optionIndex: 0,
       errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"',
-      show:false
+      show: false,
+      flag: true
     };
   },
   methods: {
-    ...mapActions(["setlistName","setNum"]),
+    ...mapActions(["setlistName", "setNum"]),
     nowIndexII: function(index, i) {
       this.IndexII = index;
       this.IndexIII = 0;
@@ -175,9 +175,7 @@ export default {
     },
     addtoCart(jump, id, num) {
       // 立即购买或者加入购物车
-      console.log(sessionStorage.getItem("userName"))
       if (sessionStorage.getItem("userName")) {
-        console.log(123)
         // 判断现在是否为登录状态
         this.ajax
           .post(
@@ -189,7 +187,6 @@ export default {
           )
           .then(data => {
             // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
-            console.log(data.data)
             if (data.data.status == 1) {
               this.setNum();
             } else {
@@ -210,7 +207,12 @@ export default {
       this.show = false;
     },
     nowBuy(id) {
-      this.addtoCart(true, id, 1);
+      if (sessionStorage.getItem("userName")) {
+        this.flag = false;
+        this.addtoCart(true, id, 1);
+      } else {
+        this.addtoCart(true, id, 1);
+      }
     },
     cartAdd(id) {
       this.addtoCart(false, id, 1);
@@ -478,9 +480,7 @@ export default {
   background: url("../../assets/pc/left.png");
 }
 
-
 .cart .message {
-  
   position: fixed;
   background: rgba(0, 0, 0, 0.3);
   top: 0;

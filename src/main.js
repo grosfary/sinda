@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'
+import store from './store'   
 import axios from 'axios'
 import qs from 'qs'
 import Validator from 'vue-validator'
@@ -24,6 +24,11 @@ new Vue({
     }
 })
 
+
+if (/Android|webOS|iPhone|ipad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    
+//   window.location.href = "#/m.sinda";
+}
 
 // setTimeout(function() {
 //   console.log(5);

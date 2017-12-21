@@ -1,13 +1,118 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" href="/src/assets/sinda_icon.png" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>北京信达科技有限公司</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="/src/assets/sinda_icon.png" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script type="text/javascript">
+    function urlredirect() {
+      var sUserAgent = navigator.userAgent.toLowerCase();
+      if ((sUserAgent.match(/(ipod|iphone os|midp|ucweb|android|windows ce|windows mobile)/i))) {
+        //PC跳转移动端
+        var thisUrl = window.location.href;
+        //此处是在PC链接后自动添加手机版前缀，根据项目自行变更，我的是m开头
+        // window.location.href = thisUrl.substr(0,thisUrl.lastIndexOf('/') + 1) + 'mobile/';
+        var a = location.href;
+        if (a.indexOf("/#/index") !== -1) {
+          location.href = '/#/m.sinda';
+        }
+        (function (doc, win) {
+          var docEl = doc.documentElement,
+            resizeEvt =
+            "orientationchange" in window ? "orientationchange" : "resize",
+            recalc = function () {
+              var clientWidth = docEl.clientWidth;
+              if (!clientWidth) return;
+              if (clientWidth >= 750) {
+                docEl.style.fontSize = "100px";
+              } else {
+                docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
+              }
+            };
+          if (!doc.addEventListener) return;
+          win.addEventListener(resizeEvt, recalc, false);
+          doc.addEventListener("DOMContentLoaded", recalc, false);
+        })(document, window);
+      }
+    }
+    urlredirect();
+
+  </script>
+
+
+   
+
+  <style type="text/css">
+    #Loading {
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      -webkit-transform: translateY(-50%) translateX(-50%);
+      transform: translateY(-50%) translateX(-50%);
+      z-index: 100;
+    }
+
+    @-webkit-keyframes ball-beat {
+      50% {
+        opacity: 0.2;
+        -webkit-transform: scale(0.75);
+        transform: scale(0.75);
+      }
+
+      100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+    }
+
+    @keyframes ball-beat {
+      50% {
+        opacity: 0.2;
+        -webkit-transform: scale(0.75);
+        transform: scale(0.75);
+      }
+
+      100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+    }
+
+    .ball-beat>div {
+      background-color: #279fcf;
+      width: 15px;
+      height: 15px;
+      border-radius: 100% !important;
+      margin: 2px;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      display: inline-block;
+      -webkit-animation: ball-beat 0.7s 0s infinite linear;
+      animation: ball-beat 0.7s 0s infinite linear;
+    }
+
+    .ball-beat>div:nth-child(2n-1) {
+      -webkit-animation-delay: 0.35s !important;
+      animation-delay: 0.35s !important;
+    }
+
+  </style>
+  <title>北京信达科技有限公司</title>
+</head>
+
+<body>
+  <div id="Loading">
+    <div class="loader-inner ball-beat">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <div i <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>

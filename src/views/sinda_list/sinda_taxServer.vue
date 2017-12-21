@@ -61,8 +61,8 @@
                 </div>
                 <div class="shopright">
                   <p>￥ {{product.price}}.00</p>
-                  <button>立即购买</button>
-                  <button>加入购物车</button>
+                  <button @click="flag && nowBuy(product.id)">立即购买</button>
+                  <button @click="cartAdd(product.id)">加入购物车</button>
                 </div>
               </div>
             </div>
@@ -70,20 +70,29 @@
         </div>
       </div>
       <div class="list">
-<<<<<<< HEAD
-        <button>上一页</button>
-
-        <button>下一页</button>
-     
-=======
         <button @click="beforeOption">上一页</button>
         <span v-for="(i,index) in limitArr" :key="i" @click="option(index)" :class="{bg_2693d4:(index==optionIndex)}">{{i}}</span>
         <button @click="nextOption">下一页</button>
->>>>>>> 6c3e6ca60ea08116f9e8c3e19d2919511be7e864
       </div>
     </div>
     <div class="side">
     </div>
+
+    <transition name="reversal">
+      <div class="message" v-if="show">
+
+        <div v-if="show">
+          <h3>请您先登录</h3>
+          <p>马上登录账号？</p>
+          <button @click="queding">确定
+            <span></span>
+          </button>
+          <button @click="quxiao">取消</button>
+        </div>
+
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -112,11 +121,13 @@ export default {
       sortIndex: 0,
       sort: "",
       optionIndex: 0,
-      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"'
+      errorImg: 'this.src="' + require("../../assets/pc/not_found.jpg") + '"',
+      show: false,
+      flag: true
     };
   },
   methods: {
-    ...mapActions(["setlistName"]),
+    ...mapActions(["setlistName", "setNum"]),
     nowIndexII: function(index, i) {
       this.IndexII = index;
       this.IndexIII = 0;
@@ -164,6 +175,53 @@ export default {
             this.limitArr.push(i);
           }
         });
+    },
+    addtoCart(jump, id, num) {
+      // 立即购买或者加入购物车
+      console.log(sessionStorage.getItem("userName"));
+      if (sessionStorage.getItem("userName")) {
+        console.log(123);
+        // 判断现在是否为登录状态
+        this.ajax
+          .post(
+            "/xinda-api/cart/add",
+            this.qs.stringify({
+              id: id,
+              num: num
+            })
+          )
+          .then(data => {
+            // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
+            console.log(data.data);
+            if (data.data.status == 1) {
+              this.setNum();
+            } else {
+              console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
+            }
+            if (jump) {
+              this.$router.push({ path: "/list/cart" });
+            }
+          });
+      } else {
+        this.show = true;
+      }
+    },
+    queding() {
+      this.$router.push({ path: "/LoginRegister/login" });
+    },
+    quxiao() {
+      this.show = false;
+    },
+    nowBuy(id) {
+      if (sessionStorage.getItem("userName")) {
+        this.flag = false;
+        this.addtoCart(true, id, 1);
+      } else {
+        this.addtoCart(true, id, 1);
+      }
+    },
+    cartAdd(id) {
+      this.addtoCart(false, id, 1);
     },
     option(index) {
       // 列表索引 1 2 3 4 5 6 7 8 9
@@ -414,5 +472,60 @@ export default {
   border: 1px solid #cccccc;
   margin-bottom: 200px;
   background: url("../../assets/pc/left.png");
+}
+
+.cart .message {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100%;
+  > div {
+    border-radius: 6px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    width: 384px;
+    height: 200px;
+    h3 {
+      line-height: 53px;
+      text-align: center;
+      background: #f2f2f2;
+    }
+    p {
+      padding-left: 28px;
+      line-height: 70px;
+      color: #797a8b;
+    }
+    button {
+      font-size: 18px;
+      border-radius: 6px;
+      width: 150px;
+      height: 45px;
+      background: #d8d8d8;
+      border: none;
+      margin-left: 28px;
+      cursor: pointer;
+    }
+  }
+}
+
+.reversal-enter-active {
+  transition: all 0.3s ease;
+}
+.reversal-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.reversal-enter {
+  transform: translateX(100px);
+  opacity: 0;
+}
+.reversal-leave-to {
+  opacity: 0;
 }
 </style>

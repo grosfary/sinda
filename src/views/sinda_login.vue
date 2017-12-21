@@ -122,7 +122,7 @@ export default {
           if (status == 1) {
             this.setuserName(this.boxVal);
             sessionStorage.setItem("userName", this.boxVal);
-            this.$router.push({ path: "/" });
+            this.$router.go(-1);
           }
         });
     },

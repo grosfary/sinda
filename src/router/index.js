@@ -14,6 +14,7 @@ import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书�
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
 import line_item from '../stores/line_item' //订单详情
+import pay from '../stores/pay' //订单详情
 import payment from '../views/sinda_payment' //支付页面
 import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
 import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
@@ -94,6 +95,9 @@ export default new Router({
         }, {
           path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
           component: store_list
+        }, {
+          path: 'pay', // 银联/微信/支付宝支付页面 如 http://localhost:8081/#/pay
+          component: pay
         },
 
         {
@@ -200,15 +204,15 @@ export default new Router({
           path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
           component: m_joinus,
         }, {
-          path: '/generic', //未注册
+          path: 'generic', //未注册
           name: 'generic',
           component: generic
         }, {
-          path: '/logged', //已登录
+          path: 'logged', //已登录
           name: 'logged',
           component: logged
         }, {
-          path: '/set', //已登录
+          path: 'set', //已登录
           name: 'set',
           component: set
         },
