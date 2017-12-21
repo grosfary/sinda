@@ -42,7 +42,7 @@
           <li><div class='areas password'>旧　　密　　码：</div><input type="password"  class='input' v-model='password'></li>
           <p class='none' v-show='sty'>旧密码错误</p>
           <li><div class='areas password'>新　　密　　码：</div><input type="password"  class='input' @blur='abl' v-model='place'></li>
-          <p class='new' v-show='style'>请输入新密码</p>
+          <p class='new' v-show='style'>8-16位,大写字母,小写字母,数字各至少一个</p>
           <li><div class='areas repeat'>再次输入新密码：</div><input type="password" class='input' v-model='fal'></li>
            <p class='newnone' v-show='nostyle'>新旧密码不一致</p>
         </ul>
@@ -56,7 +56,7 @@
 
 <script>
 import dist from "../components/distpicker";
-var md5 = require('md5')
+var md5 = require("md5");
 export default {
   data() {
     return {
@@ -68,20 +68,20 @@ export default {
       post: "",
       zone: "",
       src: "../../images/pc/u5086.png",
-      area:'',
-      disCode:'',
-      index:1,
-      sty:false,
-      style:false,
-      nostyle:false,
-      place:'',
-      fal:'',
-      password:''
+      area: "",
+      disCode: "",
+      index: 1,
+      sty: false,
+      style: false,
+      nostyle: false,
+      place: "",
+      fal: "",
+      password: ""
     };
   },
   components: { dist },
   methods: {
-      selected(code) {
+    selected(code) {
       this.distCode = code;
     },
     selected(code) {
@@ -95,73 +95,82 @@ export default {
         this.box = true;
       }
     },
-    abl:function(){
-      var that=this
-        if(this.place==''){
-            this.style=true;
-        }else{
-           this.style=false;
-        }
+    abl: function() {
+      var that = this;
+      var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+      if (reg.test(this.place)) {
+        this.style = false;
+      } else {
+        this.style = true;
+      }
     },
-        arr:function(){
-      var that=this;
-      if(this.password==''){//判断旧密码是否输入
-          this.sty=true;
-      }else if(this.place==''){//判断新密码是否输入
-        this.sty=false;
-        this.style=true
-      }else if(this.place!==this.fal){//判断新密码与再次输入是否相同
-             this.sty=false;
-             this.style=false;
-             this.nostyle=true;
-          }else{
-             this.nostyle=false;
-             this.ajax.post(
-                '/xinda-api/sso/change-pwd',
-                 this.qs.stringify({
-                 oldPwd:md5(this.password),
-                 newPwd:md5(this.place)
-              })
-            ).then(function(data){
-                if(data.data.msg =='旧密码错误'){
-                  that.password=[]
-                  that.sty=true;
-                }else{
-                  alert('登陆成功')
-                }
-              })
-         
-        }
+    arr: function() {
+      var that = this;
+      var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/;
+      if (this.password == "") {
+        //判断旧密码是否输入
+        this.sty = true;
+      } else if (!reg.test(this.place)) {
+        //判断新密码是否输入
+        this.sty = false;
+        this.style = true;
+      } else if (this.place !== this.fal) {
+        //判断新密码与再次输入是否相同
+        this.sty = false;
+        this.style = false;
+        this.nostyle = true;
+      } else {
+        this.nostyle = false;
+        this.ajax
+          .post(
+            "/xinda-api/sso/change-pwd",
+            this.qs.stringify({
+              oldPwd: md5(this.password),
+              newPwd: md5(this.place)
+            })
+          )
+          .then(function(data) {
+            if (data.data.msg == "旧密码错误") {
+              that.password = [];
+              that.sty = true;
+            } else {
+              alert("登陆成功");
+            }
+          });
+      }
     },
-    sex: function(index){
-        this.index = index;
+    sex: function(index) {
+      this.index = index;
     },
-    keep:function(){
-      if(this.area != ''){
-            this.name=false;
-          if(this.post!=''){
-            if(this.box!=true){
-                if(this.disCode!=''&&this.disCode!='0'){
-                  this.dist=false;
-                  this.ajax.post('/xinda-api/member/update-info',this.qs.stringify({
-                        name:this.area,
-                        gender:this.index,
-                        email:this.post,
-                        regionId:this.disCode
-                  })).then(
-                    function(data){
-                      console.log(data)
-                    }
-                  )
-                }else{
-                  this.dist=true;
-                }
-              }
-          }else{
-           this.box=true;
+    keep: function() {
+      if (this.area != "") {
+        this.name = false;
+        if (this.post != "") {
+          if (this.box != true) {
+            if (this.disCode != "" && this.disCode != "0") {
+              this.dist = false;
+              this.ajax
+                .post(
+                  "/xinda-api/member/update-info",
+                  this.qs.stringify({
+                    name: this.area,
+                    gender: this.index,
+                    email: this.post,
+                    regionId: this.disCode
+                  })
+                )
+                .then(function(data) {
+                  console.log(data);
+                });
+            } else {
+              this.dist = true;
+            }
           }
-      }else{
-            this.name=true;
+        } else {
+          this.box = true;
+        }
+      } else {
+        this.name = true;
       }
     },
     uploadFile: function($event) {
@@ -179,17 +188,17 @@ export default {
         }
         // console.log(file,123);
         // imgRUL = window.URL.createObjectURL(file);
-        
+
         //  console.log("//Firefox8.0以上",imgURL);
         //Firefox 因安全性问题已无法直接通过input[file].value 获取完整的文件路径
         try {
           //Firefox7.0
           imgURL = file.getAsDataURL();
-          console.log("//Firefox7.0"+imgURL);
+          console.log("//Firefox7.0" + imgURL);
         } catch (e) {
           //Firefox8.0以上
           imgURL = window.URL.createObjectURL(file);
-          console.log("//Firefox8.0以上"+imgURL);
+          console.log("//Firefox8.0以上" + imgURL);
         }
       } catch (e) {
         //这里不知道怎么处理了，如果是遨游的话会报这个异常
@@ -211,9 +220,9 @@ export default {
 </script>
 
 <style scoped lang="less">
-  input[type="file"] {
-    color: transparent;
-  }
+input[type="file"] {
+  color: transparent;
+}
 .center {
   width: 100%;
   text-align: center;
@@ -307,29 +316,29 @@ export default {
         font-size: 0.11rem;
         text-align-last: 0;
       }
-      .name{
+      .name {
         .box;
-        top:33%;
+        top: 33%;
       }
-      .dist{
+      .dist {
         .box;
-        top:93%;
-        left:30%;
+        top: 93%;
+        left: 30%;
       }
-      .none{
+      .none {
         .box;
-        top:4%;
-        left:104%;
+        top: 4%;
+        left: 104%;
       }
-      .new{
+      .new {
         .box;
-        top:42%;
-        left:104%;
+        top: 63%;
+        left: 104%;
       }
-      .newnone{
+      .newnone {
         .box;
-        top:78%;
-        left:104%;
+        top: 78%;
+        left: 104%;
       }
     }
   }
@@ -368,7 +377,7 @@ export default {
     width: 156%;
     height: 54%;
     font-size: 0.11rem;
-    border:0;
+    border: 0;
   }
 }
 @media screen and (min-width: 400px) {

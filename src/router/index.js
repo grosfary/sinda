@@ -43,10 +43,12 @@ import m_storelist from '../m_sinda/m_storelist' //手机shop
 import m_joinus from '../m_sinda/m_joinus' //手机shop
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
 import m_out from '../components/m_out' //手机端公共页
-import generic from '../components/generic' //手机端公共页
-import logged from '../components/logged' //手机端公共页
-import set from '../components/set' //手机端公共页
-import myOrder from '../components/myOrder' //手机端公共页
+import generic from '../components/generic' //未登录
+import logged from '../components/logged' //已登录
+import shoppingCard from '../components/shoppingCard' //购物车
+import listPage from '../components/listPage' //购物车
+import set from '../components/set' //账户设置
+import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
 Vue.use(Router)
 
@@ -219,12 +221,20 @@ export default new Router({
         name: 'logged',
         component: logged
     }, {
-        path: '/set', //已登录
+        path: '/set', //账户设置
         name: 'set',
         component: set
     }, {
-        path: '/myOrder', //已登录
+        path: '/myOrder', //我的订单
         name: 'myOrder',
         component: myOrder
+    }, {
+        path: '/shoppingCard', //购物车
+        name: 'shoppingCard',
+        component: shoppingCard
+    }, {
+        path: '/listPage', //购物车
+        name: 'listPage',
+        component: listPage
     }]
 })

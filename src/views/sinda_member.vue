@@ -11,7 +11,7 @@
               <div>
                 <img src="../assets/pc/u5086.jpg" alt="">
               </div>
-              <div><span>12345678912</span></div>
+              <div><span>{{username}}</span></div>
             </div>
             <div class='set'>
               <div><router-link tag='a' active-class="backe" to="/member/toeveluete"><div><div class='backa'><span>我的订单</span></div></div></router-link></div>
@@ -34,11 +34,14 @@ import sinda_footer from "../components/sinda_global_footer";
   }
 export default {
   components: { sinda_header, sinda_footer },
-  methods:{
-    sum:function(data){
-      this.data = data
-      console.log(data)
-    },
+  data(){
+    return{
+      username:[],
+    }
+  },
+  created(){
+    var value=sessionStorage.getItem('userName')
+    this.username = value
   }
 };
 </script>

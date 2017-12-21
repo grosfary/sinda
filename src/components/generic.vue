@@ -2,7 +2,7 @@
   <div class="hello">
     <div class='generic'>
       <div class='head'>
-        <img src="../assets/pc/u5086.jpg" alt="">
+        <img src="../assets/pc/u5086.png" alt="">
       </div>
       <div class='submit'>
         <nobr>
@@ -22,79 +22,86 @@
 </script>
 
 <style scoped lang="less">
-  html{
-    width: 100%;
-  }
-  body{
-    min-width: 300px;
-  }
-  .hello{
-    width:100%;
-  .generic{
-      width:100%;
-      overflow-x: scroll;
-      position: fixed;
-      top: 38%;
-      left: 50%;
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      .set{
-        div{
-          margin:0 auto;
-          width:6.7rem;
-          height:0.56rem;
-          margin-top:10px;
-          font-size:22px;
-          line-height:0.56rem;
-        }
-         .myset{
-            div{
-              width:64px;
-              margin:0 0;
-              background:url(../assets/pc/Sprites.png) no-repeat -410px -300px;
-              white-space:nowrap;
-            }
-              background:#e9e9e9;
-              text-indent:83px;
-        }
-      }
-  }
-  .head{
-    img{
-      width:100%;
-      height:100%;
-    }
-    width:1.6rem;
-    height:1.6rem;
-    margin:auto auto;
-  }
-  .submit{
-    text-align:center;
-    input{
-      width:1.16rem;
-      height:0.5rem;
-      font-size:22px;
-      background:#2693d4;
-      color:#fff;
-      border:0;
-      border-radius:4px;
-    }
-  }
- }
- .myorder{
-   white-space:nowrap;
-   text-indent:83px;
-   background:#e9e9e9 url(../assets/pc/Sprites.png) no-repeat -486px -292px;
- }
- @media screen and (max-width: 730px) {
-    .hello>.generic>.set>div{
-      width:90%;
-    }
+html {
+  width: 100%;
 }
- @media screen and (max-width: 380px) {
-    .hello{
-      width:380px;
-      height:671px;
+body {
+  min-width: 300px;
+}
+.hello {
+  width: 100%;
+  .generic {
+    width: 90%;
+    overflow-x: scroll;
+    position: fixed;
+    top: 38%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    .set {
+      margin-top:1.63rem;
+      div {
+        margin: 0 auto;
+        height: 0.86rem;
+        margin-top: 10px;
+        font-size: 22px;
+        line-height: 0.89rem;
+      }
+      .myset {
+        div {
+          width: 64px;
+          margin: 0 0;
+          background: url(../assets/pc/Sprites.png) no-repeat -410px -300px;
+          white-space: nowrap;
+        }
+        background: #e9e9e9;
+        text-indent: 83px;
+      }
     }
+  }
+  .head {
+    img {
+      width: 100%;
+      height: 100%;
+      margin-top:2.82rem;
+    }
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: auto auto;
+  }
+  .submit {
+    text-align: center;
+    margin-top:2.7rem;
+    input {
+      width: 1.58rem;
+      height: 0.59rem;
+      font-size: 22px;
+      background: #2693d4;
+      color: #fff;
+      border: 0;
+      border-radius: 0.08rem;
+      line-height:0.59rem;
+    }
+  }
+}
+.myorder {
+  white-space: nowrap;
+  text-indent: 83px;
+  background: #e9e9e9 url(../assets/pc/Sprites.png) no-repeat -486px -300px;
+}
+//  @media screen and (max-width: 730px) {
+//     .hello>.generic>.set>div{
+//       width:90%;
+//     }
+// }
+@media screen and (min-width: 468px) {
+  .hello > .generic {
+    width: 4.68rem;
+    height: 6.71rem;
+  }
+  .hello > .generic > .set div {
+    height: 67px;
+    line-height: 67px;
+  }
 }
 </style>
 

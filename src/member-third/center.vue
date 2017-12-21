@@ -49,149 +49,150 @@
 </template>
 <script>
 import member from "../views/sinda_member";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      index:-1,
-      buys:[],
-      sumes:1,
-      textarea:''
+      index: -1,
+      buys: [],
+      sumes: 1,
+      textarea: ""
     };
   },
-  computed:{
-    ...mapGetters(['setnumtoeva'])
+  computed: {
+    ...mapGetters(["setnumtoeva"])
   },
   components: { member },
-  methods:{
-    image:function(index){
-        this.index = index;
+  methods: {
+    image: function(index) {
+      this.index = index;
     },
-    judge:function(){
+    judge: function() {
       var that = this;
-      console.log(that.index+1)
-      console.log(that.textarea)
-      console.log(that.sumes)
-      that.ajax.post(
-        '/xinda-api/service/judge/submit',that.qs.stringify({
-          id:that.$route.query.id,
-          type:that.sumes,
-          score:that.index+1,
-          content:that.textarea
-        })).then(function(data){
-          console.log(data.data)
-      })
+      console.log(that.index + 1);
+      console.log(that.textarea);
+      console.log(that.sumes);
+      that.ajax
+        .post(
+          "/xinda-api/service/judge/submit",
+          that.qs.stringify({
+            id: that.$route.query.id,
+            type: that.sumes,
+            score: that.index + 1,
+            content: that.textarea
+          })
+        )
+        .then(function(data) {
+          console.log(data.data);
+        });
     },
-    sum:function(sumes){
+    sum: function(sumes) {
       // console.log(sumes)
       this.sumes = sumes;
     }
   },
-  created(){
+  created() {
     var that = this;
-    this.ajax.post('/xinda-api/business-order/detail',{}).then(function(data){
-      var Data=data.data.data
-      that.buys.push(Data)
-    })
+    this.ajax.post("/xinda-api/business-order/detail", {}).then(function(data) {
+      var Data = data.data.data;
+      that.buys.push(Data);
+    });
   }
-
 };
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-  .assess{
-    width:875px;
-    height:34px;
-    border-bottom:2px solid #e9e9e9;
-    float: left;
-    margin-top:-474px;
-    margin-left:541px;
-  div{
-    width:86px;
+.assess {
+  width: 875px;
+  height: 34px;
+  border-bottom: 2px solid #e9e9e9;
+  float: left;
+  margin-top: -474px;
+  margin-left: 541px;
+  div {
+    width: 86px;
     height: 34px;
-    color:#abcfe9;
-    border-bottom:2px solid #2693d4;
-    line-height:34px;
-    text-align:center;
-    }
-   
+    color: #abcfe9;
+    border-bottom: 2px solid #2693d4;
+    line-height: 34px;
+    text-align: center;
   }
- .evaluate{
-   width:644px;
-   height: 36px;
-   margin-top:-438px;
-   margin-left:569px;
-   float:left;
-   span{
-     width:200px;
-     font-size:10px;
-     line-height:36px;
-     float:left;
-     margin-left:10px;
-   }
- }
- .evalu{
-   .evaluate;
-    margin-top:-401px;
-    width:300px;
-    span{
-      float:left;
-      width:40px;
-    }
-    input{
-      margin-top:11px;
-      margin-left:-63px;
-    }
- }
- .score{
-   .evaluate;
-    margin-top:-363px;
-    margin-left:579px;
-    width:180px;
- }
- .feel{
-   .evaluate;
-    margin-top:-326px;
-    width:590px;
-    height:103px;
- }
- .sub{
-   .evaluate;
-    margin-top:-222px;
- }
- .textarea{
-   width:536px;
-   height:101px;
-   margin-top:-30px;
-   margin-left:55px;
- }
- .judge{
-   width:105px;
-   height:30px;
-   float:right;
-   background:#169bd5;
-   border:0;
-   margin-top:17px;
-   border-radius:4px;
-   color:#fff;
- }
- .top{
-   margin-top:233px;
- }
- .score>span{
-   width:13px;
-   height:13px;
-   background:url('../assets/pc/Sprites.png') no-repeat -198px -261px;
-   margin-top:12px;
-   &.active{
-     background-position: -221px -261px;
-   }
- }
- .score>a{
-   line-height: 36px;
-   float:left;
-   font-size:10px;
- }
+}
+.evaluate {
+  width: 644px;
+  height: 36px;
+  margin-top: -438px;
+  margin-left: 569px;
+  float: left;
+  span {
+    width: 200px;
+    font-size: 10px;
+    line-height: 36px;
+    float: left;
+    margin-left: 10px;
+  }
+}
+.evalu {
+  .evaluate;
+  margin-top: -401px;
+  width: 300px;
+  span {
+    float: left;
+    width: 40px;
+  }
+  input {
+    margin-top: 11px;
+    margin-left: -63px;
+  }
+}
+.score {
+  .evaluate;
+  margin-top: -363px;
+  margin-left: 579px;
+  width: 180px;
+}
+.feel {
+  .evaluate;
+  margin-top: -326px;
+  width: 590px;
+  height: 103px;
+}
+.sub {
+  .evaluate;
+  margin-top: -222px;
+}
+.textarea {
+  width: 536px;
+  height: 101px;
+  margin-top: -30px;
+  margin-left: 55px;
+}
+.judge {
+  width: 105px;
+  height: 30px;
+  float: right;
+  background: #169bd5;
+  border: 0;
+  margin-top: 17px;
+  border-radius: 4px;
+  color: #fff;
+}
+.top {
+  margin-top: 233px;
+}
+.score > span {
+  width: 13px;
+  height: 13px;
+  background: url("../assets/pc/Sprites.png") no-repeat -198px -261px;
+  margin-top: 12px;
+  &.active {
+    background-position: -221px -261px;
+  }
+}
+.score > a {
+  line-height: 36px;
+  float: left;
+  font-size: 10px;
+}
 </style>
