@@ -40,7 +40,7 @@
               <div class='name'>
                 <div>{{prod.serviceName}}</div>
                 <div class='img'>
-
+                  <!-- <img src="../assets/pc/1212.gif" alt=""> -->
                 </div>
               </div>
               <div class='unit'><div>{{prod.status}}</div></div>
@@ -50,7 +50,7 @@
               <div class='operation'>
                 <div>
                   <a href="#/line_item"><input type="submit" class='pay' value="付款"></a>
-                  <input type="submit" class = 'delet' value="删除订单" @click="alert">
+                  <input type="submit" class = 'delet' value="删除订单" @click="alert(product.id)">
                 </div>
               </div>
             </div>
@@ -94,15 +94,23 @@ export default {
     },
     onchange:function(){
     },
-      hidedate:function(){
-        this.show = false
-        this.products.splice(this.abj,1)
+      hidedate:function(code){
+        this.show = false;
+        var that = this;
+              this.ajax.post(
+              '/xinda-api/ business-order/del',this.qs.stringify({
+                id:this.code
+          })).then(
+            function(data){
+                that.$router.go(0);
+        })
       },
       hide:function(){
         this.show = false
       },
-      alert:function(){
-        this.show = true
+      alert:function(code){
+        this.show = true;
+        this.code = code;
       },
       submit:function(index){
         this.index=index;
@@ -176,7 +184,7 @@ export default {
         '/xinda-api/service-order/grid',{
         }).then(
           function(data){
-          var data = data.data.data;
+          data = data.data.data;
           var tempData = {};
           for (var key in data) {
             var businessNo = data[key].businessNo;
@@ -186,7 +194,21 @@ export default {
             }
             tempData[businessNo].subItem.push(data[key]);   
               that.products = tempData;
+              console.log(tempData)
           }
+          that.ajax.post(
+                '/xinda-api/business-order/grid',{
+                }).then(
+                  function(data){
+                    var data = data.data.data;
+                    for (var key in data) {
+                      if(tempData[data[key].businessNo]){
+                         tempData[data[key].businessNo].id = data[key].id;
+                      }
+                    }
+                  }
+                )
+          
         var aaa=[];
         for(key in tempData){
             aaa.push(tempData[key])
@@ -231,7 +253,9 @@ export default {
       ned:true,
       date:'',
       array:[],
-      arr:[]
+      arr:[],
+      data:[],
+      code:[]
       }
 },
 computed:{
@@ -251,6 +275,10 @@ computed:{
 .img{
   height:100%;
   width:78px;
+  img{
+    width:100%;
+    height:100%;
+  }
 }
 .inputcopy{
   display:flex;
@@ -264,6 +292,7 @@ computed:{
   width:39px;
   height:34px;
   color:#2592d3;
+  background: #2592d3;
   line-height:34px;
   margin-left:10px;
   text-indent:11px;
@@ -499,7 +528,7 @@ computed:{
  }
   .name{
     width:178px;
-    margin-top:2%;
+    margin:auto 0;
   }
   .unit{
     width:191px;
