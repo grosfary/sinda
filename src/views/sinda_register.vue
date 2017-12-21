@@ -19,8 +19,8 @@
             <input class="boxI" type="text" placeholder=" 请输入验证码" v-model="sjCode" @blur="sjCodeI">
             <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
             <div @click="getCoBut">
-              <button v-show="get" class="getblue">点击获取</button>
-              <button v-show="getNew" class="getgray" disabled>重新获取{{count}}</button>
+              <span v-show="show" @click="getCode" class="getblue">获取验证码</span>
+              <span v-show="!show" class="getgray">重新获取{{count}}s</span>
             </div>
           </div>
           <!-- <v-distpicker class="register-android-wheel" :placeholders="placeholders" @selected="selected"></v-distpicker> -->
@@ -72,7 +72,9 @@ export default {
       sCode: false,
       pswd: "password",
       suo: head,
-      count: "60",
+      show: true,
+      count: "",
+      timer: null,
       get: true,
       getNew: false
     };
@@ -134,15 +136,23 @@ export default {
         .then(data => {
           // console.log(data);
         });
-      var that = this;
-      var dic = setInterval(function() {
-        that.count--;
-        if (that.count == 1) {
-          clearInterval(dic);
-          that.get = true;
-          that.getNew = false;
-        }
-      }, 1000);
+      
+    },
+    getCode() {
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      }
     },
     iregister() {
       this.ajax
@@ -270,6 +280,9 @@ export default {
   justify-content: space-around;
 }
 .getblue {
+  line-height: 35px;
+  text-align: center;
+  display: block;
   width: 98px;
   height: 35px;
   border: 1px solid #2693d4;
@@ -278,6 +291,9 @@ export default {
   color: #2693d4;
 }
 .getgray {
+  line-height: 35px;
+  text-align: center;
+  display: block;
   width: 98px;
   height: 35px;
   border-radius: 3px;
