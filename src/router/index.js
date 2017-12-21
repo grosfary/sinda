@@ -226,5 +226,9 @@ export default new Router({
         path: '/myOrder', //已登录
         name: 'myOrder',
         component: myOrder
+    }, {
+        path: '/registerP', //注册
+        name: 'registerP',
+        component: registerP
     }]
 })
