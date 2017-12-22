@@ -51,6 +51,7 @@ import listPage from '../components/listPage' //购物车
 import set from '../components/set' //账户设置
 import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
+import loginP from '../components/loginP' //手机端注册
 Vue.use(Router)
 
 // pc端
@@ -243,5 +244,9 @@ export default new Router({
         path: '/registerP', //注册
         name: 'registerP',
         component: registerP
+    }, {
+        path: '/loginP', //注册
+        name: 'loginP',
+        component: loginP
     }]
 })

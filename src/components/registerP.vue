@@ -6,7 +6,17 @@
     </div>
     <div class="middle">
       <div class="phone">
-        <input type="number" placeholder="  请输入手机号码">
+        <input class="box" type="number" placeholder="请输入手机号码" v-model="phone" @focus="Zphone" @blur="Cphone">
+        <div class="yeahing" v-show="yphone">
+          <p class="yeahP">请输入11位中国大陆手机号</p>
+        </div>
+        <div class="erping" v-show="ephone">
+          <div class="erImg"></div>
+          <p class="errP">{{Ephone}}</p>
+        </div>
+        <!-- 
+        <input type="number" @blur="onBlur" v-model="phone" placeholder="  请输入手机号码">
+        <p class="phoneT" v-show="phoneA">*您输入的手机号不正确</p> -->
       </div>
       <div class="picture">
         <input type="text" placeholder="  请输入验证码">
@@ -31,26 +41,63 @@
 </template>
 
 <script>
+//三级联动调用
 import dist from "../components/distpicker";
 var md5 = require("md5");
 export default {
   data() {
     return {
+      //图片验证
       imgUrl: "/xinda-api/ajaxAuthcode",
+      //倒计时
       show: true,
       count: "",
       timer: null,
       get: true,
-      getNew: false
+      getNew: false,
+      //手机号
+      phone: "",
+      phoneA: false
     };
   },
   methods: {
+    //手机号
+    // onBlur() {
+    //   if (/^1[34578]\d{9}$/.test(this.phone)) {
+    //     this.phoneA = false;
+    //   } else {
+    //     this.phoneA = true;
+    //   }
+    // },
+    Zphone: function() {
+      this.ephone = false;
+      this.yphone = true;
+    },
+    Cphone: function() {
+      var phoneStyle = /^1[3|4|5|7|8]\d{9}$/;
+      if (this.phone) {
+        if (!phoneStyle.test(this.phone)) {
+          this.yphone = false;
+          this.ephone = true;
+          this.Ephone = "请输入正确的手机号码";
+        } else {
+          this.ephone = false;
+          this.yphone = false;
+        }
+      } else {
+        this.yphone = false;
+      }
+    },
+
+    //三级联动
     selected(code) {
       this.distCode = code;
     },
+    //图片验证
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
+    //点击获取
     getCoBut() {
       this.setNum(0);
       this.get = false;
@@ -68,6 +115,7 @@ export default {
           // console.log(data);
         });
     },
+    //倒计时
     getCode() {
       const TIME_COUNT = 60;
       if (!this.timer) {
@@ -84,6 +132,7 @@ export default {
         }, 1000);
       }
     },
+    //立即注册
     iregister() {
       this.ajax
         .post(
@@ -97,7 +146,7 @@ export default {
           })
         )
         .then(data => {
-          console.log("注册提交", data.data.msg, data.data.status);
+          console.log("立即注册", data.data.msg, data.data.status);
           if (status == 1) {
             this.$router.push({ path: "/LoginRegister/login" });
           }
@@ -110,6 +159,7 @@ export default {
 </script>
 
 <style lang="less">
+/* 三级联动样式更改*/
 .whole .middle .linkage {
   width: 5.5rem;
   height: 0.77rem;
@@ -177,6 +227,9 @@ export default {
     font-size: 30%;
   }
 }
+.phoneT {
+}
+/*图片验证*/
 .picture {
   width: 5.5rem;
   height: 0.77rem;
@@ -200,6 +253,7 @@ export default {
     }
   }
 }
+/*短信验证*/
 .message {
   width: 5.5rem;
   height: 0.77rem;
@@ -214,6 +268,7 @@ export default {
     font-size: 30%;
   }
 }
+/*点击获取*/
 .getblue {
   line-height: 0.75rem;
   text-align: center;
@@ -225,6 +280,7 @@ export default {
   color: #fff;
   font-size: 30%;
 }
+/*倒计时*/
 .getgray {
   line-height: 0.75rem;
   text-align: center;
@@ -237,6 +293,7 @@ export default {
   color: #fff;
   font-size: 30%;
 }
+/*密码*/
 .password {
   width: 5.5rem;
   height: 0.77rem;
@@ -249,6 +306,7 @@ export default {
     font-size: 30%;
   }
 }
+/*立即注册按钮*/
 .promptly {
   width: 5.5rem;
   height: 0.77rem;
@@ -256,7 +314,7 @@ export default {
   border: 0.01rem solid #2693d4;
   font-size: 30%;
   margin: 0 auto;
-  color:#fff;
+  color: #fff;
 }
 </style>
 
