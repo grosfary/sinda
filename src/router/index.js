@@ -36,8 +36,8 @@ import list_list from '../views/sinda_list/list_list' //公司工商
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
 import m_index from '../m_sinda/m_index' //手机端首页
-import m_success from '../m_sinda/m_success' //手机端首页
-import m_failure from '../m_sinda/m_failure' //手机端首页
+import m_success from '../m_sinda/m_success' //手机端支付成功
+import m_failure from '../m_sinda/m_failure' //手机端支付失败
 import m_shop from '../m_sinda/m_shop' //手机shop
 import m_storelist from '../m_sinda/m_storelist' //手机shop
 import m_joinus from '../m_sinda/m_joinus' //手机shop
@@ -51,6 +51,11 @@ import listPage from '../components/listPage' //购物车
 import set from '../components/set' //账户设置
 import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
+<<<<<<< HEAD
+import m_details from '../m_sinda/m_details' //手机端商品详情
+=======
+import loginP from '../components/loginP' //手机端注册
+>>>>>>> 76d9d034bb44d249a532ec183f04dfedd7784e00
 Vue.use(Router)
 
 // pc端
@@ -179,6 +184,36 @@ export default new Router({
         name: 'm.sinda',
         component: m_global,
         children: [{
+<<<<<<< HEAD
+            path: '/', // 手机端的首页
+            component: m_index
+        }, {
+            path: 'shop', // 手机端的店铺页
+            component: m_shop,
+            redirect: "shop/service",
+            children: [{
+                path: 'service',
+                component: m_shop_service,
+            }]
+        }, {
+            path: 'details', // 手机端商品详情
+            name: 'm_details',
+            component: m_details,
+        }, {
+            path: 'success', // 手机端的支付成功
+            name: 'm_success',
+            component: m_success
+        }, {
+            path: 'failure', // 手机端的支付失败
+            name: 'm_failure',
+            component: m_failure
+        }]
+    }, {
+        path: '/m.out', // 手机端公共页面 不包含底部
+        name: 'm.out',
+        component: m_out
+            // children: [{}]
+=======
                 path: '/', // 手机端的首页
                 component: m_index
             }, {
@@ -215,6 +250,7 @@ export default new Router({
             }
 
         ]
+>>>>>>> 76d9d034bb44d249a532ec183f04dfedd7784e00
     }, {
         path: '/generic', //未注册
         name: 'generic',
@@ -243,5 +279,9 @@ export default new Router({
         path: '/registerP', //注册
         name: 'registerP',
         component: registerP
+    }, {
+        path: '/loginP', //注册
+        name: 'loginP',
+        component: loginP
     }]
 })
