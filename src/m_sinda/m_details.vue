@@ -29,7 +29,6 @@
                     </div>
                     <ul>
                         <li>{{provider.name}}</li>
-
                         <li>信誉: <img src="../assets/gongyon/xinyu.png" alt=""></li>
                         <li>地区:{{shop.providerRegionText}}</li>
                         <li>服务次数:{{providerBusiness.serviceNum}}</li>
@@ -47,31 +46,30 @@
                     <p>服务介绍</p>
                     <span></span>
                 </div>
-
-                <p class="content">服务内容:</p>
-                <div v-html="serv"></div>
-
+                <div v-html="serv" class='intro'></div>
             </div>
             <div class="User">
                 <div class="user">
                     <p>用户评价</p>
                     <span></span>
                 </div>
-                <div>
-                    <div><img src="" alt=""></div>
+                <div class='assess'>
+                    <div class='img'><img src="" alt=""></div>
                     <div class="appraise">
-                        <p>满意度</p>
-                        <span>评价：</span>
+                        <p>满意度：</p>
+                        <span>评　价：</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer">
+        <div class='base'>
+          <div class="footer">
             <button class="relation"><img src="../assets/gongyon/kefu.png" alt="">
                 <p>联系商家</p>
             </button>
             <button class="join">加入购物车</button>
             <button class="immediately">立即购买</button>
+        </div>
         </div>
     </div>
 </template>
@@ -96,13 +94,13 @@ export default {
     this.ajax
       .post(
         "/xinda-api/product/package/detail", //商品接口
-
         this.qs.stringify({
-          sId: this.$route.query.id,
-          sId: "64a9c8a15fe7493b967d74164b1a4ed5"
+          sId: this.$route.query.id
+          // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
         })
       )
       .then(function(data) {
+        // console.log(that.$router.query.id)
         var shop = data.data.data;
         that.product = shop.product;
         that.provider = shop.provider;
@@ -112,7 +110,7 @@ export default {
         that.shop = shop;
         that.serviceList = shop.serviceList;
         that.serv = shop.serviceList[0].serviceContent;
-        console.log(shop);
+        console.log(that.serv);
       });
     this.ajax
       .post(
@@ -140,6 +138,11 @@ export default {
 @media screen and (max-width: 1200px) {
   .detail {
     width: 7.5rem;
+      .footer{
+        bottom:0;
+        position: fixed;
+        bottom:0;
+      }
     .headed {
       position: relative;
       img {
@@ -240,7 +243,7 @@ export default {
         }
       }
       .service {
-        width: 7.5rem;
+        // width: 7.5rem;
         padding: 0.5rem;
         display: flex;
         .picture {
@@ -286,7 +289,8 @@ export default {
     }
     .matter {
       position: relative;
-
+      font-size: 22px;
+      border-bottom: 5px solid #ebebeb;
       .introduce {
         padding: 0.1rem;
         border-bottom: 2px solid #2693d4;
@@ -311,11 +315,31 @@ export default {
         border-left: 4px solid #fff;
         border-right: 4px solid #fff;
       }
+      .intro {
+        text-indent: 37px;
+        margin-bottom: 20px;
+      }
     }
     .User {
       position: relative;
-      .appraise {
-        font-size: 0.33rem;
+      .assess {
+        width: 100%;
+        display: flex;
+        border-bottom: 3px solid #ebebeb;
+        .img {
+          width: 8%;
+          height: 0.58rem;
+          background: #000;
+          margin-top: 0.39rem;
+          margin-left: 0.26rem;
+        }
+        .appraise {
+          width: 92%;
+          font-size: 0.33rem;
+          margin-top: 0.26rem;
+          margin-left: 0.26rem;
+          margin-bottom: 0.35rem;
+        }
       }
     }
     .user {
