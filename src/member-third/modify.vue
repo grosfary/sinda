@@ -49,19 +49,21 @@ export default {
    methods:{
     abl:function(){
       var that=this
-        if(this.place==''){
-            this.style=true;
+      var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/
+        if(reg.test(this.place)){
+            this.style=false;
         }else{
-           this.style=false;
+           this.style=true;
         }
     },
     arr:function(){
       var that=this;
+      var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/
       if(this.password==''){//判断旧密码是否输入
           this.sty=true;
-      }else if(this.place==''){//判断新密码是否输入
+      }else if(!reg.test(this.place)){//判断新密码是否输入
         this.sty=false;
-        this.style=true
+        this.style=true;
       }else if(this.place!==this.fal){//判断新密码与再次输入是否相同
              this.sty=false;
              this.style=false;

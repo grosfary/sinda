@@ -1,25 +1,25 @@
 
 <template>
-    <div class="phoneservice">
-        <div class="center">
-            <p>所有服务
-                <span></span>
-            </p>
-        </div>
-        <div class="below">
-            <div class="shopleft" v-for="list in lists" :key='list.id'>
-                <div class="picture">
-                    <img :src="'http://115.182.107.203:8088/xinda/pic' + list.providerImg" alt="">
-                </div>
-                <div class="shopright">
-                    <h3>{{list.providerName}}</h3>
-                    <p title="list.serviceInfo">{{list.serviceInfo}}</p>
-                    <span>{{list.regionName}}</span>
-                    <span class="money">￥ {{list.marketPrice}}元</span>
-                </div>
-            </div>
-        </div>
+  <div class="phoneservice">
+    <div class="center">
+      <p>所有服务
+        <span></span>
+      </p>
     </div>
+    <div class="below">
+      <div @click="dianji(list.id)" class="shopleft" v-for="list in lists" :key='list.id'>
+        <div class="picture">
+          <img :src="'http://115.182.107.203:8088/xinda/pic' + list.providerImg" alt="">
+        </div>
+        <div class="shopright">
+          <h3>{{list.serviceName}}</h3>
+          <p title="list.serviceInfo">{{list.serviceInfo}}</p>
+          <span>{{list.regionName}}</span>
+          <span class="money">￥ {{list.marketPrice}}元</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
       .post(
         //请求店铺商品信息
         "/xinda-api/product/package/grid",
-       
+
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据
@@ -39,78 +39,40 @@ export default {
         })
       )
       .then(function(data) {
-        var shop = data.data.data;
-        shops(shop);
-        // pages(shop);
+        // var shop = data.data.data;
+        that.lists = data.data.data;
+
+        // shops(shop);
       });
     //数据处理函数
-    var shops = function(shopping) {
-      for (var key in shopping) {
-        shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
-        if (shopping[key].serviceName.length > 11) {
-          shopping[key].serviceName =
-            shopping[key].serviceName.substr(0, 11) + "...";
-        }
-        if (shopping[key].serviceInfo.length > 16) {
-          shopping[key].serviceInfo = shopping[key].serviceInfo.substr(0, 14);
-        }
-      }
-      that.getPage(1, shopping); //调用页数跳转函数
-      that.dat = shopping; //所有数据存储在dat里面
-    };
-    //分页函数
-    var pages = function(shopping) {
-      var len = shopping.length;
-      var nu = len % 6;
-      if (nu == 0) {
-        var page = len / 6;
-      } else {
-        var page = (len - nu) / 6 + 1;
-      }
-      for (var i = 0; i < page; i++) {
-        that.number.push(i + 1);
-      }
-    };
+    // var shops = function(shopping) {
+    //   for (var key in shopping) {
+    //     shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
+    //   }
+    //   that.lists = shopping;
+    //   console.log(that.lists);
+    // };
   },
 
   data() {
     return {
       lists: [],
-      dat: [],
       number: [],
-      page: 1
-      // shop:[],
+      page: 1,
+     id:['0cb85ec6b63b41fc8aa07133b6144ea3'],
     };
   },
 
   methods: {
-    //页数跳转函数
-    getPage(num, data) {
-      var len = data.length; //总数据长度
-      var nu = len % 6; //余数
-      if (nu == 0) {
-        var page = len / 6; //共分几页
-      } else {
-        var page = (len - nu) / 6 + 1;
-      }
-      if (num < 1) {
-        //如果页数小于1，则修改为第一页
-        num = 1;
-      } else if (num > page) {
-        //判断如果输入的页面超过了最大页数，则修改为最后一页
-        num = page;
-      }
-      var a = (num - 1) * 6; //a为当前跳转页的起始条目
-      var b = a + 6; //b为终止条目
-      if (b > len) {
-        //判断如果b的值超出了数据长度，则重新赋值为数据长度
-        b = len;
-      }
-      this.lists = []; //清除原有内容
-      for (var i = a; i < b; i++) {
-        this.lists.push(data[i]); //根据页数重新填充数据
-      }
-      this.page = num; //重新记录页数数据，以便下次调用
+    dianji:function(id) {
+   
+      this.$router.push({
+        path:'../details',
+        query: {id:id}
+        
+      });
+     
+      return;
     }
   }
 };
@@ -118,9 +80,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.phoneservice{
-    display: block;
-     width:7.5rem;
+.phoneservice {
+  display: block;
+  width: 7.5rem;
 }
 .center {
   position: relative;
@@ -145,13 +107,16 @@ export default {
   border-bottom: 1px solid #cfcfcf;
   padding: 0.3rem 0.2rem;
   display: flex;
- 
-  .shopright{
-    width:5.08rem;
+  .picture {
+    align-items: center;
+  }
+
+  .shopright {
+    width: 5.08rem;
     margin-left: 0.25rem;
-    .money{
-        font-size: 0.18rem;
-        color: red;
+    .money {
+      font-size: 0.18rem;
+      color: red;
     }
   }
   h3 {

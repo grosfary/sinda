@@ -1,9 +1,9 @@
 <template>
     <div class="call">
-      <!-- <div class="serviceItem" v-for="list in lists" :key="list.id"> -->
+      <div class="serviceItem" v-for="list in lists" :key="list.id">
         <h3>工作时间：{{workTime}}</h3> 
         <h3>QQ咨询：{{qq}}</h3> 
-      <!-- </div> -->
+      </div>
     </div>
 </template>
 

@@ -40,11 +40,11 @@ export default {
 };
 </script>
 <style lang="less">
-// @media screen and (max-width: 1200px) {
-//   html {
-//     font-size: 625%;
-//   }
-// }
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 625%;
+  }
+}
 
 * {
   margin: 0;
