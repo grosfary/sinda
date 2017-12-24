@@ -293,7 +293,7 @@ export default {
   .page {
     width: 39px;
     height: 34px;
-    color: #2592d3;
+    color: #fff;
     background: #2592d3;
     line-height: 34px;
     margin-left: 10px;

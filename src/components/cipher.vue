@@ -2,7 +2,7 @@
   <div class="whole">
     <div class="top">
       <p class="topI"></p>
-      <p class="topII">注册</p>
+      <p class="topII">忘记密码</p>
     </div>
     <div class="middle">
       <div class="phone">
@@ -30,7 +30,9 @@
           <span v-show="!show" class="getgray">重新获取{{count}}s</span>
         </div>
       </div>
-      <dist class="linkage" @selected="selected"></dist>
+      <div class="password">
+        <input type="password" placeholder="  请输入密码">
+      </div>
       <div class="password">
         <input type="password" placeholder="  请输入密码">
       </div>
@@ -157,26 +159,6 @@ export default {
 };
 </script>
 
-<style lang="less">
-/* 三级联动样式更改*/
-.whole .middle .linkage {
-  width: 5.5rem;
-  height: 0.77rem;
-  font-size: 0.1rem;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.32rem;
-  .province,
-  .city,
-  .area {
-    font-size: 0.25rem;
-    height: 0.75rem;
-    width: 1.69rem;
-    margin-bottom: 26px;
-  }
-}
-</style>
-
 <style scoped lang="less">
 .whole {
   width: 100%;
@@ -226,9 +208,7 @@ export default {
     font-size: 30%;
   }
 }
-//手机号输入错误提示
 .phoneT {
-  width:;
 }
 /*图片验证*/
 .picture {

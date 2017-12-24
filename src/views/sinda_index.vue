@@ -19,7 +19,7 @@
       </div>
       <div class="star_main">
         <div class="star_pro" v-for="(i,index) in noviceMust" :key="i.id">
-          <!-- 初创企业必备产品 -->
+          <!-- 明星产品推荐 -->
           <div>
             <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
             <!-- 公司logo -->
@@ -588,11 +588,11 @@ export default {
     margin-left: 23px;
   }
   .SB_SB {
-    background: url("../assets/gongyon/shangbiao.jpg") no-repeat 0 0;
+    background: url("../../static/g_img/shangbiao.jpg") no-repeat 0 0;
     background-size: 100% 100%;
   }
   .SB_BQ {
-    background: url("../assets/gongyon/banquan.jpg") no-repeat 0 0;
+    background: url("../../static/g_img/banquan.jpg") no-repeat 0 0;
     background-size: 100% 100%;
   }
   ul {
@@ -603,7 +603,7 @@ export default {
 .Zz {
   margin-top: 22px;
   margin-left: 23px;
-  background: url("../assets/gongyon/zhuzuoquan.jpg") no-repeat 0 0;
+  background: url("../../static/g_img/zhuzuoquan.jpg") no-repeat 0 0;
   background-size: 100% 100%;
   width: 850px;
   height: 230px;

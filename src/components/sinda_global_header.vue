@@ -36,7 +36,7 @@
             <span>|</span>
             <a href="">服务商</a>
           </li>
-          <li>
+          <li class="search_search">
             <input type="text" placeholder="搜索您需要的服务或服务商">
             <button>
               <span class="icon_global"></span>
@@ -301,53 +301,57 @@ export default {
       margin-right: 8px;
     }
   }
-  input {
-    // 搜索框部分
-    margin-left: 1px;
-    outline: none;
-    padding-left: 10px;
-    width: 471px;
-    height: 37px;
-    border: 2px solid #2693d4;
-    border-right: 0;
-    vertical-align: top;
-    &::-webkit-input-placeholder {
-      // 搜索框占位符颜色设置
-      /* WebKit browsers */
-      color: #a3a3a3;
+  .search_search {
+    font-size: 0;
+    input {
+      // 搜索框部分
+      margin-left: 1px;
+      outline: none;
+      padding-left: 10px;
+      width: 471px;
+      height: 37px;
+      border: 2px solid #2693d4;
+      border-right: 0;
+      vertical-align: top;
+      &::-webkit-input-placeholder {
+        // 搜索框占位符颜色设置
+        /* WebKit browsers */
+        color: #a3a3a3;
+      }
+      &:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #a3a3a3;
+      }
+      &::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #a3a3a3;
+      }
+      &:-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #a3a3a3;
+      }
     }
-    &:-moz-placeholder {
-      /* Mozilla Firefox 4 to 18 */
-      color: #a3a3a3;
-    }
-    &::-moz-placeholder {
-      /* Mozilla Firefox 19+ */
-      color: #a3a3a3;
-    }
-    &:-ms-input-placeholder {
-      /* Internet Explorer 10+ */
-      color: #a3a3a3;
+    button {
+      // 搜索按钮部分
+      width: 103px;
+      height: 41px;
+      background: #2693d4;
+      border: none;
+      vertical-align: top;
+      cursor: pointer;
+      outline: none;
+      span {
+        // 搜索按钮的放大镜图片
+        width: 24px;
+        height: 24px;
+        position: relative;
+        top: 2px;
+        display: inline-block;
+        background-position: 0 -111px;
+      }
     }
   }
-  button {
-    // 搜索按钮部分
-    width: 103px;
-    height: 41px;
-    background: #2693d4;
-    border: none;
-    vertical-align: top;
-    cursor: pointer;
-    outline: none;
-    span {
-      // 搜索按钮的放大镜图片
-      width: 24px;
-      height: 24px;
-      position: relative;
-      top: 2px;
-      display: inline-block;
-      background-position: 0 -111px;
-    }
-  }
+
   .hotServer {
     // 热门服务部分
     margin-left: 14px;

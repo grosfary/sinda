@@ -1,12 +1,12 @@
 <template>
-    <div class="whole">
-        <div class="top">
-            <p class="topI"></p>
-            <p class="topII">登录</p>
-        </div>
-        <div class="middle">
-            <div class="phone">
-                <!-- <input class="box" type="number" placeholder="请输入手机号码" v-model="phone" @focus="Zphone" @blur="Cphone">
+  <div class="whole">
+    <div class="top">
+      <p class="topI"></p>
+      <p class="topII">登录</p>
+    </div>
+    <div class="middle">
+      <div class="phone">
+        <!-- <input class="box" type="number" placeholder="请输入手机号码" v-model="phone" @focus="Zphone" @blur="Cphone">
                 <div class="yeahing" v-show="yphone">
                     <p class="yeahP">请输入11位中国大陆手机号</p>
                 </div>
@@ -15,32 +15,34 @@
                     <p class="errP">{{Ephone}}</p>
                 </div> -->
 
-                <input type="number" placeholder="  请输入手机号码">
-                <!-- <p class="phoneT" v-show="phoneA">*您输入的手机号不正确</p> -->
-            </div>
-            <div class="password">
-                <input type="password" placeholder="  请输入密码">
-            </div>
-            <div class="picture">
-                <input type="text" placeholder="  请输入验证码">
-                <div class="verifyI" @click="imgReflash">
-                    <img :src="imgUrl" alt="">
-                </div>
-            </div>
-            <button class="promptly" @click="iregister">立即登录</button>
+        <input type="number" v-model="boxVal" placeholder="  请输入手机号码">
+        <!-- <p class="phoneT" v-show="phoneA">*您输入的手机号不正确</p> -->
+      </div>
+      <div class="password">
+        <input type="password" v-model="boxPasw" placeholder="  请输入密码">
+      </div>
+      <div class="picture">
+        <input type="text" v-model="imgV" placeholder="  请输入验证码">
+        <div class="verifyI" @click="imgReflash">
+          <img :src="imgUrl" alt="">
         </div>
+      </div>
+      <button class="promptly" @click="iregister">立即登录</button>
     </div>
+  </div>
 </template>
 
 <script>
 //三级联动调用
 import dist from "../components/distpicker";
-var md5 = require("md5");
 export default {
   data() {
     return {
       //图片验证
-      imgUrl: "/xinda-api/ajaxAuthcode"
+      imgUrl: "/xinda-api/ajaxAuthcode",
+      boxPasw: "",
+      imgV: "",
+      boxVal:"",
     };
   },
   methods: {
@@ -50,22 +52,26 @@ export default {
     },
     //立即注册
     iregister() {
+      var that = this
+      var pw = this.boxPasw;
+      var md5 = require("md5");
       this.ajax
         .post(
-          "/xinda-api/register/register",
+          "/xinda-api/sso/login",
           this.qs.stringify({
-            cellphone: this.phone,
-            smsType: 1,
-            validCode: 111111,
-            password: md5(this.boxPasw),
-            regionId: this.distCode
+            loginId: this.boxVal,
+            password: md5(pw),
+            imgCode: this.imgV
           })
         )
         .then(data => {
-          console.log("立即注册", data.data.msg, data.data.status);
-          if (status == 1) {
-            this.$router.push({ path: "/LoginRegister/login" });
-          }
+          console.log(data.data.msg, data.data.status);
+          let status = data.data.status;
+          // if (status == 1) {
+            // this.setuserName(that.boxVal);
+            // sessionStorage.setItem("userName", this.boxVal);
+            // this.$router.push({ path: "/" });
+          // }
         });
     }
   },

@@ -1,5 +1,6 @@
 <template>
-  <div class="hello">
+  <div>
+    这是系统外部
     <router-view/>
   </div>
 </template>
