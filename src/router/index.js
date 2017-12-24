@@ -53,6 +53,7 @@ import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
 import m_details from '../m_sinda/m_details' //手机端商品详情
 import loginP from '../components/loginP' //手机端注册
+import cipher from '../components/cipher' //手机端注册
 Vue.use(Router)
 
 // pc端
@@ -250,8 +251,12 @@ export default new Router({
         name: 'registerP',
         component: registerP
     }, {
-        path: '/loginP', //注册
+        path: '/loginP', //登录
         name: 'loginP',
         component: loginP
+    },{
+        path: '/cipher', //忘记密码
+        name: 'cipher',
+        component: cipher
     }]
 })
