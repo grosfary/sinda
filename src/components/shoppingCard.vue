@@ -64,13 +64,25 @@ export default {
   },
   data() {
     return {
-      show: false,
+      show: true,
       index: "",
       inde: "",
-      products: []
+      products: [],
+      code:''
     };
   },
-  created() {}
+  created() {
+    var that = this;
+    this.ajax.post(
+      
+      this.qs.stringify({
+
+      })
+    )
+    .then(function(data){
+
+    })
+  }
 };
 </script>
 

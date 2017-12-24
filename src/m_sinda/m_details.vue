@@ -64,11 +64,7 @@
         </div>
         <div class='base'>
           <div class="footer">
-            <button class="relation"><img src="../assets/gongyon/kefu.png" alt="">
-                <p>联系商家</p>
-            </button>
-            <button class="join">加入购物车</button>
-            <button class="immediately">立即购买</button>
+            <button class="relation"><img src="../assets/gongyon/kefu.png" alt=""><p>联系商家</p></button><button class="join">加入购物车</button><button class="immediately">立即购买</button>
         </div>
         </div>
     </div>
@@ -96,7 +92,6 @@ export default {
         "/xinda-api/product/package/detail", //商品接口
         this.qs.stringify({
           sId: this.$route.query.id
-          // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
         })
       )
       .then(function(data) {
@@ -141,7 +136,8 @@ export default {
       .footer{
         bottom:0;
         position: fixed;
-        bottom:0;
+        width:100%;
+       
       }
     .headed {
       position: relative;
@@ -202,7 +198,8 @@ export default {
     }
     .footer {
       button {
-        width: 2.3rem;
+        // width: 2.3rem;
+        width: 33.333%;
         height: 1.15rem;
         border: none;
         outline: none;
@@ -235,7 +232,7 @@ export default {
         span {
           position: absolute;
           right: 6.35rem;
-          top: 0.61rem;
+          top: 0.63rem;
           border-top: 4px solid #fff;
           border-bottom: 4px solid #2693d4;
           border-left: 4px solid #fff;
@@ -309,7 +306,7 @@ export default {
       span {
         position: absolute;
         right: 6.35rem;
-        top: 0.6rem;
+        top: 0.63rem;
         border-top: 4px solid #fff;
         border-bottom: 4px solid #2693d4;
         border-left: 4px solid #fff;
@@ -353,7 +350,7 @@ export default {
       span {
         position: absolute;
         right: 6.35rem;
-        top: 0.6rem;
+        top: 0.63rem;
         border-top: 4px solid #fff;
         border-bottom: 4px solid #2693d4;
         border-left: 4px solid #fff;

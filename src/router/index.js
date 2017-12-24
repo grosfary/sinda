@@ -58,6 +58,7 @@ Vue.use(Router)
 // pc端
 // 信达的登录注册页面和其他页面的公共头部不一样，
 // 所以有两个一级路由global和loginregister
+
 // global里分别又有列表页和首页、列表页等等等等，注册登录页有注册有登录
 // 又会有分别的子路由，如index、list、login、register等等等等
 // 再往下肯定还会有三级路由 在views里

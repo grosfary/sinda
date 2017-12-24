@@ -11,7 +11,7 @@
           <p class="alipay">支付失败!</p>
           <div class="payment">
               <p>支付未成功 ：让我们再试一次吧 ! </p>
-              <a class="return" href="">返回支付页</a>
+              <a class="return" href="../../stores/line_item.vue">返回支付页</a>
           </div>
           <div class="question">
               <span class="problem">如有问题，请联系客服：</span>
