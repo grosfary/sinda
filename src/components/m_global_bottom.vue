@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "sinda_footer",
+  name: "m_sinda_bottom",
   data() {
     return {
       btn: {
@@ -34,7 +34,10 @@ export default {
     display: none;
   }
   .m_footer {
+    padding-top: 0.08rem;
+    background: #fff;
     position: fixed;
+    z-index: 1000;
     bottom:0;
     width: 100%;
     height: 0.88rem;
