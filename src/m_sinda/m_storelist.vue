@@ -2,7 +2,7 @@
 <div>
     <div class="m-body">
       <div class="m-head">
-        <a href="javascript:void(0)" @click="new_touch=false" :class="{new_list:new_touch}">默认排序</a><a href="javascript:void(0)" @click="new_touchh()" :class="{new_list:!new_touch}">  销量   </a>
+        <a href="javascript:void(0)" v-on:click="new_touchh()" @click="new_touch=true" :class="{new_list:new_touch}">默认排序</a><a href="javascript:void(0)" @click="new_touchh()" :class="{new_list:!new_touch}">  销量   </a>
       </div>
          <div class="m-lister">
                
@@ -79,6 +79,9 @@ export default{
     margin: 0 auto;
     .m-head{
         text-align: center;
+        .new_list{
+          background: #2693d4;
+        }
     a{  
       
         border: 1px solid #2693d4;

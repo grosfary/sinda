@@ -40,7 +40,7 @@
             <div class="we-pay" id="weipay" v-if="weback">
                 <div class="pay-header">
                     <p class="lageheader">微信支付</p>
-                    <p class="cha" @click='cha'>X</p>
+                    <p class="cha" @click='cha'>&#10005</p>
                 </div>
                 <span class="QRcode"></span>
                 <p class="wechatlage">请用微信扫一扫 进行扫码支付</p>
@@ -54,7 +54,7 @@
         <div class="feedback" v-if="feedback">
                     <div class="feedheader">
                         <p style="display:inline" class="feedlage">支付反馈</p>
-                        <a href="javascript:void(0)" class="clean" @click="clean">X</a>
+                        <a href="javascript:void(0)" class="clean" @click="clean">&#10005</a>
                     </div>
                         <p class="lagefeed">请您在新打开的页面完成订单付款</p>
                         <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
@@ -263,6 +263,7 @@ export default {
            .cha{
                      margin-left: 140px;
                      font-size: 13px;
+                     cursor: pointer;
             }
             .lageheader{
                 font-size: 13px;

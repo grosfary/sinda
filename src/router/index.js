@@ -134,6 +134,7 @@ export default new Router({
                     },
                     {
                         path: 'center', //会员中心三级页   如 http://localhost:8081/#/member/center
+
                         component: center
                     },
                     {
