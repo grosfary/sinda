@@ -157,7 +157,6 @@ export default {
         )
         .then(function(data) {
           var data = data.data.data;
-          console.log(data);
           var tempData = {};
           that.products = [];
           for (var key in data) {
@@ -174,10 +173,8 @@ export default {
     skip: function(bum) {
       this.product = []; //清除数据
       var array = [];
-      console.log(this);
       if ((bum + 1) * 2 - 1 == this.rData.length) {
         //判断products里元素是否跟要加入数组的最后一个元素相同
-
         array.push(this.rData[(bum + 1) * 2 - 2]); //添加数据
       } else {
         console.log(this.rData[(bum + 1) * 2 - 2]);

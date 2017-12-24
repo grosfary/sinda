@@ -181,34 +181,46 @@ export default new Router({
         name: 'm.sinda',
         component: m_global,
         children: [{
-            path: '/', // 手机端的首页
-            component: m_index
-        }, {
-            path: 'shop', // 手机端的店铺页
-            component: m_shop,
-            redirect: "shop/service",
-            children: [{
-                path: 'service',
-                component: m_shop_service,
-            }]
-        }, {
-            path: 'details', // 手机端商品详情
-            name: 'm_details',
-            component: m_details,
-        }, {
-            path: 'success', // 手机端的支付成功
-            name: 'm_success',
-            component: m_success
-        }, {
-            path: 'failure', // 手机端的支付失败
-            name: 'm_failure',
-            component: m_failure
-        }]
-    }, {
-        path: '/m.out', // 手机端公共页面 不包含底部
-        name: 'm.out',
-        component: m_out
-            // children: [{}]
+                path: '/', // 手机端的首页
+                component: m_index
+            }, {
+                path: 'shop', // 手机端的店铺页
+                component: m_shop,
+                redirect: "shop/service",
+                children: [{
+                    path: 'service',
+                    component: m_shop_service,
+                }]
+            }, {
+                path: 'details', // 手机端商品详情
+                name: 'm_details',
+                component: m_details,
+            }, {
+                path: '/m.out', // 手机端公共页面 不包含底部
+                name: 'm.out',
+                component: m_out,
+                children: [{
+                        path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+                        component: m_storelist
+                    }, {
+                        path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/.out/m_joinus
+                        component: m_joinus,
+                    }, {
+                        path: 'success', // 手机端的支付成功
+                        name: 'm_success',
+                        component: m_success
+                    }, {
+                        path: 'm_lineitem',
+                        component: m_lineitem
+                    }, {
+                        path: 'failure', // 手机端的支付失
+                        name: 'm_failure',
+                        component: m_failure
+                    }]
+                    // children: [{}]
+            }
+
+        ]
     }, {
         path: '/generic', //未注册
         name: 'generic',
