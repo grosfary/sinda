@@ -37,18 +37,24 @@ import list_list from '../views/sinda_list/list_list' //公司工商
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
 import m_index from '../m_sinda/m_index' //手机端首页
-import m_success from '../m_sinda/m_success' //手机端首页
-import m_failure from '../m_sinda/m_failure' //手机端首页
+import m_success from '../m_sinda/m_success' //手机端支付成功
+import m_failure from '../m_sinda/m_failure' //手机端支付失败
 import m_shop from '../m_sinda/m_shop' //手机shop
 import m_storelist from '../m_sinda/m_storelist' //手机shop
 import m_joinus from '../m_sinda/m_joinus' //手机shop
+import m_lineitem from '../m_sinda/m_lineitem'
 import m_shop_service from '../m_sinda/m_shop/m_shop_service' //手机shop service
 import m_out from '../components/m_out' //手机端公共页
-import generic from '../components/generic' //手机端公共页
-import logged from '../components/logged' //手机端公共页
-import set from '../components/set' //手机端公共页
-import myOrder from '../components/myOrder' //手机端公共页
+import generic from '../components/generic' //未登录
+import logged from '../components/logged' //已登录
+import shoppingCard from '../components/shoppingCard' //购物车
+import listPage from '../components/listPage' //购物车
+import set from '../components/set' //账户设置
+import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
+import m_details from '../m_sinda/m_details' //手机端商品详情
+import loginP from '../components/loginP' //手机端注册
+import cipher from '../components/cipher' //手机端注册
 Vue.use(Router)
 
 // pc端
@@ -98,7 +104,7 @@ export default new Router({
       }, {
         path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
         component: store_list
-      },{
+      }, {
         path: 'pay', //支付界面 如 http://localhost:8081/#/pay
         component: pay
       },
@@ -229,5 +235,25 @@ export default new Router({
     path: '/myOrder', //已登录
     name: 'myOrder',
     component: myOrder
+  }, {
+    path: '/shoppingCard', //购物车
+    name: 'shoppingCard',
+    component: shoppingCard
+  }, {
+    path: '/listPage', //列表页
+    name: 'listPage',
+    component: listPage
+  }, {
+    path: '/registerP', //注册
+    name: 'registerP',
+    component: registerP
+  }, {
+    path: '/loginP', //登录
+    name: 'loginP',
+    component: loginP
+  }, {
+    path: '/cipher', //忘记密码
+    name: 'cipher',
+    component: cipher
   }]
 })

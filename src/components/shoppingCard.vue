@@ -1,11 +1,8 @@
 <template>
   <div class="hello">
-      <div class='top'>我的订单</div>
-    <div >
-      <div class='numberpay clear'>
-        <div class='number'>订单号：</div>
-        <div class='pay'>等待买家付款</div>
-      </div>
+    <div>
+      <div class='top'>购物车内共有件商品</div>
+    <div class='back'>
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
@@ -13,19 +10,12 @@
             </div>
             <div class='deta'>
                 <span>新公司注册</span><br>
-                <span>下单时间：</span><br>
-                <span class='doller'>￥</span><span class='doller'>元</span>
+                <span>￥</span><br>
+                <span class='doller'>购买数量</span><br>
+                <span class='doller'>地区</span>
             </div>
           </div>
       </div>
-      <div class='balance'>
-        <div class='num'>合计：</div>
-        <div class='account'>
-          <input type="submit" value='删除订单' class='delete' @click="alert">
-          <input type="submit" value='付款'>
-        </div>
-      </div>
-      <div class='line'></div>
     </div>
     <div class='informations' v-show='show'>
       <div class='hint'>
@@ -39,6 +29,7 @@
           <input type="submit" value='取消'  @mouseenter='submit(2)' @click='hide'>
         </div>
       </div>
+     </div>
      </div>
   </div>
 </template>
@@ -80,37 +71,7 @@ export default {
     };
   },
   created() {
-    var that = this;
-    this.ajax
-      .post("/xinda-api/service-order/grid", {
-        //数据整合
-      })
-      .then(function(data) {
-        data = data.data.data;
-        console.log(tempData);
-        var tempData = {};
-        for (var key in data) {
-          var businessNo = data[key].businessNo;
-          if (!tempData[businessNo]) {
-            tempData[businessNo] = data[key];
-            tempData[businessNo].subItem = [];
-          }
-          tempData[businessNo].subItem.push(data[key]);
-          that.products = tempData;
-        }
-        // that.ajax.post(
-        //       '/xinda-api/business-order/grid',{//业务订单与服务订单联系
-        //       }).then(
-        //         function(data){
-        //           var data = data.data.data;
-        //           for (var key in data) {
-        //             if(tempData[data[key].businessNo]){
-        //                tempData[data[key].businessNo].id = data[key].id;
-        //             }
-        //           }
-        //         }
-        //       )
-      });
+  
   }
 };
 </script>
@@ -122,10 +83,8 @@ export default {
   display: block;
   clear: both;
 }
-.line {
-  width: 100%;
-  height: 0.2rem;
-  background: #e5e5e5;
+.back{
+    background: #f8f8f8;
 }
 .hello {
   width: 100%;
@@ -135,30 +94,18 @@ export default {
   width: 100%;
   height: 0.77rem;
   background: #e5e5e5;
-  text-align: center;
+  text-indent: 0.5rem;
   line-height: 0.77rem;
 }
-.numberpay {
-  width: 90%;
-  height: 0.74rem;
-  text-align: center;
-  line-height: 0.74rem;
-}
-.number {
-  float: left;
-}
-.pay {
-  float: right;
-}
 .content {
-  width: 100%;
+  width: 90%;
   height: 2.1rem;
-  background: #f8f8f8;
   position: relative;
+  margin:0 auto;
+  border-bottom:1px solid #7b7b7b;
 }
 .img {
   position: absolute;
-  margin: auto;
   display: flex;
   top: 0;
   bottom: 0;
@@ -166,7 +113,6 @@ export default {
   right: 0;
   width: 100%;
   height: 1.7rem;
-  background: #fff;
 }
 .imgs {
   width: 1.7rem;
@@ -178,35 +124,6 @@ export default {
   height: 1.7rem;
   span {
     line-height: 2;
-  }
-  .doller {
-    line-height: 5;
-  }
-}
-.balance {
-  height: 0.73rem;
-  width: 90%;
-  margin: 0 auto;
-  .num {
-    float: left;
-    line-height: 0.73rem;
-  }
-  .account {
-    float: right;
-    line-height: 0.73rem;
-    input {
-      margin-right: 0.2rem;
-      width: 0.8rem;
-      height: 0.47rem;
-      font-size: 0.19rem;
-      border: 0;
-      background: #2693d4;
-      color: #fff;
-    }
-    .delete {
-      background: #fff;
-      color: red;
-    }
   }
 }
 .informations {

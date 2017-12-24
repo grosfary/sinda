@@ -1,6 +1,7 @@
 <template>
+<div>
     <div class="m-body">
-        <div class="m-head">
+      <div class="m-head">
         <a href="javascript:void(0)" @click="new_touch=false" :class="{new_list:new_touch}">默认排序</a><a href="javascript:void(0)" @click="new_touchh()" :class="{new_list:!new_touch}">  销量   </a>
       </div>
          <div class="m-lister">
@@ -17,7 +18,8 @@
              </div>
            </div>
            </div>
-          </div>
+    </div>
+    </div>
 </template>
 
 <script>

@@ -28,7 +28,6 @@
           <router-view></router-view>
         </div>
       </div>
-      <div class=""></div>
     </div>
 
   </div>
@@ -79,7 +78,7 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        // console.log(shop);
+        console.log(shop);
       });
   }
 };
