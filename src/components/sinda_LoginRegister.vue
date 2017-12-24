@@ -17,6 +17,7 @@ export default {
   data() {
     return {};
   },
+
   components: { LRhead, sinda_top, sinda_bottom }
 };
 </script>
