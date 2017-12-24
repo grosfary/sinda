@@ -243,7 +243,7 @@ export default new Router({
         name: 'shoppingCard',
         component: shoppingCard
     }, {
-        path: '/listPage', //购物车
+        path: '/listPage', //列表页
         name: 'listPage',
         component: listPage
     }, {

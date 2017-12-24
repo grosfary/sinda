@@ -7,7 +7,8 @@
           <div :class='number==2?"collation":"price"' @click='aaa(2)'>价格</div>
         </div>
       </div>
-    <div class='back' v-for='product in products' :key="product.data">
+   <div class='back' v-for='product in products' :key="product.data">
+      <router-link :to="{path:'/m.sinda/details',query:{id:product.id}}" @click='ccc'>
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
@@ -21,6 +22,7 @@
             </div>
           </div>
       </div>
+          </router-link>
     </div>
      </div>
      <div class='bottom'>
@@ -38,30 +40,43 @@ export default {
       products: [],
       index: 0,
       number: 1,
-      sort:'',
+      sort: "",
+      num: 0
     };
   },
   methods: {
+    ccc:function(){
+      this.$router.query.id;
+    },
     aaa: function(number) {
       //sort背景颜色
       this.number = number;
-      if(this.number==2){
-        this.index = 0
-        this.index = this.index+1;
-        this.sort = 2
-        this.sum()
-      }else{
-        this.index = 0
+      if (this.number == 2) {
+        if (this.num == 0) {
+          this.index = 0;
+          this.index = this.index + 1;
+          this.sort = 2;
+          this.sum();
+          this.num = 1;
+        } else {
+          this.index = 0;
+          this.index = this.index + 2;
+          this.sort = 3;
+          this.sum();
+          this.num = 0;
+        }
+      } else {
+        this.index = 0;
+        this.num = 0;
         this.index = this.index;
-        this.sort = ''
-        this.sum()
+        this.sort = "";
+        this.sum();
       }
-    
     },
     next: function() {
       //下一页
-        this.index = this.index + 3;
-        this.sum();
+      this.index = this.index + 3;
+      this.sum();
     },
     previous: function() {
       //上一页
@@ -74,83 +89,82 @@ export default {
     },
     sum() {
       //封装调用函数
-      if (sessionStorage.getItem(this.index)!=null) {
-        this.products = JSON.parse(sessionStorage.getItem(this.index))[this.index]
+      if (sessionStorage.getItem(this.index) != null) {
+        this.products = JSON.parse(sessionStorage.getItem(this.index))[
+          this.index
+        ];
       } else {
-        if(this.index%3==0){
-        var that = this;
-        var str = {};
-        this.ajax
-          .post(
-            //列表商品
-            "/xinda-api/product/package/grid",
-            this.qs.stringify({
-              start: this.index,
-              limit: 3,
-              productTypeCode: "0",
-              productId: "8a82f52b674543e298d2e5f685946e6e",
-              sort: this.sort
-            })
-          )
-          .then(data => {
-            var data = data.data.data;
-            that.products = data;
-            if (!str[this.index]) {
-              str[this.index] = data;
-            }
-            sessionStorage.setItem(this.index, JSON.stringify(str));
-          });
-      }
-      else if(this.index%3==1){
-        var that = this;
-        var str = {};
-        this.ajax
-          .post(
-            //列表商品
-            "/xinda-api/product/package/grid",
-            this.qs.stringify({
-              start: this.index-1,
-              limit: 3,
-              productTypeCode: "0",
-              productId: "8a82f52b674543e298d2e5f685946e6e",
-              sort: this.sort
-            })
-          )
-          .then(data => {
-            var data = data.data.data;
-            that.products = data;
-            if (!str[this.index]) {
-              str[this.index] = data;
-            }
-            sessionStorage.setItem(this.index, JSON.stringify(str));
-          });
-      }
-      // else if(this.index%3==2){
-      //   var that = this;
-      //   var str = {};
-      //   this.ajax
-      //     .post(
-      //       //列表商品
-      //       "/xinda-api/product/package/grid",
-      //       this.qs.stringify({
-      //         start: this.index-2,
-      //         limit: 3,
-      //         productTypeCode: "0",
-      //         productId: "8a82f52b674543e298d2e5f685946e6e",
-      //         sort: this.sort
-      //       })
-      //     )
-      //     .then(data => {
-      //       var data = data.data.data;
-      //       that.products = data;
-      //       if (!str[this.index]) {
-      //         str[this.index] = data;
-      //       }
-      //       sessionStorage.setItem(this.index, JSON.stringify(str));
-      //     });
-      // }
+        if (this.index % 3 == 0) {
+          var that = this;
+          var str = {};
+          this.ajax
+            .post(
+              //列表商品
+              "/xinda-api/product/package/grid",
+              this.qs.stringify({
+                start: this.index,
+                limit: 3,
+                productTypeCode: "0",
+                productId: "8a82f52b674543e298d2e5f685946e6e",
+                sort: this.sort
+              })
+            )
+            .then(data => {
+              var data = data.data.data;
+              that.products = data;
+              if (!str[this.index]) {
+                str[this.index] = data;
+              }
+              sessionStorage.setItem(this.index, JSON.stringify(str));
+            });
+        } else if (this.index % 3 == 1) {
+          var that = this;
+          var str = {};
+          this.ajax
+            .post(
+              //列表商品
+              "/xinda-api/product/package/grid",
+              this.qs.stringify({
+                start: this.index - 1,
+                limit: 3,
+                productTypeCode: "0",
+                productId: "8a82f52b674543e298d2e5f685946e6e",
+                sort: this.sort
+              })
+            )
+            .then(data => {
+              var data = data.data.data;
+              that.products = data;
+              if (!str[this.index]) {
+                str[this.index] = data;
+              }
+              sessionStorage.setItem(this.index, JSON.stringify(str));
+            });
+        } else if (this.index % 3 == 2) {
+          var that = this;
+          var str = {};
+          this.ajax
+            .post(
+              //列表商品
+              "/xinda-api/product/package/grid",
+              this.qs.stringify({
+                start: this.index - 2,
+                limit: 3,
+                productTypeCode: "0",
+                productId: "8a82f52b674543e298d2e5f685946e6e",
+                sort: this.sort
+              })
+            )
+            .then(data => {
+              var data = data.data.data;
+              that.products = data;
+              if (!str[this.index]) {
+                str[this.index] = data;
+              }
+              sessionStorage.setItem(this.index, JSON.stringify(str));
+            });
         }
-        
+      }
     }
   },
   created() {
