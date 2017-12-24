@@ -2,35 +2,35 @@
   <div class="hello">
     <div>
       <div class='top'>购物车内共有件商品</div>
-    <div class='back'>
-      <div class='content'>
+      <div class='back'>
+        <div class='content'>
           <div class='img'>
             <div class='imgs'>
 
             </div>
             <div class='deta'>
-                <span>新公司注册</span><br>
-                <span>￥</span><br>
-                <span class='doller'>购买数量</span><br>
-                <span class='doller'>地区</span>
+              <span>新公司注册</span><br>   
+              <span>￥</span><br>
+              <span class='doller'>购买数量</span><br>
+              <span class='doller'>地区</span>
             </div>
           </div>
+        </div>
       </div>
-    </div>
-    <div class='informations' v-show='show'>
-      <div class='hint'>
-        <div class='infor'>
+      <div class='informations' v-show='show'>
+        <div class='hint'>
+          <div class='infor'>
             <div class='for'>信息</div>
             <div class='err' @click='hide'>x</div>
-        </div>
-        <div class='information'>确认删除订单吗</div>
-        <div class='ok'>
-          <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
-          <input type="submit" value='取消'  @mouseenter='submit(2)' @click='hide'>
+          </div>
+          <div class='information'>确认删除订单吗</div>
+          <div class='ok'>
+            <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
+            <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
+          </div>
         </div>
       </div>
-     </div>
-     </div>
+    </div>
   </div>
 </template>
 
@@ -70,9 +70,7 @@ export default {
       products: []
     };
   },
-  created() {
-  
-  }
+  created() {}
 };
 </script>
 
@@ -83,8 +81,8 @@ export default {
   display: block;
   clear: both;
 }
-.back{
-    background: #f8f8f8;
+.back {
+  background: #f8f8f8;
 }
 .hello {
   width: 100%;
@@ -101,8 +99,8 @@ export default {
   width: 90%;
   height: 2.1rem;
   position: relative;
-  margin:0 auto;
-  border-bottom:1px solid #7b7b7b;
+  margin: 0 auto;
+  border-bottom: 1px solid #7b7b7b;
 }
 .img {
   position: absolute;

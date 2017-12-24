@@ -9,8 +9,8 @@
           <h3>{{list.serviceName}}</h3>
           <p>{{list.serviceInfo}}</p>
           <p>销量:</p>
-          <h2>￥ {{list.marketPrice}}.00</h2>
-          <del>原价：￥{{list.price}}.00</del>
+          <h2>￥ {{list.price}}.00</h2>
+          <del>原价：￥{{list.marketPrice}}.00</del>
           <a  @click="detail(list.id)">查看详情>></a>
         </div>
       </div>
@@ -52,7 +52,7 @@ export default {
     //数据处理函数
     var shops = function(shopping) {
       for (var key in shopping) {
-        shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
+        // shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
         if (shopping[key].serviceName.length > 11) {
           shopping[key].serviceName =
             shopping[key].serviceName.substr(0, 11) + "...";
