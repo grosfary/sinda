@@ -28,7 +28,7 @@
             <div class='state'><div>订单状态</div></div>
             <div class='operation'><div>订单操作</div></div>
           </div>
-        <div v-for='product in products' :key='product.rData'>
+        <div v-for='(product,ind) in products' :key='product.rData'>
           <div class='wares'>
               <input type='checkbox' class='checkbox'>
               <span>订单号：{{product.businessNo}}</span>
@@ -36,25 +36,30 @@
               <span class='floot'>下单时间：{{product.createTime | formatDate}}</span>
             </div>
           </div>
-          <div v-for="prod in product.subItem" :key="prod.id">
+         <div class='sss'>
+            <div>
+          <div v-for="(prod,index) in product.subItem" :key="prod.id">
             <div class='deta'>
               <div class='name'>
-                <div>{{prod.serviceName}}</div>
+                <div class='brand'>{{prod.serviceName}}</div>
                 <div class='img'>
-                  <!-- <img src="../assets/pc/1212.gif" alt=""> -->
+                  <img src="../../static/g_img/shangbiao.jpg" alt="">
                 </div>
               </div>
               <div class='unit'><div>{{prod.status}}</div></div>
               <div class='num'><div>{{prod.buyNum}}</div></div>
               <div class='sum'><div >{{prod.totalPrice}}</div></div>
               <div class='state'><div>{{prod.unit}}</div></div>
-              <div class='operation'>
+          
+            </div>
+            </div>
+            </div>
+                <div class='operation'>
                 <div>
                   <a href="#/line_item"><input type="submit" class='pay' value="付款"></a>
-                  <input type="submit" class = 'delet' value="删除订单" @click="alert(product.id)">
+                  <input type="submit" class = 'delet' value="删除订单" @click="alert(product.id,ind,prod)">
                 </div>
               </div>
-            </div>
             </div>
           </div>
           <div class='inputcopy' v-show='ned'>
@@ -93,7 +98,8 @@ export default {
   methods: {
     hidedate: function(code) {
       this.show = false;
-      var that = this;
+      var product = this.products;
+      product.splice(this.ind, 1);
       this.ajax
         .post(
           "/xinda-api/ business-order/del",
@@ -101,16 +107,16 @@ export default {
             id: this.code
           })
         )
-        .then(function(data) {
-          that.$router.go(0);
-        });
+        .then(function(data) {});
     },
     hide: function() {
       this.show = false;
     },
-    alert: function(code) {
+    alert: function(code, ind, prod) {
       this.show = true;
       this.code = code;
+      this.ind = ind;
+      // console.log(prod)
     },
     submit: function(index) {
       this.index = index;
@@ -157,7 +163,6 @@ export default {
         )
         .then(function(data) {
           var data = data.data.data;
-          var tempData = {};
           that.products = [];
           for (var key in data) {
             var businessNo = data[key].businessNo;
@@ -209,12 +214,12 @@ export default {
         }
       });
 
-      var aaa = [];
+      var furn = [];
       for (key in tempData) {
-        aaa.push(tempData[key]);
+        furn.push(tempData[key]);
       }
-      that.rData = aaa; //所需的数据
-      if (aaa.length > 2) {
+      that.rData = furn; //所需的数据
+      if (furn.length > 2) {
         //判断数据长度是否大于2
         that.array.push(that.rData[0]);
         that.ned = true;
@@ -222,7 +227,7 @@ export default {
         arr.push(that.rData[0]); //一二条数据相加
         arr.push(that.rData[1]);
         that.products = arr;
-        var numeral = Math.ceil(aaa.length / 2); //判断应该产生多少按钮
+        var numeral = Math.ceil(furn.length / 2); //判断应该产生多少按钮
         for (let i = 1; i <= numeral; i++) {
           //循环button按钮
           (function(j) {
@@ -257,7 +262,9 @@ export default {
       arr: [],
       data: [],
       code: [],
-      box: false
+      box: false,
+      tempData: {},
+      ind: ""
     };
   },
   computed: {
@@ -274,11 +281,18 @@ export default {
   display: block;
   clear: both;
 }
+.ddd {
+  display: none;
+}
 .img {
-  height: 100%;
+  height: 90%;
   width: 78px;
+  position: absolute;
+  left: 0;
+  margin-top: 0.5%;
   img {
     width: 100%;
+    height: 100%;
     height: 100%;
   }
 }
@@ -329,6 +343,7 @@ export default {
 .information {
   height: 92px;
   line-height: 105px;
+  text-align: center;
 }
 .ok {
   margin-left: 24px;
@@ -409,7 +424,6 @@ export default {
   }
 }
 .order {
-  width: 877px;
   float: left;
   margin-top: -438px;
   margin-left: 496px;
@@ -523,9 +537,11 @@ export default {
 .deta {
   display: flex;
   width: 935px;
+  height: 93px;
   background: #fff;
   font-weight: 400;
   border: 1px solid #e8e8e8;
+  position: relative;
   div {
     line-height: 35px;
     float: left;
@@ -535,26 +551,37 @@ export default {
   }
   .name {
     width: 178px;
-    margin: auto 0;
+    div {
+      line-height: 35px;
+    }
+    .brand {
+      width: 50%;
+      margin-top: 10%;
+    }
   }
   .unit {
     width: 191px;
-    margin-top: 2%;
+    margin-top: 3%;
   }
   .num {
     width: 114px;
-    margin-top: 2%;
+    margin-top: 3%;
   }
   .sum {
     width: 127px;
-    margin-top: 2%;
+    margin-top: 3%;
   }
   .state {
     width: 141px;
-    margin-top: 2%;
+    margin-top: 3%;
   }
   .operation {
     width: 136px;
+    margin-top:1%;
   }
+}
+.sss{
+  display: flex;
+  border:2px solid #000;
 }
 </style>
