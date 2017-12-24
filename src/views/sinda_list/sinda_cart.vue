@@ -31,7 +31,7 @@
             </li>
             <li>{{i.totalPrice}}</li>
             <li>
-              <span @click="delOrder(i.serviceId)" style="cursor: pointer;">删除</span>
+              <span @click="delOrder(i.serviceId,index)" style="cursor: pointer;">删除</span>
             </li>
           </ul>
         </div>
@@ -119,7 +119,7 @@ export default {
           }
         });
     },
-    delOrder(id) {
+    delOrder(id,index) {
       //删除订单
       this.ajax
         .post(

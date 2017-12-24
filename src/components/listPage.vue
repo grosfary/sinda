@@ -104,12 +104,13 @@ export default {
               this.qs.stringify({
                 start: this.index,
                 limit: 3,
-                productTypeCode: "0",
-                productId: "8a82f52b674543e298d2e5f685946e6e",
+                productTypeCode: this.$route.query.code,
+                productId: this.$route.query.id,
                 sort: this.sort
               })
             )
             .then(data => {
+              console.log(this.$route.query.id,this.$route.query.code)
               var data = data.data.data;
               that.products = data;
               if (!str[this.index]) {
@@ -127,8 +128,8 @@ export default {
               this.qs.stringify({
                 start: this.index - 1,
                 limit: 3,
-                productTypeCode: "0",
-                productId: "8a82f52b674543e298d2e5f685946e6e",
+                productTypeCode: this.$route.query.id,
+                productId: this.$route.query.id,
                 sort: this.sort
               })
             )
@@ -150,8 +151,8 @@ export default {
               this.qs.stringify({
                 start: this.index - 2,
                 limit: 3,
-                productTypeCode: "0",
-                productId: "8a82f52b674543e298d2e5f685946e6e",
+                productTypeCode: this.$route.query.id,
+                productId: this.$route.query.id,
                 sort: this.sort
               })
             )

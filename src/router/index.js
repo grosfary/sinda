@@ -37,6 +37,7 @@ import list_list from '../views/sinda_list/list_list' //公司工商
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
 import m_index from '../m_sinda/m_index' //手机端首页
+import m_classify from '../m_sinda/m_classify' //手机端列表选择
 import m_success from '../m_sinda/m_success' //手机端支付成功
 import m_failure from '../m_sinda/m_failure' //手机端支付失败
 import m_shop from '../m_sinda/m_shop' //手机shop
@@ -188,6 +189,9 @@ export default new Router({
     children: [{
         path: '/', // 手机端的首页
         component: m_index
+      }, {
+        path: 'classify', // 手机端的首页
+        component: m_classify
       }, {
         path: 'shop', // 手机端的店铺页
         component: m_shop,
