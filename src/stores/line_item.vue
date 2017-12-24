@@ -74,10 +74,12 @@ export default {
     created() {
     var that = this;
     this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/business-order/detail",this.qs.stringify({
-         businessNo:"S1704040001075133085"//订单明细
-          
+         businessNo:"S1704040001075133085"//订单明细          
         }))
-        .then(function (data){})
+        .then(function (data){
+            var item= data.data;
+            console.log(item);
+        })
     this.ajax
       .post("http://115.182.107.203:8088/xinda/xinda-api/pay/detail", this.qs.stringify({
          businessNo:"S1704040001075133085"//订单详情
@@ -85,8 +87,7 @@ export default {
         }))
       .then(function(data) {
     
-        var item= data;
-        console.log(item);
+       
       });
       this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/china-pay",this.qs.stringify({
          businessNo:"S1704040001075133085"//银联支付
