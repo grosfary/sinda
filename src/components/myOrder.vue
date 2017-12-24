@@ -1,20 +1,20 @@
 <template>
   <div class="hello">
       <div class='top'>我的订单</div>
-    <div >
+    <div v-for='product in products' :key='product.rData'>
       <div class='numberpay clear'>
-        <div class='number'>订单号：</div>
+        <div class='number'>订单号：{{product.businessNo}}</div>
         <div class='pay'>等待买家付款</div>
       </div>
       <div class='content'>
-          <div class='img'>
+          <div class='img' v-for="prod in product.subItem" :key="prod.id">
             <div class='imgs'>
 
             </div>
             <div class='deta'>
                 <span>新公司注册</span><br>
-                <span>下单时间：</span><br>
-                <span class='doller'>￥</span><span class='doller'>元</span>
+                <span>下单时间：{{product.createTime | formatDate}}</span><br>
+                <span class='doller'>￥{{prod.totalPrice}}</span>
             </div>
           </div>
       </div>
@@ -44,7 +44,14 @@
 </template>
 
 <script>
+import { formatDate } from "../../config/date";
 export default {
+    filters: {
+    formatDate(time) {
+      var date = new Date(time);
+      return formatDate(date, "yyyy-MM-dd hh:mm");
+    }
+  },
   methods: {
     alert: function(code) {
       this.show = true;
@@ -87,7 +94,7 @@ export default {
       })
       .then(function(data) {
         data = data.data.data;
-        console.log(tempData);
+        console.log(data);
         var tempData = {};
         for (var key in data) {
           var businessNo = data[key].businessNo;
@@ -178,9 +185,6 @@ export default {
   height: 1.7rem;
   span {
     line-height: 2;
-  }
-  .doller {
-    line-height: 5;
   }
 }
 .balance {

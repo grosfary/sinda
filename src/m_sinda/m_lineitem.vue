@@ -3,9 +3,9 @@
         <div class="pay" style="width:100%">
             <p>选择支付方式</p>
             
-                <span class="no-bank"><input type="radio" name="pay"></span>
+                <span class="no-bank"><input type="radio" name="pay" id="bank"></span>
                 <span class="wechat"><input type="radio" name="pay" id="wechat" checked="checked"></span>
-                <span class="alipay"><input type="radio" name="pay"></span>
+                <span class="alipay"><input type="radio" name="pay" id="alipay"></span>
                 <span class="bank"><input type="radio" name="pay"></span>
         
         </div>
@@ -21,6 +21,14 @@
             <div>
             <a href="javascript:void(0)" @click="fork">重新选择支付方式</a>
             </div>
+        </div> 
+        <div class="feedback" v-if="feedback">
+           <p>请您在新打开的页面完成订单付款</p>
+           <span>根据您的支付完成情况,完成下步操作</span>
+           <a class="wancheng" href="javascript:void(0)" >已完成支付</a><a class="shibai" href="javascript:void(0)" >支付遇到问题</a>
+                <div class="bottom">
+                    <p  @click="fork">返回重新选择支付方式</p>
+                </div>
         </div>
     </div>
 </template>
@@ -30,17 +38,29 @@ export default{
     data(){
         return{
             wcpay:false,
+            feedback:false,
         };
     },
     methods:{
         fork:function(){
             this.wcpay=false;
+            this.feedback=false;
         },
-        close:function(){
-            if(wechat.checked==true){
-                this.wcpay=true;
-            }
-        }
+     close: function() {
+      // ---------------------------------------------------------
+      if (wechat.checked == true) {
+        //   微信支付
+        this.wcpay=true;
+        // ------------------------------------------------------
+      } else if (bank.checked == true || alipay.checked==true) {
+        //   银联支付
+        this.feedback=true
+        
+        //   -------------------------------------------------
+      } 
+      //   ---------------------------------------------------------
+    },
+      
     }
 }
 </script>
@@ -116,8 +136,56 @@ export default{
             color:#fff;
         }
     }
+    .feedback{
+        width:7.5rem;
+        height: 100%;
+        background: #f1f1f1;
+        position: absolute;
+        top: 0rem;
+        margin: 0 auto;
+        p{
+             font-size: 0.5rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        span{
+            font-size: 0.4rem;
+        
+        }
+      
+        .wancheng{
+              margin-left: 0.1rem;
+            color:#2693d4;
+            border: #2693d4 1px solid;
+            background: #fff;
+             padding: 0.1rem 0.3rem;
+            border-radius:0.05rem;
+            font-size: 0.5rem;
+             &:hover{
+                text-decoration: none;
+            }
+        }
+         .shibai{
+             margin-left: 0.5rem;
+            color:#2693d4;
+            border: #2693d4 1px solid;
+            background: #fff;
+            padding: 0.1rem 0.3rem;
+            border-radius:0.05rem;
+            font-size: 0.5rem;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+        .bottom{
+         
+            p{
+            font-size: 0.5rem;
+         }
+        }
+    }
     .wcpay{
-        width:100%;
+        width:7.5rem;
         height: 100%;
         background: #f1f1f1;
         position: absolute;

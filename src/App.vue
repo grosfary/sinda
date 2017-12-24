@@ -5,46 +5,15 @@
 </template>
 
 <script>
-if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-  // window.location.href = "#/";
-  (function(doc, win) {
-    var docEl = doc.documentElement,
-      resizeEvt =
-        "orientationchange" in window ? "orientationchange" : "resize",
-      recalc = function() {
-        var clientWidth = docEl.clientWidth;
-        if (!clientWidth) return;
-        if (clientWidth >= 750) {
-          docEl.style.fontSize = "100px";
-        } else {
-          docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
-        }
-      };
-
-    if (!doc.addEventListener) return;
-    win.addEventListener(resizeEvt, recalc, false);
-    doc.addEventListener("DOMContentLoaded", recalc, false);
-  })(document, window);
-} else {
-  // window.location.href = "#/m.sinda";
-}
-
 // import sinda_top from "./components/sinda_top"; // 用变量sinda_top来接收sinda_top.vue里的html内容
 // import sinda_bottom from "./components/sinda_bottom"; // 作用同上
 export default {
-  // ES6：export default暴露 模块、函数、变量、文件
-  // 想知道原理自己看
-  // http://es6.ruanyifeng.com/?search=export&x=0&y=0#docs/module#export-default-命令
-  // name: "app",
-  // components: { sinda_top, sinda_bottom }
+  name: "app",
+  mounted() {  document.body.removeChild(document.getElementById('Loading'))   
+}
 };
 </script>
 <style lang="less">
-@media screen and (max-width: 1200px) {
-  html {
-    font-size: 625%;
-  }
-}
 
 * {
   margin: 0;
