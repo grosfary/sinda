@@ -71,6 +71,42 @@
 import sinda_header from "../components/sinda_global_header";// 公共头部
 import sinda_footer from "../components/sinda_global_footer";//公共底部
 export default {
+    created() {
+    var that = this;
+    this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/business-order/detail",this.qs.stringify({
+         businessNo:"S1704040001075133085"//订单明细
+          
+        }))
+        .then(function (data){})
+    this.ajax
+      .post("http://115.182.107.203:8088/xinda/xinda-api/pay/detail", this.qs.stringify({
+         businessNo:"S1704040001075133085"//订单详情
+        
+        }))
+      .then(function(data) {
+    
+        var item= data;
+        console.log(item);
+      });
+      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/china-pay",this.qs.stringify({
+         businessNo:"S1704040001075133085"//银联支付
+        
+        }))
+        .then(function (data){})
+      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/ali-pay",this.qs.stringify({
+         businessNo:"S1704040001075133085"//支付宝支付
+        
+        }))
+        .then(function (data){})
+      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/ weixin-pay",this.qs.stringify({
+         businessNo:"S1704040001075133085"//微信支付
+          
+        }))
+        .then(function (data){})
+       
+        
+    },
+    
   data() {
     return {
         weback:false,
