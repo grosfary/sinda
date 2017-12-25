@@ -26,7 +26,7 @@
 export default{
     methods:{
         open: function(name,id,image) {
-        this.$router.push({path:'/shop/service',query:{id:id,Name:name,img:image}});
+        this.$router.push({path:'/m.sinda/shop/service',query:{id:id,Name:name,img:image}});
     },
      new_touchh() { //升序降序
       this.new_touch = false;

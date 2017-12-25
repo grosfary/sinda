@@ -201,9 +201,6 @@ export default new Router({
                     name: 'm.out',
                     component: m_out,
                     children: [{
-                            path: 'm_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
-                            component: m_storelist
-                        }, {
                             path: 'success', // 手机端的支付成功
                             name: 'm_success',
                             component: m_success
@@ -217,10 +214,13 @@ export default new Router({
 
             ]
         }, {
-            path: 'm_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
+            path: '/m_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+            component: m_storelist
+        }, {
+            path: '/m_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
             component: m_joinus,
         }, {
-            path: 'm_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
+            path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
             component: m_lineitem
         },
         {
