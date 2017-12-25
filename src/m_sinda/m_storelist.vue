@@ -27,13 +27,10 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    open: function(name, id, image) {
-      this.$router.push({
-        path: "/m.sinda/shop/service",
-        query: { id: id, Name: name, img: image }
-      });
+export default{
+    methods:{
+        open: function(name,id,image) {
+        this.$router.push({path:'/m.sinda/shop/service',query:{id:id,Name:name,img:image}});
     },
     new_touchh() {
       //升序降序
@@ -81,26 +78,31 @@ export default {
 <style scoped lang="less">
 // body { margin-right: -15px; margin-bottom: -15px; }
 
-.m-body {
-  width: 7.5rem;
-  margin: 0 auto;
-  .m-head {
-    text-align: center;
-    a {
-      border: 1px solid #2693d4;
-      background: #fff;
-      font-size: 0.2rem;
-      text-decoration: none;
-      color: #000;
-      padding: 0.1rem 0.5rem;
-
-      &:first-child {
-        border-right: none;
-        border-radius: 3px 0 0 3px;
-      }
-      &:last-child {
-        border-radius: 0 3px 3px 0;
-      }
+.m-body{
+    
+    width:7.5rem;
+    margin: 0 auto;
+    .m-head{
+        text-align: center;
+        .new_list{
+          background: #2693d4;
+        }
+    a{  
+      
+        border: 1px solid #2693d4;
+        background: #fff;
+        font-size: 0.2rem;
+        text-decoration: none;
+        color:#000;
+        padding:0.1rem 0.5rem;
+        
+        &:first-child{
+            border-right: none;
+            border-radius: 3px  0 0 3px;
+        }
+        &:last-child{
+             border-radius:0 3px 3px 0;
+        }
 
       &:active {
         background: #2693d4;

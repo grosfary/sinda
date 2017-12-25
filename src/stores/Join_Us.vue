@@ -22,10 +22,10 @@
            <p class="lageV">YOU WILL RECEIVE</p>
            <span class="backgroundI"><p class="lageIV">你将获得</p></span>
            <div class="jiamengshang">
-           <span class="backgroundII"><p>精准的线上曝光机会</p></span>
-           <span class="backgroundIII"><p>万亿市场份额</p></span>  
-            <span class="backgroundIV"><p>系统化的营销解决方案</p></span>
-           <span class="backgroundV"><p>各种补贴优惠</p></span>
+                <span class="backgroundII"><p>精准的线上曝光机会</p></span>
+                <span class="backgroundIII"><p>万亿市场份额</p></span>  
+                <span class="backgroundIV"><p>系统化的营销解决方案</p></span>
+                <span class="backgroundV"><p>各种补贴优惠</p></span>
            </div>
        </div>
         <div class="occupation">
@@ -33,8 +33,8 @@
             <span></span>
         </div>
         <div class="iamges">
-            <span class="iamgeI"><p id="gs"   @mouseover="gs">工商注册RIGISTERED</p> </span>
-            <span class="iamgeII"><p id="cw"  @mouseover="cs">财税服务SERVICECER</p></span>
+            <span class="iamgeI"><p id="gs"    @mouseover="gs">工商注册RIGISTERED</p> </span>
+            <span class="iamgeII"><p id="cw"   @mouseover="cs">财税服务SERVICECER</p></span>
             <span class="iamgeIII"><p id="zs"  @mouseover="zs">知识产权INTELLECTAULPROPERTY</P></span>
             <span class="iamgeIV"><P id="hr"   @mouseover="hr">人力外包 HR&nbspOUTSOURCING</P></span>
         </div>
@@ -58,41 +58,42 @@ import sinda_footer from "../components/sinda_global_footer";
 export default {
   data() {
     return {
-      gsbox:true,
-      csbox:false,
-      hrbox:false,
-      zsbox:false,
+      gsbox: true,
+      csbox: false,
+      hrbox: false,
+      zsbox: false
     };
   },
   components: { sinda_header, sinda_footer },
-  methods: {//底部动态效果，鼠标上浮文字内容显示，移走消失
-    gs:function(){
-      if( this.gsbox=true){
-        this.zsbox=false;
-        this.hrbox=false;
-        this.csbox=false;
-       }
+  methods: {
+    //底部动态效果，鼠标上浮文字内容显示，移走消失
+    gs: function() {
+      if ((this.gsbox = true)) {
+        this.zsbox = false;
+        this.hrbox = false;
+        this.csbox = false;
+      }
     },
-     cs:function(){
-        if( this.csbox=true){
-        this.gsbox=false;
-        this.hrbox=false;
-        this.zsbox=false;
-     }
+    cs: function() {
+      if ((this.csbox = true)) {
+        this.gsbox = false;
+        this.hrbox = false;
+        this.zsbox = false;
+      }
     },
-    zs:function(){
-       if( this.zsbox=true){
-        this.gsbox=false;
-        this.hrbox=false;
-        this.csbox=false;
-       }
+    zs: function() {
+      if ((this.zsbox = true)) {
+        this.gsbox = false;
+        this.hrbox = false;
+        this.csbox = false;
+      }
     },
-    hr:function(){
-       if( this.hrbox=true){
-        this.gsbox=false;
-        this.zsbox=false;
-        this.csbox=false;
-       }
+    hr: function() {
+      if ((this.hrbox = true)) {
+        this.gsbox = false;
+        this.zsbox = false;
+        this.csbox = false;
+      }
     }
   }
 };
@@ -110,15 +111,16 @@ export default {
       width: 100%;
       height: 395px; //给背景设置宽高
       display: block; //设置为块级元素
-      background: url("../assets/pc/jiameng.jpg") no-repeat 0 0;//背景图
+      background: url("../assets/pc/jiameng.jpg") no-repeat 0 0; //背景图
     }
-    .lage {//顶部文字样式
-      text-align: center;//设置居中
+    .lage {
+      //顶部文字样式
+      text-align: center; //设置居中
       padding-top: 190px;
       p {
-        color: #2a2a2a;//颜色
-        font-size: 23px;//字体大小
-        font-family: "黑体";//字体格式
+        color: #2a2a2a; //颜色
+        font-size: 23px; //字体大小
+        font-family: "黑体"; //字体格式
       }
     }
   }
