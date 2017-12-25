@@ -109,7 +109,6 @@ export default new Router({
           path: 'pay', //支付界面 如 http://localhost:8081/#/pay
           component: pay
         },
-
         {
           path: '/shop',
           component: shop,
@@ -248,6 +247,10 @@ export default new Router({
       path: '/listPage', //列表页
       name: 'listPage',
       component: listPage
+    }, {
+      path: '/details', //列表页
+      name: 'details',
+      component: m_details
     }, {
       path: '/registerP', //注册
       name: 'registerP',
