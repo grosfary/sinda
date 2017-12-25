@@ -57,11 +57,11 @@ export default {
         .then(data => {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
-          // if (status == 1) {
+          if (status == 1) {
             // this.setuserName(that.boxVal);
-            // sessionStorage.setItem("userName", this.boxVal);
-            // this.$router.push({ path: "/" });
-          // }
+            sessionStorage.setItem("userName", this.boxVal);
+            this.$router.push({ path: "/m.sinda" });
+          }
         });
     }
   },

@@ -67,14 +67,15 @@
         <button class="relation"><img src="../assets/gongyon/kefu.png" alt="">
           <p>联系商家</p>
         </button>
-        <button class="join" @click="join">加入购物车</button>
-        <button class="immediately" @click="immediately">立即购买</button>
+        <button class="join" @click="join()">加入购物车</button>
+        <button class="immediately" @click="flag && immediately()">立即购买</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { MessageBox } from "mint-ui";
 export default {
   data() {
     return {
@@ -86,10 +87,23 @@ export default {
       shop: [],
       serviceList: [],
       serv: [],
-      evaluate: []
+      evaluate: [],
+      flag: true
     };
   },
   created() {
+    this.ajax
+      .post(
+        "/xinda-api/sso/login-info", //商品接口
+        this.qs.stringify({
+          // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
+        })
+      )
+      .then(function(data) {
+        console.log(data.data.data.loginId);
+        sessionStorage.setItem("userName", data.data.data.loginId);
+      });
+
     var that = this;
     this.ajax
       .post(
@@ -110,7 +124,6 @@ export default {
         that.shop = shop;
         that.serviceList = shop.serviceList;
         that.serv = shop.serviceList[0].serviceContent;
-        console.log(that.serv);
       });
     this.ajax
       .post(
@@ -124,19 +137,52 @@ export default {
       )
       .then(function(data) {
         var evaluate = data.data.data;
-        // console.log(evaluate);
       });
   },
   methods: {
     enter() {
       return;
     },
+    addtoCart(jump, id, num) {
+      // 立即购买或者加入购物车
+      if (sessionStorage.getItem("userName")) {
+        // 判断现在是否为登录状态
+        this.ajax
+          .post(
+            "/xinda-api/cart/add",
+            this.qs.stringify({
+              id: id,
+              num: num
+            })
+          )
+          .then(data => {
+            // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
+            if (data.data.status == 1) {
+              if (jump) {
+                this.$router.push({ path: "/shoppingCard" });
+              }
+            } else {
+              MessageBox("提示", "非常抱歉，系统开小差了，请稍后再试");
+            }
+          });
+      } else {
+        MessageBox.confirm("请您登陆后再继续操作").then(action => {
+          this.$router.push({ path: "/loginP" });
+        });
+      }
+    },
     immediately() {
       //立即购买按钮
+      if (sessionStorage.getItem("userName")) {
+        this.flag = false;
+        this.addtoCart(true, this.$route.query.id, 1);
+      } else {
+        this.addtoCart(true, this.$route.query.id, 1);
+      }
     },
-    join() {
+    join(id) {
       // 加入购物车按钮
-
+      this.addtoCart(false, this.$route.query.id, 1);
     }
   }
 };

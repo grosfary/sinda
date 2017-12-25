@@ -1,40 +1,59 @@
 <template>
   <div class="hello">
     <div>
-      <div class='top'>购物车内共有件商品</div>
-    <div class='back'>
-      <div class='content'>
+      <div class='top'>购物车内共有{{allProObj.length}}件商品</div>
+
+      <div class='back'>
+        <div class='content' v-for="(i,index) in allProObj" :key="i.id">
+          <p class=" title" style="height:0.69rem;line-height:0.69rem;font-size:0.3rem">{{i.providerName}}</p>
           <div class='img'>
             <div class='imgs'>
-
+              <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="" style="width:100%;height:100%">
             </div>
             <div class='deta'>
-                <span>新公司注册</span><br>
-                <span>￥</span><br>
-                <span class='doller'>购买数量</span><br>
-                <span class='doller'>地区</span>
+              <span style="font-size:0.3rem;line-height:0.35rem;display:block">{{i.serviceName}}</span>
+              <div style="font-size:0.14rem;">
+                <span style="font-size:0.24rem;color:red;">￥{{i.totalPrice}} </span>元
+              </div>
+              <span class='doller' style="font-size:0rem;">
+                <span style="font-size:0.14rem;">购买数量：</span>
+                <button style="font-size:0.24rem;width:0.33rem;height:0.31rem;background:#ededed;color:#585453;border:1px solid #c7c7c7;vertical-align:top;" @click="nAdd(i.serviceId,-1,i.buyNum,index)">-</button>
+                <span style="font-size:0.12rem;width:0.33rem;height:0.29rem;background:#fff;color:#585453;border:1px solid #c7c7c7;display:inline-block;text-align:center;vertical-align:top;border-left:none;border-right:none;line-height:0.29rem;">{{i.buyNum}}</span>
+                <button style="font-size:0.24rem;width:0.33rem;height:0.31rem;background:#ededed;color:#585453;border:1px solid #c7c7c7;vertical-align:top;" @click="nAdd(i.serviceId,1,i.buyNum,index)">+</button>
+              </span><br>
+              <span class='doller'>地区：{{diqu}}</span>
             </div>
+
           </div>
+          <span class="delOrder" @click="delOrder(i.serviceId,index)">删除订单</span>
+        </div>
       </div>
-    </div>
-    <div class='informations' v-show='show'>
-      <div class='hint'>
-        <div class='infor'>
+      <div class="footer">
+        <div class="totalPrice">合计：
+          <span>￥{{totalPrice}}.00</span>
+        </div>
+        <div class="settle">去结算</div>
+      </div>
+
+      <div class='informations' v-show='show'>
+        <div class='hint'>
+          <div class='infor'>
             <div class='for'>信息</div>
             <div class='err' @click='hide'>x</div>
-        </div>
-        <div class='information'>确认删除订单吗</div>
-        <div class='ok'>
-          <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
-          <input type="submit" value='取消'  @mouseenter='submit(2)' @click='hide'>
+          </div>
+          <div class='information'>确认删除订单吗</div>
+          <div class='ok'>
+            <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
+            <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
+          </div>
         </div>
       </div>
-     </div>
-     </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { MessageBox } from "mint-ui";
 export default {
   methods: {
     alert: function(code) {
@@ -60,6 +79,58 @@ export default {
     },
     hide: function() {
       this.show = false;
+    },
+    cartList() {
+      this.ajax
+        .post("/xinda-api/cart/list", this.qs.stringify({}))
+        .then(data => {
+          this.allProObj = data.data.data; // 定义一个变量接受返回的数据
+          var totalPrice = 0; // 初始一个总价
+          for (var i in this.allProObj) {
+            totalPrice += this.allProObj[i].totalPrice;
+          }
+          this.diqu = "北京-北京市-朝阳区";
+          this.totalPrice = totalPrice;
+        });
+    },
+    nAdd(id, num, count, index) {
+      this.ajax
+        .post(
+          "/xinda-api/cart/add",
+          this.qs.stringify({
+            id: id,
+            num: num
+          })
+        )
+        .then(data => {
+          if (data.data.status == 1) {
+            this.allProObj[index].buyNum += num;
+            var unit = this.allProObj[index].unitPrice;
+            var total = this.allProObj[index].totalPrice;
+            num === 1 ? (total += unit) : (total -= unit);
+            this.allProObj[index].totalPrice = total;
+            num === 1 ? (this.totalPrice += unit) : (this.totalPrice -= unit);
+          }
+        });
+    },
+    delOrder(id,index) {
+      MessageBox.confirm("不再考虑考虑了？", "确定删除?").then(action => {
+        this.ajax
+          .post(
+            "/xinda-api/cart/del",
+            this.qs.stringify({
+              id: id
+            })
+          )
+          .then(data => {
+            if (data.data.status === 1) {
+              // 如果成功删除订单 刷新当前页面
+              this.$router.go(0);
+            } else {
+              console.log("系统正在开小差中，请稍后重试");
+            }
+          });
+      });
     }
   },
   data() {
@@ -67,11 +138,23 @@ export default {
       show: false,
       index: "",
       inde: "",
-      products: []
+      products: [],
+      totalPrice: 0,
+      allProObj: {},
+      diqu: {}
     };
   },
   created() {
-  
+    this.ajax // 判断当前用户是否登录ajax请求
+      .post("/xinda-api/sso/login-info", this.qs.stringify({}))
+      .then(data => {
+        if (data.data.status === 0) {
+          MessageBox("提示", "请您登录后再继续操作");
+          this.$router.push({ path: "/loginP" });
+        } else {
+          this.cartList();
+        }
+      });
   }
 };
 </script>
@@ -83,45 +166,57 @@ export default {
   display: block;
   clear: both;
 }
-.back{
-    background: #f8f8f8;
+.back {
+  margin-top: 0.77rem;
+  margin-bottom: 1.1rem;
 }
 .hello {
-  width: 100%;
+  width: 7.5rem;
   font-size: 0.22rem;
+  margin: 0 auto;
 }
 .top {
-  width: 100%;
+  width: 7.5rem;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  z-index: 100;
   height: 0.77rem;
   background: #e5e5e5;
+
   text-indent: 0.5rem;
   line-height: 0.77rem;
 }
 .content {
   width: 90%;
-  height: 2.1rem;
   position: relative;
-  margin:0 auto;
-  border-bottom:1px solid #7b7b7b;
+  margin: 0 auto;
+  border-bottom: 1px solid #cfcfcf;
+  .delOrder {
+    position: absolute;
+    right: 0;
+    top: 0.55rem;
+    color: red;
+  }
 }
 .img {
-  position: absolute;
   display: flex;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
-  height: 1.7rem;
+  margin-bottom: 0.21rem;
 }
 .imgs {
   width: 1.7rem;
   height: 1.7rem;
   margin-left: 0.17rem;
+  margin-right: 0.18rem;
+  border: 1px solid #e3e3e3;
 }
 .deta {
   width: 3.4rem;
-  height: 1.7rem;
   span {
     line-height: 2;
   }
@@ -183,6 +278,33 @@ export default {
   .color {
     background: #2693d4;
     color: #fff;
+  }
+}
+//----------------------------------------------------------------------------------------
+// 去结算&&总价
+.footer {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  .totalPrice {
+    background: #e5e5e5;
+    padding-left: 0.3rem;
+    width: 4.91rem;
+    height: 1.1rem;
+    font-size: 0.3rem;
+    line-height: 1.1rem;
+    color: #4d4d4d;
+    span {
+      color: red;
+    }
+  }
+  .settle {
+    width: 2.59rem;
+    background: red;
+    color: #fff;
+    font-size: 0.3rem;
+    text-align: center;
+    line-height: 1.1rem;
   }
 }
 </style>

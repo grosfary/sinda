@@ -16,7 +16,7 @@
             </div>
             <div class='deta'>
                 <span>{{product.serviceName}}</span><br>
-                <span>{{product.serviceInfo}}</span><br>
+                <span style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;">{{product.serviceInfo}}</span><br>
                 <span class='area'>地区：{{product.regionName}}</span>
                 <span class='doller'>￥{{product.price}}</span>
             </div>
