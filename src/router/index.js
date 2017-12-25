@@ -14,7 +14,6 @@ import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书�
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
 import line_item from '../stores/line_item' //订单详情
-import pay from '../stores/pay' //订单详情
 import payment from '../views/sinda_payment' //支付页面
 import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
 import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
@@ -30,13 +29,18 @@ import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
+// import pay from '../views/' //购物车
+
 import pro from '../views/sinda_list/sinda_products' //商品详情
 import com from '../views/sinda_list/company' //公司工商
 import list_list from '../views/sinda_list/list_list' //公司工商
+import { MessageBox } from "mint-ui";
+
 // -----------------------------------------------------------------------------------------------------------------------
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
 import m_index from '../m_sinda/m_index' //手机端首页
+import m_classify from '../m_sinda/m_classify' //手机端列表选择
 import m_success from '../m_sinda/m_success' //手机端支付成功
 import m_failure from '../m_sinda/m_failure' //手机端支付失败
 import m_shop from '../m_sinda/m_shop' //手机shop
@@ -49,17 +53,18 @@ import generic from '../components/generic' //未登录
 import logged from '../components/logged' //已登录
 import shoppingCard from '../components/shoppingCard' //购物车
 import listPage from '../components/listPage' //购物车
+import shoppingstalley from '../components/shoppingstalley.vue' //购物车空
 import set from '../components/set' //账户设置
 import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
 import m_details from '../m_sinda/m_details' //手机端商品详情
 import loginP from '../components/loginP' //手机端注册
-import cipher from '../components/cipher' //手机端注册
 Vue.use(Router)
 
 // pc端
 // 信达的登录注册页面和其他页面的公共头部不一样，
 // 所以有两个一级路由global和loginregister
+
 // global里分别又有列表页和首页、列表页等等等等，注册登录页有注册有登录
 // 又会有分别的子路由，如index、list、login、register等等等等
 // 再往下肯定还会有三级路由 在views里
@@ -104,9 +109,6 @@ export default new Router({
                 }, {
                     path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
                     component: store_list
-                }, {
-                    path: 'pay', //支付界面 如 http://localhost:8081/#/pay
-                    component: pay
                 },
 
                 {
@@ -255,10 +257,6 @@ export default new Router({
             path: '/loginP', //登录
             name: 'loginP',
             component: loginP
-        }, {
-            path: '/cipher', //忘记密码
-            name: 'cipher',
-            component: cipher
-        }
+        },
     ]
 })

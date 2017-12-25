@@ -8,7 +8,7 @@
         </div>
       </div>
    <div class='back' v-for='product in products' :key="product.data">
-      <router-link :to="{path:'/m.sinda/details',query:{id:product.id}}" @click='ccc'>
+      <router-link :to="{path:'/details',query:{id:product.id}}" @click='ccc'>
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
@@ -16,7 +16,7 @@
             </div>
             <div class='deta'>
                 <span>{{product.serviceName}}</span><br>
-                <span>{{product.serviceInfo}}</span><br>
+                <span style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;">{{product.serviceInfo}}</span><br>
                 <span class='area'>地区：{{product.regionName}}</span>
                 <span class='doller'>￥{{product.price}}</span>
             </div>
@@ -104,12 +104,13 @@ export default {
               this.qs.stringify({
                 start: this.index,
                 limit: 3,
-                productTypeCode: "0",
-                productId: "8a82f52b674543e298d2e5f685946e6e",
+                productTypeCode: this.$route.query.code,
+                productId: this.$route.query.id,
                 sort: this.sort
               })
             )
             .then(data => {
+              console.log(this.$route.query.id,this.$route.query.code)
               var data = data.data.data;
               that.products = data;
               if (!str[this.index]) {
@@ -127,8 +128,8 @@ export default {
               this.qs.stringify({
                 start: this.index - 1,
                 limit: 3,
-                productTypeCode: "0",
-                productId: "8a82f52b674543e298d2e5f685946e6e",
+                productTypeCode: this.$route.query.code,
+                productId: this.$route.query.id,
                 sort: this.sort
               })
             )
@@ -150,8 +151,8 @@ export default {
               this.qs.stringify({
                 start: this.index - 2,
                 limit: 3,
-                productTypeCode: "0",
-                productId: "8a82f52b674543e298d2e5f685946e6e",
+                productTypeCode: this.$route.query.code,
+                productId: this.$route.query.id,
                 sort: this.sort
               })
             )
@@ -169,7 +170,11 @@ export default {
   },
   created() {
     this.sum();
+  },destroyed: function() {
+    // 生命周期销毁钩子
+    sessionStorage.clear()
   }
+
 };
 </script>
 <style scoped lang="less">
