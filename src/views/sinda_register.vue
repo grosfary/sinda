@@ -65,7 +65,6 @@ export default {
       boxTC: false,
       boxPasw: "",
       boxPC: false,
-      distCode: "",
       imgCode: "",
       boxCode: false,
       sjCode: "",
@@ -359,12 +358,12 @@ input::-webkit-outer-spin-button {
   width: 30px;
   height: 30px;
   position: absolute;
-  top: 235px;
+  top: 240px;
   left: 248px;
 }
 #cloImg {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .bottom {
   padding-bottom: 150px;

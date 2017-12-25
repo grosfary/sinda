@@ -6,17 +6,7 @@
     </div>
     <div class="middle">
       <div class="phone">
-        <!-- <input class="box" type="number" placeholder="请输入手机号码" v-model="phone" @focus="Zphone" @blur="Cphone">
-                <div class="yeahing" v-show="yphone">
-                    <p class="yeahP">请输入11位中国大陆手机号</p>
-                </div>
-                <div class="erping" v-show="ephone">
-                    <div class="erImg"></div>
-                    <p class="errP">{{Ephone}}</p>
-                </div> -->
-
         <input type="number" v-model="boxVal" placeholder="  请输入手机号码">
-        <!-- <p class="phoneT" v-show="phoneA">*您输入的手机号不正确</p> -->
       </div>
       <div class="password">
         <input type="password" v-model="boxPasw" placeholder="  请输入密码">
@@ -128,8 +118,6 @@ export default {
     border: 0.01rem solid #b0b0b0;
     font-size: 30%;
   }
-}
-.phoneT {
 }
 /*密码*/
 .password {
