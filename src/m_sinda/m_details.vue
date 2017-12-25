@@ -1,77 +1,77 @@
 <template>
-    <div class="detail">
-        <div class="headed">
-            <div>
-                <img src :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
-            </div>
-            <div class="company">
-                <p>{{product.name}}</p>
-                <span>{{product.info}}</span>
-            </div>
-        </div>
-        <div class="bodyed">
-            <div class="areo">
-                <p>区域：{{regionText}}</p>
-                <div class="price">
-                    <p>价格：</p>
-                    <span>￥{{providerProduct.price}}.00</span>
-                    <del>￥{{product.marketPrice}}</del>
-                </div>
-            </div>
-            <div class="Merchant">
-                <div class="merchant">
-                    <p>服务商家</p>
-                    <span></span>
-                </div>
-                <div class="service">
-                    <div class="picture">
-                        <img :src="'http://115.182.107.203:8088/xinda/pic' + provider.providerImg" alt="">
-                    </div>
-                    <ul>
-                        <li>{{provider.name}}</li>
-                        <li>信誉: <img src="../assets/gongyon/xinyu.png" alt=""></li>
-                        <li>地区:{{shop.providerRegionText}}</li>
-                        <li>服务次数:{{providerBusiness.serviceNum}}</li>
-                        <li>
-                            <button @click="enter">进入店铺</button>
-                        </li>
-                        <li class="gold"><img src="../assets/gongyon/jinpai.png" alt="">
-                            <p>金牌服务商</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="matter">
-                <div class="introduce">
-                    <p>服务介绍</p>
-                    <span></span>
-                </div>
-                <div v-html="serv" class='intro'></div>
-            </div>
-            <div class="User">
-                <div class="user">
-                    <p>用户评价</p>
-                    <span></span>
-                </div>
-                <div class='assess'>
-                    <div class='img'><img src="" alt=""></div>
-                    <div class="appraise">
-                        <p>满意度：</p>
-                        <span>评　价：</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='base'>
-          <div class="footer">
-            <button class="relation"><img src="../assets/gongyon/kefu.png" alt="">
-                <p>联系商家</p>
-            </button>
-            <button class="join">加入购物车</button>
-            <button class="immediately">立即购买</button>
-        </div>
-        </div>
+  <div class="detail">
+    <div class="headed">
+      <div>
+        <img src :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+      </div>
+      <div class="company">
+        <p>{{product.name}}</p>
+        <span>{{product.info}}</span>
+      </div>
     </div>
+    <div class="bodyed">
+      <div class="areo">
+        <p>区域：{{regionText}}</p>
+        <div class="price">
+          <p>价格：</p>
+          <span>￥{{providerProduct.price}}.00</span>
+          <del>￥{{product.marketPrice}}</del>
+        </div>
+      </div>
+      <div class="Merchant">
+        <div class="merchant">
+          <p>服务商家</p>
+          <span></span>
+        </div>
+        <div class="service">
+          <div class="picture">
+            <img :src="'http://115.182.107.203:8088/xinda/pic' + provider.providerImg" alt="">
+          </div>
+          <ul>
+            <li>{{provider.name}}</li>
+            <li>信誉: <img src="../assets/gongyon/xinyu.png" alt=""></li>
+            <li>地区:{{shop.providerRegionText}}</li>
+            <li>服务次数:{{providerBusiness.serviceNum}}</li>
+            <li>
+              <button @click="enter">进入店铺</button>
+            </li>
+            <li class="gold"><img src="../assets/gongyon/jinpai.png" alt="">
+              <p>金牌服务商</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="matter">
+        <div class="introduce">
+          <p>服务介绍</p>
+          <span></span>
+        </div>
+        <div v-html="serv" class='intro'></div>
+      </div>
+      <div class="User">
+        <div class="user">
+          <p>用户评价</p>
+          <span></span>
+        </div>
+        <div class='assess'>
+          <div class='img'><img src="" alt=""></div>
+          <div class="appraise">
+            <p>满意度：</p>
+            <span>评　价：</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='base'>
+      <div class="footer">
+        <button class="relation"><img src="../assets/gongyon/kefu.png" alt="">
+          <p>联系商家</p>
+        </button>
+        <button class="join" @click="join">加入购物车</button>
+        <button class="immediately" @click="immediately">立即购买</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -118,7 +118,7 @@ export default {
         this.qs.stringify({
           start: 0,
           limit: 10,
-          serviceId: "64a9c8a15fe7493b967d74164b1a4ed5",
+          serviceId: this.$route.query.id,
           type: 1
         })
       )
@@ -130,6 +130,13 @@ export default {
   methods: {
     enter() {
       return;
+    },
+    immediately() {
+      //立即购买按钮
+    },
+    join() {
+      // 加入购物车按钮
+
     }
   }
 };
@@ -138,11 +145,11 @@ export default {
 @media screen and (max-width: 1200px) {
   .detail {
     width: 7.5rem;
-      .footer{
-        bottom:0;
-        position: fixed;
-        bottom:0;
-      }
+    .footer {
+      bottom: 0;
+      position: fixed;
+      bottom: 0;
+    }
     .headed {
       position: relative;
       img {
@@ -173,6 +180,7 @@ export default {
       }
     }
     .bodyed {
+      margin-bottom: 1.32rem;
       .areo {
         font-size: 0.31rem;
         color: #000000;

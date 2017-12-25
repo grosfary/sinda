@@ -248,6 +248,10 @@ export default new Router({
     name: 'listPage',
     component: listPage
   }, {
+    path: '/details', //手机商品详情页
+    name: 'm_details',
+    component: m_details
+  }, {
     path: '/registerP', //注册
     name: 'registerP',
     component: registerP

@@ -8,7 +8,7 @@
         </div>
       </div>
    <div class='back' v-for='product in products' :key="product.data">
-      <router-link :to="{path:'/m.sinda/details',query:{id:product.id}}" @click='ccc'>
+      <router-link :to="{path:'/details',query:{id:product.id}}" @click='ccc'>
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
@@ -128,7 +128,7 @@ export default {
               this.qs.stringify({
                 start: this.index - 1,
                 limit: 3,
-                productTypeCode: this.$route.query.id,
+                productTypeCode: this.$route.query.code,
                 productId: this.$route.query.id,
                 sort: this.sort
               })
@@ -151,7 +151,7 @@ export default {
               this.qs.stringify({
                 start: this.index - 2,
                 limit: 3,
-                productTypeCode: this.$route.query.id,
+                productTypeCode: this.$route.query.code,
                 productId: this.$route.query.id,
                 sort: this.sort
               })
@@ -170,7 +170,11 @@ export default {
   },
   created() {
     this.sum();
+  },destroyed: function() {
+    // 生命周期销毁钩子
+    sessionStorage.clear()
   }
+
 };
 </script>
 <style scoped lang="less">
