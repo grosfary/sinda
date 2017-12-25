@@ -32,6 +32,8 @@ import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
 import com from '../views/sinda_list/company' //公司工商
 import list_list from '../views/sinda_list/list_list' //公司工商
+import { MessageBox } from "mint-ui";
+
 // -----------------------------------------------------------------------------------------------------------------------
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
@@ -214,7 +216,7 @@ export default new Router({
                         path: 'm_lineitem',
                         component: m_lineitem
                     }, {
-                        path: 'failure', // 手机端的支付失
+                        path: 'failure', // 手机端的支付失败
                         name: 'm_failure',
                         component: m_failure
                     }]

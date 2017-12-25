@@ -68,19 +68,20 @@ export default {
       index: "",
       inde: "",
       products: [],
-      code:''
+      code:'',
+      shop:[],
     };
   },
   created() {
     var that = this;
-    this.ajax.post(
-      
-      this.qs.stringify({
-
-      })
+    this.ajax
+    .post(
+      "http://115.182.107.203:8088/xinda/xinda-api/cart/list",//店铺商品
+      // "/xinda-api/cart/list",
     )
     .then(function(data){
-
+      var shop =data.data;
+      console.log(shop);
     })
   }
 };
