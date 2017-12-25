@@ -1,27 +1,27 @@
 <template>
   <div class="hello">
       <div class='top'>我的订单</div>
-    <div v-for='product in products' :key='product.rData'>
+    <div v-for='product in products' :key='product.rData' v-show='read'>
       <div class='numberpay clear'>
         <div class='number'>订单号：{{product.businessNo}}</div>
         <div class='pay'>等待买家付款</div>
       </div>
-      <div class='content'>
-          <div class='img' v-for="prod in product.subItem" :key="prod.id">
+      <div class='content' v-for="prod in product.subItem" :key="prod.id">
+          <div class='img'>
             <div class='imgs'>
 
             </div>
             <div class='deta'>
                 <span>新公司注册</span><br>
-                <span>下单时间：{{product.createTime | formatDate}}</span><br>
+                <span>下单时间：{{prod.createTime | formatDate}}</span><br>
                 <span class='doller'>￥{{prod.totalPrice}}</span>
             </div>
           </div>
       </div>
       <div class='balance'>
-        <div class='num'>合计：</div>
+        <div class='num'>合计：￥{{product.total}}</div>
         <div class='account'>
-          <input type="submit" value='删除订单' class='delete' @click="alert">
+          <input type="submit" value='删除订单' class='delete' @click="alert(product.id)">
           <input type="submit" value='付款'>
         </div>
       </div>
@@ -36,7 +36,7 @@
         <div class='information'>确认删除订单吗</div>
         <div class='ok'>
           <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
-          <input type="submit" value='取消'  @mouseenter='submit(2)' @click='hide'>
+          <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
         </div>
       </div>
      </div>
@@ -71,7 +71,7 @@ export default {
           })
         )
         .then(function(data) {
-          that.$router.go(0);
+          that.read = false;
         });
     },
     hide: function() {
@@ -83,7 +83,9 @@ export default {
       show: false,
       index: "",
       inde: "",
-      products: []
+      products: [],
+      code:[],
+      read:true
     };
   },
   created() {
@@ -101,22 +103,24 @@ export default {
           if (!tempData[businessNo]) {
             tempData[businessNo] = data[key];
             tempData[businessNo].subItem = [];
+            tempData[businessNo].total = 0;
           }
           tempData[businessNo].subItem.push(data[key]);
+          tempData[businessNo].total = tempData[businessNo].total+data[key].totalPrice;
           that.products = tempData;
         }
-        // that.ajax.post(
-        //       '/xinda-api/business-order/grid',{//业务订单与服务订单联系
-        //       }).then(
-        //         function(data){
-        //           var data = data.data.data;
-        //           for (var key in data) {
-        //             if(tempData[data[key].businessNo]){
-        //                tempData[data[key].businessNo].id = data[key].id;
-        //             }
-        //           }
-        //         }
-        //       )
+        that.ajax.post(
+              '/xinda-api/business-order/grid',{//业务订单与服务订单联系
+              }).then(
+                function(data){
+                  var data = data.data.data;
+                  for (var key in data) {
+                    if(tempData[data[key].businessNo]){
+                       tempData[data[key].businessNo].id = data[key].id;
+                    }
+                  }
+                }
+              )
       });
   }
 };

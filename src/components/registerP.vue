@@ -6,25 +6,16 @@
     </div>
     <div class="middle">
       <div class="phone">
-        <!-- <input class="box" type="number" placeholder="请输入手机号码" v-model="phone" @focus="Zphone" @blur="Cphone">
-        <div class="yeahing" v-show="yphone">
-          <p class="yeahP">请输入11位中国大陆手机号</p>
-        </div>
-        <div class="erping" v-show="ephone">
-          <div class="erImg"></div>
-          <p class="errP">{{Ephone}}</p>
-        </div> -->
-        <input type="number" @blur="onBlur" v-model="phone" placeholder="  请输入手机号码">
-        <p class="phoneT" v-show="phoneA">*您输入的手机号不正确</p>
+        <input type="number" @blur="phonBlur" v-model="phone" placeholder="  请输入手机号码">
       </div>
       <div class="picture">
-        <input type="text" placeholder="  请输入验证码">
+        <input type="text" v-model="imgCode" @blur="verCode" placeholder="  请输入验证码">
         <div class="verifyI" @click="imgReflash">
           <img :src="imgUrl" alt="">
         </div>
       </div>
       <div class="message">
-        <input type="text" placeholder="  请输入短信验证码">
+        <input type="text" v-model="sjCode" placeholder="  请输入短信验证码" @blur="sjCodeI">
         <div @click="getCoBut">
           <span v-show="show" @click="getCode" class="getblue">点击获取</span>
           <span v-show="!show" class="getgray">重新获取{{count}}s</span>
@@ -32,7 +23,10 @@
       </div>
       <dist class="linkage" @selected="selected"></dist>
       <div class="password">
-        <input type="password" placeholder="  请输入密码">
+        <input :type="pswd" type="password" @blur="pawOnBlur" v-model="boxPasw" placeholder="  请输入密码">
+        <div id="xianshi" @click="concealPS">
+          <img :src="suo" alt="">
+        </div>
       </div>
       <button class="promptly" @click="iregister">立即注册</button>
     </div>
@@ -42,7 +36,10 @@
 <script>
 //三级联动调用
 import dist from "../components/distpicker";
+import { MessageBox } from "mint-ui";
 var md5 = require("md5");
+const head = require("../assets/pc/suo.jpg");
+const headO = require("../assets/pc/suoo.jpg");
 export default {
   data() {
     return {
@@ -56,38 +53,25 @@ export default {
       getNew: false,
       //手机号
       phone: "",
-      phoneA: false
+      phoneA: false,
+      phoneB: false,
+      //手机验证码
+      sjCode: "",
+      //密码
+      boxPasw: "",
+      suo: head,
+      pswd: "password",
+      //验证码
+      imgCode: ""
     };
   },
   methods: {
     //手机号
-    onBlur() {
-      if (/^1[34578]\d{9}$/.test(this.phone)) {
-        this.phoneA = false;
-      } else {
-        this.phoneA = true;
+    phonBlur() {
+      if (!/^1[34578]\d{9}$/.test(this.phone)) {
+        MessageBox("提示", "请输入正确的手机号");
       }
     },
-    // Zphone: function() {
-    //   this.ephone = false;
-    //   this.yphone = true;
-    // },
-    // Cphone: function() {
-    //   var phoneStyle = /^1[3|4|5|7|8]\d{9}$/;
-    //   if (this.phone) {
-    //     if (!phoneStyle.test(this.phone)) {
-    //       this.yphone = false;
-    //       this.ephone = true;
-    //       this.Ephone = "请输入正确的手机号码";
-    //     } else {
-    //       this.ephone = false;
-    //       this.yphone = false;
-    //     }
-    //   } else {
-    //     this.yphone = false;
-    //   }
-    // },
-
     //三级联动
     selected(code) {
       this.distCode = code;
@@ -95,6 +79,18 @@ export default {
     //图片验证
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
+    },
+    //验证码
+    verCode() {
+      if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+        MessageBox("提示", "您输入验证码不正确");
+      }
+    },
+    //手机验证
+    sjCodeI() {
+      if (!/^[0-9]{6}$/.test(this.sjCode)) {
+        MessageBox("提示", "手机验证码输入不正确");
+      }
     },
     //点击获取
     getCoBut() {
@@ -131,8 +127,28 @@ export default {
         }, 1000);
       }
     },
+    //密码
+    pawOnBlur() {
+      if (
+        !/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
+        MessageBox("提示", "密码长度6-16位且必须包含大小写字母、数字、字符");
+      }
+    },
+    concealPS() {
+      if (this.pswd == "password") {
+        this.pswd = "text";
+        this.suo = headO;
+      } else {
+        this.pswd = "password";
+        this.suo = head;
+      }
+    },
     //立即注册
     iregister() {
+      MessageBox("title", "content");
       this.ajax
         .post(
           "/xinda-api/register/register",
@@ -156,26 +172,6 @@ export default {
   components: { dist }
 };
 </script>
-
-<style lang="less">
-/* 三级联动样式更改*/
-.whole .middle .linkage {
-  width: 5.5rem;
-  height: 0.77rem;
-  font-size: 0.1rem;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.32rem;
-  .province,
-  .city,
-  .area {
-    font-size: 0.25rem;
-    height: 0.75rem;
-    width: 1.69rem;
-    margin-bottom: 26px;
-  }
-}
-</style>
 
 <style scoped lang="less">
 .whole {
@@ -205,7 +201,6 @@ export default {
 }
 //手机格式
 .middle {
-  // margin-top: 0.7rem;
   width: 5.5rem;
   margin: 0.77rem auto 0;
   input::-webkit-inner-spin-button {
@@ -219,16 +214,13 @@ export default {
   width: 5.5rem;
   height: 0.77rem;
   line-height: 0.2rem;
+  position: relative;
   input {
     width: 5.48rem;
     height: 0.75rem;
     border: 0.01rem solid #b0b0b0;
     font-size: 30%;
   }
-}
-//手机号输入错误提示
-.phoneT {
-  width:;
 }
 /*图片验证*/
 .picture {
@@ -300,11 +292,17 @@ export default {
   height: 0.77rem;
   margin-top: 0.32rem;
   line-height: 0.2rem;
+  position: relative;
   input {
     width: 5.48rem;
     height: 0.75rem;
     border: 0.01rem solid #b0b0b0;
     font-size: 30%;
+  }
+  img {
+    position: absolute;
+    top: 0.15rem;
+    left: 4.8rem;
   }
 }
 /*立即注册按钮*/
@@ -315,7 +313,28 @@ export default {
   border: 0.01rem solid #2693d4;
   font-size: 30%;
   margin: 0 auto;
+  margin-top: 1.45rem;
   color: #fff;
+}
+</style>
+
+<style lang="less">
+/* 三级联动样式更改*/
+.whole .middle .linkage {
+  width: 5.5rem;
+  height: 0.77rem;
+  font-size: 0.1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.32rem;
+  .province,
+  .city,
+  .area {
+    font-size: 0.25rem;
+    height: 0.75rem;
+    width: 1.69rem;
+    margin-bottom: 26px;
+  }
 }
 </style>
 

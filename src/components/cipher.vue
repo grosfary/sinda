@@ -15,7 +15,6 @@
           <p class="errP">{{Ephone}}</p>
         </div> -->
         <input type="number" @blur="onBlur" v-model="phone" placeholder="  请输入手机号码">
-        <p class="phoneT" v-show="phoneA">*您输入的手机号不正确</p>
       </div>
       <div class="picture">
         <input type="text" placeholder="  请输入验证码">
