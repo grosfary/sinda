@@ -23,8 +23,8 @@
       </div>
       <dist class="linkage" @selected="selected"></dist>
       <div class="password">
-        <input :type="pswd" type="password" @blur="pawOnBlur" v-model="boxPasw" placeholder="  请输入密码">
-        <div id="xianshi" @click="concealPS">
+        <input :type="pswd" @blur="pawOnBlur" v-model="boxPasw" placeholder="  请输入密码">
+        <div @click="concealPS">
           <img :src="suo" alt="">
         </div>
       </div>
@@ -53,8 +53,6 @@ export default {
       getNew: false,
       //手机号
       phone: "",
-      phoneA: false,
-      phoneB: false,
       //手机验证码
       sjCode: "",
       //密码
@@ -161,9 +159,9 @@ export default {
           })
         )
         .then(data => {
-          console.log("立即注册", data.data.msg, data.data.status);
+          console.log("立即注册", data.data.msg, data.data.status);   
           if (status == 1) {
-            this.$router.push({ path: "/LoginRegister/login" });
+            this.$router.go(-1);
           }
         });
     }
@@ -302,7 +300,7 @@ export default {
   img {
     position: absolute;
     top: 0.15rem;
-    left: 4.8rem;
+    left: 4.7rem;
   }
 }
 /*立即注册按钮*/

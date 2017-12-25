@@ -6,13 +6,16 @@
     </div>
     <div class="middle">
       <div class="phone">
-        <input type="number" v-model="boxVal" placeholder="  请输入手机号码">
+        <input type="number" @blur="phonBlur" v-model="phone" placeholder="  请输入手机号码">
       </div>
       <div class="password">
-        <input type="password" v-model="boxPasw" placeholder="  请输入密码">
+        <input :type="pswd" @blur="pawOnBlur" v-model="boxPasw" placeholder="  请输入密码">
+        <div @click="concealPS">
+          <img :src="suo" alt="">
+        </div>
       </div>
       <div class="picture">
-        <input type="text" v-model="imgV" placeholder="  请输入验证码">
+        <input type="text" v-model="imgCode" @blur="verCode" placeholder="  请输入验证码">
         <div class="verifyI" @click="imgReflash">
           <img :src="imgUrl" alt="">
         </div>
@@ -25,6 +28,10 @@
 <script>
 //三级联动调用
 import dist from "../components/distpicker";
+import { MessageBox } from "mint-ui";
+var md5 = require("md5");
+const head = require("../assets/pc/suo.jpg");
+const headO = require("../assets/pc/suoo.jpg");
 export default {
   data() {
     return {
@@ -32,36 +39,72 @@ export default {
       imgUrl: "/xinda-api/ajaxAuthcode",
       boxPasw: "",
       imgV: "",
-      boxVal:"",
+      phone:"",
+      //手机
+      phone:"",
+      //验证码
+      imgCode: "",
+      //密码
+      boxPasw: "",
+      suo: head,
+      pswd: "password",
     };
   },
   methods: {
+    //手机号
+    phonBlur() {
+      if (!/^1[34578]\d{9}$/.test(this.phone)) {
+        MessageBox("提示", "请输入正确的手机号");
+      }
+    },
+    //密码
+    pawOnBlur() {
+      if (
+        !/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          this.boxPasw
+        )
+      ) {
+        MessageBox("提示", "密码长度6-16位且必须包含大小写字母、数字、字符");
+      }
+    },
+    concealPS() {
+      if (this.pswd == "password") {
+        this.pswd = "text";
+        this.suo = headO;
+      } else {
+        this.pswd = "password";
+        this.suo = head;
+      }
+    },
     //图片验证
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    //立即注册
+    //验证码
+    verCode() {
+      if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+        MessageBox("提示", "您输入验证码不正确");
+      }
+    },
+    //立即登录
     iregister() {
-      var that = this
-      var pw = this.boxPasw;
-      var md5 = require("md5");
       this.ajax
         .post(
           "/xinda-api/sso/login",
           this.qs.stringify({
-            loginId: this.boxVal,
-            password: md5(pw),
+            loginId: this.phone,
+            password: md5(this.boxPasw),
             imgCode: this.imgV
           })
         )
         .then(data => {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
-          // if (status == 1) {
-            // this.setuserName(that.boxVal);
-            // sessionStorage.setItem("userName", this.boxVal);
-            // this.$router.push({ path: "/" });
-          // }
+          if (status == 1) {
+            this.setuserName(this.phone);
+            sessionStorage.setItem("userName", this.phone);
+            this.$router.go(-1);
+          }
         });
     }
   },
@@ -125,11 +168,17 @@ export default {
   height: 0.77rem;
   margin-top: 0.32rem;
   line-height: 0.2rem;
+  position: relative;
   input {
     width: 5.48rem;
     height: 0.75rem;
     border: 0.01rem solid #b0b0b0;
     font-size: 30%;
+  }
+  img {
+    position: absolute;
+    top: 0.15rem;
+    left: 4.7rem;
   }
 }
 /*图片验证*/

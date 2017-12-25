@@ -117,20 +117,6 @@ export default {
         this.suo = head;
       }
     },
-    // getcode() {
-    //   this.ajax
-    //     .post(
-    //       "/xinda-api/register/sendsms",
-    //       this.qs.stringify({
-    //         cellphone: this.boxVal,
-    //         smsType: 1,
-    //         imgCode: this.imgV
-    //       })
-    //     )
-    //     .then(data => {
-    //       console.log("点击验证码", data.data.msg, data.data.status);
-    //     });
-    // },
     onBlurI: function() {
       var pw = this.boxPasw;
       var md5 = require("md5");
@@ -145,7 +131,7 @@ export default {
         this.boxPC = true;
       }
     },
-    onBlurII: function() {
+    onBlurII() {
       var pw = this.boxPaswI;
       var md5 = require("md5");
       console.log(md5(pw));
