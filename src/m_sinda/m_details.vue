@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="headed">
       <div>
-        <img src :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+        <img src :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="图片无法显示">
       </div>
       <div class="company">
         <p>{{product.name}}</p>
@@ -25,7 +25,7 @@
         </div>
         <div class="service">
           <div class="picture">
-            <img :src="'http://115.182.107.203:8088/xinda/pic' + provider.providerImg" alt="">
+            <img :src="'http://115.182.107.203:8088/xinda/pic' + provider.providerImg" alt="图片无法显示">
           </div>
           <ul>
             <li>{{provider.name}}</li>
@@ -310,7 +310,7 @@ export default {
       span {
         position: absolute;
         right: 6.35rem;
-        top: 0.6rem;
+        top: 0.62rem;
         border-top: 4px solid #fff;
         border-bottom: 4px solid #2693d4;
         border-left: 4px solid #fff;
@@ -355,7 +355,7 @@ export default {
       span {
         position: absolute;
         right: 6.35rem;
-        top: 0.61rem;
+        top: 0.62rem;
         border-top: 4px solid #fff;
         border-bottom: 4px solid #2693d4;
         border-left: 4px solid #fff;

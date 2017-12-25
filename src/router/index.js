@@ -29,6 +29,7 @@ import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
+
 import pro from '../views/sinda_list/sinda_products' //商品详情
 import com from '../views/sinda_list/company' //公司工商
 import list_list from '../views/sinda_list/list_list' //公司工商
@@ -50,6 +51,7 @@ import generic from '../components/generic' //未登录
 import logged from '../components/logged' //已登录
 import shoppingCard from '../components/shoppingCard' //购物车
 import listPage from '../components/listPage' //购物车
+import shoppingstalley from '../components/shoppingstalley.vue' //购物车空
 import set from '../components/set' //账户设置
 import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
@@ -244,6 +246,10 @@ export default new Router({
         path: '/shoppingCard', //购物车
         name: 'shoppingCard',
         component: shoppingCard
+    }, {
+        path: '/shoppingstalley', //购物车空
+        name: 'shoppingstalley',
+        component: shoppingstalley
     }, {
         path: '/listPage', //列表页
         name: 'listPage',
