@@ -26,6 +26,12 @@
 export default {
   created() {
     var that = this;
+    var id = this.$route.query.id;
+    !function(){
+      if(!id){
+        location.href="#/m_storelist";
+      
+    }
     that.ajax
       .post(
         //请求店铺商品信息
@@ -33,16 +39,17 @@ export default {
 
         that.qs.stringify({
           start: 0,
-          //不加限制条数的参数，获取所有数据
           // providerId: "9080f0c120a64eb3831d50ba93c33e78",
-          providerId: this.$route.query.id,
+          providerId: id,
           sort: 2
         })
       )
       .then(function(data) {
-        // var shop = data.data.data;
+        // var lists = data.data.data;
         that.lists = data.data.data;
+        console.log(that.lists)
       });
+    }()
   },
 
   data() {
@@ -50,15 +57,15 @@ export default {
       lists: [],
       number: [],
       page: 1,
-      id: ["0cb85ec6b63b41fc8aa07133b6144ea3"]
+      id: "17a2bbe928104677952ef12d8faff685"
     };
   },
 
   methods: {
-    dianji: function(id) {
+    dianji: function(providerId) {
       this.$router.push({
-        path: "../details",
-        query: { id: id }
+        path: "/details",
+        query: { sId: providerId }
       });
 
       return;
