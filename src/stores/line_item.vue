@@ -73,7 +73,7 @@
             <div class="we-pay" id="weipay" v-if="weback">
                 <div class="pay-header">
                     <p class="lageheader">微信支付</p>
-                    <p class="cha" @click='cha'>X</p>
+                    <p class="cha" @click='cha'>&#10005</p>
                 </div>
                 <span class="QRcode"></span>
                 <p class="wechatlage">请用微信扫一扫 进行扫码支付</p>
@@ -86,18 +86,17 @@
             </div>
         </div>
         <div class="feedback" v-if="feedback">
-            <div class="feedheader">
-                <p style="display:inline" class="feedlage">支付反馈</p>
-                <a href="javascript:void(0)" class="clean" @click="clean">X</a>
-            </div>
-            <p class="lagefeed">请您在新打开的页面完成订单付款</p>
-            <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
-            <div class="feedbody">
-                <a class="wancheng" href="javascript:void(0)" @click="success">已完成支付</a>
-                <a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
-            </div>
-            <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
-        </div>
+                    <div class="feedheader">
+                        <p style="display:inline" class="feedlage">支付反馈</p>
+                        <a href="javascript:void(0)" class="clean" @click="clean">&#10005</a>
+                    </div>
+                        <p class="lagefeed">请您在新打开的页面完成订单付款</p>
+                        <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
+                    <div class="feedbody">
+                        <a class="wancheng" href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
+                     </div>
+                     <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
+                </div>
     </div>
 
 </template>
@@ -106,6 +105,43 @@
 import sinda_header from "../components/sinda_global_header"; // 公共头部
 import sinda_footer from "../components/sinda_global_footer"; //公共底部
 export default {
+    created() {
+    var that = this;
+    this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/business-order/detail",this.qs.stringify({
+         businessNo:"S1704040001075133085"//订单明细          
+        }))
+        .then(function (data){
+            var item= data.data;
+            console.log(item);
+        })
+    this.ajax
+      .post("http://115.182.107.203:8088/xinda/xinda-api/pay/detail", this.qs.stringify({
+         businessNo:"S1704040001075133085"//订单详情
+        
+        }))
+      .then(function(data) {
+    
+       
+      });
+      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/china-pay",this.qs.stringify({
+         businessNo:"S1704040001075133085"//银联支付
+        
+        }))
+        .then(function (data){})
+      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/ali-pay",this.qs.stringify({
+         businessNo:"S1704040001075133085"//支付宝支付
+        
+        }))
+        .then(function (data){})
+      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/ weixin-pay",this.qs.stringify({
+         businessNo:"S1704040001075133085"//微信支付
+          
+        }))
+        .then(function (data){})
+       
+        
+    },
+    
   data() {
     return {
       weback: false,
@@ -308,6 +344,7 @@ export default {
             font-size: 15px;
             color:#2693d4;
             margin-top: 20px;
+             cursor: pointer;
         }
     }
     .bigbox{
@@ -381,6 +418,7 @@ export default {
            .cha{
                      margin-left: 140px;
                      font-size: 13px;
+                     cursor: pointer;
             }
             .lageheader{
                 font-size: 13px;
