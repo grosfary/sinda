@@ -1,7 +1,7 @@
 <template>
   <div class="whole">
     <div class="top">
-      <p class="topI"></p>
+      <p class="topI" @click="back()"></p>
       <p class="topII">忘记密码</p>
     </div>
     <div class="middle">
@@ -61,6 +61,9 @@ export default {
     };
   },
   methods: {
+     back(){
+      this.$router.go(-1);
+    },
     //手机号
     onBlur() {
       if (/^1[34578]\d{9}$/.test(this.phone)) {
