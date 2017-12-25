@@ -30,7 +30,7 @@ export default {
       .post(
         "/xinda-api/provider/detail",
         this.qs.stringify({
-          id: "9080f0c120a64eb3831d50ba93c33e78"
+          id: this.$route.query.id
           //请求店铺信息
         })
       )

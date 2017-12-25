@@ -34,24 +34,15 @@ export default {
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据
-          providerId: "9080f0c120a64eb3831d50ba93c33e78",
+          // providerId: "9080f0c120a64eb3831d50ba93c33e78",
+          providerId: this.$route.query.id,
           sort: 2
         })
       )
       .then(function(data) {
         // var shop = data.data.data;
         that.lists = data.data.data;
-
-        // shops(shop);
       });
-    //数据处理函数
-    // var shops = function(shopping) {
-    //   for (var key in shopping) {
-    //     shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
-    //   }
-    //   that.lists = shopping;
-    //   console.log(that.lists);
-    // };
   },
 
   data() {
@@ -59,19 +50,17 @@ export default {
       lists: [],
       number: [],
       page: 1,
-     id:['0cb85ec6b63b41fc8aa07133b6144ea3'],
+      id: ["0cb85ec6b63b41fc8aa07133b6144ea3"]
     };
   },
 
   methods: {
-    dianji:function(id) {
-   
+    dianji: function(id) {
       this.$router.push({
-        path:'../details',
-        query: {id:id}
-        
+        path: "../details",
+        query: { id: id }
       });
-     
+
       return;
     }
   }
@@ -108,6 +97,7 @@ export default {
   padding: 0.3rem 0.2rem;
   display: flex;
   .picture {
+    display: flex;
     align-items: center;
   }
 

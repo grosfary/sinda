@@ -135,7 +135,7 @@ export default {
   },
   data() {
     return {
-      show: false,
+      show: true,
       index: "",
       inde: "",
       products: [],
