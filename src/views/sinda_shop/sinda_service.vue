@@ -29,7 +29,7 @@
 export default {
   created() {
     var that = this;
-    // console.log('this.$route.query.Name==',that.$route.query.Name)
+    
     that.ajax
       .post(
         //请求店铺商品信息
@@ -52,7 +52,6 @@ export default {
     //数据处理函数
     var shops = function(shopping) {
       for (var key in shopping) {
-        // shopping[key].price = Math.floor(shopping[key].marketPrice * 1.2);
         if (shopping[key].serviceName.length > 11) {
           shopping[key].serviceName =
             shopping[key].serviceName.substr(0, 11) + "...";
@@ -84,8 +83,8 @@ export default {
       lists: [],
       dat: [],
       number: [],
-      page: 1
-      // shop:[],
+      page: 1,
+      shop:[],
     };
   },
 
