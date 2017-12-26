@@ -61,18 +61,27 @@ export default {
      },
     //手机号
     phonBlur() {
+      if(this.phone !=""){
       if (!/^1[34578]\d{9}$/.test(this.phone)) {
         MessageBox("提示", "请输入正确的手机号");
+      }
+      }else{       
+        MessageBox("提示", "手机号不能为空");
       }
     },
     //密码
     pawOnBlur() {
+      if(this.boxPasw !=""){
       if (
         !/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
           this.boxPasw
         )
       ) {
         MessageBox("提示", "密码长度6-16位且必须包含大小写字母、数字、字符");
+      }
+      }
+      else{       
+        MessageBox("提示", "密码不能为空");
       }
     },
     concealPS() {
@@ -96,9 +105,13 @@ export default {
     //立即注册
     //验证码
     verCode() {
+      if(this.imgCode !=""){
       if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
         MessageBox("提示", "您输入验证码不正确");
       }
+     }else{
+       MessageBox("提示","验证码不能为空")
+     }
     },
     //立即登录
     iregister() {

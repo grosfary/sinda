@@ -6,14 +6,17 @@
         <div class="loginfirst">
           <input class="boxT" type="number" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号码">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
+          <p class="boxtxt" v-show="boxtxt">*手机号不能为空</p>
           <input :type="pswd" class="boxP" @blur="onBlurI" v-model="boxPasw" placeholder="请输入密码">
           <div id="xianshi" @click="concealPS">
             <img id="cloImg" :src="suo" alt="">
           </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
+          <p class="boxmima" v-show="boxmima">*密码不能为空</p>
           <div>
             <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
             <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
+            <p class="boxcode" v-show="boxcode">*验证码不能为空</p>
             <div class="verify" @click="imgReflash">
               <img :src="imgUrl" alt="">
             </div>
@@ -51,9 +54,12 @@ export default {
       boxPasw: "",
       boxPC: false,
       imgV: "",
-      boxCode:false,
+      boxCode: false,
       pswd: "password",
       suo: head,
+      boxtxt: false,
+      boxmima:false,
+      boxcode:false
     };
   },
   methods: {
@@ -77,16 +83,23 @@ export default {
         });
     },
     onBlur() {
-      if (/^1[34578]\d{9}$/.test(this.boxVal)) {
-        this.boxTC = false;
+      if (this.boxVal != "") {
+        if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+          this.boxTC = false;
+        } else {
+          this.boxTC = true;
+           this.boxtxt=false;
+        }
       } else {
-        this.boxTC = true;
+        this.boxtxt=true;
+        this.boxTC=false;
       }
     },
     onBlurI() {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
+      if(pw !=""){
       if (
         /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
           this.boxPasw
@@ -95,7 +108,12 @@ export default {
         this.boxPC = false;
       } else {
         this.boxPC = true;
+        this.boxmima=false;
       }
+    }else{
+      this.boxmima=true
+       this.boxPC = false;
+    }
     },
     concealPS() {
       if (this.pswd == "password") {
@@ -127,17 +145,23 @@ export default {
         });
     },
     verCode() {
+      if(this.imgV != ""){
       if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
         this.boxCode = false;
       } else {
         this.boxCode = true;
+        this.boxcode=false;
       }
+    }else{
+      this.boxcode=true;
+      this.boxCode=false;
     }
   },
   created: function() {
     this.setloginState("登录");
   },
   components: { LRhead }
+  }
 };
 </script>
 
@@ -245,6 +269,14 @@ input::-webkit-outer-spin-button {
   left: 295px;
   position: absolute;
 }
+.boxtxt {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 8px;
+  left: 295px;
+  position: absolute;
+}
 .boxpas {
   width: 180px;
   color: #fb81fd;
@@ -253,7 +285,23 @@ input::-webkit-outer-spin-button {
   left: 285px;
   position: absolute;
 }
+.boxmima {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 64px;
+  left: 285px;
+  position: absolute;
+}
 .vCode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 129px;
+  left: 295px;
+  position: absolute;
+}
+.boxcode {
   width: 180px;
   color: #fb81fd;
   font-size: 12px;
