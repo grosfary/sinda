@@ -1,19 +1,22 @@
 <template>
   <div class="hello">
-    <div>
+    <div class='bottom'>
       <div class='top'>购物车内共有件商品</div>
-    <div class='back'>
+    <div class='back' v-for = 'product in products' :key='product.data'>
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
-
+                <img v-bind:src="('http://115.182.107.203:8088/xinda/pic'+product.providerImg)">
             </div>
             <div class='deta'>
                 <span>新公司注册</span><br>
-                <span>￥</span><br>
-                <span class='doller'>购买数量</span><br>
+                <span>￥{{product.unitPrice}}</span><br>
+                <span class='doller'>购买数量:
+
+                  </span><br>
                 <span class='doller'>地区</span>
             </div>
+            <div class='delet'>删除订单</div>
           </div>
       </div>
     </div>
@@ -30,6 +33,10 @@
         </div>
       </div>
      </div>
+     </div>
+     <div class='bottomInfor'>
+       <div class='aggre'>合计：</div>
+       <div class='pay'>去结算</div>
      </div>
   </div>
 </template>
@@ -71,7 +78,12 @@ export default {
     };
   },
   created() {
-  
+    var that = this;
+    this.ajax.post("/xinda-api/cart/list", {}).then(data => {
+      data = data.data.data;
+      that.products = data;
+      console.log(data);
+    });
   }
 };
 </script>
@@ -83,8 +95,8 @@ export default {
   display: block;
   clear: both;
 }
-.back{
-    background: #f8f8f8;
+.back {
+  background: #f8f8f8;
 }
 .hello {
   width: 100%;
@@ -101,11 +113,11 @@ export default {
   width: 90%;
   height: 2.1rem;
   position: relative;
-  margin:0 auto;
-  border-bottom:1px solid #7b7b7b;
+  margin: 0 auto;
+  display: flex;
+  border-bottom: 1px solid #7b7b7b;
 }
 .img {
-  position: absolute;
   display: flex;
   top: 0;
   bottom: 0;
@@ -113,15 +125,22 @@ export default {
   right: 0;
   width: 100%;
   height: 1.7rem;
+  align-self: center;
+  .delet{
+    line-height:1.7rem;
+    position:absolute;
+    right:0;
+    color:red;
+  }
 }
 .imgs {
-  width: 1.7rem;
-  height: 1.7rem;
-  margin-left: 0.17rem;
+  width: 1.6rem;
+  img {
+    width: 90%;
+    height: 100%;
+  }
 }
 .deta {
-  width: 3.4rem;
-  height: 1.7rem;
   span {
     line-height: 2;
   }
@@ -183,6 +202,32 @@ export default {
   .color {
     background: #2693d4;
     color: #fff;
+  }
+}
+.bottom {
+  margin-bottom: 1.1rem;
+}
+.bottomInfor {
+  width: 100%;
+  height: 1.1rem;
+  display:flex;
+  font-size:31px;
+  position: fixed;
+  bottom:0;
+  .aggre{
+    background:#e5e5e5;
+    width:70%;
+    height:1.1rem;
+    line-height:1.1rem;
+    text-indent:0.3rem;
+  }
+  .pay{
+    background:red;
+    width:30%;
+    height:1.1rem;
+    text-align:center;
+    margin:0 auto;
+    line-height:1.1rem;
   }
 }
 </style>

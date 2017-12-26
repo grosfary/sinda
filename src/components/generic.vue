@@ -6,13 +6,13 @@
       </div>
       <div class='submit'>
         <nobr>
-            <input type="submit" value="注册">
-            <input type="submit" value="登录">
+            <router-link :to="{path:'/registerP'}"><input type="submit" value="注册"></router-link>
+            <router-link :to="{path:'/loginP'}"><input type="submit" value="登录"></router-link>
         </nobr>
       </div>
       <div class='set'>
-        <div class='myorder'>我的订单</div>
-        <div class='myset'><div>账户设置</div></div>
+        <router-link :to="{path:'/loginP'}"><div class='myorder'>我的订单</div></router-link>
+        <router-link :to="{path:'/loginP'}"><div class='myset'><div>账户设置</div></div></router-link>
       </div>
     </div>
   </div>

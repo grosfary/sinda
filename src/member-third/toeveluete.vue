@@ -49,15 +49,15 @@
               <div class='unit'><div>{{prod.status}}</div></div>
               <div class='num'><div>{{prod.buyNum}}</div></div>
               <div class='sum'><div >{{prod.totalPrice}}</div></div>
-              <div class='state'><div>{{prod.unit}}</div></div>
+              <div class='state'><div>等待买家付款</div></div>
           
             </div>
             </div>
             </div>
                 <div class='operation'>
-                <div>
-                  <a href="#/line_item"><input type="submit" class='pay' value="付款"></a>
-                  <input type="submit" class = 'delet' value="删除订单" @click="alert(product.id,ind,prod)">
+                <div class='ope'>
+                  <a href="#/line_item"><input type="submit" class='pay' value="付款"></a><br>
+                  <input type="submit" class = 'delet' value="删除订单" @click="alert(product.id,ind)">
                 </div>
               </div>
             </div>
@@ -107,12 +107,14 @@ export default {
             id: this.code
           })
         )
-        .then(function(data) {});
+        .then(function(data) {
+          console.log(data)
+        });
     },
     hide: function() {
       this.show = false;
     },
-    alert: function(code, ind, prod) {
+    alert: function(code, ind) {
       this.show = true;
       this.code = code;
       this.ind = ind;
@@ -163,6 +165,7 @@ export default {
         )
         .then(function(data) {
           var data = data.data.data;
+          var tempData = {}
           that.products = [];
           for (var key in data) {
             var businessNo = data[key].businessNo;
@@ -172,6 +175,32 @@ export default {
             }
             tempData[businessNo].subItem.push(data[key]);
             that.products = tempData;
+        var furn = [];
+      for (key in tempData) {
+        furn.push(tempData[key]);
+      }
+      that.rData = furn; //所需的数据
+      if (furn.length > 2) {
+        //判断数据长度是否大于2
+        that.array.push(that.rData[0]);
+        that.ned = true;
+        var arr = [];
+        furn = 0;
+        arr.push(that.rData[0]); //一二条数据相加
+        arr.push(that.rData[1]);
+        that.products = arr;
+        var numeral = Math.ceil(furn.length / 2); //判断应该产生多少按钮
+        for (let i = 1; i <= numeral; i++) {
+          //循环button按钮
+          (function(j) {
+            that.buttons.push(i); //每个按钮编号
+            that.abb = numeral; //按钮号
+          })(i);
+        }
+      } else {
+        that.products = that.rData; //小于二时，将所有数据添加
+        that.ned = false;
+      }
           }
         });
     },
@@ -185,7 +214,6 @@ export default {
         console.log(this.rData[(bum + 1) * 2 - 2]);
         array.push(this.rData[(bum + 1) * 2 - 2]);
         array.push(this.rData[(bum + 1) * 2 - 1]);
-        // array.push(this.rData[(bum+1)*2-1]);//添加数据
       }
       this.products = array; //将所有数据添加
       this.col = bum;
@@ -195,6 +223,7 @@ export default {
     var that = this;
     this.ajax.post("/xinda-api/service-order/grid", {}).then(function(data) {
       data = data.data.data;
+      console.log(data)
       var tempData = {};
       for (var key in data) {
         var businessNo = data[key].businessNo;
@@ -263,7 +292,6 @@ export default {
       data: [],
       code: [],
       box: false,
-      tempData: {},
       ind: ""
     };
   },
@@ -290,6 +318,7 @@ export default {
   position: absolute;
   left: 0;
   margin-top: 0.5%;
+  margin-left:0.5%;
   img {
     width: 100%;
     height: 100%;
@@ -311,7 +340,7 @@ export default {
     background: #2592d3;
     line-height: 34px;
     margin-left: 10px;
-    text-indent: 11px;
+    text-align: center;
     border: 1px solid #2592d3;
   }
   .pages {
@@ -320,7 +349,7 @@ export default {
     color: #ccc;
     line-height: 34px;
     margin-left: 10px;
-    text-indent: 11px;
+    text-align: center;
     border: 1px solid #ccc;
   }
 }
@@ -389,8 +418,6 @@ export default {
   border: 1px solid #000;
 }
 .pay {
-  margin-top: 0px;
-  margin-left: 92px;
   background: #2693d4;
   color: #fff;
   width: 56px;
@@ -398,8 +425,6 @@ export default {
   border: 2px solid #2693d4;
 }
 .delet {
-  margin-top: 0px;
-  margin-left: 92px;
   background: #fff;
   border: 0;
   color: red;
@@ -481,7 +506,7 @@ export default {
   height: 35px;
   background: #f7f7f7;
   font-weight: 700;
-  border: 1px solid #2693d4;
+  border: 1px solid #e8e8e8;
   div {
     line-height: 35px;
     float: left;
@@ -511,7 +536,7 @@ export default {
     height: 35px;
   }
   .operation {
-    width: 136px;
+    width: 150px;
     height: 35px;
   }
 }
@@ -536,7 +561,7 @@ export default {
 }
 .deta {
   display: flex;
-  width: 935px;
+  width: 817px;
   height: 93px;
   background: #fff;
   font-weight: 400;
@@ -574,14 +599,19 @@ export default {
   .state {
     width: 141px;
     margin-top: 3%;
-  }
-  .operation {
-    width: 136px;
-    margin-top:1%;
+    color:#0686e1;
   }
 }
 .sss{
   display: flex;
-  border:2px solid #000;
+  border:2px solid #e8e8e8;
+  .operation{
+    width:100px;
+    display:flex;
+    .ope{
+        align-self: center;
+        margin:0 auto;
+    }
+  }
 }
 </style>

@@ -197,6 +197,10 @@ export default new Router({
           component: m_shop_service,
         }]
       }, {
+        path: 'details', // 手机端商品详情
+        name: 'm_details',
+        component: m_details,
+    },{
         path: '/m.out', // 手机端公共页面 不包含底部
         name: 'm.out',
         component: m_out,
