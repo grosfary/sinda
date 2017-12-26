@@ -121,16 +121,16 @@ export default {
           this.qs.stringify({
             loginId: this.phone,
             password: md5(this.boxPasw),
-            imgCode: this.imgV
+            imgCode: this.imgCode
           })
         )
         .then(data => {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
           if (status == 1) {
-            this.setuserName(this.phone);
-            sessionStorage.setItem("userName", this.phone);
-            this.$router.go(-1);
+            // this.setuserName(this.phone);
+            // sessionStorage.setItem("userName", this.phone);
+            this.$router.push({ path: "/m.sinda" });
           }
         });
     }
