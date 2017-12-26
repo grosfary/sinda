@@ -87,7 +87,7 @@
 <script>
 import member from "../views/sinda_member";
 import { mapGetters } from "vuex";
-import { formatDate } from "../../config/date";
+import { formatDate } from "../../static/date/date";
 export default {
   filters: {
     formatDate(time) {
