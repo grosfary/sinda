@@ -62,6 +62,7 @@ import loginP from '../components/loginP' //手机端注册
 import cipher from '../components/cipher' //手机忘记密码
 Vue.use(Router)
 
+
 // pc端
 // 信达的登录注册页面和其他页面的公共头部不一样，
 // 所以有两个一级路由global和loginregister
@@ -262,6 +263,9 @@ export default new Router({
             path: '/cipher',
             name: 'cipher',
             component: cipher
+        }, {
+            path: '/details', //登录
+            component: m_details
         }
     ]
 })
