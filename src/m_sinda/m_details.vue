@@ -3,7 +3,7 @@
     <div class="headed">
       <div class="imgbox">
         <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
-        <img src="../assets/gongyon/123.jpg" alt="">
+        <!-- <img src="../assets/gongyon/123.jpg" alt=""> -->
         <!-- onerror="this.src='../assets/gongyon/123.jpg'"  -->
       </div>
       <div class="company">
@@ -117,6 +117,7 @@ export default {
         })
       )
       .then(function(data) {
+        console.log(data)
         // console.log(that.$router.query.id)
         var shop = data.data.data;
         that.product = shop.product;
@@ -222,7 +223,6 @@ export default {
     .headed {
       position: relative;
       .imgbox{
-        display: flex;
         overflow: hidden;
         img{
           width: 100%

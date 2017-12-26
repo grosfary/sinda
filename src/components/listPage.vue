@@ -8,7 +8,7 @@
         </div>
       </div>
    <div class='back' v-for='product in products' :key="product.data">
-      <router-link :to="{path:'/details',query:{id:product.id}}" @click='ccc'>
+      <router-link :to="{path:'/details',query:{sId:product.id}}">
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
@@ -45,9 +45,6 @@ export default {
     };
   },
   methods: {
-    ccc:function(){
-      this.$router.query.id;
-    },
     aaa: function(number) {
       //sort背景颜色
       this.number = number;
