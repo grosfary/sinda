@@ -9,7 +9,7 @@
       <div class='content' v-for="prod in product.subItem" :key="prod.id">
           <div class='img'>
             <div class='imgs'>
-
+                <img :src="('http://115.182.107.203:8088/xinda/pic'+prod.service)">
             </div>
             <div class='deta'>
                 <span>新公司注册</span><br>
@@ -88,7 +88,8 @@ export default {
       inde: "",
       products: [],
       code:[],
-      key:[]
+      key:[],
+      src:''
     };
   },
   created() {
@@ -110,6 +111,7 @@ export default {
           tempData[businessNo].subItem.push(data[key]);
           tempData[businessNo].total = tempData[businessNo].total+data[key].totalPrice;
           that.products = tempData;
+          console.log(tempData)
         }
         that.ajax.post(
               '/xinda-api/business-order/grid',{//业务订单与服务订单联系
@@ -119,6 +121,18 @@ export default {
                   for (var key in data) {
                     if(tempData[data[key].businessNo]){
                        tempData[data[key].businessNo].id = data[key].id;
+                       var prodata = data;
+                       that.ajax.post(
+                            '/xinda-api/provider/detail',that.qs.stringify({//logo
+                            id:tempData[data[key].businessNo].providerId
+                            })).then(
+                              function(data){
+                                var data = data.data.data;
+                                                                console.log(tempData[prodata[key].businessNo])
+
+                                tempData[prodata[key].businessNo].service =  data.providerImg;
+                              }
+                            )
                     }
                   }
                 }
