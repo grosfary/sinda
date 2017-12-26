@@ -6,6 +6,10 @@
       </div>
       <div class='submit'>
         <div class='name'>{{userName}}</div>
+        <nobr>
+            <router-link :to="{path:'/registerP'}"><input type="submit" value="注册"></router-link>
+            <router-link :to="{path:'/loginP'}"><input type="submit" value="登录"></router-link>
+        </nobr>
       </div>
       <div class='set'>
         <a href="#/myOrder"><div class='myorder'>我的订单</div></a>
@@ -37,6 +41,10 @@ export default {
     };
   },
   created() {
+    // console.log(sessionStorage.getItem("userName"))
+    // if(sessionStorage.getItem("userName")){
+    //   return this.$router.push({path:'/generic'})
+    // }
     this.userName = sessionStorage.getItem("userName");
   },
   methods: {
