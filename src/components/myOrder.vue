@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
       <div class='top'>我的订单</div>
-    <div v-for='product in products' :key='product.rData' v-show='read'>
+    <div v-for='(product,key,index) in products' :key='product.rData'>
       <div class='numberpay clear'>
         <div class='number'>订单号：{{product.businessNo}}</div>
         <div class='pay'>等待买家付款</div>
@@ -14,14 +14,14 @@
             <div class='deta'>
                 <span>新公司注册</span><br>
                 <span>下单时间：{{prod.createTime | formatDate}}</span><br>
-                <span class='doller'>￥{{prod.totalPrice}}</span>
+                <span class='doller'>￥{{prod.buyNum}}</span><span class='red'>　　x{{prod.status}}</span>
             </div>
           </div>
       </div>
       <div class='balance'>
         <div class='num'>合计：￥{{product.total}}</div>
         <div class='account'>
-          <input type="submit" value='删除订单' class='delete' @click="alert(product.id)">
+          <input type="submit" value='删除订单' class='delete' @click="alert(product.id,index,key)">
           <input type="submit" value='付款'>
         </div>
       </div>
@@ -53,9 +53,10 @@ export default {
     }
   },
   methods: {
-    alert: function(code) {
+    alert: function(code,index,key) {
       this.show = true;
       this.code = code;
+      this.key = key;
     },
     submit: function(index) {
       this.index = index;
@@ -63,15 +64,17 @@ export default {
     hidedate: function(code) {
       this.show = false;
       var that = this;
+      delete this.products[this.key]
+      console.log(this.key)
       this.ajax
         .post(
-          "/xinda-api/ business-order/del",
+          "/xinda-api/business-order/del",
           this.qs.stringify({
             id: this.code
           })
         )
         .then(function(data) {
-          that.read = false;
+          
         });
     },
     hide: function() {
@@ -85,7 +88,7 @@ export default {
       inde: "",
       products: [],
       code:[],
-      read:true
+      key:[]
     };
   },
   created() {
@@ -96,7 +99,6 @@ export default {
       })
       .then(function(data) {
         data = data.data.data;
-        console.log(data);
         var tempData = {};
         for (var key in data) {
           var businessNo = data[key].businessNo;
@@ -122,6 +124,7 @@ export default {
                 }
               )
       });
+
   }
 };
 </script>
@@ -132,6 +135,9 @@ export default {
   content: "";
   display: block;
   clear: both;
+}
+.red{
+  color:red;
 }
 .line {
   width: 100%;
