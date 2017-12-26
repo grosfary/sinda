@@ -2,14 +2,8 @@
   <div class="detail">
     <div class="headed">
       <div class="imgbox">
-<<<<<<< HEAD
         <img :src="imgURL" :onerror="imgURL='../../static/g_img/123.jpg'" alt="">
 
-=======
-        <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
-        <!-- <img src="../assets/gongyon/123.jpg" alt=""> -->
-        <!-- onerror="this.src='../assets/gongyon/123.jpg'"  -->
->>>>>>> d4e001517449b1935983fb154a6cdc28c001d6da
       </div>
       <div class="company">
         <p>{{product.name}}</p>
