@@ -92,7 +92,6 @@ export default {
     },
     //点击获取
     getCoBut() {
-      this.setNum(0);
       this.get = false;
       this.getNew = true;
       this.ajax
@@ -105,7 +104,7 @@ export default {
           })
         )
         .then(data => {
-          // console.log(data);
+          console.log(data,'data');
         });
     },
     //倒计时
@@ -146,7 +145,7 @@ export default {
     },
     //立即注册
     iregister() {
-      MessageBox("title", "content");
+      // MessageBox("提示", "content");
       this.ajax
         .post(
           "/xinda-api/register/register",
