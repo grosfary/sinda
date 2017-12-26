@@ -8,7 +8,7 @@
         <div class="server">
           <div class="Server">服务分类</div>
           <div class="type" v-for="(itemList1,key,index) in itemLists" :key="itemList1.id" v-if="(index==indexs-1)">
-            <span v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" @click="nowIndexII(index,itemListII)" :class="{title_bg:(index==IndexII)}">{{itemListII.name}}</span>
+            <span v-for="(itemListII,key,index) in itemList1.itemList" :key="itemListII.id" @click="nowIndexII(index,itemListII,itemListII.code)" :class="{title_bg:(index==IndexII)}">{{itemListII.name}}</span>
           </div>
         </div>
 
@@ -126,7 +126,8 @@ export default {
   },
   methods: {
     ...mapActions(["setlistName", "setNum"]),
-    nowIndexII: function(index, i) {
+    nowIndexII: function(index, i,code) {
+      console.log(code)
       this.IndexII = index;
       this.IndexIII = 0;
       var arr = [];
@@ -251,6 +252,7 @@ export default {
       // 三级标题点击事件
       this.IndexIII = index;
       this.pro_type_id = id;
+      console.log(id)
       this.liebiao(this.pro_type_id);
     },
     shangpinxinxi: function() {

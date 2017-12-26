@@ -27,7 +27,7 @@
     <!-- Swiper end  -->
     <!-- Nav  -->
     <div class="home_nav">
-      <div v-for="i in navObj" :key="i.name">
+      <div v-for="i in navObj" :key="i.name" @click="toDetail(i.code,i.id)">
         <div>
           <img :src='i.imgSrc'>
         </div>
@@ -55,8 +55,8 @@
     </div>
     <!-- 公共标题 end -->
     <!-- 初创企业必备 -->
-    <div class="novice_main">
-      <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
+    <div class="novice_main" v-for="(i,index) in noviceMust" :key="i.id">
+      <div class="novice_pro">
         <!-- 初创企业必备产品 -->
         <div class="logo">
           <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
@@ -74,6 +74,7 @@
         </div>
 
       </div>
+      <span></span>
     </div>
     <!-- 初创企业必备 end -->
     <div class="footer">
@@ -101,13 +102,48 @@ export default {
         "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4220262347,3856549398&fm=27&gp=0.jpg"
       ],
       navObj: {
-        a: { name: "财税服务", imgSrc: "../../static/m_img/caishui.png" },
-        b: { name: "开公司", imgSrc: "../../static/m_img/kaigongsi.png" },
-        c: { name: "公司变更", imgSrc: "../../static/m_img/gongsibiangeng.png" },
-        d: { name: "个人社保", imgSrc: "../../static/m_img/gerenshebao.png" },
-        e: { name: "公司社保", imgSrc: "../../static/m_img/gongsishebao.png" },
-        f: { name: "知识产权", imgSrc: "../../static/m_img/zhishichanquan.png" },
-        g: { name: "全部服务", imgSrc: "../../static/m_img/quanbufuwu.png" }
+        a: {
+          name: "财税服务",
+          imgSrc: "../../static/m_img/caishui.png",
+          code: 3,
+          id: ""
+        },
+        b: {
+          name: "开公司",
+          imgSrc: "../../static/m_img/kaigongsi.png",
+          code: 0,
+          id: "19b94314bc1a4b078d2402f8727c388b"
+        },
+        c: {
+          name: "公司变更",
+          imgSrc: "../../static/m_img/gongsibiangeng.png",
+          code: 5,
+          id: ""
+        },
+        d: {
+          name: "个人社保",
+          imgSrc: "../../static/m_img/gerenshebao.png",
+          code: 7,
+          id: ""
+        },
+        e: {
+          name: "公司社保",
+          imgSrc: "../../static/m_img/gongsishebao.png",
+          code: 6,
+          id: ""
+        },
+        f: {
+          name: "知识产权",
+          imgSrc: "../../static/m_img/zhishichanquan.png",
+          code: 10,
+          id: ""
+        },
+        g: {
+          name: "全部服务",
+          imgSrc: "../../static/m_img/quanbufuwu.png",
+          code: 0,
+          id: ""
+        }
       },
       knowledge: {
         a: {
@@ -142,6 +178,9 @@ export default {
   methods: {
     a(index) {
       this.indexs = index;
+    },
+    toDetail(n, i) {
+      this.$router.push({ path: "/listPage", query: { id: i, code: n } });
     }
   },
   created() {
@@ -326,14 +365,14 @@ export default {
   .novice_pro {
     // 初创企业必备产品
     display: flex;
-    margin-left: 0.17rem;
-    margin-right: 0.16rem;
+    margin: 0.27rem 0.16rem 0.21rem 0.17rem;
+
     .logo {
       width: 1.68rem;
       height: 1.68rem;
       border: 0.02rem solid #e3e3e3;
       margin: 0;
-      img{
+      img {
         width: 100%;
       }
     }
@@ -344,14 +383,15 @@ export default {
       h4 {
         // 产品标题
         overflow: hidden;
-        font-size: 0.3rem;font-weight: 100;
+        font-size: 0.3rem;
+        font-weight: 100;
       }
       p {
         // 产品价格
         overflow: hidden;
         font-size: 0.24rem;
         color: red;
-        line-height: 0.27rem;
+        line-height: 0.3rem;
         font-weight: 100;
         height: 1rem;
         span {
@@ -368,6 +408,12 @@ export default {
         color: #000;
       }
     }
+  }
+  > span {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #cfcfcf;
   }
 }
 // ---------------------------------------------------------------------------------------------------
