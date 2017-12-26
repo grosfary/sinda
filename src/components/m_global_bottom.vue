@@ -2,10 +2,10 @@
   <!-- 公共页面底部 -->
   <div class="footer_outer">
     <div class="m_footer">
-      <div v-for="(i,index) in btn" :key="i.name" >
+      <router-link tag="a" :to="i.src" v-for="(i,index) in btn" :key="i.name" >
         <div class="bg" :class="i.class"></div>
         <div>{{i.name}}</div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template> 
@@ -16,16 +16,16 @@ export default {
   data() {
     return {
       btn: {
-        a: { name: "首页", src: "#/", class: "bg_index" },
-        b: { name: "店铺", src: "#/list", class: "bg_shop" },
-        c: { name: "购物车", src: "#/", class: "bg_cart" },
-        d: { name: "我的", src: "#/Join_Us", class: "bg_my" }
+        a: { name: "首页", src: "/m.sinda", class: "bg_index" },
+        b: { name: "店铺", src: "/m_storelist", class: "bg_shop" },
+        c: { name: "购物车", src: "/shoppingCard", class: "bg_cart" },
+        d: { name: "我的", src: "/generic", class: "bg_my" }
       }
     };
   }
 };
 </script>
-
+  
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   // 手机端样式调整

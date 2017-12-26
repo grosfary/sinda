@@ -1,24 +1,32 @@
 <template>
-  <div class="hello">
+  <div class="hel">
     <div class='generic'>
       <div class='head'>
         <img src="../assets/pc/u5086.png" alt="">
       </div>
       <div class='submit'>
         <nobr>
-            <input type="submit" value="注册">
-            <input type="submit" value="登录">
+            <router-link :to="{path:'/registerP'}"><input type="submit" value="注册"></router-link>
+            <router-link :to="{path:'/loginP'}"><input type="submit" value="登录"></router-link>
         </nobr>
       </div>
       <div class='set'>
-        <div class='myorder'>我的订单</div>
-        <div class='myset'><div>账户设置</div></div>
+        <router-link :to="{path:'/loginP'}"><div class='myorder'>我的订单</div></router-link>
+        <router-link :to="{path:'/loginP'}"><div class='myset'><div>账户设置</div></div></router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+export default{
+  created(){
+    //     if(sessionStorage.getItem("userName")){
+    //   return this.$router.push({path:'/logged'})
+    // }
+  }
+}
+
 </script>
 
 <style scoped lang="less">
@@ -28,7 +36,7 @@ html {
 body {
   min-width: 300px;
 }
-.hello {
+.hel {
   width: 100%;
   .generic {
     width: 90%;

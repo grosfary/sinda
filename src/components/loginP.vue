@@ -1,7 +1,7 @@
 <template>
   <div class="whole">
     <div class="top">
-      <p class="topI"></p>
+      <p class="topI" @click="back()"></p>
       <p class="topII">登录</p>
     </div>
     <div class="middle">
@@ -22,6 +22,11 @@
       </div>
       <button class="promptly" @click="iregister">立即登录</button>
     </div>
+    <div class="bottom">
+      <p>还没有薪客账号</p>
+      <button @click="enroll()">立即注册</button>
+    </div>
+    
   </div>
 </template>
 
@@ -51,6 +56,9 @@ export default {
     };
   },
   methods: {
+     back(){
+      this.$router.go(-1);
+     },
     //手机号
     phonBlur() {
       if (!/^1[34578]\d{9}$/.test(this.phone)) {
@@ -80,6 +88,12 @@ export default {
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
+    enroll(){
+      this.$router.push({
+        path:"/registerP"
+      })
+    },
+    //立即注册
     //验证码
     verCode() {
       if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
@@ -115,7 +129,8 @@ export default {
 
 <style scoped lang="less">
 .whole {
-  width: 100%;
+  width: 7.5rem;
+  margin: 0 auto;
 }
 //顶部
 .top {
@@ -214,6 +229,34 @@ export default {
   font-size: 30%;
   margin: 0 auto;
   color: #fff;
+}
+.bottom{
+  width: 7.5rem;
+  background: #4d4d4d;
+  position: fixed;
+  bottom: 0;
+  margin: 0 auto;
+  height: 0.7rem;
+  // text-align: center;
+  p{
+    font-size: 0.3rem;
+    padding-left: 0.8rem;
+    line-height: 0.7rem;
+    color: #d6d6d6;
+  }
+  button{
+      position: fixed;
+    color: #000;
+    bottom: 0.05rem;
+    left:5.5rem;
+    padding:0.15rem 0.4rem;
+    background: #2693d4;
+    color:#fff;
+    font-size: 0.25rem;
+    font-family: "黑体";
+    border:none;
+    border-radius: 4px;
+  }
 }
 </style>
 

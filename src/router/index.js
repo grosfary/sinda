@@ -34,7 +34,9 @@ import cart from '../views/sinda_list/sinda_cart' //购物车
 import pro from '../views/sinda_list/sinda_products' //商品详情
 import com from '../views/sinda_list/company' //公司工商
 import list_list from '../views/sinda_list/list_list' //公司工商
-import { MessageBox } from "mint-ui";
+import {
+    MessageBox
+} from "mint-ui";
 
 // -----------------------------------------------------------------------------------------------------------------------
 // 手机端
@@ -58,7 +60,8 @@ import set from '../components/set' //账户设置
 import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
 import m_details from '../m_sinda/m_details' //手机端商品详情
-import loginP from '../components/loginP' //手机端注册
+import loginP from '../components/loginP' //手机端登录
+import cipher from '../components/cipher' //手机端忘记密码
 Vue.use(Router)
 
 
@@ -192,6 +195,21 @@ export default new Router({
                     path: '/', // 手机端的首页
                     component: m_index
                 }, {
+                    path: '/classify', // 手机端的列表页
+                    component: m_classify
+                }, {
+
+                    path: '/shoppingCard', //购物车
+                    name: 'shoppingCard',
+                    component: shoppingCard
+                }, {
+                    path: '/generic', //未注册
+                    name: 'generic',
+                    component: generic
+                }, {
+                    path: '/m_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+                    component: m_storelist
+                }, {
                     path: 'shop', // 手机端的店铺页
                     component: m_shop,
                     redirect: "shop/service",
@@ -217,9 +235,6 @@ export default new Router({
 
             ]
         }, {
-            path: '/m_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
-            component: m_storelist
-        }, {
             path: '/m_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
             component: m_joinus,
         }, {
@@ -227,10 +242,6 @@ export default new Router({
             component: m_lineitem
         },
         {
-            path: '/generic', //未注册
-            name: 'generic',
-            component: generic
-        }, {
             path: '/logged', //已登录
             name: 'logged',
             component: logged
@@ -243,13 +254,45 @@ export default new Router({
             name: 'myOrder',
             component: myOrder
         }, {
-            path: '/shoppingCard', //购物车
-            name: 'shoppingCard',
-            component: shoppingCard
+            path: '/m.out', // 手机端公共页面 不包含底部
+            name: 'm.out',
+            component: m_out,
+            children: [{
+                path: 'success', // 手机端的支付成功
+                name: 'm_success',
+                component: m_success
+            }, {
+                path: 'failure', // 手机端的支付失
+                name: 'm_failure',
+                component: m_failure
+            }]
+        }, {
+            path: '/m_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
+            component: m_joinus,
+        }, {
+            path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
+            component: m_lineitem
+        },
+        {
+            path: '/logged', //已登录
+            name: 'logged',
+            component: logged
+        }, {
+            path: '/set', //已登录
+            name: 'set',
+            component: set
+        }, {
+            path: '/myOrder', //已登录
+            name: 'myOrder',
+            component: myOrder
         }, {
             path: '/listPage', //列表页
             name: 'listPage',
             component: listPage
+        }, {
+            path: '/details', //列表页
+            name: 'details',
+            component: m_details
         }, {
             path: '/registerP', //注册
             name: 'registerP',
@@ -259,8 +302,9 @@ export default new Router({
             name: 'loginP',
             component: loginP
         }, {
-            path: '/details', //登录
-            component: m_details
+            path: '/cipher', //忘记密码
+            name: 'cipher',
+            component: cipher
         }
     ]
 })
