@@ -5,8 +5,8 @@
         <img src="../assets/pc/u5086.png" alt="">
       </div>
       <div class='submit'>
-        <div class='name'>{{userName}}</div>
-        <nobr>
+        <div class='name' v-if="mark">{{userName}}</div>
+        <nobr v-if="!mark">
             <router-link :to="{path:'/registerP'}"><input type="submit" value="注册"></router-link>
             <router-link :to="{path:'/loginP'}"><input type="submit" value="登录"></router-link>
         </nobr>
@@ -15,7 +15,7 @@
         <a href="#/myOrder"><div class='myorder'>我的订单</div></a>
         <a href="#/generic"><div class='myset'><div>账户设置</div></div></a>
       </div>
-      <input type="submit" value='退出登录' class='quit' @click='quit'>
+      <input type="submit" value='退出登录' class='quit' @click='quit' v-if="mark">
     </div>
         <div class='informations' v-show='show'>
       <div class='hint'>
@@ -38,14 +38,15 @@ export default {
     return {
       userName: "请先登录",
       show:false,
+      mark:false,
     };
   },
   created() {
-    // console.log(sessionStorage.getItem("userName"))
-    // if(sessionStorage.getItem("userName")){
-    //   return this.$router.push({path:'/generic'})
-    // }
     this.userName = sessionStorage.getItem("userName");
+    if(sessionStorage.getItem("userName")){
+this.mark=true;
+    }
+    
   },
   methods: {
     quit: function() {
@@ -60,7 +61,6 @@ export default {
     hidedate: function(code) {
       this.show = false;
       this.userName= "请先登录";
-      sessionStorage.clear();
       var that = this;
       this.ajax
         .post(
@@ -70,6 +70,8 @@ export default {
         )
         .then(function(data) {
           console.log(data)
+      sessionStorage.clear();
+      that.$router.go(0)
         });
     },
   }
@@ -190,6 +192,16 @@ body {
   }
   .submit {
     text-align: center;
+    input {
+      width: 1.58rem;
+      height: 0.59rem;
+      font-size: 22px;
+      background: #2693d4;
+      color: #fff;
+      border: 0;
+      border-radius: 0.08rem;
+      line-height:0.59rem;
+    }
   }
 }
 .myorder {

@@ -12,7 +12,7 @@
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
-                <img :src="('http://115.182.107.203:8088/xinda/pic'+product.productImg)" alt="">
+                <img :src="('http://115.182.107.203:8088/xinda/pic'+product.productImg)" @error="setDefImg($event)" alt="">
             </div>
             <div class='deta'>
                 <span>{{product.serviceName}}</span><br>
@@ -45,6 +45,9 @@ export default {
     };
   },
   methods: {
+    setDefImg(e){
+      e.target.src=require("../../images/pc/prestrain.jpg");
+    },
     aaa: function(number) {
       //sort背景颜色
       this.number = number;
@@ -110,6 +113,7 @@ export default {
               console.log(this.$route.query.id,this.$route.query.code)
               var data = data.data.data;
               that.products = data;
+                            
               if (!str[this.index]) {
                 str[this.index] = data;
               }

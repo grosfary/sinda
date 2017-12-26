@@ -20,7 +20,7 @@
               <div>服务单号：{{product.serviceNo}}</div>
               <div>购买内容：{{product.serviceName}}</div>
             </div>
-            <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
+            <div class='time'>购买时间：<div class='date'>{{product.createTime | formatDate}}</div></div>
             <a @click='tail(product.id)'><button @click='toeva(key)'>去评价</button></a>
           </div>
            <div class='inputcopy' v-show='ned'>
