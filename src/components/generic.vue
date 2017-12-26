@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hel">
     <div class='generic'>
       <div class='head'>
         <img src="../assets/pc/u5086.png" alt="">
@@ -19,6 +19,14 @@
 </template>
 
 <script>
+export default{
+  created(){
+    //     if(sessionStorage.getItem("userName")){
+    //   return this.$router.push({path:'/logged'})
+    // }
+  }
+}
+
 </script>
 
 <style scoped lang="less">
@@ -28,7 +36,7 @@ html {
 body {
   min-width: 300px;
 }
-.hello {
+.hel {
   width: 100%;
   .generic {
     width: 90%;
