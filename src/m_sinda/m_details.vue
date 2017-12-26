@@ -180,14 +180,14 @@ export default {
       //立即购买按钮
       if (sessionStorage.getItem("userName")) {
         this.flag = false;
-        this.addtoCart(true, this.$route.query.id, 1);
+        this.addtoCart(true, this.$route.query.sId, 1);
       } else {
-        this.addtoCart(true, this.$route.query.id, 1);
+        this.addtoCart(true, this.$route.query.sId, 1);
       }
     },
     join(id) {
       // 加入购物车按钮
-      this.addtoCart(false, this.$route.query.id, 1);
+      this.addtoCart(false, this.$route.query.sId, 1);
     }
   }
 };
