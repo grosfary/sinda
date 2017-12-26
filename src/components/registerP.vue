@@ -1,7 +1,7 @@
 <template>
   <div class="whole">
     <div class="top">
-      <p class="topI"></p>
+      <p class="topI" @click="back()"></p>
       <p class="topII">注册</p>
     </div>
     <div class="middle">
@@ -142,6 +142,9 @@ export default {
         this.pswd = "password";
         this.suo = head;
       }
+    },
+    back(){
+      this.$router.go(-1);
     },
     //立即注册
     iregister() {

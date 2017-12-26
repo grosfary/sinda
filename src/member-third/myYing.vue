@@ -12,11 +12,13 @@
             <a class='notappb' v-show='notappb'></a>
           </div>
           <div class='details' v-for='(product,key) in products' :key='product.rData'>
-            <div class='box'></div>
+            <div class='box'>
+              <img src="../../static/g_img/shangbiao.jpg" alt="">
+            </div>
             <div class='infor'>
               <div></div>
               <div>服务单号：{{product.serviceNo}}</div>
-              <div>购买内容：</div>
+              <div>购买内容：{{product.serviceName}}</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
             <a @click='tail(product.id)'><button @click='toeva(key)'>去评价</button></a>
@@ -42,7 +44,7 @@ export default {
       .post("/xinda-api/service-order/grid", {
         // startTime:this.changes,
         // endTime:this.onchanges--S1712130636102806089
-        businessNo: "S1712130642023214030"
+        // businessNo: "S1712130642023214030"
       })
       .then(function(data) {
         that.rData = data.data.data; //所需的数据
@@ -187,7 +189,6 @@ export default {
     background: #fff;
     line-height: 34px;
     margin-left: 10px;
-    text-indent: 11px;
     border: 1px solid #2592d3;
   }
   .pages {
@@ -197,7 +198,6 @@ export default {
     background: #fff;
     line-height: 34px;
     margin-left: 10px;
-    text-indent: 11px;
     border: 1px solid #ccc;
   }
 }
@@ -242,6 +242,10 @@ export default {
       margin: 25px 10px;
       background: #fff;
       border-bottom: 0;
+      img{
+        width:100%;
+        height:100%;
+      }
       div {
         background: #fff;
         width: 100%;
@@ -264,7 +268,6 @@ export default {
       .date {
         width: 144px;
         height: 39px;
-        border: 1px solid #000;
         margin-top: -72px;
         margin-left: 179px;
       }

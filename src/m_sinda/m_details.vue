@@ -1,8 +1,10 @@
 <template>
   <div class="detail">
     <div class="headed">
-      <div>
-        <img src :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+      <div class="imgbox">
+        <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+        <!-- <img src="../assets/gongyon/123.jpg" alt=""> -->
+        <!-- onerror="this.src='../assets/gongyon/123.jpg'"  -->
       </div>
       <div class="company">
         <p>{{product.name}}</p>
@@ -19,7 +21,8 @@
         </div>
       </div>
       <div class="Merchant">
-        <div class="merchant">
+        <!-- 三角号 -->
+        <div class="sanjiaohao">
           <p>服务商家</p>
           <span></span>
         </div>
@@ -42,14 +45,14 @@
         </div>
       </div>
       <div class="matter">
-        <div class="introduce">
+        <div class="sanjiaohao">
           <p>服务介绍</p>
           <span></span>
         </div>
         <div v-html="serv" class='intro'></div>
       </div>
       <div class="User">
-        <div class="user">
+        <div class="sanjiaohao">
           <p>用户评价</p>
           <span></span>
         </div>
@@ -109,11 +112,12 @@ export default {
       .post(
         "/xinda-api/product/package/detail", //商品接口
         this.qs.stringify({
-          sId: this.$route.query.id
+          sId: this.$route.query.sId
           // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
         })
       )
       .then(function(data) {
+        console.log(data)
         // console.log(that.$router.query.id)
         var shop = data.data.data;
         that.product = shop.product;
@@ -124,6 +128,7 @@ export default {
         that.shop = shop;
         that.serviceList = shop.serviceList;
         that.serv = shop.serviceList[0].serviceContent;
+        console.log(that.serv);
       });
     this.ajax
       .post(
@@ -189,6 +194,25 @@ export default {
 </script> 
 <style scoped lang="less">
 @media screen and (max-width: 1200px) {
+  .sanjiaohao {
+    border-bottom: 2px solid #2693d4;
+    position: relative;
+    padding: 0.1rem;
+    p {
+      font-size: 0.39rem;
+      color: #000000;
+      margin-left: 0.4rem;
+    }
+    span {
+      position: absolute;
+      right: 6.35rem;
+      top: 0.62rem;
+      border-top: 4px solid #fff;
+      border-bottom: 4px solid #2693d4;
+      border-left: 4px solid #fff;
+      border-right: 4px solid #fff;
+    }
+  }
   .detail {
     width: 7.5rem;
     .footer {
@@ -198,8 +222,11 @@ export default {
     }
     .headed {
       position: relative;
-      img {
-        width: 7.5rem;
+      .imgbox{
+        overflow: hidden;
+        img{
+          width: 100%
+        }
       }
       .company {
         background: rgba(0, 0, 0, 0.5);
@@ -255,10 +282,10 @@ export default {
     }
     .footer {
       display: flex;
-        position: fixed;      
-        z-index: 1001;
-        width: 100%;
-        
+      position: fixed;
+      z-index: 1001;
+      width: 100%;
+
       button {
         width: 33.33%;
         height: 1.15rem;
@@ -348,6 +375,8 @@ export default {
       position: relative;
       font-size: 22px;
       border-bottom: 5px solid #ebebeb;
+      // text-align: ;
+
       .introduce {
         padding: 0.1rem;
         border-bottom: 2px solid #2693d4;
@@ -363,18 +392,10 @@ export default {
         margin-left: 0.4rem;
         margin-top: 0.18rem;
       }
-      span {
-        position: absolute;
-        right: 6.35rem;
-        top: 0.62rem;
-        border-top: 4px solid #fff;
-        border-bottom: 4px solid #2693d4;
-        border-left: 4px solid #fff;
-        border-right: 4px solid #fff;
-      }
       .intro {
         text-indent: 37px;
         margin-bottom: 20px;
+        padding: 0 20px;
       }
     }
     .User {

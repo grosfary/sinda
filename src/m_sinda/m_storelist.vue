@@ -2,8 +2,7 @@
   <div>
     <div class="m-body">
       <div class="m-head">
-        <a href="javascript:void(0)" @click="new_touch=false" :class="{new_list:new_touch}">默认排序</a>
-        <a href="javascript:void(0)" @click="new_touchh()" :class="{new_list:!new_touch}"> 销量 </a>
+        <a href="javascript:void(0)" @click="new_touchh()" v-on:click="new_touch=true" :class="{new_list:new_touch}">默认排序</a><a href="javascript:void(0)" @click="new_touchh()" :class="{new_list:!new_touch}"> 销量 </a>
       </div>
       <div class="m-lister">
         <div class="m-lists" v-for="list in lists" :key="list.id" @click="open(list.providerName,list.id,list.providerImg)">
@@ -94,14 +93,16 @@ export default{
         font-size: 0.2rem;
         text-decoration: none;
         color:#000;
-        padding:0.1rem 0.5rem;
+        
         
         &:first-child{
             border-right: none;
             border-radius: 3px  0 0 3px;
+            padding:0.1rem 0.4rem;
         }
         &:last-child{
              border-radius:0 3px 3px 0;
+             padding:0.1rem 0.6rem;
         }
 
       &:active {
