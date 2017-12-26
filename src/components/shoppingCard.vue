@@ -34,20 +34,6 @@
         </div>
         <div class="settle">去结算</div>
       </div>
-
-      <div class='informations' v-show='show'>
-        <div class='hint'>
-          <div class='infor'>
-            <div class='for'>信息</div>
-            <div class='err' @click='hide'>x</div>
-          </div>
-          <div class='information'>确认删除订单吗</div>
-          <div class='ok'>
-            <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
-            <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -113,7 +99,7 @@ export default {
           }
         });
     },
-    delOrder(id,index) {
+    delOrder(id, index) {
       MessageBox.confirm("不再考虑考虑了？", "确定删除?").then(action => {
         this.ajax
           .post(
@@ -149,8 +135,9 @@ export default {
       .post("/xinda-api/sso/login-info", this.qs.stringify({}))
       .then(data => {
         if (data.data.status === 0) {
-          MessageBox("提示", "请您登录后再继续操作");
-          this.$router.push({ path: "/loginP" });
+          MessageBox.confirm("请您登陆后再继续操作").then(action => {
+            this.$router.push({ path: "/loginP" });
+          });
         } else {
           this.cartList();
         }
@@ -168,7 +155,7 @@ export default {
 }
 .back {
   margin-top: 0.77rem;
-  margin-bottom: 1.1rem;
+  margin-bottom: 2.06rem;
 }
 .hello {
   width: 7.5rem;
@@ -284,7 +271,7 @@ export default {
 // 去结算&&总价
 .footer {
   position: fixed;
-  bottom: 0;
+  bottom: 0.96rem;
   display: flex;
   .totalPrice {
     background: #e5e5e5;

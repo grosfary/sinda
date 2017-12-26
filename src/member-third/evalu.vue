@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+      <div class="hello">
       <div class="top clear">
         <div class='assess'>
           <div>我的评价</div>
@@ -11,12 +11,14 @@
             <div class='notapp'  :class='index==1?"notapp":"havebeen"' @click='appraise(1)'>已评价</div>
             <a class='notappb' v-show='notappb'></a>
           </div>
-          <div class='details' v-for='product in products' :key='product.rData'>
-            <div class='box'></div>
+          <div class='details' v-for='(product,key) in products' :key='product.rData'>
+            <div class='box'>
+              <img src="../../static/g_img/shangbiao.jpg" alt="">
+            </div>
             <div class='infor'>
               <div></div>
-              <div>服务单号：</div>
-              <div>购买内容：</div>
+              <div>服务单号：{{product.serviceNo}}</div>
+              <div>购买内容：{{product.serviceName}}</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{1491263493000 | formatDate}}</div></div>
             <button>已评价</button>
@@ -34,18 +36,18 @@
 <script>
 import member from "../views/sinda_member";
 import { formatDate } from "../../config/date";
+import { mapActions } from "vuex";
 export default {
   created() {
     var that = this;
     this.ajax
-      .post("/xinda-api/service/judge/grid", {
+      .post("/xinda-api/service-order/grid", {
         // startTime:this.changes,
         // endTime:this.onchanges--S1712130636102806089
-        businessNo: "S1712130642023214030"
+        // businessNo: "S1712130642023214030"
       })
       .then(function(data) {
         that.rData = data.data.data; //所需的数据
-        // that.products = rData;
         if (that.rData.length > 2) {
           //判断数据长度是否大于2
           that.ned = true;
@@ -56,9 +58,11 @@ export default {
           var numeral = Math.ceil(that.rData.length / 2); //判断应该产生多少按钮
           for (let i = 1; i <= numeral; i++) {
             //循环button按钮
-            that.buttons.push(i); //每个按钮编号
+            (function(j) {
+              that.buttons.push(i); //每个按钮编号
+              that.abb = numeral; //按钮号
+            })(i);
           }
-          that.abb = numeral; //按钮号
         } else {
           that.products = that.rData; //小于二时，将所有数据添加
           that.ned = false;
@@ -96,9 +100,9 @@ export default {
         this.col = this.col + 1;
         var array = [];
         this.product = []; //清除数据
-        if (this.abb * 2 - 1 == this.col) {
+        if ((this.col + 1) * 2 - 1 == this.rData.length) {
           //判断products里元素是否跟要加入数组的最后一个元素相同
-          array.push(this.rData[this.abb * 2 - 2]); //添加数据
+          array.push(this.rData[(this.col + 1) * 2 - 2]); //添加数据
         } else {
           array.push(this.rData[(this.col + 1) * 2 - 2]);
           array.push(this.rData[(this.col + 1) * 2 - 1]); //添加数据
@@ -109,9 +113,9 @@ export default {
     skip: function(bum) {
       var array = [];
       this.product = []; //清除数据
-      if (this.abb * 2 - 1 == this.bum) {
+      if ((bum + 1) * 2 - 1 == this.rData.length) {
         //判断products里元素是否跟要加入数组的最后一个元素相同
-        array.push(this.rData[this.abb * 2 - 2]); //添加数据
+        array.push(this.rData[(bum + 1) * 2 - 2]); //添加数据
       } else {
         array.push(this.rData[(bum + 1) * 2 - 2]);
         array.push(this.rData[(bum + 1) * 2 - 1]); //添加数据
@@ -131,7 +135,8 @@ export default {
       abb: "",
       col: 0,
       rData: [],
-      ned: true
+      ned: true,
+      nones: []
     };
   },
   components: { member }
@@ -164,8 +169,8 @@ export default {
     color: #2592d3;
     line-height: 34px;
     margin-left: 10px;
-    text-indent: 11px;
     border: 1px solid #2592d3;
+    background: #fff;
   }
   .pages {
     width: 39px;
@@ -173,7 +178,7 @@ export default {
     color: #ccc;
     line-height: 34px;
     margin-left: 10px;
-    text-indent: 11px;
+    background: #fff;
     border: 1px solid #ccc;
   }
 }
@@ -219,10 +224,13 @@ export default {
       margin: 25px 10px;
       background: #fff;
       border-bottom: 0;
+      img{
+        width:100%;
+        height:100%;
+      }
       .date {
         width: 144px;
         height: 39px;
-        border: 1px solid #000;
         margin-top: -72px;
         margin-left: 179px;
       }

@@ -1,8 +1,10 @@
 <template>
   <div class="detail">
     <div class="headed">
-      <div>
-        <img src :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+      <div class="imgbox">
+        <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
+        <!-- <img src="../assets/gongyon/123.jpg" alt=""> -->
+        <!-- onerror="this.src='../assets/gongyon/123.jpg'"  -->
       </div>
       <div class="company">
         <p>{{product.name}}</p>
@@ -115,6 +117,7 @@ export default {
         })
       )
       .then(function(data) {
+        console.log(data)
         // console.log(that.$router.query.id)
         var shop = data.data.data;
         that.product = shop.product;
@@ -203,7 +206,7 @@ export default {
     span {
       position: absolute;
       right: 6.35rem;
-      top: 0.56rem;
+      top: 0.62rem;
       border-top: 4px solid #fff;
       border-bottom: 4px solid #2693d4;
       border-left: 4px solid #fff;
@@ -219,8 +222,11 @@ export default {
     }
     .headed {
       position: relative;
-      img {
-        width: 7.5rem;
+      .imgbox{
+        overflow: hidden;
+        img{
+          width: 100%
+        }
       }
       .company {
         background: rgba(0, 0, 0, 0.5);
@@ -369,6 +375,8 @@ export default {
       position: relative;
       font-size: 22px;
       border-bottom: 5px solid #ebebeb;
+      // text-align: ;
+
       .introduce {
         padding: 0.1rem;
         border-bottom: 2px solid #2693d4;

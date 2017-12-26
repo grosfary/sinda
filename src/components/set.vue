@@ -51,6 +51,19 @@
     <div class='center'><input type="submit" value='保存' class='keep' @click='arr'></div>
     </div>
     <div class='boundary'></div>
+        <div class='informations' v-show='show'>
+      <div class='hint'>
+        <div class='infor'>
+            <div class='for'>信息</div>
+            <div class='err' @click='hide'>x</div>
+        </div>
+        <div class='information'>保存成功</div>
+        <div class='ok'>
+          <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
+          <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
+        </div>
+      </div>
+     </div>
   </div>
 </template>
 
@@ -76,7 +89,8 @@ export default {
       nostyle: false,
       place: "",
       fal: "",
-      password: ""
+      password: "",
+      show: false,
     };
   },
   components: { dist },
@@ -86,6 +100,48 @@ export default {
     },
     selected(code) {
       this.disCode = code;
+    },
+        hide: function() {
+      this.show = false;
+    },
+     hidedate: function(code) {
+      this.show = false;
+      var that = this;
+     if (this.area != "") {
+        this.name = false;
+        if (this.post != "") {
+          if (this.box != true) {
+            if (this.disCode != "" && this.disCode != "0") {
+              this.dist = false;
+              this.ajax
+                .post(
+                  "/xinda-api/member/update-info",
+                  this.qs.stringify({
+                    name: this.area,
+                    gender: this.index,
+                    email: this.post,
+                    regionId: this.disCode
+                  })
+                )
+                .then(function(data) {
+                    if(data.data.status==1){
+                      that.show = true;
+                    }
+                  
+                });
+            } else {
+              this.dist = true;
+            }
+          }
+        } else {
+          this.box = true;
+        }
+      } else {
+        this.name = true;
+      }
+    },
+    submit: function(index) {
+      this.index = index;
     },
     key: function() {
       var reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
@@ -134,7 +190,7 @@ export default {
               that.password = [];
               that.sty = true;
             } else {
-              alert("登陆成功");
+              that.show = true;
             }
           });
       }
@@ -143,35 +199,7 @@ export default {
       this.index = index;
     },
     keep: function() {
-      if (this.area != "") {
-        this.name = false;
-        if (this.post != "") {
-          if (this.box != true) {
-            if (this.disCode != "" && this.disCode != "0") {
-              this.dist = false;
-              this.ajax
-                .post(
-                  "/xinda-api/member/update-info",
-                  this.qs.stringify({
-                    name: this.area,
-                    gender: this.index,
-                    email: this.post,
-                    regionId: this.disCode
-                  })
-                )
-                .then(function(data) {
-                  console.log(data);
-                });
-            } else {
-              this.dist = true;
-            }
-          }
-        } else {
-          this.box = true;
-        }
-      } else {
-        this.name = true;
-      }
+      this.show = true;
     },
     uploadFile: function($event) {
       // console.log('imgurl==',this.getImgURL($event.target));
@@ -222,6 +250,65 @@ export default {
 <style scoped lang="less">
 input[type="file"] {
   color: transparent;
+}
+.informations {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  position: fixed;
+  filter: alpha(opacity=0);
+}
+.hint {
+  width: 306px;
+  height: 176px;
+  float: left;
+  background: #fff;
+  border: 1px solid #000;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin: auto;
+}
+.infor {
+  height: 32px;
+  background: #e8e8e8;
+}
+.for {
+  float: left;
+  width: 40px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 12px;
+  font-weight: 700;
+  text-indent: 10px;
+}
+.err {
+  float: right;
+  width: 24px;
+  height: 32px;
+  line-height: 32px;
+}
+.information {
+  height: 92px;
+  line-height: 105px;
+  text-align: center;
+}
+.ok {
+  margin-left: 24px;
+  input {
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    width: 115px;
+    height: 30px;
+    margin-left: 10px;
+  }
+  .color {
+    background: #2693d4;
+    color: #fff;
+  }
 }
 .center {
   width: 100%;

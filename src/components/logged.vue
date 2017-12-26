@@ -11,22 +11,61 @@
         <a href="#/myOrder"><div class='myorder'>我的订单</div></a>
         <a href="#/generic"><div class='myset'><div>账户设置</div></div></a>
       </div>
-      <input type="submit" value='退出登录' class='quit'>
+      <input type="submit" value='退出登录' class='quit' @click='quit'>
     </div>
+        <div class='informations' v-show='show'>
+      <div class='hint'>
+        <div class='infor'>
+            <div class='for'>信息</div>
+            <div class='err' @click='hide'>x</div>
+        </div>
+        <div class='information'>确认退出登录吗</div>
+        <div class='ok'>
+          <input type="submit" value='确定' class='color' @mouseenter='submit(1)' @click='hidedate'>
+          <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
+        </div>
+      </div>
+     </div>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      userName: []
+      userName: "请先登录",
+      show:false,
     };
+  },
+  created() {
+    this.userName = sessionStorage.getItem("userName");
+  },
+  methods: {
+    quit: function() {
+      this.show = true;
+    },
+    hide: function() {
+      this.show = false;
+    },
+    submit: function(index) {
+      this.index = index;
+    },
+    hidedate: function(code) {
+      this.show = false;
+      this.userName= "请先登录";
+      sessionStorage.clear();
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/sso/ logout",
+          this.qs.stringify({
+          })
+        )
+        .then(function(data) {
+          console.log(data)
+        });
+    },
   }
 };
-// created:{
-//   var userName = sessionStorage.getItam('userName');
-//   this.userName = userName;
-// }
 </script>
 <style scoped lang="less">
 html {
@@ -34,6 +73,66 @@ html {
 }
 body {
   min-width: 300px;
+}
+.informations {
+  font-size:0.22rem;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  position: fixed;
+  filter: alpha(opacity=0);
+}
+.hint {
+  width: 306px;
+  height: 176px;
+  float: left;
+  background: #fff;
+  border: 1px solid #000;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin: auto;
+}
+.infor {
+  height: 32px;
+  background: #e8e8e8;
+}
+.for {
+  float: left;
+  width: 40px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 12px;
+  font-weight: 700;
+  text-indent: 10px;
+}
+.err {
+  float: right;
+  width: 24px;
+  height: 32px;
+  line-height: 32px;
+}
+.information {
+  height: 92px;
+  line-height: 105px;
+  text-align: center;
+}
+.ok {
+  margin-left: 24px;
+  input {
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    width: 115px;
+    height: 30px;
+    margin-left: 10px;
+  }
+  .color {
+    background: #2693d4;
+    color: #fff;
+  }
 }
 .hello {
   width: 100%;
@@ -100,7 +199,7 @@ body {
   background: #2693d4;
   color: #fff;
   border: 0;
-  margin-top:1rem;
+  margin-top: 1rem;
   border-radius: 4px;
 }
 @media screen and (max-width: 670px) {
