@@ -19,7 +19,7 @@ export default {
         a: { name: "首页", src: "/m.sinda", class: "bg_index" },
         b: { name: "店铺", src: "/m_storelist", class: "bg_shop" },
         c: { name: "购物车", src: "/shoppingCard", class: "bg_cart" },
-        d: { name: "我的", src: "/generic", class: "bg_my" }
+        d: { name: "我的", src: "/logged", class: "bg_my" }
       }
     };
   }

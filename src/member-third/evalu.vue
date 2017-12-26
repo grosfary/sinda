@@ -35,7 +35,7 @@
 </template>
 <script>
 import member from "../views/sinda_member";
-import { formatDate } from "../../config/date";
+import { formatDate } from "../../static/date/date";
 import { mapActions } from "vuex";
 export default {
   created() {

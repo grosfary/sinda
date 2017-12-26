@@ -21,9 +21,9 @@
 
         <div class="commodityList">
           <div class="navgation">
-            <router-link v-bind:to="{path:'/shop/service'}" class="jump" active-class="serving">服务产品</router-link>
-            <router-link v-bind:to="{path:'/shop/product'}" class="jump" active-class="serving">客服</router-link>
-            <router-link v-bind:to="{path:'/shop/certificate'}" class="jump" active-class="serving">资质证书</router-link>
+            <router-link v-bind:to="{path:'/shop/service'}" class="jump" active-class="serving" replace>服务产品</router-link>
+            <router-link v-bind:to="{path:'/shop/product'}" class="jump" active-class="serving" replace>客服</router-link>
+            <router-link v-bind:to="{path:'/shop/certificate'}" class="jump" active-class="serving" replace>资质证书</router-link>
           </div>
           <router-view></router-view>
         </div>
@@ -41,7 +41,8 @@ export default {
       providerName: "",
       regionName: "",
       providerInfo: "",
-      shopLOGO: ""
+      shopLOGO: "",
+      providerInfo:"",
     };
   },
   created() {
@@ -56,13 +57,13 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        // console.log('shop==',shop);
+        // console.log("shop1"==shop);
         sessionStorage.setItem("shoppingID", JSON.stringify(shop));
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
         that.shopLOGO = shop.providerImg;
-        // console.log(that.shopLOGO);
+        console.log(that.providerInfo);
       });
 
     that.ajax
@@ -78,7 +79,7 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        console.log(shop);
+        // console.log(shop);
       });
   }
 };

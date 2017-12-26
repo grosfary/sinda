@@ -9,12 +9,12 @@
       <div class='content' v-for="prod in product.subItem" :key="prod.id">
           <div class='img'>
             <div class='imgs'>
-
+                <img :src="src">
             </div>
             <div class='deta'>
                 <span>新公司注册</span><br>
                 <span>下单时间：{{prod.createTime | formatDate}}</span><br>
-                <span class='doller'>￥{{prod.buyNum}}</span><span class='red'>　　x{{prod.status}}</span>
+                <span class='doller'>￥{{prod.unitPrice}}</span><span class='red'>　　x{{prod.buyNum}}</span>
             </div>
           </div>
       </div>
@@ -40,11 +40,24 @@
         </div>
       </div>
      </div>
+    <div class='informations' v-show='route'>
+      <div class='hint'>
+        <div class='infor'>
+            <div class='for'>信息</div>
+            <div class='err' @click='hide'>x</div>
+        </div>
+        <div class='information'>请先登录</div>
+        <div class='ok'>
+          <router-link :to="{path:'/loginP'}"><input type="submit" value='确定' class='color' @mouseenter='submit(1)'></router-link>
+          <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
+        </div>
+      </div>
+     </div>
   </div>
 </template>
 
 <script>
-import { formatDate } from "../../config/date";
+import { formatDate } from "../../static/date/date";
 export default {
     filters: {
     formatDate(time) {
@@ -53,6 +66,7 @@ export default {
     }
   },
   methods: {
+    
     alert: function(code,index,key) {
       this.show = true;
       this.code = code;
@@ -79,19 +93,26 @@ export default {
     },
     hide: function() {
       this.show = false;
+      this.route = false;
     }
   },
   data() {
     return {
       show: false,
+      route: false,
       index: "",
       inde: "",
       products: [],
       code:[],
-      key:[]
+      key:[],
+      src:"../../images/pc/prestrain.jpg",
     };
   },
   created() {
+       if(!sessionStorage.getItem("userName")){
+         console.log(sessionStorage.getItem("userName"))
+      this.route = true;
+    }
     var that = this;
     this.ajax
       .post("/xinda-api/service-order/grid", {
@@ -99,8 +120,18 @@ export default {
       })
       .then(function(data) {
         data = data.data.data;
+        console.log(data)
         var tempData = {};
-        for (var key in data) {
+        for (let key in data) {
+          that.ajax.post(
+                '/xinda-api/provider/detail',that.qs.stringify({//logo
+                id:data[key].providerId
+                })).then(
+                  function(infor){
+                    var infor = infor.data.data;
+                    that.src = ('http://115.182.107.203:8088/xinda/pic'+infor.providerImg)
+                  }
+                )
           var businessNo = data[key].businessNo;
           if (!tempData[businessNo]) {
             tempData[businessNo] = data[key];
@@ -189,6 +220,10 @@ export default {
   width: 1.7rem;
   height: 1.7rem;
   margin-left: 0.17rem;
+  img{
+    width:100%;
+    height:100%;
+  }
 }
 .deta {
   width: 3.4rem;
