@@ -45,9 +45,9 @@ export default {
     };
   },
   methods: {
-    ccc:function(){
-      this.$router.query.id;
-    },
+    // ccc:function(){
+    //   this.$router.query.id;
+    // },
     aaa: function(number) {
       //sort背景颜色
       this.number = number;

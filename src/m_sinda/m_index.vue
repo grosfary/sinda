@@ -180,7 +180,11 @@ export default {
       this.indexs = index;
     },
     toDetail(n, i) {
-      this.$router.push({ path: "/listPage", query: { id: i, code: n } });
+      if (n != 0) {
+        this.$router.push({ path: "/listPage", query: { id: i, code: n } });
+      }else{
+        this.$router.push({ path: "/classify" });
+      }
     }
   },
   created() {

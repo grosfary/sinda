@@ -231,7 +231,6 @@ export default {
         font-size: 0.31rem;
         color: #000000;
         border-bottom: 2px solid #ebebeb;
-
         p {
           border-bottom: 1px solid #c5c5c5;
           margin: 0.23rem auto 0.18rem 0.42rem;
@@ -255,8 +254,13 @@ export default {
       }
     }
     .footer {
+      display: flex;
+        position: fixed;      
+        z-index: 1001;
+        width: 100%;
+        
       button {
-        width: 2.3rem;
+        width: 33.33%;
         height: 1.15rem;
         border: none;
         outline: none;
@@ -297,7 +301,6 @@ export default {
         }
       }
       .service {
-        // width: 7.5rem;
         padding: 0.5rem;
         display: flex;
         .picture {
@@ -363,7 +366,7 @@ export default {
       span {
         position: absolute;
         right: 6.35rem;
-        top: 0.6rem;
+        top: 0.62rem;
         border-top: 4px solid #fff;
         border-bottom: 4px solid #2693d4;
         border-left: 4px solid #fff;
@@ -380,6 +383,7 @@ export default {
         width: 100%;
         display: flex;
         border-bottom: 3px solid #ebebeb;
+        margin-bottom: 1.15rem;
         .img {
           width: 8%;
           height: 0.58rem;
@@ -407,7 +411,7 @@ export default {
       span {
         position: absolute;
         right: 6.35rem;
-        top: 0.6rem;
+        top: 0.62rem;
         border-top: 4px solid #fff;
         border-bottom: 4px solid #2693d4;
         border-left: 4px solid #fff;

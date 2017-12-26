@@ -14,7 +14,6 @@ import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书�
 import login from '../views/sinda_login' //登录
 import register from '../views/sinda_register' //注册
 import line_item from '../stores/line_item' //订单详情
-import pay from '../stores/pay' //订单详情
 import payment from '../views/sinda_payment' //支付页面
 import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
 import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
@@ -30,9 +29,15 @@ import store_list from '../stores/store_list' //店铺列表
 import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
 import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
 import cart from '../views/sinda_list/sinda_cart' //购物车
+// import pay from '../views/' //购物车
+
 import pro from '../views/sinda_list/sinda_products' //商品详情
 import com from '../views/sinda_list/company' //公司工商
 import list_list from '../views/sinda_list/list_list' //公司工商
+import {
+  MessageBox
+} from "mint-ui";
+
 // -----------------------------------------------------------------------------------------------------------------------
 // 手机端
 import m_global from '../components/m_global' //手机端公共页
@@ -50,17 +55,19 @@ import generic from '../components/generic' //未登录
 import logged from '../components/logged' //已登录
 import shoppingCard from '../components/shoppingCard' //购物车
 import listPage from '../components/listPage' //购物车
+import shoppingstalley from '../components/shoppingstalley.vue' //购物车空
 import set from '../components/set' //账户设置
 import myOrder from '../components/myOrder' //我的订单
 import registerP from '../components/registerP' //手机端注册
 import m_details from '../m_sinda/m_details' //手机端商品详情
-import loginP from '../components/loginP' //手机端注册
-import cipher from '../components/cipher' //手机端注册
+import loginP from '../components/loginP' //手机端登录
+import cipher from '../components/cipher' //手机端忘记密码
 Vue.use(Router)
 
 // pc端
 // 信达的登录注册页面和其他页面的公共头部不一样，
 // 所以有两个一级路由global和loginregister
+
 // global里分别又有列表页和首页、列表页等等等等，注册登录页有注册有登录
 // 又会有分别的子路由，如index、list、login、register等等等等
 // 再往下肯定还会有三级路由 在views里
@@ -105,10 +112,8 @@ export default new Router({
         }, {
           path: 'store_list', //店铺列表 如 http://localhost:8081/#/store_list
           component: store_list
-        }, {
-          path: 'pay', //支付界面 如 http://localhost:8081/#/pay
-          component: pay
         },
+
         {
           path: '/shop',
           component: shop,
@@ -189,6 +194,21 @@ export default new Router({
           path: '/', // 手机端的首页
           component: m_index
         }, {
+          path: '/classify', // 手机端的列表页
+          component: m_classify
+        }, {
+
+          path: '/shoppingCard', //购物车
+          name: 'shoppingCard',
+          component: shoppingCard
+        }, {
+          path: '/generic', //未注册
+          name: 'generic',
+          component: generic
+        }, {
+          path: '/m_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
+          component: m_storelist
+        }, {
           path: 'shop', // 手机端的店铺页
           component: m_shop,
           redirect: "shop/service",
@@ -214,9 +234,6 @@ export default new Router({
 
       ]
     }, {
-      path: '/m_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
-      component: m_storelist
-    }, {
       path: '/m_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
       component: m_joinus,
     }, {
@@ -224,10 +241,6 @@ export default new Router({
       component: m_lineitem
     },
     {
-      path: '/generic', //未注册
-      name: 'generic',
-      component: generic
-    }, {
       path: '/logged', //已登录
       name: 'logged',
       component: logged
@@ -240,9 +253,37 @@ export default new Router({
       name: 'myOrder',
       component: myOrder
     }, {
-      path: '/shoppingCard', //购物车
-      name: 'shoppingCard',
-      component: shoppingCard
+      path: '/m.out', // 手机端公共页面 不包含底部
+      name: 'm.out',
+      component: m_out,
+      children: [{
+        path: 'success', // 手机端的支付成功
+        name: 'm_success',
+        component: m_success
+      }, {
+        path: 'failure', // 手机端的支付失
+        name: 'm_failure',
+        component: m_failure
+      }]
+    }, {
+      path: '/m_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
+      component: m_joinus,
+    }, {
+      path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
+      component: m_lineitem
+    },
+    {
+      path: '/logged', //已登录
+      name: 'logged',
+      component: logged
+    }, {
+      path: '/set', //已登录
+      name: 'set',
+      component: set
+    }, {
+      path: '/myOrder', //已登录
+      name: 'myOrder',
+      component: myOrder
     }, {
       path: '/listPage', //列表页
       name: 'listPage',
