@@ -2,9 +2,8 @@
   <div class="detail">
     <div class="headed">
       <div class="imgbox">
-        <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" alt="">
-        <img src="../assets/gongyon/123.jpg" alt="">
-        <!-- onerror="this.src='../assets/gongyon/123.jpg'"  -->
+        <img :src="imgURL" :onerror="imgURL='../../static/g_img/123.jpg'" alt="">
+
       </div>
       <div class="company">
         <p>{{product.name}}</p>
@@ -91,21 +90,22 @@ export default {
       serviceList: [],
       serv: [],
       evaluate: [],
-      flag: true
+      flag: true,
+      imgURL: ""
     };
   },
   created() {
-    this.ajax
-      .post(
-        "/xinda-api/sso/login-info", //商品接口
-        this.qs.stringify({
-          // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
-        })
-      )
-      .then(function(data) {
-        console.log(data.data.data.loginId);
-        sessionStorage.setItem("userName", data.data.data.loginId);
-      });
+    // this.ajax
+    //   .post(
+    //     "/xinda-api/sso/login-info", //商品接口
+    //     this.qs.stringify({
+    //       // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
+    //     })
+    //   )
+    //   .then(function(data) {
+    //     // console.log(data.data.data.loginId);
+    //     sessionStorage.setItem("userName", data.data.data.loginId);
+    //   });
 
     var that = this;
     this.ajax
@@ -127,24 +127,27 @@ export default {
         that.shop = shop;
         that.serviceList = shop.serviceList;
         that.serv = shop.serviceList[0].serviceContent;
-        console.log(that.serv);
+        that.imgURL =
+          "http://115.182.107.203:8088/xinda/pic" + shop.product.img;
+        // console.log(that.serv);
       });
-    this.ajax
-      .post(
-        "/xinda-api/product/judge/grid", //评价接口
-        this.qs.stringify({
-          start: 0,
-          limit: 10,
-          serviceId: this.$route.query.id,
-          type: 1
-        })
-      )
-      .then(function(data) {
-        var evaluate = data.data.data;
-      });
+    // this.ajax
+    //   .post(
+    //     "/xinda-api/product/judge/grid", //评价接口
+    //     this.qs.stringify({
+    //       start: 0,
+    //       limit: 10,
+    //       serviceId: this.$route.query.id,
+    //       type: 1
+    //     })
+    //   )
+    //   .then(function(data) {
+    //     var evaluate = data.data.data;
+    //   });
   },
   methods: {
     enter() {
+      window.history.go(-1);
       return;
     },
     addtoCart(jump, id, num) {
@@ -221,16 +224,13 @@ export default {
     }
     .headed {
       position: relative;
-      .imgbox{
-        display: flex;
-        overflow: hidden;
-        img{
-          width: 100%
-        }
+      img {
+        width: 100%;
       }
       .company {
         background: rgba(0, 0, 0, 0.5);
         position: absolute;
+
         display: block;
         width: 7.5rem;
         height: 2.25rem;
@@ -375,7 +375,6 @@ export default {
       position: relative;
       font-size: 22px;
       border-bottom: 5px solid #ebebeb;
-      // text-align: ;
 
       .introduce {
         padding: 0.1rem;

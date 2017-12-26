@@ -124,7 +124,7 @@ export default {
     open: function(name, id, image) {
       this.$router.push({
         path: "/shop/service",
-        query: { id: id, Name: name, img: image }
+        query: { id: id }
       });
     },
       changebg(name) {
