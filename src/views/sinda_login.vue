@@ -140,7 +140,9 @@ export default {
           if (status == 1) {
             this.setuserName(this.boxVal);
             sessionStorage.setItem("userName", this.boxVal);
-            this.$router.go(-1);
+            this.$router.push({
+              path:'/index'
+            });
           }
         });
     },
