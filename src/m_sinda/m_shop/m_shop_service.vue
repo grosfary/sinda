@@ -9,7 +9,7 @@
     <div class="below">
       <div @click="dianji(list.id)" class="shopleft" v-for="list in lists" :key='list.id'>
         <div class="picture">
-          <img :src="'http://115.182.107.203:8088/xinda/pic' + list.providerImg" alt="">
+          <img :src="list.providerImg" alt="">
         </div>
         <div class="shopright">
           <h3>{{list.serviceName}}</h3>
@@ -27,34 +27,40 @@ export default {
   created() {
     var that = this;
     var id = this.$route.query.id;
-    !function(){
-      if(!id){
-        location.href="#/m_storelist";
-      
-    }
-    that.ajax
-      .post(
-        //请求店铺商品信息
-        "/xinda-api/product/package/grid",
+    !(function() {
+      if (!id) {
+        location.href = "#/m_storelist";
+      }
+      that.ajax
+        .post(
+          //请求店铺商品信息
+          "/xinda-api/product/package/grid",
 
-        that.qs.stringify({
-          start: 0,
-          // providerId: "9080f0c120a64eb3831d50ba93c33e78",
-          providerId: id,
-          sort: 2
-        })
-      )
-      .then(function(data) {
-        // var lists = data.data.data;
-        that.lists = data.data.data;
-        console.log(that.lists)
-      });
-    }()
+          that.qs.stringify({
+            start: 0,
+            // providerId: "9080f0c120a64eb3831d50ba93c33e78",
+            providerId: id,
+            sort: 2
+          })
+        )
+        .then(function(data) {
+          // var lists = data.data.data;
+          that.lists = data.data.data;
+          for (var key in that.lists) {
+            that.lists[key].providerImg =
+              "http://115.182.107.203:8088/xinda/pic" +
+              that.lists[key].providerImg;
+          }
+          //  console.log(that.lists)
+          console.log(that.lists[0].providerImg);
+        });
+    })();
   },
 
   data() {
     return {
       lists: [],
+    
       number: [],
       page: 1,
       id: "17a2bbe928104677952ef12d8faff685"
