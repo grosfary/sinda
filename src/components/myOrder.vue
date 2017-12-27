@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { formatDate } from "../../static/date/date";
+import { formatDate } from "../global_js/date.js";
 export default {
     filters: {
     formatDate(time) {
