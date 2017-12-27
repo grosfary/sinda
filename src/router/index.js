@@ -238,6 +238,10 @@ export default new Router({
                     path: '/myOrder', //已登录
                     name: 'myOrder',
                     component: myOrder
+                }, {
+                    path: '/listPage', //列表页
+                    name: 'listPage',
+                    component: listPage
                 },
 
             ]
@@ -258,10 +262,6 @@ export default new Router({
         }, {
             path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
             component: m_lineitem
-        }, {
-            path: '/listPage', //列表页
-            name: 'listPage',
-            component: listPage
         }, {
             path: '/details', //列表页
             name: 'details',
