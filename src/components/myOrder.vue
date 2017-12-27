@@ -178,6 +178,7 @@ export default {
 .hello {
   width: 100%;
   font-size: 0.22rem;
+  margin-bottom:1.08rem;
 }
 .top {
   width: 100%;
