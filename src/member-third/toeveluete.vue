@@ -102,7 +102,7 @@ export default {
       product.splice(this.ind, 1);
       this.ajax
         .post(
-          "/xinda-api/ business-order/del",
+          "/xinda-api/business-order/del",
           this.qs.stringify({
             id: this.code
           })
