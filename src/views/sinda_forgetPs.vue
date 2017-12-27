@@ -6,9 +6,11 @@
         <div class="registerfirst">
           <input class="box" type="number" @blur="onBlur" v-model="boxVal" placeholder="请输入手机号">
           <p class="boxtel" v-show="boxTC">*您输入的手机号不正确</p>
+          <p class="boxtxt" v-show="boxtxt">*手机号不能为空</p>
           <div class="verify">
             <input class="boxI" type="text" placeholder="请输入验证码" v-model="imgV" @blur="verCode">
             <p class="vCode" v-show="boxCode">*您输入的验证码不正确</p>
+            <p class="vcode" v-show="vcode">*验证码不能为空</p>
             <!-- 图片验证 -->
             <div class="verifyI" @click="imgReflash">
               <img :src="imgUrl" alt="">
@@ -17,6 +19,7 @@
           <div class="acquire">
             <input class="boxI" type="text" placeholder="请输入验证码" v-model="sjCode" @blur="sjCodeI">
             <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
+            <p class="tcode" v-show="tcode">*请获取手机验证码</p>
             <!-- 倒计时 -->
             <div @click="getCoBut">
               <button v-show="get" class="getblue">点击获取</button>
@@ -28,6 +31,7 @@
             <img id="cloImg" :src="closuo" alt="">
           </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
+          <p class="boxp" v-show="boxp">密码不能为空</p>
           <input  :type="pad" class="boxII" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
           <div id="yincang" @click="concealPW">
             <img id="cloImg" :src="suo" alt="">
@@ -81,7 +85,11 @@ export default {
       //倒计时
       count: "60",
       get: true,
-      getNew: false
+      getNew: false,
+      boxtxt:false,
+      vcode:false,
+      tcode:false,
+      boxp:false,
     };
   },
   methods: {
@@ -89,12 +97,21 @@ export default {
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
+    
     //手机验证
     onBlur() {
+      if( this.boxVal!=""){
+      if(this.boxVal!=""){
       if (/^1[34578]\d{9}$/.test(this.boxVal)) {
         this.boxTC = false;
       } else {
         this.boxTC = true;
+        this.boxtxt=false;
+        }
+       }
+      }else{
+        this.boxtxt=true;
+        this.boxTC=false;
       }
     },
     //密码显示隐藏
@@ -121,6 +138,7 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
+      if(this.boxPasw!=""){
       if (
         /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
           this.boxPasw
@@ -129,6 +147,11 @@ export default {
         this.boxPC = false;
       } else {
         this.boxPC = true;
+        this.boxp=false;
+       }
+      }else{
+        this.boxp=true;
+        this.boxPC=false;
       }
     },
     onBlurII() {
@@ -142,18 +165,30 @@ export default {
       }
     },
     verCode() {
+      if(this.imgV!=""){
       if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
         this.boxCode = false;
       } else {
         this.boxCode = true;
+        this.vcode=false;
+       }
+      }else{
+        this.vcode=true;
+        this.boxCode=false;
       }
     },
     sjCodeI() {
+      if(this.sjCode){
       if (/^[0-9]{6}$/.test(this.sjCode)) {
         this.sCode = false;
       } else {
         this.sCode = true;
-      }
+        this.tcode=false;
+        }
+       }else{
+         this.tcode=true;
+         this.sCode=false;
+       }
     },
     getCoBut() {
       this.get = false;
@@ -229,10 +264,24 @@ export default {
   top: 8px;
   left: 295px;
   position: absolute;
-  border: 1px solid #fb81fd;
-  border-radius: 3px;
+}
+.boxtxt {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 8px;
+  left: 295px;
+  position: absolute;
 }
 .boxpas {
+  width: 150px;
+  color: #fb81fd;
+  font-size: 14px;
+  top: 180px;
+  left: 295px;
+  position: absolute;
+}
+.boxp {
   width: 150px;
   color: #fb81fd;
   font-size: 14px;
@@ -256,7 +305,23 @@ export default {
   left: 295px;
   position: absolute;
 }
+.vcode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 65px;
+  left: 295px;
+  position: absolute;
+}
 .sCode {
+  width: 180px;
+  color: #fb81fd;
+  font-size: 12px;
+  top: 125px;
+  left: 295px;
+  position: absolute;
+}
+.tcode {
   width: 180px;
   color: #fb81fd;
   font-size: 12px;

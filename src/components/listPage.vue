@@ -12,10 +12,10 @@
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
-                <img :src="('http://115.182.107.203:8088/xinda/pic'+product.productImg)" alt="">
+                <img :src="('http://115.182.107.203:8088/xinda/pic'+product.productImg)" @error="setDefImg($event)" alt="">
             </div>
             <div class='deta'>
-                <span>{{product.serviceName}}</span><br>
+                <span class='color'>{{product.serviceName}}</span><br>
                 <span style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;">{{product.serviceInfo}}</span><br>
                 <span class='area'>地区：{{product.regionName}}</span>
                 <span class='doller'>￥{{product.price}}</span>
@@ -45,6 +45,9 @@ export default {
     };
   },
   methods: {
+    setDefImg(e){
+      e.target.src=require("../../images/pc/prestrain.jpg");
+    },
     aaa: function(number) {
       //sort背景颜色
       this.number = number;
@@ -110,6 +113,7 @@ export default {
               console.log(this.$route.query.id,this.$route.query.code)
               var data = data.data.data;
               that.products = data;
+                            
               if (!str[this.index]) {
                 str[this.index] = data;
               }
@@ -247,6 +251,11 @@ export default {
   height: 1.7rem;
   margin-left: 0.5rem;
   position: relative;
+  color:#000;
+  .color{
+    color:#551a8b;
+
+  }
   .area {
     position: absolute;
     bottom: 0;
@@ -255,7 +264,7 @@ export default {
     line-height: 2;
   }
   .doller {
-    margin-left: 2.8rem;
+    margin-left: 3.8rem;
     font-size: 0.3rem;
     color: red;
     position: absolute;

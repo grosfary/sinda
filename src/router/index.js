@@ -206,6 +206,10 @@ export default new Router({
                     path: '/generic', //未注册
                     name: 'generic',
                     component: generic
+                },{
+                    path: '/logged', //已登录
+                    name: 'logged',
+                    component: logged
                 }, {
                     path: '/m_storelist', //手机端店铺列表 如http://localhost:8081/#/m.out/m_stprelist
                     component: m_storelist
@@ -241,11 +245,7 @@ export default new Router({
             path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
             component: m_lineitem
         },
-        {
-            path: '/logged', //已登录
-            name: 'logged',
-            component: logged
-        }, {
+        , {
             path: '/set', //已登录
             name: 'set',
             component: set
@@ -273,11 +273,7 @@ export default new Router({
             path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
             component: m_lineitem
         },
-        {
-            path: '/logged', //已登录
-            name: 'logged',
-            component: logged
-        }, {
+         {
             path: '/set', //已登录
             name: 'set',
             component: set
