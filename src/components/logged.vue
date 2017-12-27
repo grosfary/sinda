@@ -13,7 +13,8 @@
       </div>
       <div class='set'>
         <a href="#/myOrder"><div class='myorder'>我的订单</div></a>
-        <a href="#/set"><div class='myset'><div>账户设置</div></div></a>
+        <a href="#/set" v-if="mark"><div class='myset'><div>账户设置</div></div></a>
+        <a href="#/loginP" v-if="!mark"><div class='myset'><div>账户设置</div></div></a>
       </div>
       <input type="submit" value='退出登录' class='quit' @click='quit' v-if="mark">
     </div>
@@ -44,7 +45,7 @@ export default {
   created() {
     this.userName = sessionStorage.getItem("userName");
     if(sessionStorage.getItem("userName")){
-this.mark=true;
+    this.mark=true;
     }
     
   },
