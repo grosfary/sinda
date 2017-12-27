@@ -189,7 +189,6 @@ export default new Router({
             ]
         }, {
             path: '/m.sinda', // 手机端公共页面 包含公共底部
-            name: 'm.sinda',
             component: m_global,
             children: [{
                     path: '/', // 手机端的首页
@@ -235,7 +234,11 @@ export default new Router({
                             component: m_failure
                         }]
                         // children: [{}]
-                }
+                }, {
+                    path: '/myOrder', //已登录
+                    name: 'myOrder',
+                    component: myOrder
+                },
 
             ]
         }, {
@@ -250,37 +253,11 @@ export default new Router({
             name: 'set',
             component: set
         }, {
-            path: '/myOrder', //已登录
-            name: 'myOrder',
-            component: myOrder
-        }, {
-            path: '/m.out', // 手机端公共页面 不包含底部
-            name: 'm.out',
-            component: m_out,
-            children: [{
-                path: 'success', // 手机端的支付成功
-                name: 'm_success',
-                component: m_success
-            }, {
-                path: 'failure', // 手机端的支付失
-                name: 'm_failure',
-                component: m_failure
-            }]
-        }, {
             path: '/m_joinus', //手机端加盟我们 如http://locahost:8801/#/m_joinus
             component: m_joinus,
         }, {
             path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
             component: m_lineitem
-        },
-         {
-            path: '/set', //已登录
-            name: 'set',
-            component: set
-        }, {
-            path: '/myOrder', //已登录
-            name: 'myOrder',
-            component: myOrder
         }, {
             path: '/listPage', //列表页
             name: 'listPage',
