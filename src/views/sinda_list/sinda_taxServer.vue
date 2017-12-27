@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     ...mapActions(["setlistName", "setNum"]),
-    nowIndexII: function(index, i) {
+    nowIndexII: function(index, i) { 
       this.IndexII = index;
       this.IndexIII = 0;
       var arr = [];
@@ -169,7 +169,9 @@ export default {
         .then(data => {
           this.limitArr = [1];
           this.Rdata = data.data.data;
-          console.log(this.Rdata);
+          // console.log(this.Rdata);
+
+         
           this.totalCount = Math.ceil(data.data.totalCount / this.limit);
           for (var i = 2; i < this.totalCount + 1; i++) {
             this.limitArr.push(i);
@@ -249,7 +251,7 @@ export default {
       index == 0 ? (this.sortIndex = 1) : (this.sortIndex = 0);
       index == 0 ? (this.sort = 2) : (this.sort = 3);
       this.liebiao(this.pro_type_id);
-    },
+    }, 
     nowIndexIII: function(index, id) {
       // 三级标题点击事件
       this.IndexIII = index;

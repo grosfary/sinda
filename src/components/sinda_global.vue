@@ -3,7 +3,6 @@
 
     <sinda_top></sinda_top>
     <sinda_header></sinda_header>
-    <!-- <h3>这是公共页面部分</h3>       -->
     <router-view/>
     <sinda_footer></sinda_footer>
     <sinda_bottom></sinda_bottom>
@@ -11,19 +10,23 @@
 </template>
 
 <script>
-import sinda_header from "./sinda_global_header";
-import sinda_footer from "./sinda_global_footer";
-import sinda_top from "../components/sinda_top";
-import sinda_bottom from "../components/sinda_bottom";
+// import sinda_header from "./sinda_global_header";
+// import sinda_footer from "./sinda_global_footer";
+// import sinda_top from "../components/sinda_top";
+// import sinda_bottom from "../components/sinda_bottom";
 export default {
   name: "sinda_global",
   data() {
     return {};
   },
-  created() {
-
-  },
-  components: { sinda_header, sinda_footer, sinda_top, sinda_bottom }
+  created() {},
+  // components: { sinda_header, sinda_footer, sinda_top, sinda_bottom }
+  components: {
+    sinda_header: () => import("./sinda_global_header"),
+    sinda_footer: () => import("./sinda_global_footer"),
+    sinda_top: () => import("../components/sinda_top"),
+    sinda_bottom: () => import("../components/sinda_bottom"),
+  }
 };
 </script>
 

@@ -26,10 +26,6 @@ new Vue({
 })
 
 
-if (/Android|webOS|iPhone|ipad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    
-//   window.location.href = "#/m.sinda";
-}
 
 // setTimeout(function() {
 //   console.log(5);

@@ -431,7 +431,7 @@ export default {
 .main_main {
   // padding: 22px;
   width: 1198px;
-  height: 743px;
+  min-height: 743px;
   border: 1px solid #cccccc;
   border-top: none;
   margin-bottom: 69px;

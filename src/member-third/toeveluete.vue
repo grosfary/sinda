@@ -87,7 +87,7 @@
 <script>
 import member from "../views/sinda_member";
 import { mapGetters } from "vuex";
-import { formatDate } from "../../static/date/date";
+import { formatDate } from "../global_js/date.js";
 export default {
   filters: {
     formatDate(time) {
@@ -102,7 +102,7 @@ export default {
       product.splice(this.ind, 1);
       this.ajax
         .post(
-          "/xinda-api/ business-order/del",
+          "/xinda-api/business-order/del",
           this.qs.stringify({
             id: this.code
           })

@@ -27,7 +27,7 @@
         </div>
         <div class="service">
           <div class="picture">
-            <img :src="'http://115.182.107.203:8088/xinda/pic' + provider.providerImg" alt="">
+            <img :src="providerImg" alt="">
           </div>
           <ul>
             <li>{{provider.name}}</li>
@@ -81,6 +81,7 @@ import { MessageBox } from "mint-ui";
 export default {
   data() {
     return {
+      providerImg: "",
       product: [],
       provider: [],
       providerProduct: [],
@@ -95,17 +96,17 @@ export default {
     };
   },
   created() {
-    // this.ajax
-    //   .post(
-    //     "/xinda-api/sso/login-info", //商品接口
-    //     this.qs.stringify({
-    //       // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
-    //     })
-    //   )
-    //   .then(function(data) {
-    //     // console.log(data.data.data.loginId);
-    //     sessionStorage.setItem("userName", data.data.data.loginId);
-    //   });
+    this.ajax
+      .post(
+        "/xinda-api/sso/login-info", //商品接口
+        this.qs.stringify({
+          // sId: "64a9c8a15fe7493b967d74164b1a4ed5"
+        })
+      )
+      .then(function(data) {
+        // console.log(data.data.data.loginId);
+        sessionStorage.setItem("userName", data.data.data.loginId);
+      });
 
     var that = this;
     this.ajax
@@ -117,7 +118,7 @@ export default {
         })
       )
       .then(function(data) {
-        console.log(data)
+        // console.log(data)
         // console.log(that.$router.query.id)
         var shop = data.data.data;
         that.product = shop.product;
@@ -128,9 +129,11 @@ export default {
         that.shop = shop;
         that.serviceList = shop.serviceList;
         that.serv = shop.serviceList[0].serviceContent;
+        that.providerImg =
+          "http://115.182.107.203:8088/xinda/pic" + shop.provider.providerImg;
         that.imgURL =
           "http://115.182.107.203:8088/xinda/pic" + shop.product.img;
-        // console.log(that.serv);
+        console.log(that.providerImg);
       });
     // this.ajax
     //   .post(
@@ -183,14 +186,14 @@ export default {
       //立即购买按钮
       if (sessionStorage.getItem("userName")) {
         this.flag = false;
-        this.addtoCart(true, this.$route.query.id, 1);
+        this.addtoCart(true, this.$route.query.sId, 1);
       } else {
-        this.addtoCart(true, this.$route.query.id, 1);
+        this.addtoCart(true, this.$route.query.sId, 1);
       }
     },
     join(id) {
       // 加入购物车按钮
-      this.addtoCart(false, this.$route.query.id, 1);
+      this.addtoCart(false, this.$route.query.sId, 1);
     }
   }
 };
@@ -208,8 +211,8 @@ export default {
     }
     span {
       position: absolute;
-      right: 6.35rem;
-      top: 0.62rem;
+      right: 6.5rem;
+      top: 0.58rem;
       border-top: 4px solid #fff;
       border-bottom: 4px solid #2693d4;
       border-left: 4px solid #fff;
@@ -225,10 +228,10 @@ export default {
     }
     .headed {
       position: relative;
-      .imgbox{
+      .imgbox {
         overflow: hidden;
-        img{
-          width: 100%
+        img {
+          width: 100%;
         }
       }
       .company {

@@ -44,12 +44,12 @@
       <div class='hint'>
         <div class='infor'>
             <div class='for'>信息</div>
-            <div class='err' @click='hide'>x</div>
+            <router-link :to="{path:'/loginP'}"><div class='err' @click='hide'>x</div></router-link>
         </div>
         <div class='information'>请先登录</div>
         <div class='ok'>
           <router-link :to="{path:'/loginP'}"><input type="submit" value='确定' class='color' @mouseenter='submit(1)'></router-link>
-          <input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'>
+          <router-link :to="{path:'/loginP'}"><input type="submit" value='取消' @mouseenter='submit(2)' @click='hide'></router-link>
         </div>
       </div>
      </div>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { formatDate } from "../../static/date/date";
+import { formatDate } from "../global_js/date.js";
 export default {
     filters: {
     formatDate(time) {
@@ -111,7 +111,9 @@ export default {
   created() {
        if(!sessionStorage.getItem("userName")){
          console.log(sessionStorage.getItem("userName"))
-      this.route = true;
+         this.route = true;
+         sessionStorage.clear();
+         this.products = [];
     }
     var that = this;
     this.ajax
@@ -178,6 +180,7 @@ export default {
 .hello {
   width: 100%;
   font-size: 0.22rem;
+  margin-bottom:1.08rem;
 }
 .top {
   width: 100%;
