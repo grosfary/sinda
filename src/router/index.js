@@ -1,39 +1,75 @@
 import Vue from 'vue' // vue模块
 import Router from 'vue-router' // 路由模块
-import global from '@/components/sinda_global' // 公共页
-import LoginRegister from '../components/sinda_LoginRegister' // 登录和注册的公共页
-import index from '../views/sinda_index' // 首页
-import list from '../views/sinda_list' // 列表页
-import shop from '../views/sinda_shop' // 店铺页
+
+const global = resolve => require(['@/components/sinda_global'], resolve);
+const LoginRegister = resolve => require(['../components/sinda_LoginRegister'], resolve);
+const index = resolve => require(['../views/sinda_index'], resolve);
+const list = resolve => require(['../views/sinda_list'], resolve);
+const shop = resolve => require(['../views/sinda_shop'], resolve);
+// import global from '@/components/sinda_global' // 公共页
+// import LoginRegister from '../components/sinda_LoginRegister' // 登录和注册的公共页
+// import index from '../views/sinda_index' // 首页
+// import list from '../views/sinda_list' // 列表页
+// import shop from '../views/sinda_shop' // 店铺页
 
 
-import service from '../views/sinda_shop/sinda_service' // 三级服务页
-import product from '../views/sinda_shop/sinda_product' // 三级产品页
-import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书页
+const service = resolve => require(['../views/sinda_shop/sinda_service'], resolve);
+const product = resolve => require(['../views/sinda_shop/sinda_product'], resolve);
+const certificate = resolve => require(['../views/sinda_shop/sinda_certificate'], resolve);
+// import service from '../views/sinda_shop/sinda_service' // 三级服务页
+// import product from '../views/sinda_shop/sinda_product' // 三级产品页
+// import certificate from '../views/sinda_shop/sinda_certificate' // 三级证书页
 
-import login from '../views/sinda_login' //登录
-import register from '../views/sinda_register' //注册
-import line_item from '../stores/line_item' //订单详情
-import payment from '../views/sinda_payment' //支付页面
-import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
-import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
-import member from '../views/sinda_member' //会员中心
-import myYing from '../member-third/myYing' //会员中心
-import center from '../member-third/center' //会员中心
-import toeveluete from '../member-third/toeveluete' //会员中心
-import evalu from '../member-third/evalu' //会员中心
-import setting from '../member-third/setting' //会员中心
-import modify from '../member-third/modify' //会员中心
-import Join_Us from '../stores/Join_Us' //加盟我们
-import store_list from '../stores/store_list' //店铺列表
-import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
-import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
-import cart from '../views/sinda_list/sinda_cart' //购物车
+const login = resolve => require(['../views/sinda_login'], resolve);
+const register = resolve => require(['../views/sinda_register'], resolve);
+const line_item = resolve => require(['../stores/line_item'], resolve);
+const payment = resolve => require(['../views/sinda_payment'], resolve);
+// import login from '../views/sinda_login' //登录
+// import register from '../views/sinda_register' //注册
+// import line_item from '../stores/line_item' //订单详情
+// import payment from '../views/sinda_payment' //支付页面
+
+
+const payment_success = resolve => require(['../views/sinda_payment/sinda_payment_success'], resolve);
+const payment_failure = resolve => require(['../views/sinda_payment/sinda_payment_failure'], resolve);
+// import payment_success from '../views/sinda_payment/sinda_payment_success' //支付成功页面
+// import payment_failure from '../views/sinda_payment/sinda_payment_failure' //支付失败页面
+
+
+const member = resolve => require(['../views/sinda_member'], resolve);
+const myYing = resolve => require(['../member-third/myYing'], resolve);
+const center = resolve => require(['../member-third/center'], resolve);
+const toeveluete = resolve => require(['../member-third/toeveluete'], resolve);
+const evalu = resolve => require(['../member-third/evalu'], resolve);
+const setting = resolve => require(['../member-third/setting'], resolve);
+const modify = resolve => require(['../member-third/modify'], resolve);
+// import member from '../views/sinda_member' //会员中心
+// import myYing from '../member-third/myYing' //会员中心
+// import center from '../member-third/center' //会员中心
+// import toeveluete from '../member-third/toeveluete' //会员中心
+// import evalu from '../member-third/evalu' //会员中心
+// import setting from '../member-third/setting' //会员中心
+// import modify from '../member-third/modify' //会员中心
+
+
+const Join_Us = resolve => require(['../stores/Join_Us'], resolve);
+const store_list = resolve => require(['../stores/store_list'], resolve);
+const forgetPs = resolve => require(['../views/sinda_forgetPs.vue'], resolve);
+const tax = resolve => require(['../views/sinda_list/sinda_taxServer'], resolve);
+const cart = resolve => require(['../views/sinda_list/sinda_cart'], resolve);
+// import Join_Us from '../stores/Join_Us' //加盟我们
+// import store_list from '../stores/store_list' //店铺列表
+// import forgetPs from '../views/sinda_forgetPs.vue' //忘记密码
+// import tax from '../views/sinda_list/sinda_taxServer' //财税服务页
+// import cart from '../views/sinda_list/sinda_cart' //购物车
 // import pay from '../views/' //购物车
 
-import pro from '../views/sinda_list/sinda_products' //商品详情
-import com from '../views/sinda_list/company' //公司工商
-import list_list from '../views/sinda_list/list_list' //公司工商
+const pro = resolve => require(['../views/sinda_list/sinda_products'], resolve);
+const com = resolve => require(['../views/sinda_list/company'], resolve);
+const list_list = resolve => require(['../views/sinda_list/list_list'], resolve);
+// import pro from '../views/sinda_list/sinda_products' //商品详情
+// import com from '../views/sinda_list/company' //公司工商
+// import list_list from '../views/sinda_list/list_list' //公司工商
 import {
     MessageBox
 } from "mint-ui";
