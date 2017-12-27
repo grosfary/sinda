@@ -128,6 +128,7 @@ export default {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
           if (status == 1) {
+            // this.setuserName(this.phone);
             sessionStorage.setItem("userName", this.phone);
             this.$router.push({ path: "/m.sinda" });
           }
@@ -143,6 +144,7 @@ export default {
 .whole {
   width: 7.5rem;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 //顶部
 .top {

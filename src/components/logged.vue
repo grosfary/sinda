@@ -13,7 +13,7 @@
       </div>
       <div class='set'>
         <a href="#/myOrder"><div class='myorder'>我的订单</div></a>
-        <a href="#/generic"><div class='myset'><div>账户设置</div></div></a>
+        <a href="#/set"><div class='myset'><div>账户设置</div></div></a>
       </div>
       <input type="submit" value='退出登录' class='quit' @click='quit' v-if="mark">
     </div>
