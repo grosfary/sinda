@@ -319,6 +319,7 @@ input[type="file"] {
 .hello {
   font-size: 0.22rem;
   margin: 0 auto;
+  margin-bottom:1rem;
   input {
     border: 1px solid #b0b0b0;
     height: 0.42rem;

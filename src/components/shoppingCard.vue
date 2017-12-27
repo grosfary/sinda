@@ -1,6 +1,15 @@
 <template>
-  <div class="hello">
-    <div>
+  <div class="hello" v-if="mark">
+    <div class="empoty" v-if="!allProObj.length">
+      <img src="../assets/kehu/gouwu.png" alt="">
+      <div>
+        <p>购物车空空如也，去首页逛逛吧！</p>
+      </div>
+      <a href="/#/m.sinda">
+        <button>去首页</button>
+      </a>
+    </div>
+    <div v-if="allProObj.length">
       <div class='top'>购物车内共有{{allProObj.length}}件商品</div>
 
       <div class='back'>
@@ -127,7 +136,8 @@ export default {
       products: [],
       totalPrice: 0,
       allProObj: {},
-      diqu: {}
+      diqu: {},
+      mark:false,
     };
   },
   created() {
@@ -140,6 +150,7 @@ export default {
           });
         } else {
           this.cartList();
+          this.mark=true;
         }
       });
   }
@@ -292,6 +303,33 @@ export default {
     font-size: 0.3rem;
     text-align: center;
     line-height: 1.1rem;
+  }
+}
+
+//-------------------------------------------------------------------------------------------------------------
+// 空购物车
+.empoty {
+  width: 7.5rem;
+  margin: 0 auto;
+  text-align: center;
+  img {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+  }
+  p {
+    font-size: 0.5rem;
+    color: #2693d4;
+  }
+  button {
+    width: 2.6rem;
+    height: 0.9rem;
+    font-size: 0.4rem;
+    background: #2693d4;
+    border: 1px solid #2693d4;
+    border-radius: 3px;
+    color: #fff;
+    text-align: center;
   }
 }
 </style>

@@ -144,6 +144,7 @@ export default {
 .whole {
   width: 7.5rem;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 //顶部
 .top {
