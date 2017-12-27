@@ -81,6 +81,7 @@ export default{
     
     width:7.5rem;
     margin: 0 auto;
+    margin-bottom: 5rem;
     .m-head{
         text-align: center;
         .new_list{
