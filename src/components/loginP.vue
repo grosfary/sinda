@@ -128,6 +128,10 @@ export default {
           console.log(data.data.msg, data.data.status);
           let status = data.data.status;
           if (status == 1) {
+<<<<<<< HEAD
+            // this.setuserName(this.phone);
+=======
+>>>>>>> ddfcbdd15e1192b0f5e40a4721f2452ab8121b62
             sessionStorage.setItem("userName", this.phone);
             this.$router.push({ path: "/m.sinda" });
           }
