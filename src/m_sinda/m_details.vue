@@ -104,8 +104,10 @@ export default {
         })
       )
       .then(function(data) {
-        // console.log(data.data.data.loginId);
+        if (data.data.status!=0){
+
         sessionStorage.setItem("userName", data.data.data.loginId);
+        }
       });
 
     var that = this;
