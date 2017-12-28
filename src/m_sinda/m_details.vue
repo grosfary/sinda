@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="headed">
       <div class="imgbox">
-        <img :src="imgURL" :onerror="imgURL='../../static/g_img/123.jpg'" alt="">
+        <img :src="imgURL" :onerror="imgURL=require('../../static/g_img/123.jpg')" alt="">
 
       </div>
       <div class="company">
@@ -105,7 +105,9 @@ export default {
       )
       .then(function(data) {
         // console.log(data.data.data.loginId);
-        sessionStorage.setItem("userName", data.data.data.loginId);
+        if (data.data.status != 0) {
+          sessionStorage.setItem("userName", data.data.data.loginId);
+        }
       });
 
     var that = this;
