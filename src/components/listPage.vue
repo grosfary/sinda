@@ -117,7 +117,7 @@ export default {
               if (!str[this.index]) {
                 str[this.index] = data;
               }
-              sessionStorage.setItem(this.index, JSON.stringify(str));
+              // sessionStorage.setItem(this.index, JSON.stringify(str));
             });
         } else if (this.index % 3 == 1) {
           var that = this;
@@ -140,7 +140,7 @@ export default {
               if (!str[this.index]) {
                 str[this.index] = data;
               }
-              sessionStorage.setItem(this.index, JSON.stringify(str));
+              // sessionStorage.setItem(this.index, JSON.stringify(str));
             });
         } else if (this.index % 3 == 2) {
           var that = this;
@@ -163,7 +163,7 @@ export default {
               if (!str[this.index]) {
                 str[this.index] = data;
               }
-              sessionStorage.setItem(this.index, JSON.stringify(str));
+              // sessionStorage.setItem(this.index, JSON.stringify(str));
             });
         }
       }
