@@ -212,7 +212,7 @@ export default {
     span {
       position: absolute;
       right: 6.5rem;
-      top: 0.58rem;
+      top: 0.59rem;
       border-top: 4px solid #fff;
       border-bottom: 4px solid #2693d4;
       border-left: 4px solid #fff;
