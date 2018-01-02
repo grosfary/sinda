@@ -73,11 +73,11 @@ export default {
     pawOnBlur() {
       if(this.boxPasw !=""){
       if (
-        !/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+        !/^\w{6,16}$/.test(
           this.boxPasw
         )
       ) {
-        MessageBox("提示", "密码长度6-16位且必须包含大小写字母、数字、字符");
+        MessageBox("提示", "密码错误");
       }
       }
       else{       
@@ -115,24 +115,34 @@ export default {
     },
     //立即登录
     iregister() {
-      this.ajax
-        .post(
-          "/xinda-api/sso/login",
-          this.qs.stringify({
+      if(this.phone!=''){
+        if(this.boxPasw!=''){
+          this.ajax.post("/xinda-api/sso/login",this.qs.stringify({
             loginId: this.phone,
             password: md5(this.boxPasw),
             imgCode: this.imgCode
           })
-        )
-        .then(data => {
-          console.log(data.data.msg, data.data.status);
+        ).then(data => {
+          // console.log(data);
+          // console.log(data.data.msg, data.data.status);
           let status = data.data.status;
+          console.log(status);
           if (status == 1) {
             // this.setuserName(this.phone);
             sessionStorage.setItem("userName", this.phone);
             this.$router.push({ path: "/m.sinda" });
           }
+          else{
+            MessageBox("提示","验证码错误")
+          }
         });
+        }else{
+          MessageBox("提示","密码不能为空")
+        }
+      }else{
+         MessageBox("提示","账号不能为空")
+      }
+      
     }
   },
 

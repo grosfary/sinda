@@ -2,7 +2,7 @@
   <div class="detail">
     <div class="headed">
       <div class="imgbox">
-        <img :src="imgURL" :onerror="imgURL='../../static/g_img/123.jpg'" alt="">
+        <img :src="imgURL" :onerror="imgURL=require('../../static/g_img/123.jpg')" alt="">
 
       </div>
       <div class="company">
@@ -104,9 +104,9 @@ export default {
         })
       )
       .then(function(data) {
-        if (data.data.status!=0){
-
-        sessionStorage.setItem("userName", data.data.data.loginId);
+        // console.log(data.data.data.loginId);
+        if (data.data.status != 0) {
+          sessionStorage.setItem("userName", data.data.data.loginId);
         }
       });
 
@@ -188,14 +188,14 @@ export default {
       //立即购买按钮
       if (sessionStorage.getItem("userName")) {
         this.flag = false;
-        this.addtoCart(true, this.$route.query.id, 1);
+        this.addtoCart(true, this.$route.query.sId, 1);
       } else {
-        this.addtoCart(true, this.$route.query.id, 1);
+        this.addtoCart(true, this.$route.query.sId, 1);
       }
     },
     join(id) {
       // 加入购物车按钮
-      this.addtoCart(false, this.$route.query.id, 1);
+      this.addtoCart(false, this.$route.query.sId, 1);
     }
   }
 };

@@ -89,7 +89,7 @@ export default {
 <style scoped lang="less">
 .shopList {
   width: 1200px;
-  margin: 50px 170px;
+  margin: 50px auto;
   // display: none; 
 }
 .logo {
