@@ -33,7 +33,7 @@
             <img :src="suoT" alt="">
           </div>
       </div>
-      <button class="promptly" @click="iregister">立即注册</button>
+      <button class="promptly" @click="iregister">立即修改</button>
     </div>
   </div>
 </template>
@@ -113,7 +113,6 @@ export default {
     },
     //点击获取
     getCoBut() {
-      this.setNum(0);
       this.get = false;
       this.getNew = true;
       this.ajax
@@ -150,11 +149,11 @@ export default {
     pawOnBlur() {
       if(this.boxPasw){
       if (
-        !/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+        !/^\w{6,16}$/.test(
           this.boxPasw
         )
       ) {
-        MessageBox("提示", "密码长度6-16位且必须包含大小写字母、数字、字符");
+        MessageBox("提示", "密码不正确");
        }
       }else{
         MessageBox("提示","密码不能为空")
@@ -191,21 +190,20 @@ export default {
     },
     //立即注册
     iregister() {
-      this.ajax
+        this.ajax
         .post(
-          "/xinda-api/register/register",
+          "/xinda-api/register/findpas",
           this.qs.stringify({
             cellphone: this.phone,
             smsType: 1,
-            validCode: 111111,
             password: md5(this.boxPasw),
-            regionId: this.distCode
+            validCode: 111111
           })
         )
         .then(data => {
-          console.log("立即注册", data.data.msg, data.data.status);
+          console.log("立即修改", data.data.msg, data.data.status);
           if (status == 1) {
-            this.$router.go(-1);
+            this.$router.push({ path: "/loginP" });
           }
         });
     }
