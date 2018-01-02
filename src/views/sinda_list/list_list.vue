@@ -141,7 +141,7 @@ export default {
     },
     liebiaoxinxi: function() {
       this.ajax
-        .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+        .post("/xinda-api/product/style/list")
         .then(data => {
           //获取列表信息
           var obj = {};

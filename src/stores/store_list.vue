@@ -38,7 +38,7 @@
         <div class="lists" v-for="list in disStores" :key="list.id">
           <div class="image">
             <!--图片盒子-->
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg">
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+list.providerImg">
             <!--数据获取图片-->
           </div>
           <span></span>
@@ -75,7 +75,7 @@ export default {
   created() {
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+      .post("/xinda-api/product/style/list")
       .then(function(data) {
         //数据地址
         var rData = data.data.data;
