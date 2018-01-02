@@ -96,7 +96,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import dist from "../../components/distpicker";
+const dist = resolve => require(["../../components/distpicker"], resolve);
 
 export default {
   components: {
@@ -176,7 +176,7 @@ export default {
     },
     addtoCart(jump, id, num) {
       // 立即购买或者加入购物车
-      if (sessionStorage.getItem("userName")) {
+      // if (sessionStorage.getItem("userName")) {
         // 判断现在是否为登录状态
         this.ajax
           .post(
@@ -197,9 +197,9 @@ export default {
               this.$router.push({ path: "/list/cart" });
             }
           });
-      } else {
-        this.show = true;
-      }
+      // } else {
+      //   this.show = true;
+      // }
     },
     queding() {
       this.$router.push({ path: "/LoginRegister/login" });

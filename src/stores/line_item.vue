@@ -86,17 +86,18 @@
             </div>
         </div>
         <div class="feedback" v-if="feedback">
-                    <div class="feedheader">
-                        <p style="display:inline" class="feedlage">支付反馈</p>
-                        <a href="javascript:void(0)" class="clean" @click="clean">&#10005</a>
-                    </div>
-                        <p class="lagefeed">请您在新打开的页面完成订单付款</p>
-                        <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
-                    <div class="feedbody">
-                        <a class="wancheng" href="javascript:void(0)" @click="success">已完成支付</a><a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
-                     </div>
-                     <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
-                </div>
+            <div class="feedheader">
+                <p style="display:inline" class="feedlage">支付反馈</p>
+                <a href="javascript:void(0)" class="clean" @click="clean">&#10005</a>
+            </div>
+            <p class="lagefeed">请您在新打开的页面完成订单付款</p>
+            <p class="lagefeedI">根据您的支付完成情况,完成下步操作</p>
+            <div class="feedbody">
+                <a class="wancheng" href="javascript:void(0)" @click="success">已完成支付</a>
+                <a class="shibai" href="javascript:void(0)" @click="failure">支付遇到问题</a>
+            </div>
+            <p class="lagefeedII" @click="clean">返回重新选择支付方式</p>
+        </div>
     </div>
 
 </template>
@@ -105,43 +106,53 @@
 import sinda_header from "../components/sinda_global_header"; // 公共头部
 import sinda_footer from "../components/sinda_global_footer"; //公共底部
 export default {
-    created() {
+  created() {
     var that = this;
-    this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/business-order/detail",this.qs.stringify({
-         businessNo:"S1704040001075133085"//订单明细          
-        }))
-        .then(function (data){
-            var item= data.data;
-            console.log(item);
-        })
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/pay/detail", this.qs.stringify({
-         businessNo:"S1704040001075133085"//订单详情
-        
-        }))
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/business-order/detail",
+        this.qs.stringify({
+          businessNo: "S1704040001075133085" //订单明细
+        })
+      )
       .then(function(data) {
-    
-       
+        var item = data.data;
+        console.log(item);
       });
-      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/china-pay",this.qs.stringify({
-         businessNo:"S1704040001075133085"//银联支付
-        
-        }))
-        .then(function (data){})
-      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/ali-pay",this.qs.stringify({
-         businessNo:"S1704040001075133085"//支付宝支付
-        
-        }))
-        .then(function (data){})
-      this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/pay/ weixin-pay",this.qs.stringify({
-         businessNo:"S1704040001075133085"//微信支付
-          
-        }))
-        .then(function (data){})
-       
-        
-    },
-    
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/pay/detail",
+        this.qs.stringify({
+          businessNo: "S1704040001075133085" //订单详情
+        })
+      )
+      .then(function(data) {});
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/pay/china-pay",
+        this.qs.stringify({
+          businessNo: "S1704040001075133085" //银联支付
+        })
+      )
+      .then(function(data) {});
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/pay/ali-pay",
+        this.qs.stringify({
+          businessNo: "S1704040001075133085" //支付宝支付
+        })
+      )
+      .then(function(data) {});
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/pay/ weixin-pay",
+        this.qs.stringify({
+          businessNo: "S1704040001075133085" //微信支付
+        })
+      )
+      .then(function(data) {});
+  },
+
   data() {
     return {
       weback: false,
@@ -162,10 +173,10 @@ export default {
       this.bigbox = false;
     },
     success: function() {
-      location.href = "/#/payment/success";
+      location.href = "#/payment/success";
     },
     failure: function() {
-      location.href = "/#/payment/failure";
+      location.href = "#/payment/failure";
     },
     jiesuan: function() {
       // ---------------------------------------------------------
@@ -194,9 +205,7 @@ export default {
                   data.data.indexOf("</form>") + 7
                 )
               );
-              console.log();
-              console.log();
-              window.open("/#/pay");
+              window.open("#/pay");
             } else {
             }
           });
@@ -221,7 +230,7 @@ export default {
               );
               console.log();
               console.log();
-              window.open("/#/pay");
+              window.open("#/pay");
             } else {
             }
           });
@@ -236,30 +245,39 @@ export default {
     }
   },
   created() {
-    this.ajax
-      .post(
-        "/xinda-api/business-order/detail",
-        this.qs.stringify({
-          businessNo: this.$route.query.id
-        })
-      )
+    this.ajax // 判断当前用户是否登录ajax请求
+      .post("/xinda-api/sso/login-info", this.qs.stringify({}))
       .then(data => {
-        //获取列表信息
-        if (data.data.status === 1) {
-          //   console.log(data.data.data);
-          this.detail = data.data.data.businessOrder;
-          //   console.log(this.detail.createTime)
-          var date = new Date(this.detail.createTime);
-
-          this.detail.createTime =
-            date.toLocaleDateString().replace(/\//g, "-") +
-            " " +
-            date.toTimeString().substr(0, 8);
-
-          this.orderList = data.data.data.serviceOrderList;
-          console.log(this.orderList);
+        if (data.data.status === 0) {
+          //   MessageBox.confirm("请您登陆后再继续操作").then(action => {
+          this.$router.push({ path: "/LoginRegister/login" });
+          //   });
         } else {
-          console.log("非常抱歉，系统正在开小差中，请稍后。");
+          this.ajax
+            .post(
+              "/xinda-api/business-order/detail",
+              this.qs.stringify({
+                businessNo: this.$route.query.id
+              })
+            )
+            .then(data => {
+              //获取列表信息
+              if (data.data.status === 1) {
+                //   console.log(data.data.data);
+                this.detail = data.data.data.businessOrder;
+                //   console.log(this.detail.createTime)
+                var date = new Date(this.detail.createTime);
+                this.detail.createTime =
+                  date.toLocaleDateString().replace(/\//g, "-") +
+                  " " +
+                  date.toTimeString().substr(0, 8);
+
+                this.orderList = data.data.data.serviceOrderList;
+                console.log(this.orderList);
+              } else {
+                console.log("非常抱歉，系统正在开小差中，请稍后。");
+              }
+            });
         }
       });
   }

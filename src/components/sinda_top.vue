@@ -16,7 +16,7 @@
                 <a href="#/LoginRegister/register">快速注册</a>
               </li>
               <li v-if="getuserName" style="margin-left:20px;">Hi,
-                <a href="/#/member/setting">{{getuserName}}</a>
+                <a href="#/member/setting">{{getuserName}}</a>
               </li>
               <li v-if="getuserName">
                 <a @click="logOutBox" style="cursor: pointer;">退出登录</a>
@@ -66,16 +66,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getNum", "getuserName"]) //{getNum:function(){}}
+    ...mapGetters(["getNum", "getuserName"]) 
   },
   methods: {
     ...mapActions(["setuserName", "setNum"]),
     loginState: function() {
-      if (this.getuserName) {
         this.$router.push({ path: "/list/cart" });
-      } else {
-        this.$router.push({ path: "/LoginRegister/login" });
-      }
     },
     logOutBox: function() {
       this.logshow = true;
@@ -92,7 +88,7 @@ export default {
           // 如果请求返回为1，则成功退出
           sessionStorage.setItem("userName", ""); // 退出时，清空缓存用户名
           this.setuserName(""); // 清空vuex显示的用户名
-          sessionStorage.setItem("cartNumber",this.zero); // 清空购物车
+          // sessionStorage.setItem("cartNumber",this.zero); // 清空购物车
           this.state = 0;
           this.$router.go(0); // 刷新当前页面
         }

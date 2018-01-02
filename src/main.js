@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'   
+import store from './store'
 import axios from 'axios'
 import qs from 'qs'
 import Validator from 'vue-validator'
@@ -16,35 +16,11 @@ Vue.config.devtools = false //关闭vue提示
 import 'mint-ui/lib/style.css'
 /* eslint-disable no-new */
 new Vue({
-    el: '#app',
-    router,
-    store,
-    template: '<App/>',
-    components: {
-        App
-    }
+  el: '#app',
+  router,
+  store,
+  template: '<App/>',
+  components: {
+    App
+  }
 })
-
-
-if (/Android|webOS|iPhone|ipad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    
-//   window.location.href = "#/m.sinda";
-}
-
-// setTimeout(function() {
-//   console.log(5);
-// }, 100);
-// var promise = new Promise(function(resolve,reject){
-//   console.log(1);
-//   resolve();
-//   console.log(2);
-// });
-// promise.then(function(){
-//   console.log(3);
-// });
-// console.log(4);
-
-// setTimeout(function() {
-//   console.log(1);
-// }, 100);
-// console.log(2);

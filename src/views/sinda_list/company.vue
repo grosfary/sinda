@@ -98,7 +98,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import dist from "../../components/distpicker";
+const dist = resolve => require(["../../components/distpicker"], resolve);
 
 export default {
   components: {

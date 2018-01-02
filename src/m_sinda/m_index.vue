@@ -104,43 +104,43 @@ export default {
       navObj: {
         a: {
           name: "财税服务",
-          imgSrc: "./static/m_img/caishui.png",
+          imgSrc: "static/m_img/caishui.png",
           code: 3,
           id: ""
         },
         b: {
           name: "开公司",
-          imgSrc: "./static/m_img/kaigongsi.png",
+          imgSrc: "static/m_img/kaigongsi.png",
           code: 0,
           id: "19b94314bc1a4b078d2402f8727c388b"
         },
         c: {
           name: "公司变更",
-          imgSrc: "./static/m_img/gongsibiangeng.png",
+          imgSrc: "static/m_img/gongsibiangeng.png",
           code: 5,
           id: ""
         },
         d: {
           name: "个人社保",
-          imgSrc: "./static/m_img/gerenshebao.png",
+          imgSrc: "static/m_img/gerenshebao.png",
           code: 7,
           id: ""
         },
         e: {
           name: "公司社保",
-          imgSrc: "./static/m_img/gongsishebao.png",
+          imgSrc: "static/m_img/gongsishebao.png",
           code: 6,
           id: ""
         },
         f: {
           name: "知识产权",
-          imgSrc: "./static/m_img/zhishichanquan.png",
+          imgSrc: "static/m_img/zhishichanquan.png",
           code: 10,
           id: ""
         },
         g: {
           name: "全部服务",
-          imgSrc: "./static/m_img/quanbufuwu.png",
+          imgSrc: "static/m_img/quanbufuwu.png",
           code: 0,
           id: ""
         }

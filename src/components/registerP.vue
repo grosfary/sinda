@@ -35,7 +35,7 @@
 
 <script>
 //三级联动调用
-import dist from "../components/distpicker";
+const dist = resolve => require(["../components/distpicker"], resolve);
 import { MessageBox } from "mint-ui";
 var md5 = require("md5");
 const head = require("../assets/pc/suo.jpg");

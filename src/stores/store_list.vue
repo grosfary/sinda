@@ -69,9 +69,7 @@
 </template>
 
 <script>
-import sinda_header from "../components/sinda_global_header";
-import dist from "../components/distpicker";//省市区三级联动插件
-import sinda_footer from "../components/sinda_global_footer"; 
+const dist = resolve => require(["../components/distpicker"], resolve);
 export default {
   // 数据获取
   created() {
@@ -119,7 +117,7 @@ export default {
       show:true,
     };
   },
-  components: { sinda_header, sinda_footer, dist },
+  components: {  dist },
   methods: {
     open: function(name, id, image) {
       this.$router.push({
