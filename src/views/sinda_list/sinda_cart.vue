@@ -31,7 +31,7 @@
             </li>
             <li>{{i.totalPrice}}</li>
             <li>
-              <span @click="delOrder(i.serviceId,index)" style="cursor: pointer;">删除</span>
+              <span @click="delOrder(i.serviceId,index,allProObj)" style="cursor: pointer;">删除</span>
             </li>
           </ul>
         </div>
@@ -56,10 +56,10 @@
           <h3>您的购物车空空如也，马上行动吧，您可以：</h3>
         </li>
         <li>马上去
-          <a href="/#/">看看别人都在买什么</a>
+          <a href="#/index">看看别人都在买什么</a>
         </li>
         <li>看看
-          <a href="/#/member/setting">已经买到的宝贝</a>
+          <a @click="toTtoeveluete">已经买到的宝贝</a>
         </li>
       </ul>
     </div>
@@ -97,7 +97,7 @@ export default {
       allProObj: {},
       totalPrice: "",
       display: false,
-      totalPrice: 0,
+      totalPrice: 0
     };
   },
   methods: {
@@ -119,8 +119,8 @@ export default {
           }
         });
     },
-    delOrder(id,index) {
-      //删除订单
+    delOrder(id, index) {
+      // 删除订单
       this.ajax
         .post(
           "/xinda-api/cart/del",
@@ -131,7 +131,16 @@ export default {
         .then(data => {
           if (data.data.status === 1) {
             // 如果成功删除订单 刷新当前页面
-            this.$router.go(0);
+            this.allProObj.splice(index, 1);
+            var totalPrice = 0; // 初始一个总价
+            for (var i in this.allProObj) {
+              totalPrice += this.allProObj[i].totalPrice;
+            }
+            this.totalPrice = totalPrice;
+            this.setNum(this.allProObj.length);
+            if (this.allProObj.length == 0) {
+              this.display = false;
+            }
           } else {
             console.log("系统正在开小差中，请稍后重试");
           }
@@ -139,19 +148,24 @@ export default {
     },
     cart_submit: function() {
       // 购物车结算
-      this.ajax
-        .post(
-          "/xinda-api/cart/submit",
-          this.qs.stringify({
-            //   sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
-          })
-        )
+      this.ajax // 判断当前用户是否登录ajax请求
+        .post("/xinda-api/sso/login-info", this.qs.stringify({}))
         .then(data => {
-          if (data.data.status == 1) {
-            this.$router.push({
-              path: "/line_item",
-              query: { id: data.data.data }
-            });
+          if (data.data.status === 0) {
+            // MessageBox.confirm("请您登陆后再继续操作").then(action => {
+            this.$router.push({ path: "/LoginRegister/login" });
+            // });
+          } else {
+            this.ajax
+              .post("/xinda-api/cart/submit", this.qs.stringify({}))
+              .then(data => {
+                if (data.data.status == 1) {
+                  this.$router.push({
+                    path: "/line_item",
+                    query: { id: data.data.data }
+                  });
+                }
+              });
           }
         });
     },
@@ -171,7 +185,6 @@ export default {
         .then(data => {
           if (data.data.status == 1) {
             this.allProObj[index].buyNum += num;
-            // console.log(this.allProObj[index])
             var unit = this.allProObj[index].unitPrice;
             var total = this.allProObj[index].totalPrice;
             num === 1 ? (total += unit) : (total -= unit);
@@ -179,17 +192,17 @@ export default {
             num === 1 ? (this.totalPrice += unit) : (this.totalPrice -= unit);
           }
         });
+    },
+    toTtoeveluete() {
+      if (!sessionStorage.getItem("userName")) {
+        this.$router.push({ path: "/LoginRegister/login" });
+      } else {
+        this.$router.push("member/toeveluete");
+      }
     }
   },
   created() {
     this.setlistName("购物车");
-    this.ajax // 判断当前用户是否登录ajax请求
-      .post("/xinda-api/sso/login-info", this.qs.stringify({}))
-      .then(data => {
-        if (data.data.status === 0) {
-          this.$router.push({ path: "/LoginRegister/login" });
-        }
-      });
 
     this.ajax
       .post(
@@ -239,7 +252,6 @@ export default {
     li {
       float: right;
       button {
-        // display: block;
         border: 1px solid #2692d2;
         border-radius: 5px;
         background: #fff;
@@ -355,6 +367,7 @@ export default {
     }
     a {
       color: #3e9bd8;
+      cursor: pointer;
     }
   }
 }

@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import dist from "../components/distpicker";
+const dist = resolve => require(["../components/distpicker"], resolve);
 var md5 = require("md5");
 export default {
   data() {

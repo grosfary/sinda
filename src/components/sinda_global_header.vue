@@ -15,29 +15,32 @@
         <ul>
           <li>北京市</li>
           <li>
-            <a>[切换城市]</a>
+            <a @click="SelectCity">[切换城市]</a>
           </li>
         </ul>
-        <!-- <div class="SelectCity">
+        <!-- 选择城市部分 -->
+        <div class="SelectCity" v-if="ifSelectCity">
           <div>
             <div>
+
+              <span @click="SelectCityClose">×</span>
               <h3>城市选择</h3>
-              <p></p>
+              <p>尊敬的用户您好：请选择准确地地址方便我们为您提供更精确的服务！</p>
             </div>
-            <span></span>
+            <span v-for="i in SelectCitys" :key="i.name" @click="SelectCityClose">{{i.name}}</span>
           </div>
-        </div> -->
+        </div>
       </div>
       <div class="header_search">
         <!-- 头部搜索部分 -->
         <ul>
           <li>
-            <a href="">产品</a>
+            <a style="cursor: pointer;" :class="{active:(chanpin==true)}" @click="SelectSearchTypeCP">产品</a>
             <span>|</span>
-            <a href="">服务商</a>
+            <a style="cursor: pointer;" :class="{active:(fuwushang==true)}" @click="SelectSearchTypeFWS">服务商</a>
           </li>
           <li class="search_search">
-            <input type="text" placeholder="搜索您需要的服务或服务商">
+            <input type="text" placeholder="搜索您需要的服务或服务商" @input="search">
             <button>
               <span class="icon_global"></span>
             </button>
@@ -131,17 +134,19 @@ export default {
       },
       listarr: [],
       mark: false,
-      nowIndex: -1
+      nowIndex: -1,
+      ifSelectCity: false,
+      SelectCitys: {},
+      chanpin: true,
+      fuwushang: false
     };
   },
   created() {
     var that = this;
-    this.ajax
-      .post("/xinda-api/product/style/list")
-      .then(function(data) {
-        var data = data.data.data;
-        that.listarr = data;
-      });
+    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+      var data = data.data.data;
+      that.listarr = data;
+    });
   },
   mounted() {},
   methods: {
@@ -163,7 +168,6 @@ export default {
         if (obj[i].name == "专利申请") id = "24d919ba0eb545dd9a3132dfb87cf599";
         if (obj[i].name == "企业社保") id = "0e46c4b27e2a41aab572e11837ea0c9f";
       }
-      console.log(index);
       this.$router.push({
         path: "/list/list",
         query: { name: sortListarr[index].name, id: id, index: index }
@@ -171,7 +175,41 @@ export default {
     },
     cmark() {
       !this.mark ? (this.mark = true) : (this.mark = false);
-      console.log(this.mark);
+    },
+    SelectCity() {
+      var that = this;
+      this.ajax.post("/xinda-api/common/open-region").then(function(data) {
+        that.SelectCitys = data.data.data;
+        that.ifSelectCity = true;
+      });
+    },
+    SelectCityClose() {
+      this.ifSelectCity = false;
+    },
+    search() {
+      // 头部搜索部分
+      this.ajax
+        .post(
+          // "/xinda-api/provider/search-grid",
+          this.parameter,
+          this.qs.stringify({
+            start: 0,
+            limit: 8,
+            searchName: "公司"
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
+    },
+    SelectSearchTypeCP() {
+      this.fuwushang = false;
+      this.chanpin = true;
+      // this.parameter=
+    },
+    SelectSearchTypeFWS() {
+      this.fuwushang = true;
+      this.chanpin = false;
     }
   },
   computed: {
@@ -282,6 +320,35 @@ export default {
     background: #fff;
     width: 787px;
     height: 191px;
+    > div {
+      height: 88px;
+      background: #63c2c7;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      h3 {
+        padding-top: 20px;
+      }
+      > span {
+        position: absolute;
+        top: 18px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 30px;
+        z-index: 10;
+        color: #fff;
+      }
+    }
+    > span {
+      cursor: pointer;
+      display: inline-block;
+      width: 75px;
+      height: 23px;
+      text-align: center;
+      border: 2px solid #63c2c7;
+      margin-top: 38px;
+      margin-left: 20px;
+    }
   }
 }
 // 头部城市部分-----------end-------------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -295,6 +362,9 @@ export default {
     a {
       color: #000;
       line-height: 25px;
+      &.active {
+        color: #2693d4;
+      }
     }
     span {
       margin-left: 8px;

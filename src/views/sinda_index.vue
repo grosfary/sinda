@@ -21,7 +21,7 @@
         <div class="star_pro" v-for="(i,index) in noviceMust" :key="i.id">
           <!-- 明星产品推荐 -->
           <div>
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+i.providerImg" alt="">
             <!-- 公司logo -->
             <p>{{i.providerName}}</p>
             <!-- 公司名称 -->
@@ -47,7 +47,7 @@
         <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
           <!-- 初创企业必备产品 -->
           <div>
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+i.providerImg" alt="">
             <!-- 公司logo -->
             <p>{{i.providerName}}</p>
             <!-- 公司名称 -->
@@ -139,7 +139,7 @@
       <div class="server_pro" v-for="(i,index) in serverArr" :key="i.id" v-show="indexs==0">
         <!-- 推荐服务商 -->
         <div>
-          <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+          <img :src="'http://123.58.241.146:8088/xinda/pic'+i.providerImg" alt="">
           <!-- 公司logo -->
           <p>{{i.providerName}}</p>
           <!-- 公司名称 -->
@@ -159,7 +159,8 @@
         <div class="novice_pro" v-for="(i,index) in noviceMust" :key="i.id">
           <!-- 初创企业必备产品 -->
           <div>
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="">
+            <!-- <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt=""> -->
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+i.providerImg" alt="">
             <!-- 公司logo -->
             <p>{{i.providerName}}</p>
             <!-- 公司名称 -->
