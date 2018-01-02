@@ -12,7 +12,7 @@
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
-                <img :src="('http://115.182.107.203:8088/xinda/pic'+product.productImg)" @error="setDefImg($event)" alt="">
+                <img :src="('http://123.58.241.146:8088/xinda/pic'+product.productImg)" @error="setDefImg($event)" alt="">
             </div>
             <div class='deta'>
                 <span class='color'>{{product.serviceName}}</span><br>

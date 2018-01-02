@@ -132,9 +132,9 @@ export default {
         that.serviceList = shop.serviceList;
         that.serv = shop.serviceList[0].serviceContent;
         that.providerImg =
-          "http://115.182.107.203:8088/xinda/pic" + shop.provider.providerImg;
+          "http://123.58.241.146:8088/xinda/pic" + shop.provider.providerImg;
         that.imgURL =
-          "http://115.182.107.203:8088/xinda/pic" + shop.product.img;
+          "http://123.58.241.146:8088/xinda/pic" + shop.product.img;
         console.log(that.providerImg);
       });
     // this.ajax
