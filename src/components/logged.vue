@@ -34,7 +34,9 @@
   </div>
 </template>
 <script>
+import { MessageBox } from "mint-ui";
 export default {
+  
   data() {
     return {
       userName: "请先登录",
@@ -43,11 +45,19 @@ export default {
     };
   },
   created() {
-    this.userName = sessionStorage.getItem("userName");
-    if(sessionStorage.getItem("userName")){
-    this.mark=true;
-    }
-    
+    this.ajax // 判断当前用户是否登录ajax请求
+      .post("/xinda-api/sso/login-info", this.qs.stringify({}))
+      .then(data => {
+        if (data.data.status === 0) {
+          MessageBox.confirm("请您登陆后再继续操作").then(action => {
+            this.$router.push({ path: "/loginP" });
+          });
+        } else {
+          this.mark=true;
+          // this.userName;
+console.log(data.data.data)
+        }
+      });
   },
   methods: {
     quit: function() {
