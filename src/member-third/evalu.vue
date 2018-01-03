@@ -245,7 +245,7 @@ export default {
     }
     .infor {
       .box;
-      width: 186px;
+      width: 209px;
       margin: 0;
     }
     .time {
