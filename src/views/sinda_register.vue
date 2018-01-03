@@ -145,7 +145,7 @@ export default {
       if (this.boxPasw) {
         this.boxp = false;
         if (
-          /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          /^\w{6,16}$/.test(
             this.boxPasw
           )
         ) {
