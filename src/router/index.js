@@ -312,6 +312,18 @@ export default new Router({
         path: '/set', //已登录
         name: 'set',
         component: set
+      },{
+        path: '/details', //列表页
+        name: 'details',
+        component: m_details
+      }, {
+        path: '/registerP', //注册
+        name: 'registerP',
+        component: registerP
+      }, {
+        path: '/loginP', //登录
+        name: 'loginP',
+        component: loginP
       },
 
     ]
@@ -327,18 +339,6 @@ export default new Router({
   }, {
     path: '/m_lineitem', //手机端支付 如http://locahost:8801/#/m_lineitem
     component: m_lineitem
-  }, {
-    path: '/details', //列表页
-    name: 'details',
-    component: m_details
-  }, {
-    path: '/registerP', //注册
-    name: 'registerP',
-    component: registerP
-  }, {
-    path: '/loginP', //登录
-    name: 'loginP',
-    component: loginP
   }, {
     path: '/cipher', //忘记密码
     name: 'cipher',
