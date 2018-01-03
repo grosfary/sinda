@@ -21,12 +21,16 @@
         </div>
       </div>
       <button class="promptly" @click="iregister">立即登录</button>
+      <div class="paswrd">
+        <a href="#/cipher">忘记密码>></a>
+      </div>
     </div>
+
     <div class="bottom">
       <p>还没有薪客账号</p>
       <button @click="enroll()">立即注册</button>
     </div>
-    
+
   </div>
 </template>
 
@@ -44,43 +48,39 @@ export default {
       imgUrl: "/xinda-api/ajaxAuthcode",
       boxPasw: "",
       imgV: "",
-      phone:"",
+      phone: "",
       //手机
-      phone:"",
+      phone: "",
       //验证码
       imgCode: "",
       //密码
       boxPasw: "",
       suo: head,
-      pswd: "password",
+      pswd: "password"
     };
   },
   methods: {
-     back(){
+    back() {
       this.$router.go(-1);
-     },
+    },
     //手机号
     phonBlur() {
-      if(this.phone !=""){
-      if (!/^1[34578]\d{9}$/.test(this.phone)) {
-        MessageBox("提示", "请输入正确的手机号");
-      }
-      }else{       
+      if (this.phone != "") {
+        if (!/^1[34578]\d{9}$/.test(this.phone)) {
+          MessageBox("提示", "请输入正确的手机号");
+        } else {
+        }
+      } else {
         MessageBox("提示", "手机号不能为空");
       }
     },
     //密码
     pawOnBlur() {
-      if(this.boxPasw !=""){
-      if (
-        !/^\w{6,16}$/.test(
-          this.boxPasw
-        )
-      ) {
-        MessageBox("提示", "密码错误");
-      }
-      }
-      else{       
+      if (this.boxPasw != "") {
+        if (!/^\w{6,16}$/.test(this.boxPasw)) {
+          MessageBox("提示", "密码错误");
+        }
+      } else {
         MessageBox("提示", "密码不能为空");
       }
     },
@@ -97,52 +97,54 @@ export default {
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    enroll(){
+    enroll() {
       this.$router.push({
-        path:"/registerP"
-      })
+        path: "/registerP"
+      });
     },
     //立即注册
     //验证码
     verCode() {
-      if(this.imgCode !=""){
-      if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
-        MessageBox("提示", "您输入验证码不正确");
+      if (this.imgCode != "") {
+        if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+          MessageBox("提示", "您输入验证码不正确");
+        }
+      } else {
+        MessageBox("提示", "验证码不能为空");
       }
-     }else{
-       MessageBox("提示","验证码不能为空")
-     }
     },
     //立即登录
     iregister() {
-      if(this.phone!=''){
-        if(this.boxPasw!=''){
-          this.ajax.post("/xinda-api/sso/login",this.qs.stringify({
-            loginId: this.phone,
-            password: md5(this.boxPasw),
-            imgCode: this.imgCode
-          })
-        ).then(data => {
-          // console.log(data);
-          // console.log(data.data.msg, data.data.status);
-          let status = data.data.status;
-          console.log(status);
-          if (status == 1) {
-            // this.setuserName(this.phone);
-            sessionStorage.setItem("userName", this.phone);
-            this.$router.push({ path: "/m.sinda" });
-          }
-          else{
-            MessageBox("提示","验证码错误")
-          }
-        });
-        }else{
-          MessageBox("提示","密码不能为空")
+      if (this.phone != "") {
+        if (this.boxPasw != "") {
+          this.ajax
+            .post(
+              "/xinda-api/sso/login",
+              this.qs.stringify({
+                loginId: this.phone,
+                password: md5(this.boxPasw),
+                imgCode: this.imgCode
+              })
+            )
+            .then(data => {
+              console.log(data);
+              // console.log(data.data.msg, data.data.status);
+              let status = data.data.status;
+              // console.log(status);
+              if (status == 1) {
+                // this.setuserName(this.phone);
+                sessionStorage.setItem("userName", this.phone);
+                this.$router.go(-1);
+              } else {
+                MessageBox("提示", "验证码错误");
+              }
+            });
+        } else {
+          MessageBox("提示", "密码不能为空");
         }
-      }else{
-         MessageBox("提示","账号不能为空")
+      } else {
+        MessageBox("提示", "账号不能为空");
       }
-      
     }
   },
 
@@ -254,7 +256,7 @@ export default {
   margin: 0 auto;
   color: #fff;
 }
-.bottom{
+.bottom {
   width: 7.5rem;
   background: #4d4d4d;
   position: fixed;
@@ -262,25 +264,33 @@ export default {
   margin: 0 auto;
   height: 0.7rem;
   // text-align: center;
-  p{
+  p {
     font-size: 0.3rem;
     padding-left: 0.8rem;
     line-height: 0.7rem;
     color: #d6d6d6;
   }
-  button{
-      position: fixed;
+  button {
+    position: fixed;
     color: #000;
     bottom: 0.05rem;
-    left:5.5rem;
-    padding:0.15rem 0.4rem;
+    left: 5.5rem;
+    padding: 0.15rem 0.4rem;
     background: #2693d4;
-    color:#fff;
+    color: #fff;
     font-size: 0.25rem;
     font-family: "黑体";
-    border:none;
+    border: none;
     border-radius: 4px;
   }
+}
+.paswrd {
+  width: 2rem;
+  height: 0.6rem;
+  font-size: 0.3rem;
+  text-align: right;
+  line-height: 0.6rem;
+  padding-left:3.5rem;
 }
 </style>
 

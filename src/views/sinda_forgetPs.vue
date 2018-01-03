@@ -140,7 +140,7 @@ export default {
       console.log(md5(pw));
       if(this.boxPasw!=""){
       if (
-        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+        /^\w{6,16}$/.test(
           this.boxPasw
         )
       ) {

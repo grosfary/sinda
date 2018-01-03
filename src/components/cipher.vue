@@ -30,8 +30,8 @@
       <div class="pswTwo">
         <input :type="pwd" @blur="powOntw" v-model="boxPaswI" placeholder="  请输入密码">
         <div @click="conPwprd">
-            <img :src="suoT" alt="">
-          </div>
+          <img :src="suoT" alt="">
+        </div>
       </div>
       <button class="promptly" @click="iregister">立即修改</button>
     </div>
@@ -62,45 +62,45 @@ export default {
       sjCode: "",
       //密码
       boxPasw: "",
-      boxPaswI:"",
+      boxPaswI: "",
       suo: head,
       suoT: head,
       pswd: "password",
-      pwd: "password",
+      pwd: "password"
     };
   },
   methods: {
-     back(){
+    back() {
       this.$router.go(-1);
     },
     //手机号
     phonBlur() {
-      if(this.phone!=""){
-      if (!/^1[34578]\d{9}$/.test(this.phone)) {
-        MessageBox("提示", "请输入正确的手机号");
-       }
-      }else{
-        MessageBox("提示","手机号不能为空")
+      if (this.phone != "") {
+        if (!/^1[34578]\d{9}$/.test(this.phone)) {
+          MessageBox("提示", "请输入正确的手机号");
+        }
+      } else {
+        MessageBox("提示", "手机号不能为空");
       }
     },
     //验证码
     verCode() {
-      if(this.imgCode){
-      if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
-        MessageBox("提示", "您输入验证码不正确");
-       }
-      }else{
-        MessageBox("提示","验证码不能为空");
+      if (this.imgCode) {
+        if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+          MessageBox("提示", "您输入验证码不正确");
+        }
+      } else {
+        MessageBox("提示", "验证码不能为空");
       }
     },
     //手机验证
     sjCodeI() {
-      if(this.sjCode){
-      if (!/^[0-9]{6}$/.test(this.sjCode)) {
-        MessageBox("提示", "手机验证码输入不正确");
-       }
-      }else{
-        MessageBox("提示","请获取手机验证码");
+      if (this.sjCode) {
+        if (!/^[0-9]{6}$/.test(this.sjCode)) {
+          MessageBox("提示", "手机验证码输入不正确");
+        }
+      } else {
+        MessageBox("提示", "请获取手机验证码");
       }
     },
     //三级联动
@@ -115,48 +115,54 @@ export default {
     getCoBut() {
       this.get = false;
       this.getNew = true;
-      this.ajax
-        .post(
-          "/xinda-api/register/sendsms",
-          this.qs.stringify({
-            cellphone: this.phone,
-            smsType: 1,
-            imgCode: this.imgCode
-          })
-        )
-        .then(data => {
-          // console.log(data);
-        });
+      if (this.phone != "") {
+        if (this.imgCode != "") {
+          this.ajax
+            .post(
+              "/xinda-api/register/sendsms",
+              this.qs.stringify({
+                cellphone: this.phone,
+                smsType: 1,
+                imgCode: this.imgCode
+              })
+            )
+            .then(data => {
+              // console.log(data);
+            });
+        } else {
+          MessageBox("提示", "验证码不能为空");
+        }
+      } else {
+        MessageBox("提示", "手机号不能为空");
+      }
     },
     //倒计时
     getCode() {
-      const TIME_COUNT = 60;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = false;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
+      if (this.phone != "" && this.imgCode != "") {
+        const TIME_COUNT = 60;
+        if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--;
+            } else {
+              this.show = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
       }
     },
     //密码
     pawOnBlur() {
-      if(this.boxPasw){
-      if (
-        !/^\w{6,16}$/.test(
-          this.boxPasw
-        )
-      ) {
-        MessageBox("提示", "密码不正确");
-       }
-      }else{
-        MessageBox("提示","密码不能为空")
+      if (this.boxPasw) {
+        if (!/^\w{6,16}$/.test(this.boxPasw)) {
+          MessageBox("提示", "密码不正确");
+        }
+      } else {
+        MessageBox("提示", "密码不能为空");
       }
     },
     concealPS() {
@@ -172,11 +178,11 @@ export default {
       var pw = this.boxPaswI;
       var md5 = require("md5");
       console.log(md5(pw));
-      console.log(this.boxPasw)
+      console.log(this.boxPasw);
       if (this.boxPaswI != this.boxPasw) {
-        console.log(this.boxPaswI)
+        console.log(this.boxPaswI);
         MessageBox("提示", "两次密码输入不一致");
-      } 
+      }
     },
     //再次输入密码显示隐藏
     conPwprd() {
@@ -190,25 +196,44 @@ export default {
     },
     //立即注册
     iregister() {
-        this.ajax
-        .post(
-          "/xinda-api/register/findpas",
-          this.qs.stringify({
-            cellphone: this.phone,
-            smsType: 1,
-            password: md5(this.boxPasw),
-            validCode: 111111
-          })
-        )
-        .then(data => {
-          console.log("立即修改", data.data.msg, data.data.status);
-          if (status == 1) {
-            this.$router.push({ path: "/loginP" });
+      if (/^1[34578]\d{9}$/.test(this.phone)) {
+        if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+          if (/^[0-9]{6}$/.test(this.sjCode)) {
+            if (/^\w{6,16}$/.test(this.boxPasw)) {
+              if ((this.boxPaswI == this.boxPasw)) {
+                this.ajax
+                  .post(
+                    "/xinda-api/register/findpas",
+                    this.qs.stringify({
+                      cellphone: this.phone,
+                      smsType: 1,
+                      password: md5(this.boxPasw),
+                      validCode: 111111
+                    })
+                  )
+                  .then(data => {
+                    console.log("立即修改", data.data.msg, data.data.status);
+                    if (status == 1) {
+                      this.$router.push({ path: "/loginP" });
+                    }
+                  });
+              } else {
+                MessageBox("提示", "两次密码输入不一致");
+              }
+            } else {
+              MessageBox("提示", "密码不符合规则");
+            }
+          } else {
+            MessageBox("提示", "短信验证码不符合规则");
           }
-        });
+        } else {
+          MessageBox("提示", "验证码不符合规则");
+        }
+      } else {
+        MessageBox("提示", "手机号不符合规则");
+      }
     }
-  },
-
+  }
 };
 </script>
 
