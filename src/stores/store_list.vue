@@ -31,14 +31,14 @@
           <li>综合排序</li>
           <!--头部文字-->
           <li>价格↑↓</li>
-          <li>接单数↑↓</li>
+          <li @click="sorts()">接单数↑↓</li>
         </ul>
       </div>
       <div class="lister">
         <div class="lists" v-for="list in disStores" :key="list.id">
           <div class="image">
             <!--图片盒子-->
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg">
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+list.providerImg">
             <!--数据获取图片-->
           </div>
           <span></span>
@@ -75,7 +75,7 @@ export default {
   created() {
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+      .post("/xinda-api/product/style/list")
       .then(function(data) {
         //数据地址
         var rData = data.data.data;
@@ -115,6 +115,7 @@ export default {
       disStores:[],
       inner:"",
       show:true,
+      sortFlag:true,
     };
   },
   components: {  dist },
@@ -124,6 +125,20 @@ export default {
         path: "/shop/service",
         query: { id: id }
       });
+    },
+    sorts(){
+       if (this.sortFlag) {
+        this.listt.sort(function(a, b) {
+          return a.orderNum - b.orderNum;
+        });
+        this.sortFlag = !this.sortFlag;
+      } else {
+        this.listt.sort(function(b, a) {
+          return a.orderNum - b.orderNum;
+        });
+        this.sortFlag = !this.sortFlag;
+      }
+    
     },
       changebg(name) {
       this.inner = name;
