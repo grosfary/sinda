@@ -177,10 +177,10 @@ export default {
     powOntw() {
       var pw = this.boxPaswI;
       var md5 = require("md5");
-      console.log(md5(pw));
-      console.log(this.boxPasw);
+      // console.log(md5(pw));
+      // console.log(this.boxPasw);
       if (this.boxPaswI != this.boxPasw) {
-        console.log(this.boxPaswI);
+        // console.log(this.boxPaswI);
         MessageBox("提示", "两次密码输入不一致");
       }
     },
@@ -194,7 +194,7 @@ export default {
         this.suoT = head;
       }
     },
-    //立即注册
+    //立即修改
     iregister() {
       if (/^1[34578]\d{9}$/.test(this.phone)) {
         if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
@@ -212,8 +212,10 @@ export default {
                     })
                   )
                   .then(data => {
-                    console.log("立即修改", data.data.msg, data.data.status);
-                    if (status == 1) {
+                    // console.log(data.data.status);
+                    // console.log("立即修改", data.data.msg, data.data.status);
+                    if ((data.data.status == 1)) {
+                      // console.log('111');
                       this.$router.push({ path: "/loginP" });
                     }
                   });
