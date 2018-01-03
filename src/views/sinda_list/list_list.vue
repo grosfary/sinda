@@ -51,7 +51,7 @@
             <div class="first">
               <div class="shopleft" v-for="(product,key,index) in Rdata" :key='product.id'>
                 <div>
-                  <img :src="('http://115.182.107.203:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
+                  <img :src="('http://123.58.241.146:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
                 </div>
                 <div class="details" @click="toDetail(product.id)">
                   <h3>{{product.providerName}}</h3>
@@ -79,7 +79,6 @@
     </div>
     <transition name="reversal">
       <div class="message" v-if="show">
-
         <div v-if="show">
           <h3>请您先登录</h3>
           <p>马上登录账号？</p>
@@ -110,6 +109,7 @@ export default {
       IndexII: 0,
       IndexIII: 0,
       pro_type_id: this.$route.query.id,
+      pro_type_code: this.$route.query.code,
       indexs: "",
       limit: 3,
       totalCount: "",
@@ -126,32 +126,35 @@ export default {
   },
   methods: {
     ...mapActions(["setlistName", "setNum"]),
-    nowIndexII: function(index, i,code) {
-      console.log(code)
+    nowIndexII: function(index, i, code) {
+      console.log(code);
       this.IndexII = index;
-      this.IndexIII = 0;
-      var arr = [];
-      for (var j in i.itemList) {
-        arr.push(i.itemList[j]);
-      }
-      this.nowIndexIII(0, arr[0].id); // 每当点击二级标题时，重置三级标题的商品
+      var id = "";
+      this.pro_type_id = id;
+      this.pro_type_code = code;
+      this.liebiao(id, code);
+      this.IndexIII = -1;
+      this.option(0);
+      // var arr = [];
+      // for (var j in i.itemList) {
+      //   arr.push(i.itemList[j]);
+      // }
+      // this.nowIndexIII(0, arr[0].id); // 每当点击二级标题时，重置三级标题的商品
     },
     toDetail: function(id) {
       this.$router.push({ path: "/list/pro", query: { id: id } });
     },
     liebiaoxinxi: function() {
-      this.ajax
-        .post("/xinda-api/product/style/list")
-        .then(data => {
-          //获取列表信息
-          var obj = {};
-          for (var i in data.data.data) {
-            obj[data.data.data[i].code] = data.data.data[i];
-          }
-          this.itemLists = obj;
-        });
+      this.ajax.post("/xinda-api/product/style/list").then(data => {
+        //获取列表信息
+        var obj = {};
+        for (var i in data.data.data) {
+          obj[data.data.data[i].code] = data.data.data[i];
+        }
+        this.itemLists = obj;
+      });
     },
-    liebiao: function(id) {
+    liebiao: function(id, code) {
       // 当前三级标题所选显示的商品
       this.ajax
         .post(
@@ -160,7 +163,7 @@ export default {
           this.qs.stringify({
             start: this.start,
             limit: this.limit,
-            productTypeCode: "0",
+            productTypeCode: code,
             productId: id,
             sort: this.sort
           })
@@ -177,26 +180,26 @@ export default {
     addtoCart(jump, id, num) {
       // 立即购买或者加入购物车
       // if (sessionStorage.getItem("userName")) {
-        // 判断现在是否为登录状态
-        this.ajax
-          .post(
-            "/xinda-api/cart/add",
-            this.qs.stringify({
-              id: id,
-              num: num
-            })
-          )
-          .then(data => {
-            // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
-            if (data.data.status == 1) {
-              this.setNum();
-            } else {
-              console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
-            }
-            if (jump) {
-              this.$router.push({ path: "/list/cart" });
-            }
-          });
+      // 判断现在是否为登录状态
+      this.ajax
+        .post(
+          "/xinda-api/cart/add",
+          this.qs.stringify({
+            id: id,
+            num: num
+          })
+        )
+        .then(data => {
+          // 如果成功添加购物车，返回值为1 并将数量加入购物车当中
+          if (data.data.status == 1) {
+            this.setNum();
+          } else {
+            console.log("添加购物车失败提示信息===" + "非常抱歉，系统开小差了，请稍后再试");
+          }
+          if (jump) {
+            this.$router.push({ path: "/list/cart" });
+          }
+        });
       // } else {
       //   this.show = true;
       // }
@@ -225,14 +228,14 @@ export default {
       }
       this.optionIndex = index;
       this.start = index * this.limit;
-      this.liebiao(this.pro_type_id);
+      this.liebiao(this.pro_type_id, this.pro_type_code);
     },
     nextOption() {
       // 下一页按钮
       if (this.optionIndex < this.totalCount - 1) {
         this.optionIndex += 1;
         this.start += 3;
-        this.liebiao(this.pro_type_id);
+        this.liebiao(this.pro_type_id, this.pro_type_code);
       }
     },
     beforeOption() {
@@ -240,24 +243,26 @@ export default {
       if (this.optionIndex != 0) {
         this.optionIndex -= 1;
         this.start -= 3;
-        this.liebiao(this.pro_type_id);
+        this.liebiao(this.pro_type_id, this.pro_type_code);
       }
     },
     sortord(index) {
       index == 0 ? (this.sortIndex = 1) : (this.sortIndex = 0);
       index == 0 ? (this.sort = 2) : (this.sort = 3);
-      this.liebiao(this.pro_type_id);
+      this.liebiao(this.pro_type_id, this.pro_type_code);
     },
     nowIndexIII: function(index, id) {
       // 三级标题点击事件
       this.IndexIII = index;
       this.pro_type_id = id;
-      console.log(id)
-      this.liebiao(this.pro_type_id);
+      console.log(id);
+      var code = 0;
+      this.liebiao(id, code);
+      this.option(0);
     },
     shangpinxinxi: function() {
       // 获取全部产品的传参并设置当前三级商品id
-      this.liebiao(this.$route.query.id);
+      this.liebiao(this.$route.query.id, this.pro_type_code);
     }
   },
 
@@ -265,14 +270,44 @@ export default {
     $route: function() {
       // 路由监听
       this.setlistName(this.$route.query.name);
-      this.shangpinxinxi(); // 获取商品信息
-      this.indexs = this.$route.query.index; // 获取当前索引值
+      console.log("code===", this.$route.query.code);
+      console.log("index===", this.$route.query.index);
+      console.log("id===", this.$route.query.id);
+      console.log("ind===", this.$route.query.ind);
+      if (!this.$route.query.id) {
+        this.IndexII = this.$route.query.ind;
+        this.IndexIII = -1;
+      } else {
+        // console.log("x===", this.$route.query.x);
+        this.IndexII = this.$route.query.x;
+        this.IndexIII = this.$route.query.z;
+      }
+      this.indexs = this.$route.query.index;
       this.pro_type_id = this.$route.query.id;
+      this.pro_type_code = this.$route.query.code;
+      // this.shangpinxinxi(); // 获取商品信息
+      this.liebiaoxinxi(); // 获取列表信息
+      this.shangpinxinxi(); // 获取商品信息
     }
   },
   created() {
-    this.indexs = this.$route.query.index; // 获取当前索引值
+    // this.setlistName(this.$route.query.name); // 设置本页名
+    // console.log("code===", this.$route.query.code);
+    // console.log("index===", this.$route.query.index);
+    // console.log("id===", this.$route.query.id);
+    // console.log("ind===", this.$route.query.ind);
+
     this.setlistName(this.$route.query.name); // 设置本页名
+    if (!this.$route.query.id) {
+      this.IndexII = this.$route.query.ind;
+      this.IndexIII = -1;
+    } else {
+      // console.log("x===", this.$route.query.x);
+      this.IndexII = this.$route.query.x;
+    }
+    this.indexs = this.$route.query.index; // 获取当前索引值
+    this.pro_type_id = this.$route.query.id;
+    this.pro_type_code = this.$route.query.code;
     this.liebiaoxinxi(); // 获取列表信息
     this.shangpinxinxi(); // 获取商品信息
   }
