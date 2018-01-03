@@ -86,10 +86,10 @@ export default {
       count: "60",
       get: true,
       getNew: false,
-      boxtxt:false,
-      vcode:false,
-      tcode:false,
-      boxp:false,
+      boxtxt: false,
+      vcode: false,
+      tcode: false,
+      boxp: false
     };
   },
   methods: {
@@ -97,21 +97,21 @@ export default {
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    
+
     //手机验证
     onBlur() {
-      if( this.boxVal!=""){
-      if(this.boxVal!=""){
-      if (/^1[34578]\d{9}$/.test(this.boxVal)) {
-        this.boxTC = false;
-      } else {
-        this.boxTC = true;
-        this.boxtxt=false;
+      if (this.boxVal != "") {
+        if (this.boxVal != "") {
+          if (/^1[34578]\d{9}$/.test(this.boxVal)) {
+            this.boxTC = false;
+          } else {
+            this.boxTC = true;
+            this.boxtxt = false;
+          }
         }
-       }
-      }else{
-        this.boxtxt=true;
-        this.boxTC=false;
+      } else {
+        this.boxtxt = true;
+        this.boxTC = false;
       }
     },
     //密码显示隐藏
@@ -138,20 +138,16 @@ export default {
       var pw = this.boxPasw;
       var md5 = require("md5");
       console.log(md5(pw));
-      if(this.boxPasw!=""){
-      if (
-        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
-          this.boxPasw
-        )
-      ) {
-        this.boxPC = false;
+      if (this.boxPasw != "") {
+        if (/^\w{6,16}$/.test(this.boxPasw)) {
+          this.boxPC = false;
+        } else {
+          this.boxPC = true;
+          this.boxp = false;
+        }
       } else {
-        this.boxPC = true;
-        this.boxp=false;
-       }
-      }else{
-        this.boxp=true;
-        this.boxPC=false;
+        this.boxp = true;
+        this.boxPC = false;
       }
     },
     onBlurII() {
@@ -165,30 +161,30 @@ export default {
       }
     },
     verCode() {
-      if(this.imgV!=""){
-      if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
-        this.boxCode = false;
+      if (this.imgV != "") {
+        if (/^[a-zA-Z0-9]{4}$/.test(this.imgV)) {
+          this.boxCode = false;
+        } else {
+          this.boxCode = true;
+          this.vcode = false;
+        }
       } else {
-        this.boxCode = true;
-        this.vcode=false;
-       }
-      }else{
-        this.vcode=true;
-        this.boxCode=false;
+        this.vcode = true;
+        this.boxCode = false;
       }
     },
     sjCodeI() {
-      if(this.sjCode){
-      if (/^[0-9]{6}$/.test(this.sjCode)) {
-        this.sCode = false;
-      } else {
-        this.sCode = true;
-        this.tcode=false;
+      if (this.sjCode) {
+        if (/^[0-9]{6}$/.test(this.sjCode)) {
+          this.sCode = false;
+        } else {
+          this.sCode = true;
+          this.tcode = false;
         }
-       }else{
-         this.tcode=true;
-         this.sCode=false;
-       }
+      } else {
+        this.tcode = true;
+        this.sCode = false;
+      }
     },
     getCoBut() {
       this.get = false;
@@ -204,23 +200,40 @@ export default {
       }, 1000);
     },
     affirm() {
-      var md5 = require("md5");
-      this.ajax
-        .post(
-          "/xinda-api/register/findpas",
-          this.qs.stringify({
-            cellphone: this.boxVal,
-            smsType: 1,
-            password: md5(this.boxPasw),
-            validCode: 111111
-          })
-        )
-        .then(data => {
-          console.log("忘记密码121", data.data.msg, data.data.status);
-          if (status == 1) {
-            this.$router.push({ path: "/LoginRegister/login" });
-          }
-        });
+      this.onBlur();
+      this.verCode();
+      this.sjCodeI();
+      this.onBlurI();
+      this.onBlurII();
+      if (
+        !this.boxTC &&
+        !this.boxtxt &&
+        !this.boxcode &&
+        !this.vcode &&
+        !this.sCode &&
+        !this.tcode &&
+        !this.boxPC &&
+        !this.boxp &&
+        !this.boxPCI
+      ) {
+        var md5 = require("md5");
+        this.ajax
+          .post(
+            "/xinda-api/register/findpas",
+            this.qs.stringify({
+              cellphone: this.boxVal,
+              smsType: 1,
+              password: md5(this.boxPasw),
+              validCode: 111111
+            })
+          )
+          .then(data => {
+            console.log("忘记密码121", data.data.msg, data.data.status);
+            if (status == 1) {
+              this.$router.push({ path: "/LoginRegister/login" });
+            }
+          });
+      }
     }
   },
   components: { LRhead }

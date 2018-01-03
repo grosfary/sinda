@@ -69,7 +69,7 @@ export default {
     that.ajax
       .post(
         //请求店铺商品信息
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        "/xinda-api/product/package/grid",
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据

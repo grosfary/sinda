@@ -63,15 +63,16 @@ export default {
       imgCode: ""
     };
   },
+  created() {},
   methods: {
     //手机号
     phonBlur() {
-      if(this.phone!=""){
-      if (!/^1[34578]\d{9}$/.test(this.phone)) {
-        MessageBox("提示", "请输入正确的手机号");
-       }
-      }else{
-        MessageBox("提示","手机号不能为空")
+      if (this.phone != "") {
+        if (!/^1[34578]\d{9}$/.test(this.phone)) {
+          MessageBox("提示", "请输入正确的手机号");
+        }
+      } else {
+        MessageBox("提示", "手机号不能为空");
       }
     },
     //三级联动
@@ -84,70 +85,76 @@ export default {
     },
     //验证码
     verCode() {
-      if(this.imgCode){
-      if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
-        MessageBox("提示", "您输入验证码不正确");
-       }
-      }else{
-        MessageBox("提示","验证码不能为空")
+      if (this.imgCode) {
+        if (!/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+          MessageBox("提示", "您输入验证码不正确");
+        }
+      } else {
+        MessageBox("提示", "验证码不能为空");
       }
     },
     //手机验证
     sjCodeI() {
-      if(this.sjCode){
-      if (!/^[0-9]{6}$/.test(this.sjCode)) {
-        MessageBox("提示", "手机验证码输入不正确");
-       }
-      }else{
-        MessageBox("提示","请获取手机验证码")
+      if (this.sjCode) {
+        if (!/^[0-9]{6}$/.test(this.sjCode)) {
+          MessageBox("提示", "手机验证码输入不正确");
+        }
+      } else {
+        MessageBox("提示", "请获取手机验证码");
       }
     },
     //点击获取
     getCoBut() {
       this.get = false;
       this.getNew = true;
-      this.ajax
-        .post(
-          "/xinda-api/register/sendsms",
-          this.qs.stringify({
-            cellphone: this.phone,
-            smsType: 1,
-            imgCode: this.imgCode
-          })
-        )
-        .then(data => {
-          console.log(data,'data');
-        });
+      if (this.phone != "") {
+        if (this.imgCode != "") {
+          this.ajax
+            .post(
+              "/xinda-api/register/sendsms",
+              this.qs.stringify({
+                cellphone: this.phone,
+                smsType: 1,
+                imgCode: this.imgCode
+              })
+            )
+            .then(data => {
+              // console.log(data,'data');
+            });
+        } else {
+          MessageBox("提示", "验证码不能为空");
+        }
+      } else {
+        MessageBox("提示", "手机号码不能为空");
+      }
     },
     //倒计时
     getCode() {
-      const TIME_COUNT = 60;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = false;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
+      if (this.phone != "" && this.imgCode != "") {
+        const TIME_COUNT = 60;
+        if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--;
+            } else {
+              this.show = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
       }
     },
     //密码
     pawOnBlur() {
-      if(this.boxPasw!=""){
-      if (
-        !/^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
-          this.boxPasw
-        )
-      ) {
-        MessageBox("提示", "密码长度6-16位且必须包含大小写字母、数字、字符");
-       }
-      }else{
-        MessageBox("提示","密码不能为空")
+      if (this.boxPasw != "") {
+        if (!/^\w{6,16}$/.test(this.boxPasw)) {
+          MessageBox("提示", "密码错误");
+        }
+      } else {
+        MessageBox("提示", "密码不能为空");
       }
     },
     concealPS() {
@@ -159,29 +166,50 @@ export default {
         this.suo = head;
       }
     },
-    back(){
+    back() {
       this.$router.go(-1);
     },
     //立即注册
     iregister() {
       // MessageBox("提示", "content");
-      this.ajax
-        .post(
-          "/xinda-api/register/register",
-          this.qs.stringify({
-            cellphone: this.phone,
-            smsType: 1,
-            validCode: 111111,
-            password: md5(this.boxPasw),
-            regionId: this.distCode
-          })
-        )
-        .then(data => {
-          console.log("立即注册", data.data.msg, data.data.status);   
-          if (status = 1) {
-            this.$router.push({ path: "/loginP" });
+      if (/^1[34578]\d{9}$/.test(this.phone)) {
+        if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+          if (/^[0-9]{6}$/.test(this.sjCode)) {
+            if (this.distCode) {
+              if (/^\w{6,16}$/.test(this.boxPasw)) {
+                this.ajax
+                  .post(
+                    "/xinda-api/register/register",
+                    this.qs.stringify({
+                      cellphone: this.phone,
+                      smsType: 1,
+                      validCode: 111111,
+                      password: md5(this.boxPasw),
+                      regionId: this.distCode
+                    })
+                  )
+                  .then(data => {
+                    // console.log(data);
+                    // console.log("立即注册", data.data.msg, data.data.status);
+                    if ((data.data.status == 1)) {
+                      this.$router.push({ path: "/loginP" });
+                    }
+                  });
+              } else {
+                MessageBox("提示", "密码不符合规则");
+              }
+            } else {
+              MessageBox("提示", "请选择省市区");
+            }
+          } else {
+            MessageBox("提示", "短信验证码不符合规则");
           }
-        });
+        } else {
+          MessageBox("提示", "验证码不符合规则");
+        }
+      } else {
+        MessageBox("提示", "手机号不符合规则");
+      }
     }
   },
 

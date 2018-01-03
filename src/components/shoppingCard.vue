@@ -151,9 +151,9 @@ export default {
       .post("/xinda-api/sso/login-info", this.qs.stringify({}))
       .then(data => {
         if (data.data.status === 0) {
-          MessageBox.confirm("请您登陆后再继续操作").then(action => {
+          // MessageBox.confirm("请您登陆后再继续操作").then(action => {
             this.$router.push({ path: "/loginP" });
-          });
+          // });
         } else {
           this.cartList();
           this.mark = true;

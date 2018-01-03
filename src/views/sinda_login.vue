@@ -103,7 +103,7 @@ export default {
       var md5 = require("md5");
       if (pw != "") {
         if (
-          /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+          /^\w{6,16}$/.test(
             this.boxPasw
           )
         ) {
