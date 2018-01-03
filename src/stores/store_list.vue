@@ -38,7 +38,7 @@
         <div class="lists" v-for="list in disStores" :key="list.id">
           <div class="image">
             <!--图片盒子-->
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg">
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+list.providerImg">
             <!--数据获取图片-->
           </div>
           <span></span>
@@ -69,15 +69,13 @@
 </template>
 
 <script>
-import sinda_header from "../components/sinda_global_header";
-import dist from "../components/distpicker";//省市区三级联动插件
-import sinda_footer from "../components/sinda_global_footer"; 
+const dist = resolve => require(["../components/distpicker"], resolve);
 export default {
   // 数据获取
   created() {
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+      .post("/xinda-api/product/style/list")
       .then(function(data) {
         //数据地址
         var rData = data.data.data;
@@ -119,7 +117,7 @@ export default {
       show:true,
     };
   },
-  components: { sinda_header, sinda_footer, dist },
+  components: {  dist },
   methods: {
     open: function(name, id, image) {
       this.$router.push({

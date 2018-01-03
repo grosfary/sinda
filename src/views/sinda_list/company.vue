@@ -98,7 +98,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import dist from "../../components/distpicker";
+const dist = resolve => require(["../../components/distpicker"], resolve);
 
 export default {
   components: {
@@ -142,7 +142,7 @@ export default {
     },
     liebiaoxinxi: function() {
       this.ajax
-        .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+        .post("/xinda-api/product/style/list")
         .then(data => {
           //获取列表信息
           var obj = {};
@@ -157,7 +157,7 @@ export default {
       this.ajax
         .post(
           //列表商品
-          "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+          "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: this.start,
             limit: this.limit,

@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import dist from "../components/distpicker";
+const dist = resolve => require(["../components/distpicker"], resolve);
 var md5 = require("md5");
 export default {
   data() {
@@ -106,39 +106,7 @@ export default {
     },
      hidedate: function(code) {
       this.show = false;
-      var that = this;
-     if (this.area != "") {
-        this.name = false;
-        if (this.post != "") {
-          if (this.box != true) {
-            if (this.disCode != "" && this.disCode != "0") {
-              this.dist = false;
-              this.ajax
-                .post(
-                  "/xinda-api/member/update-info",
-                  this.qs.stringify({
-                    name: this.area,
-                    gender: this.index,
-                    email: this.post,
-                    regionId: this.disCode
-                  })
-                )
-                .then(function(data) {
-                    if(data.data.status==1){
-                      that.show = true;
-                    }
-                  
-                });
-            } else {
-              this.dist = true;
-            }
-          }
-        } else {
-          this.box = true;
-        }
-      } else {
-        this.name = true;
-      }
+     
     },
     submit: function(index) {
       this.index = index;
@@ -199,7 +167,39 @@ export default {
       this.index = index;
     },
     keep: function() {
-      this.show = true;
+      var that = this;
+           if (this.area != "") {
+        this.name = false;
+        if (this.post != "") {
+          if (this.box != true) {
+            if (this.disCode != "" && this.disCode != "0") {
+              this.dist = false; 
+              this.ajax
+                .post(
+                  "/xinda-api/member/update-info",
+                  this.qs.stringify({
+                    name: this.area,
+                    gender: this.index,
+                    email: this.post,
+                    regionId: this.disCode
+                  })
+                )
+                .then(function(data) {
+                    if(data.data.status==1){
+                      that.show = true;
+                    }
+                  
+                });
+            } else {
+              this.dist = true;
+            }
+          }
+        } else {
+          this.box = true;
+        }
+      } else {
+        this.name = true;
+      }
     },
     uploadFile: function($event) {
       // console.log('imgurl==',this.getImgURL($event.target));

@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="acquire">
-            <input class="boxI" type="text" placeholder=" 请输入验证码" v-model="sjCode" @blur="sjCodeI">
+            <input class="boxI" type="text" placeholder=" 请输入手机验证码" v-model="sjCode" @blur="sjCodeI">
             <p class="sCode" v-show="sCode">*您输入的验证码不正确</p>
             <p class="tcode" v-show="tcode">*请获取手机验证码</p>
             <div @click="getCoBut">
@@ -34,6 +34,7 @@
           </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
           <p class="boxp" v-show="boxp">*密码不能为空</p>
+          <div v-if="ifmsg" style="color:red;">{{msg}}</div>
           <button class="boxIII" @click="iregister">立即注册</button>
           <p>注册及同意遵守
             <a class="agreement" href="">《服务协议》</a>
@@ -53,9 +54,9 @@
 </template>
 
 <script>
-import LRhead from "../components/sinda_LoginRegister_header";
-// import VDistpicker from "v-distpicker";
-import dist from "../components/distpicker";
+const LRhead = resolve =>
+  require(["../components/sinda_LoginRegister_header"], resolve);
+const dist = resolve => require(["../components/distpicker"], resolve);
 import { mapActions } from "vuex";
 const head = require("../assets/pc/suo.jpg");
 const headO = require("../assets/pc/suoo.jpg");
@@ -80,10 +81,12 @@ export default {
       timer: null,
       get: true,
       getNew: false,
-      boxtxt:false,
-      vcode:false,
-      tcode:false,
-      boxp:false,
+      boxtxt: false,
+      vcode: false,
+      tcode: false,
+      boxp: false,
+      msg: "提示信息",
+      ifmsg: false
     };
   },
   methods: {
@@ -95,61 +98,65 @@ export default {
     imgReflash() {
       this.imgUrl = this.imgUrl + "?t=" + new Date().getTime();
     },
-    verCode() {//验证码
-    if(this.imgCode!=""){
-      if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
-        this.boxCode = false;
+    verCode() {
+      //验证码
+      if (this.boxCode) {
+        return;
+      }
+      if (this.imgCode != "") {
+        this.vcode = false;
+        if (/^[a-zA-Z0-9]{4}$/.test(this.imgCode)) {
+        } else {
+          this.vcode = false;
+        }
       } else {
-        this.boxCode = true;
-        this.vcode=false;
-       }
-      }else{
-        this.vcode=true;
-        this.boxCode=false;
+        this.vcode = true;
       }
     },
     sjCodeI() {
-      if(this.sjCode){
-      if (/^[0-9]{6}$/.test(this.sjCode)) {
-        this.sCode = false;
+      if (this.sjCode) {
+        this.tcode = false;
+        if (/^[0-9]{6}$/.test(this.sjCode)) {
+          this.sCode = false;
+        } else {
+          this.sCode = true;
+          this.tcode = false;
+        }
       } else {
-        this.sCode = true;
-        this.tcode=false;
-       }
-       
-      }else{
-        this.tcode=true;
-        this.sCode=false;
+        this.tcode = true;
+        this.sCode = false;
       }
     },
     onBlur() {
-      if(this.phone!=""){
-      if (/^1[34578]\d{9}$/.test(this.phone)) {
-        this.boxTC = false;
+      if (this.phone != "") {
+        this.boxtxt = false;
+        if (/^1[34578]\d{9}$/.test(this.phone)) {
+          this.boxTC = false;
+        } else {
+          this.boxTC = true;
+          this.boxtxt = false;
+        }
       } else {
-        this.boxTC = true;
-        this.boxtxt=false;
-       }
-      }else{
-        this.boxtxt=true;
-        this.boxTC=false;
+        this.boxtxt = true;
+        this.boxTC = false;
       }
     },
     onBlurI() {
-      if(this.boxPasw){
-      if (
-        /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
-          this.boxPasw
-        )
-      ) {
-        this.boxPC = false;
+      if (this.boxPasw) {
+        this.boxp = false;
+        if (
+          /^(?:(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])).{6,16}$/.test(
+            this.boxPasw
+          )
+        ) {
+          this.boxPC = false;
+        } else {
+          this.boxPC = true;
+          this.boxp = false;
+        }
       } else {
-        this.boxPC = true;
-        this.boxp=false;
-       }
-      }else{
-        this.boxp=true;
-        this.boxPC=false;
+        this.boxp = true;
+        this.boxPC = false;
       }
     },
     getCoBut() {
@@ -165,45 +172,83 @@ export default {
             imgCode: this.imgCode
           })
         )
-        .then(data => {
-          // console.log(data);
-        });
-      
+        .then(data => {});
     },
     getCode() {
-      const TIME_COUNT = 60;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = false;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
-      }
-    },
-    iregister() {
       this.ajax
         .post(
-          "/xinda-api/register/register",
+          "/xinda-api/register/sendsms",
           this.qs.stringify({
             cellphone: this.phone,
             smsType: 1,
-            validCode: 111111,
-            password: md5(this.boxPasw),
-            regionId: this.distCode
+            imgCode: this.imgCode
           })
         )
         .then(data => {
-          console.log("注册提交", data.data.msg, data.data.status);
-          if (status = 1) {
-            this.$router.push({ path: "/LoginRegister/login" });
+          if (data.data.status == -1 && this.vcode == false) {
+            this.boxCode = true;
+            this.imgReflash();
+          } else if (data.data.status !== -1) {
+            this.boxCode = false;
+            const TIME_COUNT = 60;
+            if (!this.timer) {
+              this.count = TIME_COUNT;
+              this.show = false;
+              this.timer = setInterval(() => {
+                if (this.count > 0 && this.count <= TIME_COUNT) {
+                  this.count--;
+                } else {
+                  this.show = true;
+                  clearInterval(this.timer);
+                  this.timer = null;
+                }
+              }, 1000);
+            }
           }
         });
+    },
+    iregister() {
+      this.onBlur();
+      this.verCode();
+      this.sjCodeI();
+      this.onBlurI();
+      if (!this.distCode) {
+        this.msg = "请选择城市";
+        this.ifmsg = true;
+        return;
+      }
+      this.ifmsg = false;
+      if (
+        !this.boxTC &&
+        !this.boxtxt &&
+        !this.boxcode &&
+        !this.vcode &&
+        !this.sCode &&
+        !this.tcode &&
+        !this.boxPC &&
+        !this.boxp
+      ) {
+        this.ajax
+          .post(
+            "/xinda-api/register/register",
+            this.qs.stringify({
+              cellphone: this.phone,
+              smsType: 1,
+              validCode: 111111,
+              password: md5(this.boxPasw),
+              regionId: this.distCode
+            })
+          )
+          .then(data => {
+            var status = data.data.status;
+            if (status == 1) {
+              this.$router.push({ path: "/LoginRegister/login" });
+            } else {
+              this.msg = data.data.msg;
+              this.ifmsg = true;
+            }
+          });
+      }
     },
     concealPS() {
       if (this.pswd == "password") {
@@ -407,7 +452,6 @@ input::-webkit-outer-spin-button {
   border: 1px solid #cbcbcb;
   border-radius: 3px;
   background-size: 20px 20px;
-  // background-size: 20px 20px;
 }
 .boxIII {
   width: 280px;

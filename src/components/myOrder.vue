@@ -131,7 +131,7 @@ export default {
                 })).then(
                   function(infor){
                     var infor = infor.data.data;
-                    that.src = ('http://115.182.107.203:8088/xinda/pic'+infor.providerImg)
+                    that.src = ('http://123.58.241.146:8088/xinda/pic'+infor.providerImg)
                   }
                 )
           var businessNo = data[key].businessNo;

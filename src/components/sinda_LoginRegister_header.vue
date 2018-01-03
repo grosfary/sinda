@@ -3,7 +3,7 @@
     <div class="top">
       <div class="topI">
         <div class="topII">
-          <div>
+          <div @click="toIndex">
             <span class="logo"></span>
             <img src="../assets/pc/xinda.jpg" alt="">
           </div>
@@ -22,6 +22,12 @@ export default {
   },
   computed: {
     ...mapGetters(["getloginState"]) //{getNum:function(){}}
+  },
+  methods: {
+    toIndex() {
+      console.log(1);
+      this.$router.push("/index");
+    }
   }
 };
 </script>
@@ -42,6 +48,7 @@ export default {
   height: 97px;
   display: flex;
   div {
+    cursor: pointer;
     margin-top: 15px;
     width: 174px;
     height: 56px;

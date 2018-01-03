@@ -12,7 +12,7 @@
       <div class='content'>
           <div class='img'>
             <div class='imgs'>
-                <img :src="('http://115.182.107.203:8088/xinda/pic'+product.productImg)" @error="setDefImg($event)" alt="">
+                <img :src="('http://123.58.241.146:8088/xinda/pic'+product.productImg)" @error="setDefImg($event)" alt="">
             </div>
             <div class='deta'>
                 <span class='color'>{{product.serviceName}}</span><br>
@@ -117,7 +117,7 @@ export default {
               if (!str[this.index]) {
                 str[this.index] = data;
               }
-              sessionStorage.setItem(this.index, JSON.stringify(str));
+              // sessionStorage.setItem(this.index, JSON.stringify(str));
             });
         } else if (this.index % 3 == 1) {
           var that = this;
@@ -140,7 +140,7 @@ export default {
               if (!str[this.index]) {
                 str[this.index] = data;
               }
-              sessionStorage.setItem(this.index, JSON.stringify(str));
+              // sessionStorage.setItem(this.index, JSON.stringify(str));
             });
         } else if (this.index % 3 == 2) {
           var that = this;
@@ -163,7 +163,7 @@ export default {
               if (!str[this.index]) {
                 str[this.index] = data;
               }
-              sessionStorage.setItem(this.index, JSON.stringify(str));
+              // sessionStorage.setItem(this.index, JSON.stringify(str));
             });
         }
       }
