@@ -51,7 +51,7 @@
             <div class="first">
               <div class="shopleft" v-for="(product,key,index) in Rdata" :key='product.id'>
                 <div>
-                  <img :src="('http://115.182.107.203:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
+                  <img :src="('http://123.58.241.146:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
                 </div>
                 <div class="details" @click="toDetail(product.id)">
                   <h3>{{product.providerName}}</h3>

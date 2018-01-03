@@ -78,7 +78,7 @@
         <div class="header_sidebar" v-if="mark">
           <!-- 头部侧导航部分 -->
           <div v-for="(i,index) in sortListarr" :key="i.code" style="font-size:16px;">
-            <div class="sidebar_left" @mouseover="relationClick(index)" @mouseout="nowIndex=-1" @click="linkHref(sortListarr,index)" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
+            <div class="sidebar_left" @mouseover="relationClick(index)" @mouseout="nowIndex=-1" v-bind:class="{sidebar_left_active:(nowIndex==index)}">
               <!-- 侧导航左半边 -->
               <div class="icon_global sidebar_icon"></div>
               <!-- 侧导航图标 -->
@@ -86,7 +86,7 @@
                 <!-- 侧导航标题 -->
                 {{i.name}}
                 <ul>
-                  <li v-for="(i,key,index) in i.itemList" :key="i.name" style="font-size:14px;">
+                  <li v-for="(i,x,ind) in i.itemList" :key="i.name" style="font-size:14px;cursor: pointer;" @click="linkHref(i.code,index,ind)">
                     {{i.name}}
                   </li>
                 </ul>
@@ -98,10 +98,10 @@
                 <li v-for="(i,key,index) in i.itemList" :key="i.name">
                   <span class="sidebar_subnav">
                     <!-- 侧部导航的子导航 -->
-                    <span>{{i.name}}></span>
+                    <span style="cursor: pointer;" @click="linkHref(i.code,nowIndex,index)">{{i.name}}></span>
                     <div>
-                      <span v-for="(i,key,index) in i.itemList" :key="i.name">
-                        <span style="margin:0 5px;">|</span>
+                      <span style="margin:0 5px;cursor: pointer;" v-for="(i,key,indexs) in i.itemList" :key="i.name" @click="toDetail(i.id,nowIndex,index,indexs)">
+                        <span>|</span>
                         {{i.name}}
                       </span>
                     </div>
@@ -159,18 +159,31 @@ export default {
     index_url: () => {
       window.location.href = "#/";
     },
-    linkHref: function(sortListarr, index) {
-      var obj = sortListarr[index].itemList;
+    linkHref: function(code, index, ind) {
+      // console.log(ind);
+      // var obj = sortListarr[index].itemList;
       var id = "";
-      for (var i in obj) {
-        if (obj[i].name == "审计报告") id = "0ed787f42fe94b30b85e6a88f56e4614";
-        if (obj[i].name == "公司注册") id = "19b94314bc1a4b078d2402f8727c388b";
-        if (obj[i].name == "专利申请") id = "24d919ba0eb545dd9a3132dfb87cf599";
-        if (obj[i].name == "企业社保") id = "0e46c4b27e2a41aab572e11837ea0c9f";
-      }
+      var name = "";
+      if (index == 1) name = "财税服务";
+      if (index == 2) name = "公司工商";
+      if (index == 3) name = "专利申请";
+      if (index == 4) name = "企业社保";
+
       this.$router.push({
         path: "/list/list",
-        query: { name: sortListarr[index].name, id: id, index: index }
+        query: { name: name, id: id, code: code, index: index, ind: ind }
+      });
+    },
+    toDetail(id, index, x, z) {
+      var name = "";
+      if (index == 1) name = "财税服务";
+      if (index == 2) name = "公司工商";
+      if (index == 3) name = "专利申请";
+      if (index == 4) name = "企业社保";
+      var code = 0;
+      this.$router.push({
+        path: "/list/list",
+        query: { name: name, id: id, code: code, index: index, x: x, z: z }
       });
     },
     cmark() {
@@ -503,7 +516,6 @@ export default {
 .sidebar_left {
   // 侧部导航左边
   width: 199px;
-  cursor: pointer;
   background: #16263c;
   vertical-align: top;
   &.sidebar_left_active {
@@ -546,7 +558,6 @@ export default {
 
 .sidebar_right {
   // 侧部导航右边
-  cursor: pointer;
   height: inherit;
   display: inline-block;
   vertical-align: top;
