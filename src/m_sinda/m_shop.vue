@@ -2,7 +2,7 @@
     <div class="mobile">
       <div class="top">
         <div class="Logo">
-              <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt="">
+              <img :src="'http://123.58.241.146:8088/xinda/pic'+shopLOGO" alt="">
         </div>
         <div class="Remit">
             <h3>{{providerName}}</h3>

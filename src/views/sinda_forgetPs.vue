@@ -31,7 +31,7 @@
             <img id="cloImg" :src="closuo" alt="">
           </div>
           <p class="boxpas" v-show="boxPC">*密码长度6-16位且必须包含大小写字母、数字、字符</p>
-          <p class="boxp" v-show="boxp">密码不能为空</p>
+          <p class="boxp" v-show="boxp">*密码不能为空</p>
           <input  :type="pad" class="boxII" @blur="onBlurII" v-model="boxPaswI" placeholder="请再次确认密码">
           <div id="yincang" @click="concealPW">
             <img id="cloImg" :src="suo" alt="">

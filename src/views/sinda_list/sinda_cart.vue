@@ -19,15 +19,15 @@
             </li>
           </ul>
           <ul class="cart_main">
-            <li><img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt=""></li>
+            <li><img :src="'http://123.58.241.146:8088/xinda/pic'+i.providerImg" alt=""></li>
             <li>
               <span :title="i.serviceName" style="display:inline-block;width:200px;overflow:hidden;text-overflow:ellipsis;">{{i.serviceName}}</span>
             </li>
             <li>{{i.unitPrice}}</li>
             <li class="number">
-              <button @click="nAdd(i.serviceId,-1,i.buyNum,index)">-</button>
+              <button @click="nAddmark&&nAdd(i.serviceId,-1,i.buyNum,index)">-</button>
               <span>{{i.buyNum}}</span>
-              <button @click="nAdd(i.serviceId,1,i.buyNum,index)">+</button>
+              <button @click="nAddmark&&nAdd(i.serviceId,1,i.buyNum,index)">+</button>
             </li>
             <li>{{i.totalPrice}}</li>
             <li>
@@ -97,7 +97,8 @@ export default {
       allProObj: {},
       totalPrice: "",
       display: false,
-      totalPrice: 0
+      totalPrice: 0,
+      nAddmark: true
     };
   },
   methods: {
@@ -160,6 +161,7 @@ export default {
               .post("/xinda-api/cart/submit", this.qs.stringify({}))
               .then(data => {
                 if (data.data.status == 1) {
+                  this.setNum();
                   this.$router.push({
                     path: "/line_item",
                     query: { id: data.data.data }
@@ -171,9 +173,14 @@ export default {
     },
     continueShopping() {
       // 继续购物
-      window.location = "/#/";
+      window.location = "#/";
     },
     nAdd(id, num, count, index) {
+      this.nAddmark = false;
+      if (num == -1 && count <= 1) {
+        this.nAddmark = true;
+        return;
+      }
       this.ajax
         .post(
           "/xinda-api/cart/add",
@@ -191,6 +198,7 @@ export default {
             this.allProObj[index].totalPrice = total;
             num === 1 ? (this.totalPrice += unit) : (this.totalPrice -= unit);
           }
+          this.nAddmark = true;
         });
     },
     toTtoeveluete() {

@@ -5,19 +5,18 @@
       <div>
         <p>购物车空空如也，去首页逛逛吧！</p>
       </div>
-      <a href="/#/m.sinda">
+      <a href="#/m.sinda">
         <button>去首页</button>
       </a>
     </div>
     <div v-if="allProObj.length">
       <div class='top'>购物车内共有{{allProObj.length}}件商品</div>
-
       <div class='back'>
         <div class='content' v-for="(i,index) in allProObj" :key="i.id">
           <p class=" title" style="height:0.69rem;line-height:0.69rem;font-size:0.3rem">{{i.providerName}}</p>
           <div class='img'>
             <div class='imgs'>
-              <img :src="'http://115.182.107.203:8088/xinda/pic'+i.providerImg" alt="" style="width:100%;height:100%">
+              <img :src="'http://123.58.241.146:8088/xinda/pic'+i.providerImg" alt="" style="width:100%;height:100%">
             </div>
             <div class='deta'>
               <span style="font-size:0.3rem;line-height:0.35rem;display:block">{{i.serviceName}}</span>
@@ -26,9 +25,9 @@
               </div>
               <span class='doller' style="font-size:0rem;">
                 <span style="font-size:0.14rem;">购买数量：</span>
-                <button style="font-size:0.24rem;width:0.33rem;height:0.31rem;background:#ededed;color:#585453;border:1px solid #c7c7c7;vertical-align:top;" @click="nAdd(i.serviceId,-1,i.buyNum,index)">-</button>
+                <button style="font-size:0.24rem;width:0.33rem;height:0.31rem;background:#ededed;color:#585453;border:1px solid #c7c7c7;vertical-align:top;" @click="nAddmark&&nAdd(i.serviceId,-1,i.buyNum,index)">-</button>
                 <span style="font-size:0.12rem;width:0.33rem;height:0.29rem;background:#fff;color:#585453;border:1px solid #c7c7c7;display:inline-block;text-align:center;vertical-align:top;border-left:none;border-right:none;line-height:0.29rem;">{{i.buyNum}}</span>
-                <button style="font-size:0.24rem;width:0.33rem;height:0.31rem;background:#ededed;color:#585453;border:1px solid #c7c7c7;vertical-align:top;" @click="nAdd(i.serviceId,1,i.buyNum,index)">+</button>
+                <button style="font-size:0.24rem;width:0.33rem;height:0.31rem;background:#ededed;color:#585453;border:1px solid #c7c7c7;vertical-align:top;" @click="nAddmark&&nAdd(i.serviceId,1,i.buyNum,index)">+</button>
               </span><br>
               <span class='doller'>地区：{{diqu}}</span>
             </div>
@@ -89,6 +88,11 @@ export default {
         });
     },
     nAdd(id, num, count, index) {
+      this.nAddmark = false;
+      if (num == -1 && count <= 1) {
+        this.nAddmark = true;
+        return;
+      }
       this.ajax
         .post(
           "/xinda-api/cart/add",
@@ -106,6 +110,7 @@ export default {
             this.allProObj[index].totalPrice = total;
             num === 1 ? (this.totalPrice += unit) : (this.totalPrice -= unit);
           }
+          this.nAddmark = true;
         });
     },
     delOrder(id, index) {
@@ -130,6 +135,7 @@ export default {
   },
   data() {
     return {
+      nAddmark: true,
       show: true,
       index: "",
       inde: "",
@@ -137,7 +143,7 @@ export default {
       totalPrice: 0,
       allProObj: {},
       diqu: {},
-      mark:false,
+      mark: false
     };
   },
   created() {
@@ -150,7 +156,7 @@ export default {
           });
         } else {
           this.cartList();
-          this.mark=true;
+          this.mark = true;
         }
       });
   }

@@ -4,7 +4,7 @@
     <div class="pro">
       <div class="pro_header">
         <div class="pro_img">
-          <img :src="'http://115.182.107.203:8088/xinda/pic' + product.img" :onerror="errorImg">
+          <img :src="'http://123.58.241.146:8088/xinda/pic' + product.img" :onerror="errorImg">
         </div>
         <div class="pro_info">
           <ul>

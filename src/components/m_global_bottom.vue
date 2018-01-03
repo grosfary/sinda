@@ -29,7 +29,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 // 手机端样式调整
-
 .footer_content {
   display: none;
 }
@@ -75,21 +74,22 @@ export default {
   .active {
     color: #2693d4;
     .bg_index {
-    background: url("../assets/kehu/icon_index_01.png") no-repeat 0 0;
-    background-size: 100% 100%;
-  }
-  .bg_shop {
-    background: url("../assets/kehu/icon_shop_01.png") no-repeat 0 0;
-    background-size: 100% 100%;
-  }
-  .bg_cart {
-    background: url("../assets/kehu/icon_cart_01.png") no-repeat 0 0;
-    background-size: 100% 100%;
-  }
-  .bg_my {
-    background: url("../assets/kehu/icon_my_01.gif") no-repeat 0 0;
-    background-size: 100% 100%;
-  }
+      background: url("../assets/kehu/icon_index_01.png") no-repeat 0 0;
+      background-size: 100% 100%;
+    }
+    .bg_shop {
+      background: url("../assets/kehu/icon_shop_01.png") no-repeat 0 0;
+      background-size: 100% 100%;
+    }
+    .bg_cart {
+      background: url("../assets/kehu/icon_cart_01.png") no-repeat 0 0;
+      background-size: 100% 100%;
+    }
+    .bg_my {
+      background: url("../assets/kehu/icon_my_01.gif") no-repeat 0 0;
+      background-size: 100% 100%;
+    }
   }
 }
+
 </style>

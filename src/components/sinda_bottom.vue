@@ -1,19 +1,6 @@
 <template>
   <div>
-    <div class="bottom_outer">
-      <div class="bottom_content">
-        <ul>
-          <li>©Copyright</li>
-          <li>
-            <a href="">2016北京信达科技有限公司</a>
-          </li>
-          <li>京ICP备</li>
-          <li>
-            <a href="">16011621号</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    
   </div>
 </template>
 
