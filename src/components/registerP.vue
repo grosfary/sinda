@@ -189,9 +189,9 @@ export default {
                     })
                   )
                   .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     // console.log("立即注册", data.data.msg, data.data.status);
-                    if ((status = 1)) {
+                    if ((data.data.status == 1)) {
                       this.$router.push({ path: "/loginP" });
                     }
                   });
