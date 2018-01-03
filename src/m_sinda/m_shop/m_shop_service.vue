@@ -48,7 +48,7 @@ export default {
           that.lists = data.data.data;
           for (var key in that.lists) {
             that.lists[key].providerImg =
-              "http://115.182.107.203:8088/xinda/pic" +
+              "http://123.58.241.146:8088/xinda/pic" +
               that.lists[key].providerImg;
           }
           //  console.log(that.lists)
