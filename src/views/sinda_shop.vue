@@ -4,7 +4,7 @@
   <div class="Mobile">
     <div class="shopList">
       <div class="logo">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+shopLOGO" alt="">
+        <img :src="'http://123.58.241.146:8088/xinda/pic'+shopLOGO" alt="">
         <div class="remit">
           <h3>{{providerName}}</h3>
           <p>{{regionName}}</p>
@@ -69,7 +69,7 @@ export default {
     that.ajax
       .post(
         //请求店铺商品信息
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        "/xinda-api/product/package/grid",
         that.qs.stringify({
           start: 0,
           //不加限制条数的参数，获取所有数据
