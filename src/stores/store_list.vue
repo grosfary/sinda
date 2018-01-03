@@ -31,7 +31,7 @@
           <li>综合排序</li>
           <!--头部文字-->
           <li>价格↑↓</li>
-          <li>接单数↑↓</li>
+          <li @click="sorts()">接单数↑↓</li>
         </ul>
       </div>
       <div class="lister">
@@ -115,6 +115,7 @@ export default {
       disStores:[],
       inner:"",
       show:true,
+      sortFlag:true,
     };
   },
   components: {  dist },
@@ -124,6 +125,20 @@ export default {
         path: "/shop/service",
         query: { id: id }
       });
+    },
+    sorts(){
+       if (this.sortFlag) {
+        this.listt.sort(function(a, b) {
+          return a.orderNum - b.orderNum;
+        });
+        this.sortFlag = !this.sortFlag;
+      } else {
+        this.listt.sort(function(b, a) {
+          return a.orderNum - b.orderNum;
+        });
+        this.sortFlag = !this.sortFlag;
+      }
+    
     },
       changebg(name) {
       this.inner = name;
