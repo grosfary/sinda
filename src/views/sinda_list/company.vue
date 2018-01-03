@@ -51,7 +51,7 @@
             <div class="first">
               <div class="shopleft" v-for="(product,key,index) in Rdata" :key='product.id'>
                 <div>
-                  <img :src="('http://115.182.107.203:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
+                  <img :src="('http://123.58.241.146:8088/xinda/pic' + product.productImg)" :onerror="errorImg">
                 </div>
                 <div class="details" @click="toDetail(product.id)">
                   <h3>{{product.providerName}}</h3>
@@ -142,7 +142,7 @@ export default {
     },
     liebiaoxinxi: function() {
       this.ajax
-        .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+        .post("/xinda-api/product/style/list")
         .then(data => {
           //获取列表信息
           var obj = {};
@@ -157,7 +157,7 @@ export default {
       this.ajax
         .post(
           //列表商品
-          "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+          "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: this.start,
             limit: this.limit,
