@@ -54,8 +54,7 @@ export default {
           });
         } else {
           this.mark=true;
-          // this.userName;
-console.log(data.data.data)
+          this.userName = JSON.parse(sessionStorage.getItem('userName'));
         }
       });
   },

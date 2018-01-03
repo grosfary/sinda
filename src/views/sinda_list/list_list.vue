@@ -145,6 +145,7 @@ export default {
       this.$router.push({ path: "/list/pro", query: { id: id } });
     },
     liebiaoxinxi: function() {
+<<<<<<< HEAD
       this.ajax.post("/xinda-api/product/style/list").then(data => {
         //获取列表信息
         var obj = {};
@@ -153,6 +154,18 @@ export default {
         }
         this.itemLists = obj;
       });
+=======
+      this.ajax
+        .post("/xinda-api/product/style/list")
+        .then(data => {
+          //获取列表信息
+          var obj = {};
+          for (var i in data.data.data) {
+            obj[data.data.data[i].code] = data.data.data[i];
+          }
+          this.itemLists = obj;
+        });
+>>>>>>> 882434be73ca94e168a25fef1b3283ccab3e81a1
     },
     liebiao: function(id, code) {
       // 当前三级标题所选显示的商品

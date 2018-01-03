@@ -7,7 +7,7 @@
       <div class="m-lister">
         <div class="m-lists" v-for="list in lists" :key="list.id" @click="open(list.providerName,list.id,list.providerImg)">
           <div class="m-image">
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg">
+            <img :src="'http://123.58.241.146:8088/xinda/pic'+list.providerImg">
           </div>
           <div class="m-lage">
             <p>{{list.providerName}}</p>
