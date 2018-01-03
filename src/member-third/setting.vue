@@ -57,7 +57,7 @@ export default {
       code: "",
       value: 1,
       distCode: "",
-      src: "../../images/pc/u5086.png"
+      src: "../static/g_img/u5086.png"
     };
   },
   components: { member, dist },
