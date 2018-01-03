@@ -21,7 +21,7 @@
               <div>购买内容：{{product.serviceName}}</div>
             </div>
             <div class='time'>购买时间：<div class='date'>{{product.createTime | formatDate}}</div></div>
-            <a @click='tail(product.id)'><button @click='toeva(key)'>去评价</button></a>
+            <a @click='tail(product.id,product.serviceName,product.createTime)'><button @click='toeva(key)'>去评价</button></a>
           </div>
            <div class='inputcopy' v-show='ned'>
             <input type="submit" class='previous' value='上一页' @click='previous'>
@@ -77,12 +77,14 @@ export default {
   },
   methods: {
     ...mapActions(["setnumtoeva"]),
-    tail(id) {
-      this.$router.push({ path: "./center", query: { id: id } });
+    tail(id, ser,cre) {
+      this.$router.push({
+        path: "./center",
+        query: { id: id, abc: ser, cre: cre }
+      });
     },
     toeva: function(key) {
       this.setnumtoeva(this.products[key].serviceNo);
-      // console.log(this.products[key])
     },
     appraise: function(index) {
       this.index = index;
@@ -154,7 +156,8 @@ export default {
       col: 0,
       rData: [],
       ned: true,
-      nones: []
+      nones: [],
+      aa: "123123"
     };
   },
   components: { member }
@@ -242,9 +245,9 @@ export default {
       margin: 25px 10px;
       background: #fff;
       border-bottom: 0;
-      img{
-        width:100%;
-        height:100%;
+      img {
+        width: 100%;
+        height: 100%;
       }
       div {
         background: #fff;

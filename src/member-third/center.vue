@@ -11,11 +11,11 @@
         <span></span>
       </div>
       <div>
-        <span>购买内容：</span>
+        <span>购买内容：{{abc}}</span>
         <span></span>
       </div>
       <div>
-        <span>购买时间：</span>
+        <span>购买时间：{{cre | formatDate}}</span>
         <span></span>
       </div>
     </div>
@@ -49,6 +49,7 @@
 </template>
 <script>
 import member from "../views/sinda_member";
+import { formatDate } from "../global_js/date.js";
 import { mapGetters } from "vuex";
 export default {
   data() {
@@ -56,22 +57,27 @@ export default {
       index: -1,
       buys: [],
       sumes: 1,
-      textarea: ""
+      textarea: "",
+      abc:"",
+      cre:''
     };
   },
   computed: {
-    ...mapGetters(["setnumtoeva"])
+    ...mapGetters(["setnumtoeva"]),
   },
   components: { member },
+    filters: {
+    formatDate(time) {
+      var date = new Date(time);
+      return formatDate(date, "yyyy-MM-dd hh:mm");
+    }
+  },
   methods: {
     image: function(index) {
       this.index = index;
     },
     judge: function() {
       var that = this;
-      console.log(that.index + 1);
-      console.log(that.textarea);
-      console.log(that.sumes);
       that.ajax
         .post(
           "/xinda-api/service/judge/submit",
@@ -93,6 +99,8 @@ export default {
   },
   created() {
     var that = this;
+    this.abc=that.$route.query.abc,
+    this.cre=that.$route.query.cre,
     this.ajax.post("/xinda-api/business-order/detail", {}).then(function(data) {
       var Data = data.data.data;
       that.buys.push(Data);
